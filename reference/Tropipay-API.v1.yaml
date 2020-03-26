@@ -30,20 +30,20 @@ paths:
                 OK:
                   value:
                     user:
-                      id: c01af560-c7f4-11e8-849a-1196b4225e29
-                      name: Ruben
-                      surname: Lang Herrera
-                      company: Mi casa
-                      email: ruben.lh@gmail.com
-                      phone: '34654291447'
-                      address: 'Gran Via de les Corts Catalanes, 765'
+                      id: c01af560-c7f4-11e8-849a-1196b4225et9
+                      name: John
+                      surname: Doe
+                      company: My Home
+                      email: my@email.com
+                      phone: '5555555555'
+                      address: 'Catalunia Plaza, Barcelona'
                       walletId: null
                       t_c_version: /terms/v0.0
-                      role: admin
+                      role: user
                       nationality: null
                       state: 1
                       balance: 923412
-                      birthDate: '1984-02-03T23:00:00.000Z'
+                      birthDate: '1986-02-03T23:00:00.000Z'
                       countryDestinationId: 1
                       city: Barcelona
                       postalCode: 8013
@@ -110,7 +110,9 @@ paths:
             schema:
               type: object
               properties:
-                '':
+                email:
+                  type: string
+                password:
                   type: string
             examples:
               Getting Token:
