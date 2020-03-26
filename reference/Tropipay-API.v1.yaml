@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Tropipay API
+  version: '1.0'
+  contact:
+    name: Tropipay Team
+    url: www.tropipay.com
+    email: soporte@tropipay.com
+  termsOfService: 'https://tropipay.com/terms'
+  license:
+    name: Tropipay - 2020 - All Right Reserved
+  description: ''
+servers:
+  - description: Develop
+    url: 'https://tropipay-dev.herokuapp.com/api'
+paths:
+  /access/login:
+    post:
+      summary: ''
+      operationId: post-access-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                OK:
+                  value:
+                    user:
+                      id: c01af560-c7f4-11e8-849a-1196b4225e29
+                      name: Ruben
+                      surname: Lang Herrera
+                      company: Mi casa
+                      email: ruben.lh@gmail.com
+                      phone: '34654291447'
+                      address: 'Gran Via de les Corts Catalanes, 765'
+                      walletId: null
+                      t_c_version: /terms/v0.0
+                      role: admin
+                      nationality: null
+                      state: 1
+                      balance: 923412
+                      birthDate: '1984-02-03T23:00:00.000Z'
+                      countryDestinationId: 1
+                      city: Barcelona
+                      postalCode: 8013
+                      kycLevel: 3
+                      occupationId: 6
+                      clientTypeId: 1
+                      isPublicOffice: false
+                      birthCountryId: 0
+                      province: Barcelona
+                      groupId: 2
+                      lastLogin: '2020-03-26T15:27:11.148Z'
+                      pendingIn: -41380
+                      pendingOut: 0
+                      lang: es
+                      shortId: YO6S
+                      createdAt: '2018-10-04T16:44:24.380Z'
+                      updatedAt: '2020-03-26T15:27:11.151Z'
+                      group:
+                        id: 2
+                        name: SUPPORT
+                        createdAt: '2020-03-16T15:31:48.232Z'
+                        updatedAt: '2020-03-16T15:31:48.232Z'
+                        permissions:
+                          - id: 1
+                            name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                            createdAt: '2019-10-29T12:19:50.939Z'
+                            updatedAt: '2019-10-29T12:19:50.939Z'
+                            GroupPermission:
+                              createdAt: '2020-03-16T15:31:48.278Z'
+                              updatedAt: '2020-03-16T15:31:48.278Z'
+                              groupId: 2
+                              permissionId: 1
+                          - id: 2
+                            name: UPLOAD_DOCUMENT
+                            label: support
+                            createdAt: '2020-03-16T15:31:48.232Z'
+                            updatedAt: '2020-03-16T15:31:48.232Z'
+                            GroupPermission:
+                              createdAt: '2020-03-16T15:31:48.278Z'
+                              updatedAt: '2020-03-16T15:31:48.278Z'
+                              groupId: 2
+                              permissionId: 2
+                      validAirbnb: true
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwMWFmNTYwLWM3ZjQtMTFlOC04NDlhLTExOTZiNDIyNWUyOSIsIm5hbWUiOiJSdWJlbiIsImVtYWlsIjoicnViZW4ubGhAZ21haWwuY29tIiwic3VybmFtZSI6IkxhbmcgSGVycmVyYSIsImNvbXBhbnkiOiJNaSBjYXNhIiwicGhvbmUiOiIzNDY1NDI5MTQ0NyIsInJvbGUiOiJhZG1pbiIsInN0YXRlIjoxLCJpYXQiOjE1ODUyMzY0MzEsImV4cCI6MTU4NTMyMjgzMX0.lrNYwUr2ysoLeaD68WLw86ztz_hJYm9ZrhiWLVPf-Uw
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                KO:
+                  value:
+                    error:
+                      message:
+                        code: 8
+                        msg: 'Wrong username or password!'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              Getting Token:
+                value:
+                  email: ruben.lh@gmail.com
+                  password: 'R4mb1701!'
+        description: Authentication
+components:
+  schemas: {}
