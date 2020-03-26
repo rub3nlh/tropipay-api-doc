@@ -16,7 +16,7 @@ servers:
 paths:
   /access/login:
     post:
-      summary: ''
+      summary: Getting API Token
       operationId: post-access-login
       responses:
         '200':
@@ -109,12 +109,16 @@ paths:
           application/json:
             schema:
               type: object
-              properties: {}
+              properties:
+                '':
+                  type: string
             examples:
               Getting Token:
                 value:
-                  email: ruben.lh@gmail.com
-                  password: 'R4mb1701!'
+                  email: user@email.com
+                  password: userP4SSW00rd
         description: Authentication
+      tags:
+        - Authentication
 components:
   schemas: {}
