@@ -25,3 +25,23 @@ In order to make it easier for you to start working with the API, we've created 
 [Sign up for a demo account >> ](https://tropipay-dev.herokuapp.com/signup)
 
 > In order to use the API on a Demo account, please change the API requests URL prefix to: https://tropipay-dev.herokuapp.com/api/
+
+
+### Testing Card
+
+For OK Charges
+>
+Card Number : 4539 2320 7664 8253
+>
+Expiration: 05/21
+>
+CVV: 123
+>
+Cip Code: 1234
+
+
+
+
+
+
+

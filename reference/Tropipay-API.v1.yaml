@@ -129,6 +129,7 @@ paths:
         - Payment Link
       responses: {}
       operationId: get-sd
+      description: ''
     parameters: []
     post:
       summary: Creating a Payment Link
