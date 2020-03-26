@@ -124,13 +124,13 @@ paths:
         - Authentication
   /paymentcards:
     get:
-      summary: Your GET endpoint
+      summary: Get Payment Link List
       tags: []
       responses: {}
       operationId: get-sd
     parameters: []
     post:
-      summary: ''
+      summary: Creating a Payment Link
       operationId: post-paymentcards
       responses:
         '200':
@@ -172,7 +172,7 @@ paths:
                       code: 934
       tags:
         - Payment Link
-      description: "Create a Payment Link. \n\nYou will get a short URL and a QR code with the Payment Link "
+      description: "Charge to your clients or receive a remitance to your account by charge credits cards. \n\nYou will get a short URL and a QR code with the Payment Link "
       requestBody:
         content:
           application/json:
