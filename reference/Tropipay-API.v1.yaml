@@ -122,5 +122,128 @@ paths:
         description: Authentication
       tags:
         - Authentication
+  /paymentcards:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-sd
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-paymentcards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Response OK Example:
+                  value:
+                    id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
+                    reference: 23u4cgvz8k23djl85
+                    concept: Gif Card - Experiencia culinaria.
+                    description: Taxi + Experiencia
+                    amount: 14000
+                    currency: EUR
+                    singleUse: false
+                    reasonId: 1
+                    userId: 6b16b480-47df-11e9-8b02-d75764f7c812
+                    state: 1
+                    updatedAt: '2019-10-23T14:29:54.628Z'
+                    createdAt: '2019-10-23T14:29:54.102Z'
+                    qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
+                    shortUrl: 'http://bit.ly/2WbaJKS'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Invalid Token Example:
+                  value:
+                    error:
+                      msg: 'Failed to authenticate token!'
+                      code: 934
+      tags:
+        - Payment Link
+      description: "Create a Payment Link. \n\nYou will get a short URL and a QR code with the Payment Link "
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: reference in your system
+                concept:
+                  type: string
+                  description: ''
+                description:
+                  type: string
+                amount:
+                  type: integer
+                  description: Cents
+                currency:
+                  type: string
+                  description: 'EUR,USD (ISO)'
+                singleUse:
+                  type: boolean
+                  description: true - payment link is closed after use it
+                reasonId:
+                  type: integer
+                  description: See reasson list section for details
+                expirationDays:
+                  type: integer
+                  description: How many days you allow order cancelation
+                lang:
+                  type: string
+                  description: 'Link Payment Language (es,en,pt)'
+                urlSuccess:
+                  type: string
+                  description: OK response redirect to this URL
+                urlFailed:
+                  type: string
+                  description: KO response redirect to this URL
+                urlNotification:
+                  type: string
+                  description: Callback notification with the response data
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+            examples:
+              Creating a Recurrent Payment Link:
+                value:
+                  reference: your-own-system-reference
+                  concept: test
+                  description: test
+                  amount: 100000
+                  currency: EUR
+                  singleUse: false
+                  reasonId: 2
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://mi-negocio.com/pago-ok'
+                  urlFailed: 'https://mi-negocio.com/pago-ko'
+                  urlNotification: 'https://mi-negocio.com/notificacion-pago'
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          description: 'Bearer {your-token}'
+          name: Authorization
+          required: true
 components:
   schemas: {}
