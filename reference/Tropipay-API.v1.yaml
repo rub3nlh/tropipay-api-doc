@@ -125,7 +125,8 @@ paths:
   /paymentcards:
     get:
       summary: Get Payment Link List
-      tags: []
+      tags:
+        - Payment Link
       responses: {}
       operationId: get-sd
     parameters: []
