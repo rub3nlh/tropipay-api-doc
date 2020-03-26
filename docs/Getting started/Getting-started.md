@@ -2,7 +2,7 @@
 tags: [Introduction]
 ---
 
-# Getting-started
+# Getting Started
 
 ### Introduction
 
