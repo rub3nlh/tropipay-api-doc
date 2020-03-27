@@ -122,7 +122,7 @@ paths:
         description: Authentication
       tags:
         - Authentication
-      description: "#### Using your your Token for Authentication\nWith this endpoint you will receive a \"token\" parameter in the response. \n\nYou must use this parameter in the Header of all request you made for a Bearer authentication. \n\n> Header: { \"Authorization\" : \"Bearer {your-token}\" } "
+      description: "#### Using your your Token for Authentication\nWith this endpoint you will receive a \"token\" parameter in the response. \n\nYou must use this parameter in the Header of all request you made for a Bearer authentication. \n\n> Header: { \"Authorization\" : \"Bearer {token}\" } "
   /paymentcards:
     get:
       summary: Get Payment Link List
