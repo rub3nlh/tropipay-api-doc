@@ -544,7 +544,7 @@ paths:
           required: true
   /paymentcards/notify:
     post:
-      summary: Payment Link Final Client Notification
+      summary: Payment Link Send a Notification
       operationId: post-paymentcards-notify
       responses:
         '200':
