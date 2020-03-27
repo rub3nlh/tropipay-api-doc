@@ -403,30 +403,19 @@ paths:
                     provider: 1
                     userId: c01af560-c7f4-11e8-849a-1196b4225e29
                     bookingDate: '2020-01-16T00:00:00.000Z'
-                    days: 0
                     amount: 9012
                     currency: USD
                     originalCurrencyAmount: 10055
                     destinationAmount: 8291
                     destinationCurrency: EUR
                     conversionRate: 1.1157
-                    providerFee: 300
-                    ourFee: 500
-                    payProviderFee: false
                     state: 1
                     serviceId: 1
                     movementTypeId: 2
                     updatedAt: '2020-01-17T19:08:43.353Z'
                     createdAt: '2020-01-17T19:08:43.340Z'
-                    depositaccountId: null
-                    tmpDestinationAmount: 0
-                    realBankFee: null
-                    paymentcardId: null
-                    expirationDate: null
-                    balanceBefore: null
-                    balanceAfter: null
                     paymentUrl:
-                      chargeUrl: 'https://api.paycomet.com/gateway/ifr-bankstore?MERCHANT_MERCHANTCODE=tanb6cf3&MERCHANT_TERMINAL=8329&OPERATION=1&LANGUAGE=ES&MERCHANT_ORDER=k5ijdex8&MERCHANT_AMOUNT=9012&MERCHANT_CURRENCY=EUR&MERCHANT_MERCHANTSIGNATURE=b1dd1f59f19f1b622132d20941d28545fa5812c969ad257f032a0f2a10d573de&3DSECURE=1&MERCHANT_SCORING=1&MERCHANT_PRODUCTDESCRIPTION=U%3Ac01af560-c7f4-11e8-849a-1196b4225e29%20P%3A1%20R%3Areferencia001&URLOK=http%3A%2F%2Flocalhost%3A3000%2Fcharge_OK&URLKO=http%3A%2F%2Flocalhost%3A3000%2Fcharge_KO'
+                      chargeUrl: 'https://booking.charge.url/213oieoi2132'
       tags:
         - Transactions
       description: "Create a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to soporte@tropipay.com a URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. "
