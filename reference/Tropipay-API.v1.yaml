@@ -480,5 +480,65 @@ paths:
                   agree: true
                   customUrlOK: 'https://google.com'
                   customUrlKO: 'https://yahoo.es'
+  '/marketproducts/{productId}/consume':
+    parameters:
+      - schema:
+          type: string
+        name: productId
+        in: path
+        required: true
+    post:
+      summary: Consume a Market Product
+      operationId: post-marketproducts-productId-consume
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Ex. Response OK Consume Cubacel Air Time Recharge:
+                  value:
+                    status: OK
+                    transaction:
+                      id: 30039
+                      reference: TX1583416644851
+                      bankOrderCode: TX1583416644851
+                      userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                      amount: -1800
+                      currency: EUR
+                      destinationAmount: -1800
+                      destinationCurrency: EUR
+                      state: 2
+                      movementTypeId: 1
+                      serviceId: 3
+                      updatedAt: '2020-03-05T13:57:24.852Z'
+                      createdAt: '2020-03-05T13:57:24.852Z'
+                      transactionId: null
+      tags:
+        - Market
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              'Ex. Consume a Cubacel Air Time Recharge (productId : recharge01)':
+                value:
+                  amount: 2000
+                  target: '5355555555'
+                  operatorId: CU_CU_TopUp
+                  notificationUrl: 'https://webhook.site/f6ce41f9-1ea2-4c58-94c4-004967f4erad'
+      description: "Consume a product from market. \n\nMarket product Id List: \n\n- recharge01 [//]: # (AIR TIME)\n\n\nThe response from this endpoint is that the order has been taken.\n\nThe result of the operation will be notified with a POST to notificationUrl parameter.\n\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n"
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+          required: true
 components:
   schemas: {}
