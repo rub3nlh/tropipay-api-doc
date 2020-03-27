@@ -487,6 +487,7 @@ paths:
         name: productId
         in: path
         required: true
+        description: Product Id you want to consume (ex. recharge01)
     post:
       summary: Consume a Market Product
       operationId: post-marketproducts-productId-consume
