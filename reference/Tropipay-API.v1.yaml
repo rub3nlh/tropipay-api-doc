@@ -460,6 +460,7 @@ paths:
           in: header
           name: Authorization
           description: 'Bearer {your-token}'
+          required: true
       requestBody:
         content:
           application/json:
