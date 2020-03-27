@@ -247,5 +247,164 @@ paths:
           description: 'Bearer {your-token}'
           name: Authorization
           required: true
+  /booking:
+    get:
+      summary: Getting Transactions List
+      tags:
+        - Transactions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                Ex. Response OK:
+                  value:
+                    count: 2
+                    rows:
+                      - id: 29950
+                        reference: 'DEV:TX1579007965129'
+                        bankOrderCode: 'DEV:TX1579007965129'
+                        provider: 4
+                        userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                        bookingDate: null
+                        days: null
+                        amount: 835
+                        currency: EUR
+                        originalCurrencyAmount: null
+                        destinationAmount: 835
+                        destinationCurrency: EUR
+                        conversionRate: null
+                        providerFee: null
+                        ourFee: null
+                        realBankFee: null
+                        depositaccountId: null
+                        payProviderFee: null
+                        state: 2
+                        serviceId: 3
+                        paymentcardId: null
+                        expirationDate: null
+                        movementTypeId: 3
+                        balanceBefore: 715812
+                        balanceAfter: 824638
+                        createdAt: '2020-01-14T13:19:25.130Z'
+                        updatedAt: '2020-01-21T13:13:32.611Z'
+                        depositaccount: null
+                        service:
+                          id: 3
+                          name: Recharge
+                          slug: RECHARGE
+                          service_fee_percent: 0
+                          service_fee_fixed: 0
+                          tp_fee_percent: 1000
+                          tp_fee_fixed: 0
+                          type: MARKET_PLACE
+                          createdAt: '2019-12-11T11:55:08.025Z'
+                          updatedAt: '2019-12-11T11:55:08.025Z'
+                        charges: []
+                        purchases:
+                          - id: 30
+                            bookingId: 29950
+                            marketproductId: 24
+                            target: someuser@nauta.com.cu
+                            specification: '1000'
+                            providerSpot: 1771
+                            fee: -0.121
+                            createdAt: '2020-01-14T13:19:25.145Z'
+                            updatedAt: '2020-01-14T13:19:25.145Z'
+                            marketproduct:
+                              slug: nauta01
+                      - id: 29936
+                        reference: TX1578581766040
+                        bankOrderCode: TX1578581766040
+                        provider: null
+                        userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                        bookingDate: null
+                        days: null
+                        amount: -900
+                        currency: EUR
+                        originalCurrencyAmount: null
+                        destinationAmount: -900
+                        destinationCurrency: EUR
+                        conversionRate: null
+                        providerFee: null
+                        ourFee: null
+                        realBankFee: null
+                        depositaccountId: null
+                        payProviderFee: null
+                        state: 3
+                        serviceId: 3
+                        paymentcardId: null
+                        expirationDate: null
+                        movementTypeId: 1
+                        balanceBefore: 738552
+                        balanceAfter: 737652
+                        createdAt: '2020-01-09T14:56:06.041Z'
+                        updatedAt: '2020-01-09T14:56:06.041Z'
+                        depositaccount: null
+                        service:
+                          id: 3
+                          name: Recharge
+                          slug: RECHARGE
+                          service_fee_percent: 0
+                          service_fee_fixed: 0
+                          tp_fee_percent: 1000
+                          tp_fee_fixed: 0
+                          type: MARKET_PLACE
+                          createdAt: '2019-12-11T11:55:08.025Z'
+                          updatedAt: '2019-12-11T11:55:08.025Z'
+                        charges: []
+                        purchases:
+                          - id: 16
+                            bookingId: 29936
+                            marketproductId: 24
+                            target: someuser@nauta.com.cu
+                            specification: '1078'
+                            providerSpot: 1771
+                            fee: 0.130419161676647
+                            createdAt: '2020-01-09T14:56:06.065Z'
+                            updatedAt: '2020-01-09T14:56:06.065Z'
+                            marketproduct:
+                              slug: nauta01
+                    limit: '10'
+                    offset: '0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Ex. KO Unauthorized:
+                  value:
+                    error:
+                      msg: 'Failed to authenticate token!'
+      operationId: get-booking
+      description: "List All Transactions made by User.\n\nOnly states Charged and Paid.\n\nTransactions in state New and Error are not returned. "
+      parameters:
+        - schema:
+            type: number
+          in: query
+          name: offset
+          description: Pagination Offset - Default 0
+        - schema:
+            type: number
+          in: query
+          name: limit
+          description: Pagination Limit - Default 10
+        - schema:
+            type: string
+          in: query
+          name: criteria
+          description: 'Search Criteria (orderCode, Reference, Purchase.target)'
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+          required: true
 components:
   schemas: {}
