@@ -542,5 +542,46 @@ paths:
           name: Authorization
           description: 'Bearer {your-token}'
           required: true
+  /paymentcards/notify:
+    post:
+      summary: Payment Link Final Client Notification
+      operationId: post-paymentcards-notify
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Ex. Response OK:
+                  value: OK
+      tags:
+        - Payment Link
+      description: 'Send a notification with the paymeyt link url to someone. '
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              Ex. Notify a client with a payment link url:
+                value:
+                  cardObj:
+                    id: 3a16d4f0-f667-11e9-9445-0f8921378a1d
+                  sendEmail: true
+                  email: client@email.com
+                  sendSMS: true
+                  phone: '+53534555555'
+                  lang: es
 components:
   schemas: {}
