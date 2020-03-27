@@ -532,7 +532,7 @@ paths:
                   target: '5355555555'
                   operatorId: CU_CU_TopUp
                   notificationUrl: 'https://webhook.site/f6ce41f9-1ea2-4c58-94c4-004967f4erad'
-      description: "Consume a product from market. \n\nMarket product Id List: \n\n- recharge01 [//]: # (AIR TIME)\n\n\nThe response from this endpoint is that the order has been taken.\n\nThe result of the operation will be notified with a POST to notificationUrl parameter.\n\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n"
+      description: "Consume a product from market. \n\nMarket product Id List: \n\n- recharge01  (AIR TIME)\n\n\nThe response from this endpoint is that the order has been taken.\n\nThe result of the operation will be notified with a POST to notificationUrl parameter.\n\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n"
       parameters:
         - schema:
             type: string
