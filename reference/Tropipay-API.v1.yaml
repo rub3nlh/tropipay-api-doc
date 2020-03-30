@@ -103,9 +103,88 @@ paths:
       summary: Get Payment Link List
       tags:
         - Payment Link
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Ex. Get Payment Link List OK:
+                  value:
+                    - id: 07bcff30-44fe-11ea-8ec4-d35783b2188a
+                      reference: 2fe88rq17vak63ootcw
+                      concept: Menu medio dia
+                      description: "primer \nsedd\nerer"
+                      amount: 2000
+                      currency: USD
+                      singleUse: false
+                      reasonId: 3
+                      userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                      qrImage: null
+                      shortUrl: 'http://bit.ly/37O5but'
+                      state: 1
+                      expirationDays: 0
+                      lang: es
+                      urlSuccess: ''
+                      urlFailed: ''
+                      urlNotification: ''
+                      expirationDate: null
+                      serviceDate: null
+                      createdAt: '2020-02-01T14:20:43.044Z'
+                      updatedAt: '2020-02-01T14:20:43.532Z'
+                    - id: c68fbe70-3d3d-11ea-adcf-9f02c8caee60
+                      reference: 2fe88rqevek5plajtj
+                      concept: cena para 2
+                      description: bocadillos mistos
+                      amount: 1200
+                      currency: USD
+                      singleUse: false
+                      reasonId: 1
+                      userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                      qrImage: null
+                      shortUrl: 'http://bit.ly/36fBEIQ'
+                      state: 1
+                      expirationDays: 1
+                      lang: es
+                      urlSuccess: ''
+                      urlFailed: ''
+                      urlNotification: ''
+                      expirationDate: null
+                      serviceDate: null
+                      createdAt: '2020-01-22T17:36:52.183Z'
+                      updatedAt: '2020-01-22T17:36:52.647Z'
+                    - id: 9b02a370-395b-11ea-ba39-91d98c954380
+                      reference: 38t147fk5ij2m1y
+                      concept: Comida para llevar
+                      description: primer plato + segundo + postre
+                      amount: 1000
+                      currency: EUR
+                      singleUse: false
+                      reasonId: 1
+                      userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                      qrImage: null
+                      shortUrl: 'http://bit.ly/3ahcxbI'
+                      state: 1
+                      expirationDays: 1
+                      lang: es
+                      urlSuccess: ''
+                      urlFailed: ''
+                      urlNotification: 'https://webhook.site/947f5220-cfd7-4ab1-84e7-a6ea5f67fa01'
+                      expirationDate: null
+                      serviceDate: null
+                      createdAt: '2020-01-17T19:00:19.369Z'
+                      updatedAt: '2020-01-17T19:00:19.867Z'
       operationId: get-sd
-      description: ''
+      description: 'Get a List of all generated Paylinks. '
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
     parameters: []
     post:
       summary: Creating a Payment Link
@@ -150,7 +229,7 @@ paths:
                       code: 934
       tags:
         - Payment Link
-      description: "Charge to your clients or receive a remitance to your account by charge credits cards. \n\nYou will get a short URL and a QR code with the Payment Link "
+      description: "Charge to your clients or receive a remitance to your account by charge credits cards. \n\nYou will get a short URL and a QR code with the Payment Link \n\n#### Callbacks:\n\nThe result of the operation will be notified in a Callback with a POST to **urlNotification** parameter.\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n#### Callback Signature: \nAll callbacks contains the parameter signature that validate it is a verified Tropipay Callback. \nYou need check the signature of any callback for security reasons:\n\n`signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + originalCurrencyAmount )\n`\n\n#### Callback Response Examples: \n\nResponse OK\n\n```json\n{\n  status: \"OK\",\n  data: {\n    \"id\": 27376,\n    \"reference\": \"1574194435610\",\n    \"bankOrderCode\": \"1574194435610\",\n    \"provider\": 4,\n    \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n    \"bookingDate\": \"2019-11-19T20:13:55.613Z\",\n    \"days\": null,\n    \"amount\": 100000,\n    \"currency\": \"EUR\",\n    \"originalCurrencyAmount\": 100000,\n    \"destinationAmount\": 96450,\n    \"destinationCurrency\": \"EUR\",\n    \"conversionRate\": 1,\n    \"depositaccountId\": null,\n    \"state\": 5,\n    \"serviceId\": 2,\n    \"paymentcardId\": \"95aa7620-0b05-11ea-b517-dfa69b738ed5\",\n    \"expirationDate\": \"2019-11-20T08:55:00.000Z\",\n    \"movementTypeId\": 2,\n    \"balanceBefore\": null,\n    \"balanceAfter\": null,\n    \"createdAt\": \"2019-11-19T20:13:55.614Z\",\n    \"updatedAt\": \"2019-11-19T20:30:04.083Z\",\n    \"paymentcard\": {\n      \"id\": \"95aa7620-0b05-11ea-b517-dfa69b738ed5\",\n      \"reference\": \"di3khs1p0k369tj0h\",\n      \"concept\": \"concept1\",\n      \"description\": \"description1\",\n      \"amount\": 100000,\n      \"currency\": \"EUR\",\n      \"singleUse\": false,\n      \"reasonId\": 4,\n      \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n      \"qrImage\": null,\n      \"shortUrl\": null,\n      \"state\": 1,\n      \"expirationDays\": 1,\n      \"lang\": \"es\",\n      \"urlSuccess\": \"https://mi-negocio.com/pago-ok\",\n      \"urlFailed\": \"https://mi-negocio.com/pago-ko\",\n      \"urlNotification\": \"https://mi-negocio.com/notificacion-de-pago\",\n      \"createdAt\": \"2019-11-19T19:48:40.194Z\",\n      \"updatedAt\": \"2019-11-19T19:48:40.194Z\"\n    },\n    \"charges\": [\n      {\n        \"id\": 22742,\n        \"orderCode\": \"1574194435610\",\n        \"cardPan\": \"0000\",\n        \"cardExpirationDate\": \"2020-01-01T00:00:00.000Z\",\n        \"cardHolderName\": \"Antonio\",\n        \"amount\": 1000,\n        \"currency\": 978,\n        \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n        \"bookingId\": 27376,\n        \"errorReason\": \"\",\n        \"state\": 3,\n        \"serviceId\": 2,\n        \"cardCountry\": \"\",\n        \"cardBrand\": \"VISA\",\n        \"cardCategory\": \"BUSINESS\",\n        \"cardType\": \"CREDIT\",\n        \"clientIp\": \"\",\n        \"clientName\": \"Antonio\",\n        \"clientLastName\": \"Lopez\",\n        \"clientAddress\": \"calle 280\",\n        \"clientPhone\": \"5300000000\",\n        \"clientEmail\": \"user@gmail.com\",\n        \"clientTC\": \"true\",\n        \"clientCountryId\": 0,\n        \"createdAt\": \"2019-11-19T20:13:55.666Z\",\n        \"updatedAt\": \"2019-11-19T20:30:04.066Z\"\n      }\n    ]\n  }\n}\n```"
       requestBody:
         content:
           application/json:
