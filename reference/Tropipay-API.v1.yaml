@@ -185,6 +185,7 @@ paths:
           in: header
           name: Authorization
           description: 'Bearer {your-token}'
+          required: true
     parameters: []
     post:
       summary: Creating a Payment Link
