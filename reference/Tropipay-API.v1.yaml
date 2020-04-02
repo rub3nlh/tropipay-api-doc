@@ -199,7 +199,22 @@ paths:
                 type: object
                 properties: {}
               examples:
-                Response OK Example:
+                Response OK Example (Asking for Client Data in the Payment Flow):
+                  value:
+                    id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
+                    reference: 23u4cgvz8k23djl85
+                    concept: Gif Card - Experiencia culinaria.
+                    description: Taxi + Experiencia
+                    amount: 14000
+                    currency: EUR
+                    singleUse: false
+                    reasonId: 1
+                    state: 1
+                    updatedAt: '2019-10-23T14:29:54.628Z'
+                    createdAt: '2019-10-23T14:29:54.102Z'
+                    qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
+                    shortUrl: 'http://bit.ly/2WbaJKS'
+                Response OK (Skip Form asking for Client Data in the Payment Flow):
                   value:
                     id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
                     reference: 23u4cgvz8k23djl85
@@ -215,6 +230,14 @@ paths:
                     createdAt: '2019-10-23T14:29:54.102Z'
                     qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
                     shortUrl: 'http://bit.ly/2WbaJKS'
+                    client:
+                      clientName: John
+                      lastName: Doe
+                      clientAddress: 'Ave. Guadí 232, Barcelona, Barcelona'
+                      clientPhone: '+34645553333'
+                      clientEmail: client@email.com
+                      clientCountryId: 1
+                      clientTC: true
         '401':
           description: Unauthorized
           content:
@@ -257,6 +280,11 @@ paths:
                 reasonId:
                   type: integer
                   description: See reasson list section for details
+                  enum:
+                    - turism service
+                    - remittance
+                    - personal
+                    - generic
                 expirationDays:
                   type: integer
                   description: How many days you allow order cancelation
@@ -272,6 +300,41 @@ paths:
                 urlNotification:
                   type: string
                   description: Callback notification with the response data
+                client:
+                  type:
+                    - 'null'
+                    - object
+                  description: 'If the client param exist and it is different of null the payment flow will skip the form asking for client data. '
+                  properties:
+                    clientName:
+                      type: string
+                      description: Client Name
+                    clientLastName:
+                      type: string
+                      description: Client Last Name
+                    clientAddress:
+                      type: string
+                      description: CLient Address
+                    clientPhone:
+                      type: string
+                      description: Client Phone
+                    clientEmail:
+                      type: string
+                      description: Client Email
+                    clientTC:
+                      type: boolean
+                      description: Client accept Terms and Conditions
+                    clientCountryId:
+                      type: integer
+                      description: Client Country Id (You must see country endpoint)
+                  required:
+                    - clientName
+                    - clientLastName
+                    - clientAddress
+                    - clientPhone
+                    - clientEmail
+                    - clientTC
+                    - clientCountryId
               required:
                 - reference
                 - concept
@@ -628,5 +691,139 @@ paths:
                   sendSMS: true
                   phone: '+53534555555'
                   lang: es
+  /country:
+    get:
+      summary: Get operational Country List
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Response OK:
+                  value:
+                    count: 248
+                    rows:
+                      - id: 44
+                        name: Afghanistan
+                        sepaZone: false
+                        state: 1
+                        slug: AF
+                        callingCode: 93
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.410Z'
+                        updatedAt: '2019-09-03T15:22:26.410Z'
+                      - id: 43
+                        name: Albania
+                        sepaZone: false
+                        state: 1
+                        slug: AL
+                        callingCode: 355
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.410Z'
+                        updatedAt: '2019-09-03T15:22:26.410Z'
+                      - id: 5
+                        name: Alemania
+                        sepaZone: true
+                        state: 1
+                        slug: DE
+                        callingCode: 49
+                        isDestination: true
+                        createdAt: '2019-05-14T09:37:40.349Z'
+                        updatedAt: '2019-05-14T09:37:40.349Z'
+                      - id: 42
+                        name: Algeria
+                        sepaZone: false
+                        state: 1
+                        slug: DZ
+                        callingCode: 213
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.411Z'
+                        updatedAt: '2019-09-03T15:22:26.411Z'
+                      - id: 40
+                        name: American Samoa
+                        sepaZone: false
+                        state: 1
+                        slug: AS
+                        callingCode: 1684
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.411Z'
+                        updatedAt: '2019-09-03T15:22:26.411Z'
+                      - id: 41
+                        name: Andorra
+                        sepaZone: true
+                        state: 1
+                        slug: AD
+                        callingCode: 376
+                        isDestination: true
+                        createdAt: '2019-09-03T15:22:26.411Z'
+                        updatedAt: '2019-10-18T10:21:13.673Z'
+                      - id: 45
+                        name: Angola
+                        sepaZone: false
+                        state: 1
+                        slug: AO
+                        callingCode: 244
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.416Z'
+                        updatedAt: '2019-09-03T15:22:26.416Z'
+                      - id: 46
+                        name: Anguilla
+                        sepaZone: false
+                        state: 1
+                        slug: AI
+                        callingCode: 1264
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.417Z'
+                        updatedAt: '2019-09-03T15:22:26.417Z'
+                      - id: 47
+                        name: Antarctica
+                        sepaZone: false
+                        state: 1
+                        slug: AQ
+                        callingCode: 672
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.418Z'
+                        updatedAt: '2019-09-03T15:22:26.418Z'
+                      - id: 48
+                        name: Antigua and Barbuda
+                        sepaZone: false
+                        state: 1
+                        slug: AG
+                        callingCode: 1268
+                        isDestination: false
+                        createdAt: '2019-09-03T15:22:26.418Z'
+                        updatedAt: '2019-09-03T15:22:26.418Z'
+                    limit: 20
+                    offset: 0
+      operationId: get-country
+      description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                offset:
+                  type: integer
+            examples:
+              Ex. Pagination:
+                value:
+                  limit: 10
+                  offset: 0
+        description: ''
 components:
   schemas: {}
