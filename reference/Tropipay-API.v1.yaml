@@ -214,7 +214,7 @@ paths:
                     createdAt: '2019-10-23T14:29:54.102Z'
                     qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
                     shortUrl: 'http://bit.ly/2WbaJKS'
-                Response OK (Skip Form asking for Client Data in the Payment Flow):
+                Response OK:
                   value:
                     id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
                     reference: 23u4cgvz8k23djl85
@@ -270,7 +270,10 @@ paths:
                   type: string
                 amount:
                   type: integer
+                  default: 0
                   description: Cents
+                  format: int32
+                  example: 1000
                 currency:
                   type: string
                   description: 'EUR,USD (ISO)'
@@ -335,6 +338,18 @@ paths:
                     - clientEmail
                     - clientTC
                     - clientCountryId
+                expirationDate:
+                  type: string
+                  default: yyyy-mm-dd
+                  description: The payment link will be destroyed this date
+                  format: date
+                  example: '2020-06-26'
+                serviceDate:
+                  type: string
+                  default: yyyy-mm-dd
+                  description: required if singleUse is true. The date of the service
+                  format: date
+                  example: '2020-03-25'
               required:
                 - reference
                 - concept
@@ -344,7 +359,7 @@ paths:
                 - singleUse
                 - reasonId
             examples:
-              Creating a Recurrent Payment Link:
+              'Creating a Recurrent Payment Link ':
                 value:
                   reference: your-own-system-reference
                   concept: test
@@ -358,6 +373,28 @@ paths:
                   urlSuccess: 'https://mi-negocio.com/pago-ok'
                   urlFailed: 'https://mi-negocio.com/pago-ko'
                   urlNotification: 'https://mi-negocio.com/notificacion-pago'
+              Ex. Creating a Paylink (Skip Form asking for Client Data in the Payment Flow):
+                value:
+                  reference: your-own-system-reference
+                  concept: test
+                  description: test
+                  amount: 100000
+                  currency: EUR
+                  singleUse: false
+                  reasonId: 2
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://mi-negocio.com/pago-ok'
+                  urlFailed: 'https://mi-negocio.com/pago-ko'
+                  urlNotification: 'https://mi-negocio.com/notificacion-pago'
+                  client:
+                    clientName: John
+                    lastName: Doe
+                    clientAddress: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    clientPhone: '+34645553333'
+                    clientEmail: client@email.com
+                    clientCountryId: 1
+                    clientTC: true
         description: ''
       parameters:
         - schema:
