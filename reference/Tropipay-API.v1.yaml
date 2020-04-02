@@ -694,7 +694,8 @@ paths:
   /country:
     get:
       summary: Get operational Country List
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: OK
