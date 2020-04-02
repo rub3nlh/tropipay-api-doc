@@ -351,9 +351,9 @@ paths:
                   description: test
                   amount: 100000
                   currency: EUR
-                  singleUse: false
+                  singleUse: true
                   reasonId: 2
-                  expirationDays: 1
+                  expirationDays: 5
                   lang: es
                   urlSuccess: 'https://mi-negocio.com/pago-ok'
                   urlFailed: 'https://mi-negocio.com/pago-ko'
