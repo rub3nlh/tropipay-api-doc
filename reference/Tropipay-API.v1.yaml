@@ -199,7 +199,7 @@ paths:
                 type: object
                 properties: {}
               examples:
-                Response OK Example (Asking for Client Data in the Payment Flow):
+                Ex. Response OK:
                   value:
                     id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
                     reference: 23u4cgvz8k23djl85
@@ -214,30 +214,6 @@ paths:
                     createdAt: '2019-10-23T14:29:54.102Z'
                     qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
                     shortUrl: 'http://bit.ly/2WbaJKS'
-                Response OK:
-                  value:
-                    id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
-                    reference: 23u4cgvz8k23djl85
-                    concept: Gif Card - Experiencia culinaria.
-                    description: Taxi + Experiencia
-                    amount: 14000
-                    currency: EUR
-                    singleUse: false
-                    reasonId: 1
-                    userId: 6b16b480-47df-11e9-8b02-d75764f7c812
-                    state: 1
-                    updatedAt: '2019-10-23T14:29:54.628Z'
-                    createdAt: '2019-10-23T14:29:54.102Z'
-                    qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
-                    shortUrl: 'http://bit.ly/2WbaJKS'
-                    client:
-                      clientName: John
-                      lastName: Doe
-                      clientAddress: 'Ave. Guadí 232, Barcelona, Barcelona'
-                      clientPhone: '+34645553333'
-                      clientEmail: client@email.com
-                      clientCountryId: 1
-                      clientTC: true
         '401':
           description: Unauthorized
           content:
