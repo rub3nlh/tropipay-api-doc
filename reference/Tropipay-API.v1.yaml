@@ -259,11 +259,6 @@ paths:
                 reasonId:
                   type: integer
                   description: See reasson list section for details
-                  enum:
-                    - turism service
-                    - remittance
-                    - personal
-                    - generic
                 expirationDays:
                   type: integer
                   description: How many days you allow order cancelation
@@ -285,35 +280,35 @@ paths:
                     - object
                   description: 'If the client param exist and it is different of null the payment flow will skip the form asking for client data. '
                   properties:
-                    clientName:
+                    name:
                       type: string
                       description: Client Name
-                    clientLastName:
+                    lastName:
                       type: string
                       description: Client Last Name
-                    clientAddress:
+                    address:
                       type: string
                       description: CLient Address
-                    clientPhone:
+                    phone:
                       type: string
                       description: Client Phone
-                    clientEmail:
+                    email:
                       type: string
                       description: Client Email
-                    clientTC:
+                    termsAndConditions:
                       type: boolean
                       description: Client accept Terms and Conditions
-                    clientCountryId:
+                    countryId:
                       type: integer
                       description: Client Country Id (You must see country endpoint)
                   required:
-                    - clientName
-                    - clientLastName
-                    - clientAddress
-                    - clientPhone
-                    - clientEmail
-                    - clientTC
-                    - clientCountryId
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - termsAndConditions
+                    - countryId
                 expirationDate:
                   type: string
                   default: yyyy-mm-dd
@@ -364,14 +359,19 @@ paths:
                   urlFailed: 'https://mi-negocio.com/pago-ko'
                   urlNotification: 'https://mi-negocio.com/notificacion-pago'
                   client:
-                    clientName: John
+                    name: John
                     lastName: Doe
-                    clientAddress: 'Ave. Guadí 232, Barcelona, Barcelona'
-                    clientPhone: '+34645553333'
-                    clientEmail: client@email.com
-                    clientCountryId: 1
-                    clientTC: true
-        description: ''
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: true
+        description: |-
+          #### Reasons (Payment reason ids):
+          -  0 : Tourist Service
+          -  1 : Remittance
+          -  2 : Personal
+          -  3 : Generic Service
       parameters:
         - schema:
             type: string
