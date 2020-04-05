@@ -540,7 +540,7 @@ paths:
           required: true
   /booking/charge:
     post:
-      summary: ''
+      summary: Charge an OTA Virtual Card
       operationId: post-booking-charge
       responses:
         '200':
@@ -549,7 +549,6 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
               examples:
                 Ex. Charge Url created:
                   value:
@@ -574,7 +573,7 @@ paths:
                       chargeUrl: 'https://booking.charge.url/213oieoi2132'
       tags:
         - Transactions
-      description: "Create a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to soporte@tropipay.com a URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. "
+      description: "### Charge an OTA Card:\nCreate a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. \n\n### How to complete the charge:\nWith the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  "
       parameters:
         - schema:
             type: string
@@ -587,7 +586,52 @@ paths:
           application/json:
             schema:
               type: object
-              properties: {}
+              properties:
+                reference:
+                  type: string
+                  description: Your unique reference
+                  example: ref2334kk23
+                provider:
+                  type: integer
+                  description: 'ProviderId (Booking, Expedia, Hotels,etc..)'
+                  example: 1
+                bookingDate:
+                  type: string
+                  description: Date of the service
+                  format: date
+                  example: '2020-01-16'
+                originalCurrencyAmount:
+                  type: integer
+                  description: Amount in Cents
+                  example: 1000
+                currency:
+                  type: string
+                  description: 'Iso Currency (EUR, USD)'
+                  example: USD
+                lang:
+                  type: string
+                  description: 'Lang (es, en)'
+                  example: es
+                agree:
+                  type: boolean
+                  description: Client accept terms and conditions
+                  example: 'true'
+                customUrlOK:
+                  type: string
+                  description: Redirect to this url with a OK charge
+                  example: 'https://mydomain.com/payment_ok'
+                customUrlKO:
+                  type: string
+                  description: Redirect to this url with a KO charge
+                  example: 'https://mydomain.com/payment_ko'
+              required:
+                - reference
+                - provider
+                - bookingDate
+                - originalCurrencyAmount
+                - currency
+                - lang
+                - agree
             examples:
               Ex. Creating a Charge URL:
                 value:
@@ -596,11 +640,11 @@ paths:
                   bookingDate: '2020-01-16'
                   originalCurrencyAmount: 10055
                   currency: USD
-                  destinationCurrency: EUR
                   lang: es
                   agree: true
                   customUrlOK: 'https://google.com'
                   customUrlKO: 'https://yahoo.es'
+        description: ''
   '/marketproducts/{productId}/consume':
     parameters:
       - schema:
