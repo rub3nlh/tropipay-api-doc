@@ -16,6 +16,7 @@ tags: [Masters Tables]
 - 2 : charged 
 - 3 : paid
 - 4 : error
+- 5 : pending in
 
 #### MovementTypes (Movement Types): 
 - 1 : transfer
