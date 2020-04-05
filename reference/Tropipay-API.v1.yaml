@@ -573,7 +573,7 @@ paths:
                       chargeUrl: 'https://booking.charge.url/213oieoi2132'
       tags:
         - Transactions
-      description: "### Charge an OTA Card:\nCreate a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. \n\n### How to complete the charge:\nWith the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  "
+      description: "### Charge an OTA Card:\nCreate a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. \n\n### How to complete the charge:\nWith the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  \n\n### Masters Ids (Providers, States, Services, MovementType): \n[Go to Masters >> >> ](./docs/Masters/Masters-Tables-Data.md)"
       parameters:
         - schema:
             type: string
