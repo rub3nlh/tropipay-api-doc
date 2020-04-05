@@ -22,6 +22,9 @@ In order to ensure safe and fair resource sharing, we define the following usage
 
 In order to make it easier for you to start working with the API, we've created a sandbox: a test account that replicates the same functionalities as a real business account, but with fake data. This means you don't need to open a business account to start using the API and, more importantly, you won't risk accidentally transferring real money to the wrong person.
 
+The develop server is slept by default. Once you access the URL the server will start, it takes like a 1min to by awake. It goes to sleep again after 30min of inactivity.  
+
+
 [Sign up for a demo account >> ](https://tropipay-dev.herokuapp.com/signup)
 
 > In order to use the API on a Demo account, please change the API requests URL prefix to: https://tropipay-dev.herokuapp.com/api/

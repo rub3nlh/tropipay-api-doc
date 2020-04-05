@@ -12,7 +12,7 @@ tags: [Masters Tables]
 - 4 : Otro
 
 #### States (Movements States):
-- 1 : created
+- 1 : created 
 - 2 : charged 
 - 3 : paid
 - 4 : error
