@@ -35,3 +35,9 @@ tags: [Masters Tables]
 - 3 : Market Purcahse Recharge
 - 4 : Market Purcahse Gif Card
 - 5 : Top Up
+
+### Reasons (PayLink Payment reason):
+- 0 : Tourist Service
+- 1 : Remittance
+- 2 : Personal
+- 3 : Generic Service
