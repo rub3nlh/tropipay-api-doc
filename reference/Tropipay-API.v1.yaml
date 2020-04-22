@@ -197,7 +197,9 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  '':
+                    type: string
               examples:
                 Ex. Response OK:
                   value:
@@ -321,6 +323,8 @@ paths:
                   description: required if singleUse is true. The date of the service
                   format: date
                   example: '2020-03-25'
+                directPayment:
+                  type: boolean
               required:
                 - reference
                 - concept
