@@ -429,7 +429,7 @@ paths:
                   example: '2020-03-25'
                 directPayment:
                   type: boolean
-                  example: 'Allows to generate the payment link directly, the client, urlSuccess and urlFailed keys are required'
+                  description: 'Allows to generate the payment link directly, the client, urlSuccess and urlFailed keys are required'
               required:
                 - reference
                 - concept
