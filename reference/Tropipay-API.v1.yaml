@@ -198,7 +198,51 @@ paths:
               schema:
                 type: object
                 properties:
-                  '':
+                  id:
+                    type: string
+                  reference:
+                    type: string
+                  concept:
+                    type: string
+                  description:
+                    type: string
+                  amount:
+                    type: integer
+                  currency:
+                    type: string
+                  singleUse:
+                    type: boolean
+                  reasonId:
+                    type: integer
+                  expirationDays:
+                    type: integer
+                  userId:
+                    type: string
+                  lang:
+                    type: string
+                  state:
+                    type: integer
+                  urlSuccess:
+                    type: string
+                  urlFailed:
+                    type: string
+                  urlNotification:
+                    type: string
+                  expirationDate:
+                    type: string
+                  serviceDate:
+                    type: string
+                  hasClient:
+                    type: boolean
+                  updatedAt:
+                    type: string
+                  createdAt:
+                    type: string
+                  qrImage:
+                    type: string
+                  shortUrl:
+                    type: string
+                  paymentUrl:
                     type: string
               examples:
                 Ex. Response OK:
@@ -209,13 +253,73 @@ paths:
                     description: Taxi + Experiencia
                     amount: 14000
                     currency: EUR
-                    singleUse: false
+                    singleUse: true
                     reasonId: 1
+                    expirationDays: 1
+                    userId: 103ec000-703b-11e9-8aea-b7e74734087c
+                    lang: es
                     state: 1
+                    urlSuccess: 'https://mi-negocio.com/pago-ok'
+                    urlFailed: 'https://mi-negocio.com/pago-ko'
+                    urlNotification: 'https://mi-negocio.com/notificacion-pago'
+                    expirationDate: '2020-04-30T00:00:00.000Z'
+                    serviceDate: '2020-04-23T00:00:00.000Z'
+                    hasClient: false
                     updatedAt: '2019-10-23T14:29:54.628Z'
                     createdAt: '2019-10-23T14:29:54.102Z'
                     qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
                     shortUrl: 'http://bit.ly/2WbaJKS'
+                    paymentUrl: null
+                Ex. Response OK (Skip Form asking for Client Data in the Payment Flow):
+                  value:
+                    id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
+                    reference: 23u4cgvz8k23djl85
+                    concept: Gif Card - Experiencia culinaria.
+                    description: Taxi + Experiencia
+                    amount: 14000
+                    currency: EUR
+                    singleUse: true
+                    reasonId: 1
+                    expirationDays: 1
+                    userId: 103ec000-703b-11e9-8aea-b7e74734087c
+                    lang: es
+                    state: 1
+                    urlSuccess: 'https://mi-negocio.com/pago-ok'
+                    urlFailed: 'https://mi-negocio.com/pago-ko'
+                    urlNotification: 'https://mi-negocio.com/notificacion-pago'
+                    expirationDate: '2020-04-30T00:00:00.000Z'
+                    serviceDate: '2020-04-23T00:00:00.000Z'
+                    hasClient: true
+                    updatedAt: '2019-10-23T14:29:54.628Z'
+                    createdAt: '2019-10-23T14:29:54.102Z'
+                    qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
+                    shortUrl: 'http://bit.ly/2WbaJKS'
+                    paymentUrl: null
+                Ex. Response OK (Payment Link Directly):
+                  value:
+                    id: 94790650-f5a1-11e9-a5b8-8db2d78a55d6
+                    reference: 23u4cgvz8k23djl85
+                    concept: Gif Card - Experiencia culinaria.
+                    description: Taxi + Experiencia
+                    amount: 14000
+                    currency: EUR
+                    singleUse: true
+                    reasonId: 1
+                    expirationDays: 1
+                    userId: 103ec000-703b-11e9-8aea-b7e74734087c
+                    lang: es
+                    state: 1
+                    urlSuccess: 'https://mi-negocio.com/pago-ok'
+                    urlFailed: 'https://mi-negocio.com/pago-ko'
+                    urlNotification: 'https://mi-negocio.com/notificacion-pago'
+                    expirationDate: '2020-04-30T00:00:00.000Z'
+                    serviceDate: '2020-04-23T00:00:00.000Z'
+                    hasClient: true
+                    updatedAt: '2019-10-23T14:29:54.628Z'
+                    createdAt: '2019-10-23T14:29:54.102Z'
+                    qrImage: 'data:image/png;base64,iVBORw0KG {...} XoGCsAAAAABJRU5ErkJggg=='
+                    shortUrl: 'http://bit.ly/2WbaJKS'
+                    paymentUrl: 'https://api.paycomet.com/gateway/ifr-bankstore {...} pagoko'
         '401':
           description: Unauthorized
           content:
@@ -325,6 +429,7 @@ paths:
                   example: '2020-03-25'
                 directPayment:
                   type: boolean
+                  example: 'Allows to generate the payment link directly, the client, urlSuccess and urlFailed keys are required'
               required:
                 - reference
                 - concept
@@ -370,6 +475,29 @@ paths:
                     email: client@email.com
                     countryId: 1
                     termsAndConditions: true
+              Ex. Creating a Paylink (Get the Payment Link Directly):
+                value:
+                  reference: your-own-system-reference
+                  concept: test
+                  description: test
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 2
+                  expirationDays: 5
+                  lang: es
+                  urlSuccess: 'https://mi-negocio.com/pago-ok'
+                  urlFailed: 'https://mi-negocio.com/pago-ko'
+                  urlNotification: 'https://mi-negocio.com/notificacion-pago'
+                  client:
+                    name: John
+                    lastName: Doe
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: true
+                  directPayment: true
         description: |-
           #### Reasons (Payment reason ids):
           -  0 : Tourist Service
