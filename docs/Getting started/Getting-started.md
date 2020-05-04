@@ -27,6 +27,8 @@ The develop server is slept by default. Once you access the URL the server will 
 
 [Sign up for a demo account >> ](https://tropipay-dev.herokuapp.com/signup)
 
+> All SMS Validation Codes for Develop Account are *123456*
+
 > In order to use the API on a Demo account, please change the API requests URL prefix to: https://tropipay-dev.herokuapp.com/api/
 
 
