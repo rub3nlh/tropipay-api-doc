@@ -32,7 +32,19 @@ The develop server is slept by default. Once you access the URL the server will 
 > In order to use the API on a Demo account, please change the API requests URL prefix to: https://tropipay-dev.herokuapp.com/api/
 
 
-### Testing Card
+### Testing Card Redsys
+
+For OK Charges
+>
+Card Number : 4548 8120 4940 0004
+>
+Expiration: 12/20
+>
+CVV: 123
+>
+Cip Code: 123456
+
+### Testing Card Paycomet
 
 For OK Charges
 >
