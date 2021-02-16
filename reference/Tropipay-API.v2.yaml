@@ -149,7 +149,7 @@ components:
     User:
       title: User
       type: object
-      description: User MOdel
+      description: User MOdel sdsfsdfsdf
       x-examples:
         Alice Smith:
           id: 1423
