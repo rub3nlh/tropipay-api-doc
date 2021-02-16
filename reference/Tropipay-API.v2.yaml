@@ -149,10 +149,10 @@ components:
     User:
       title: User
       type: object
-      description: ''
+      description: User MOdel
       x-examples:
         Alice Smith:
-          id: 142
+          id: 1423
           firstName: Alice
           lastName: Smith
           email: alice.smith@gmail.com
