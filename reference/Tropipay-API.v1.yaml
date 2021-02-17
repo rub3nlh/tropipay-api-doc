@@ -77,7 +77,7 @@ paths:
                     error:
                       message:
                         code: 8
-                        msg: 'Wrong username or password!'
+                        msg: Wrong username or password!
       parameters: []
       requestBody:
         content:
@@ -97,7 +97,13 @@ paths:
         description: Authentication
       tags:
         - Authentication
-      description: "#### Using your Token for Authentication\nWith this endpoint you will receive a \"token\" parameter in the response. \n\nYou must use this parameter in the Header of all request you made for a Bearer authentication. \n\n> Header: { \"Authorization\" : \"Bearer {token}\" } "
+      description: |-
+        #### Using your Token for Authentication
+        With this endpoint you will receive a "token" parameter in the response. 
+
+        You must use this parameter in the Header of all request you made for a Bearer authentication. 
+
+        > Header: { "Authorization" : "Bearer {token}" } 
   /paymentcards:
     get:
       summary: Get Payment Link List
@@ -117,7 +123,10 @@ paths:
                     - id: 07bcff30-44fe-11ea-8ec4-d35783b2188a
                       reference: 2fe88rq17vak63ootcw
                       concept: Menu medio dia
-                      description: "primer \nsedd\nerer"
+                      description: |-
+                        primer 
+                        sedd
+                        erer
                       amount: 2000
                       currency: USD
                       singleUse: false
@@ -330,11 +339,113 @@ paths:
                 Invalid Token Example:
                   value:
                     error:
-                      msg: 'Failed to authenticate token!'
+                      msg: Failed to authenticate token!
                       code: 934
       tags:
         - Payment Link
-      description: "Charge to your clients or receive a remitance to your account by charge credits cards. \n\nYou will get a short URL and a QR code with the Payment Link \n\n#### Callbacks:\n\nThe result of the operation will be notified in a Callback with a POST to **urlNotification** parameter.\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n#### Callback Signature: \nAll callbacks contains the parameter signature that validate it is a verified Tropipay Callback. \nYou need check the signature of any callback for security reasons:\n\n`signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + originalCurrencyAmount )\n`\n\n#### Callback Response Examples: \n\nResponse OK\n\n```json\n{\n  status: \"OK\",\n  data: {\n    \"id\": 27376,\n    \"reference\": \"1574194435610\",\n    \"bankOrderCode\": \"1574194435610\",\n    \"provider\": 4,\n    \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n    \"bookingDate\": \"2019-11-19T20:13:55.613Z\",\n    \"days\": null,\n    \"amount\": 100000,\n    \"currency\": \"EUR\",\n    \"originalCurrencyAmount\": 100000,\n    \"destinationAmount\": 96450,\n    \"destinationCurrency\": \"EUR\",\n    \"conversionRate\": 1,\n    \"depositaccountId\": null,\n    \"state\": 5,\n    \"serviceId\": 2,\n    \"paymentcardId\": \"95aa7620-0b05-11ea-b517-dfa69b738ed5\",\n    \"expirationDate\": \"2019-11-20T08:55:00.000Z\",\n    \"movementTypeId\": 2,\n    \"balanceBefore\": null,\n    \"balanceAfter\": null,\n    \"createdAt\": \"2019-11-19T20:13:55.614Z\",\n    \"updatedAt\": \"2019-11-19T20:30:04.083Z\",\n    \"paymentcard\": {\n      \"id\": \"95aa7620-0b05-11ea-b517-dfa69b738ed5\",\n      \"reference\": \"di3khs1p0k369tj0h\",\n      \"concept\": \"concept1\",\n      \"description\": \"description1\",\n      \"amount\": 100000,\n      \"currency\": \"EUR\",\n      \"singleUse\": false,\n      \"reasonId\": 4,\n      \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n      \"qrImage\": null,\n      \"shortUrl\": null,\n      \"state\": 1,\n      \"expirationDays\": 1,\n      \"lang\": \"es\",\n      \"urlSuccess\": \"https://mi-negocio.com/pago-ok\",\n      \"urlFailed\": \"https://mi-negocio.com/pago-ko\",\n      \"urlNotification\": \"https://mi-negocio.com/notificacion-de-pago\",\n      \"createdAt\": \"2019-11-19T19:48:40.194Z\",\n      \"updatedAt\": \"2019-11-19T19:48:40.194Z\"\n    },\n    \"charges\": [\n      {\n        \"id\": 22742,\n        \"orderCode\": \"1574194435610\",\n        \"cardPan\": \"0000\",\n        \"cardExpirationDate\": \"2020-01-01T00:00:00.000Z\",\n        \"cardHolderName\": \"Antonio\",\n        \"amount\": 1000,\n        \"currency\": 978,\n        \"userId\": \"103ec000-703b-11e9-8aea-b7e74734087c\",\n        \"bookingId\": 27376,\n        \"errorReason\": \"\",\n        \"state\": 3,\n        \"serviceId\": 2,\n        \"cardCountry\": \"\",\n        \"cardBrand\": \"VISA\",\n        \"cardCategory\": \"BUSINESS\",\n        \"cardType\": \"CREDIT\",\n        \"clientIp\": \"\",\n        \"clientName\": \"Antonio\",\n        \"clientLastName\": \"Lopez\",\n        \"clientAddress\": \"calle 280\",\n        \"clientPhone\": \"5300000000\",\n        \"clientEmail\": \"user@gmail.com\",\n        \"clientTC\": \"true\",\n        \"clientCountryId\": 0,\n        \"createdAt\": \"2019-11-19T20:13:55.666Z\",\n        \"updatedAt\": \"2019-11-19T20:30:04.066Z\"\n      }\n    ]\n  }\n}\n```"
+      description: |-
+        Charge to your clients or receive a remitance to your account by charge credits cards. 
+
+        You will get a short URL and a QR code with the Payment Link 
+
+        #### Callbacks:
+
+        The result of the operation will be notified in a Callback with a POST to **urlNotification** parameter.
+
+        > Note: We are working on a WebHook structure to avoid the notification parameter.
+
+        #### Callback Signature: 
+        All callbacks contains the parameter signature that validate it is a verified Tropipay Callback. 
+        You need check the signature of any callback for security reasons:
+
+        `signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + originalCurrencyAmount )
+        `
+
+        #### Callback Response Examples: 
+
+        Response OK
+
+        ```json
+        {
+          status: "OK",
+          data: {
+            "id": 27376,
+            "reference": "1574194435610",
+            "bankOrderCode": "1574194435610",
+            "provider": 4,
+            "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+            "bookingDate": "2019-11-19T20:13:55.613Z",
+            "days": null,
+            "amount": 100000,
+            "currency": "EUR",
+            "originalCurrencyAmount": 100000,
+            "destinationAmount": 96450,
+            "destinationCurrency": "EUR",
+            "conversionRate": 1,
+            "depositaccountId": null,
+            "state": 5,
+            "serviceId": 2,
+            "paymentcardId": "95aa7620-0b05-11ea-b517-dfa69b738ed5",
+            "expirationDate": "2019-11-20T08:55:00.000Z",
+            "movementTypeId": 2,
+            "balanceBefore": null,
+            "balanceAfter": null,
+            "createdAt": "2019-11-19T20:13:55.614Z",
+            "updatedAt": "2019-11-19T20:30:04.083Z",
+            "paymentcard": {
+              "id": "95aa7620-0b05-11ea-b517-dfa69b738ed5",
+              "reference": "di3khs1p0k369tj0h",
+              "concept": "concept1",
+              "description": "description1",
+              "amount": 100000,
+              "currency": "EUR",
+              "singleUse": false,
+              "reasonId": 4,
+              "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+              "qrImage": null,
+              "shortUrl": null,
+              "state": 1,
+              "expirationDays": 1,
+              "lang": "es",
+              "urlSuccess": "https://mi-negocio.com/pago-ok",
+              "urlFailed": "https://mi-negocio.com/pago-ko",
+              "urlNotification": "https://mi-negocio.com/notificacion-de-pago",
+              "createdAt": "2019-11-19T19:48:40.194Z",
+              "updatedAt": "2019-11-19T19:48:40.194Z"
+            },
+            "charges": [
+              {
+                "id": 22742,
+                "orderCode": "1574194435610",
+                "cardPan": "0000",
+                "cardExpirationDate": "2020-01-01T00:00:00.000Z",
+                "cardHolderName": "Antonio",
+                "amount": 1000,
+                "currency": 978,
+                "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+                "bookingId": 27376,
+                "errorReason": "",
+                "state": 3,
+                "serviceId": 2,
+                "cardCountry": "",
+                "cardBrand": "VISA",
+                "cardCategory": "BUSINESS",
+                "cardType": "CREDIT",
+                "clientIp": "",
+                "clientName": "Antonio",
+                "clientLastName": "Lopez",
+                "clientAddress": "calle 280",
+                "clientPhone": "5300000000",
+                "clientEmail": "user@gmail.com",
+                "clientTC": "true",
+                "clientCountryId": 0,
+                "createdAt": "2019-11-19T20:13:55.666Z",
+                "updatedAt": "2019-11-19T20:30:04.066Z"
+              }
+            ]
+          }
+        }
+        ```
       requestBody:
         content:
           application/json:
@@ -646,9 +757,14 @@ paths:
                 Ex. KO Unauthorized:
                   value:
                     error:
-                      msg: 'Failed to authenticate token!'
+                      msg: Failed to authenticate token!
       operationId: get-booking
-      description: "List All Transactions made by User.\n\nOnly states Charged and Paid.\n\nTransactions in state New and Error are not returned. "
+      description: |-
+        List All Transactions made by User.
+
+        Only states Charged and Paid.
+
+        Transactions in state New and Error are not returned. 
       parameters:
         - schema:
             type: number
@@ -706,7 +822,19 @@ paths:
                       chargeUrl: 'https://booking.charge.url/213oieoi2132'
       tags:
         - Transactions
-      description: "### Charge an OTA Card:\nCreate a charge Url for an OTA Virtual Credit Card.\n\nYou Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.\n\n> Note:  We are working on Webhooks structures to avoiding this send URL configuration step. \n\n### How to complete the charge:\nWith the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  \n\n### Masters Ids (Providers, States, Services, MovementType): \n[Go to Masters >> >> ](./docs/Masters/Masters-Tables-Data.md)"
+      description: |-
+        ### Charge an OTA Card:
+        Create a charge Url for an OTA Virtual Credit Card.
+
+        You Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.
+
+        > Note:  We are working on Webhooks structures to avoiding this send URL configuration step. 
+
+        ### How to complete the charge:
+        With the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  
+
+        ### Masters Ids (Providers, States, Services, MovementType): 
+        [Go to Masters >> >> ](./docs/Masters/Masters-Tables-Data.md)
       parameters:
         - schema:
             type: string
@@ -832,7 +960,97 @@ paths:
                   operatorId: CU_CU_TopUp
                   notificationUrl: 'https://webhook.site/f6ce41f9-1ea2-4c58-94c4-004967f4erad'
         description: ''
-      description: "Consume a product from market. \n\nMarket product Id List: \n\n- recharge01  (AIR TIME)\n\n\nOperator Id List:\n\n{...}\n\nThe response from this endpoint is that the order has been taken.\n\n#### Callbacks: \nThe result of the operation will be notified in a Callback with a POST to **notificationUrl** parameter.\n\n> Note: We are working on a WebHook structure to avoid the notification parameter.\n\n#### Callback Signature: \nAll callbacks contains the parameter signature that validate it is a verified Tropipay Callback. \nYou need check the signature of any callback for security reasons:\n\n`signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + purchaseTarget )\n`\n\n\n#### Callback Responses Examples: \n\nResponse OK\n\n```json\n{\n  \"status\": \"OK\",\n  \"signature\": \"8f417ae204273e8bddbdf961700b62a4e27eceed110df63df3fd6e7048f248ea\",\n  \"data\": {\n    \"transaction\": {\n      \"id\": 30039,\n      \"reference\": \"TX1583416644851\",\n      \"bankOrderCode\": \"TX1583416644851\",\n      \"userId\": \"c01af560-c7f4-11e8-849a-1196b4225e29\",\n      \"amount\": -1800,\n      \"currency\": \"EUR\",\n      \"destinationAmount\": -1800,\n      \"destinationCurrency\": \"EUR\",\n      \"state\": 3,\n      \"serviceId\": 3,\n      \"movementTypeId\": 1,\n      \"createdAt\": \"2020-03-05T13:57:24.852Z\",\n      \"updatedAt\": \"2020-03-05T13:57:27.008Z\",\n      \"purchase\": {\n        \"target\": \"5352634610\"\n      }\n    },\n    \"error\": {}\n  }\n}\n```\n\nResponse KO\n\n```json\n{\n  \"status\": \"KO\",\n  \"signature\": \"8f417ae204273e8bddbdf961700b62a4e27eceed110df63df3fd6e7048f248ea\",\n  \"data\": {\n    \"transaction\": {\n      \"id\": 30039,\n      \"reference\": \"TX1583416644851\",\n      \"bankOrderCode\": \"TX1583416644851\",\n      \"userId\": \"c01af560-c7f4-11e8-849a-1196b4225e29\",\n      \"amount\": -1800,\n      \"currency\": \"EUR\",\n      \"destinationAmount\": -1800,\n      \"destinationCurrency\": \"EUR\",\n      \"state\": 4,\n      \"serviceId\": 3,\n      \"movementTypeId\": 1,\n      \"createdAt\": \"2020-03-05T13:57:24.852Z\",\n      \"updatedAt\": \"2020-03-05T13:57:27.008Z\",\n      \"purchase\": {\n        \"target\": \"5352634610\"\n      }\n    },\n    \"error\": {\n      \"code\": \"MP_006\",\n      \"msg\": \"Provider Error\"\n    }\n  }\n}\n```\n\n"
+      description: |
+        Consume a product from market. 
+
+        Market product Id List: 
+
+        - recharge01  (AIR TIME)
+
+
+        Operator Id List:
+
+        {...}
+
+        The response from this endpoint is that the order has been taken.
+
+        #### Callbacks: 
+        The result of the operation will be notified in a Callback with a POST to **notificationUrl** parameter.
+
+        > Note: We are working on a WebHook structure to avoid the notification parameter.
+
+        #### Callback Signature: 
+        All callbacks contains the parameter signature that validate it is a verified Tropipay Callback. 
+        You need check the signature of any callback for security reasons:
+
+        `signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + purchaseTarget )
+        `
+
+
+        #### Callback Responses Examples: 
+
+        Response OK
+
+        ```json
+        {
+          "status": "OK",
+          "signature": "8f417ae204273e8bddbdf961700b62a4e27eceed110df63df3fd6e7048f248ea",
+          "data": {
+            "transaction": {
+              "id": 30039,
+              "reference": "TX1583416644851",
+              "bankOrderCode": "TX1583416644851",
+              "userId": "c01af560-c7f4-11e8-849a-1196b4225e29",
+              "amount": -1800,
+              "currency": "EUR",
+              "destinationAmount": -1800,
+              "destinationCurrency": "EUR",
+              "state": 3,
+              "serviceId": 3,
+              "movementTypeId": 1,
+              "createdAt": "2020-03-05T13:57:24.852Z",
+              "updatedAt": "2020-03-05T13:57:27.008Z",
+              "purchase": {
+                "target": "5352634610"
+              }
+            },
+            "error": {}
+          }
+        }
+        ```
+
+        Response KO
+
+        ```json
+        {
+          "status": "KO",
+          "signature": "8f417ae204273e8bddbdf961700b62a4e27eceed110df63df3fd6e7048f248ea",
+          "data": {
+            "transaction": {
+              "id": 30039,
+              "reference": "TX1583416644851",
+              "bankOrderCode": "TX1583416644851",
+              "userId": "c01af560-c7f4-11e8-849a-1196b4225e29",
+              "amount": -1800,
+              "currency": "EUR",
+              "destinationAmount": -1800,
+              "destinationCurrency": "EUR",
+              "state": 4,
+              "serviceId": 3,
+              "movementTypeId": 1,
+              "createdAt": "2020-03-05T13:57:24.852Z",
+              "updatedAt": "2020-03-05T13:57:27.008Z",
+              "purchase": {
+                "target": "5352634610"
+              }
+            },
+            "error": {
+              "code": "MP_006",
+              "msg": "Provider Error"
+            }
+          }
+        }
+        ```
       parameters:
         - schema:
             type: string
@@ -881,7 +1099,7 @@ paths:
                   sendSMS: true
                   phone: '+53534555555'
                   lang: es
-  /country:
+  /countries:
     get:
       summary: Get operational Country List
       tags:
@@ -992,7 +1210,7 @@ paths:
                     limit: 20
                     offset: 0
       operationId: get-country
-      description: ''
+      description: Gives a list of valid countries with their corresponding Ids
       parameters:
         - schema:
             type: string
@@ -1016,5 +1234,6 @@ paths:
                   limit: 10
                   offset: 0
         description: ''
+    parameters: []
 components:
   schemas: {}
