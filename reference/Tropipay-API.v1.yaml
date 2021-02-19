@@ -1239,7 +1239,7 @@ paths:
     parameters: []
   /booking/payout:
     post:
-      summary: ''
+      summary: Payout Transfer
       operationId: post-booking-payout
       responses:
         '200':
@@ -1347,7 +1347,7 @@ paths:
           description: 'Bearer {your-token}'
   /booking/bulkPayout:
     post:
-      summary: ''
+      summary: Payout Multiple Transfers
       operationId: post-booking-bulkPayout
       responses:
         '200':
