@@ -1235,5 +1235,66 @@ paths:
                   offset: 0
         description: ''
     parameters: []
+  /booking/payout:
+    post:
+      summary: ''
+      operationId: post-booking-payout
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                depositaccountId:
+                  type: number
+                  description: Beneficiary account Id
+                destinationAmount:
+                  type: number
+                  description: Amount to destination (Fees not included)
+                destinationCurrency:
+                  type: string
+                  minLength: 1
+                  description: Currency to destination (EUR)
+                  default: EUR
+                  example: EUR
+                currency:
+                  type: string
+                  minLength: 1
+                  default: EUR
+                  example: EUR
+                  description: Origin Currency (EUR)
+                reasonId:
+                  type: number
+                  description: Reason Id (See Reason Master Table)
+                reasonDes:
+                  type: string
+                  description: 'If ReasonId is "Other" (9), this is the description'
+                  example: Designer
+                securityCode:
+                  type: string
+                  minLength: 1
+                  description: 2FA code for confirm operation.
+              required:
+                - depositaccountId
+                - destinationAmount
+                - destinationCurrency
+                - currency
+                - reasonId
+                - reasonDes
+                - securityCode
+            examples:
+              example-1:
+                value:
+                  depositaccountId: 53837
+                  destinationAmount: 1000
+                  destinationCurrency: EUR
+                  currency: EUR
+                  reasonId: 3
+                  reasonDes: ''
+                  securityCode: '966812'
 components:
   schemas: {}
