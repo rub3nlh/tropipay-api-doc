@@ -151,9 +151,10 @@ paths:
       responses:
         '200':
           description: |-
+            Here we have an example of a valid response for a merchant who subscribed to two events:
+            ```json
             [
                 {
-                    "id": 2,
                     "event": "user_signup",
                     "target": "email",
                     "value": "tonykssa@gmail.com",
@@ -161,7 +162,6 @@ paths:
                     "updatedAt": "2021-02-13T21:30:59.154Z"
                 },
                 {
-                    "id": 3,
                     "event": "user_login",
                     "target": "web",
                     "value": "http://localhost:4000/merchant/app/listen",
@@ -169,22 +169,38 @@ paths:
                     "updatedAt": "2021-02-13T22:43:11.243Z"
                 }
             ]
+            ```
         '500':
           description: |-
+            In case of error in the token encoding you will receive an internal error with a structure as shown below 
+            ```json
             {
                 "error": {
                     "code": "InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.",
                     "message": "Failed to authenticate token for Merchant!"
                 }
             }
+            ```
       operationId: get-api-v2-hook
       parameters:
         - schema:
             type: string
           in: header
           name: Authorization
-          description: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-      description: Endpoint for get event list hook by merchant token.
+          description: ' Bearer Base64( API_CODE : API_KEY )'
+      description: |
+        Endpoint for get event list hook by merchant. 
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer Base64( API_CODE : API_KEY )
+        ```
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your API_CODE + " : " + API_KEY including the colom symbol ( : )
 components:
   schemas:
     User:
