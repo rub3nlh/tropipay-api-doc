@@ -1294,7 +1294,9 @@ paths:
                   description: Beneficiary account Id
                 destinationAmount:
                   type: number
-                  description: Amount to destination (Fees not included)
+                  description: Amount in Cents (1 EUR -> 100) to destination (Fees not included)
+                  example: 100
+                  minimum: 1
                 destinationCurrency:
                   type: string
                   description: Currency to destination (EUR)
@@ -1411,6 +1413,7 @@ paths:
                 securityCode:
                   type: string
                   minLength: 1
+                  description: 2FA code to confirm operation.
                 payOuts:
                   type: array
                   uniqueItems: true
@@ -1420,15 +1423,20 @@ paths:
                     properties:
                       depositaccountId:
                         type: number
+                        description: Beneficiary account Id.
                       destinationAmount:
                         type: number
+                        description: Amount in Cents (1 EUR -> 100) to destination (Fees not included)
                       destinationCurrency:
                         type: string
+                        description: EUR
                       currency:
                         type: string
                         example: EUR
+                        description: EUR
                       reasonId:
                         type: number
+                        description: Reason Id number
                       reasonDes:
                         type: string
                         minLength: 1
