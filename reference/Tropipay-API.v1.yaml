@@ -1390,7 +1390,7 @@ paths:
                   value:
                     error:
                       msg: Failed to authenticate token!
-      description: 'Execute Multiple Payments from the Tropipay account to a beneficiary. '
+      description: 'Execute Multiple Payments from the Tropipay account to a beneficiary .  '
       parameters:
         - schema:
             type: string
