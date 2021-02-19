@@ -109,6 +109,7 @@ paths:
       summary: Get Payment Link List
       tags:
         - Payment Link
+        - Pay In
       responses:
         '200':
           description: OK
@@ -822,6 +823,7 @@ paths:
                       chargeUrl: 'https://booking.charge.url/213oieoi2132'
       tags:
         - Transactions
+        - Pay In
       description: |-
         ### Charge an OTA Card:
         Create a charge Url for an OTA Virtual Credit Card.
@@ -1242,6 +1244,44 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: OK
+                required:
+                  - result
+              examples:
+                example-1:
+                  value:
+                    result: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - error
+              examples:
+                Token Not valid.:
+                  value:
+                    error:
+                      msg: Failed to authenticate token!
       requestBody:
         content:
           application/json:
@@ -1257,13 +1297,11 @@ paths:
                   description: Amount to destination (Fees not included)
                 destinationCurrency:
                   type: string
-                  minLength: 1
                   description: Currency to destination (EUR)
                   default: EUR
                   example: EUR
                 currency:
                   type: string
-                  minLength: 1
                   default: EUR
                   example: EUR
                   description: Origin Currency (EUR)
@@ -1276,8 +1314,8 @@ paths:
                   example: Designer
                 securityCode:
                   type: string
-                  minLength: 1
                   description: 2FA code for confirm operation.
+                  example: '123456'
               required:
                 - depositaccountId
                 - destinationAmount
@@ -1296,5 +1334,139 @@ paths:
                   reasonId: 3
                   reasonDes: ''
                   securityCode: '966812'
+      tags:
+        - Transactions
+        - Pay Out
+      description: 'Execute a Payment from the Tropipay account to a beneficiary. '
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+  /booking/bulkPayout:
+    post:
+      summary: ''
+      operationId: post-booking-bulkPayout
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  result:
+                    type: string
+                    minLength: 1
+                required:
+                  - result
+              examples:
+                example-1:
+                  value:
+                    result: OK
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      msg:
+                        type: string
+                        minLength: 1
+                    required:
+                      - msg
+                required:
+                  - error
+              examples:
+                Invalid token:
+                  value:
+                    error:
+                      msg: Failed to authenticate token!
+      description: 'Execute Multiple Payments from the Tropipay account to a beneficiary. '
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {yout-token}'
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                securityCode:
+                  type: string
+                  minLength: 1
+                payOuts:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    type: object
+                    properties:
+                      depositaccountId:
+                        type: number
+                      destinationAmount:
+                        type: number
+                      destinationCurrency:
+                        type: string
+                      currency:
+                        type: string
+                        example: EUR
+                      reasonId:
+                        type: number
+                      reasonDes:
+                        type: string
+                        minLength: 1
+                    required:
+                      - depositaccountId
+                      - destinationAmount
+                      - destinationCurrency
+                      - currency
+                      - reasonId
+                      - reasonDes
+              required:
+                - securityCode
+                - payOuts
+            examples:
+              example-1:
+                value:
+                  securityCode: '891593'
+                  payOuts:
+                    - depositaccountId: 54723
+                      destinationAmount: 10000
+                      destinationCurrency: EUR
+                      currency: EUR
+                      reasonId: 9
+                      reasonDes: Regalo
+                    - depositaccountId: 39635
+                      destinationAmount: 500
+                      destinationCurrency: EUR
+                      currency: EUR
+                      reasonId: 2
+                      reasonDes: ''
+          application/xml:
+            schema:
+              type: object
+              properties: {}
 components:
   schemas: {}
+tags:
+  - name: Transactions
+  - name: Pay Out
+  - name: Pay In
+  - name: Payment Link
