@@ -256,6 +256,53 @@ paths:
                 "value": "https://www.merchant_domain.com/api/user/signup/listen"
           }
           ```
+  /api/v2/hook/events:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: |-
+            Here we have an example of a valid response: 
+            ```json
+            [
+              { 
+                name: 'user_signup', 
+                description: 'Event launched once an user complete registration on the TropiPay platform.' 
+              },{ 
+                name: 'payment_in_state_change', 
+                description: 'The event is fired once a user changes their status payment in entry method.' 
+              },{ 
+                name: 'payment_out_state_change', 
+                description: 'The event is fired once a user changes their status payment out entry method.' 
+              }
+            ]
+            ```
+      operationId: get-api-v2-hook-events
+      description: |
+        Endpoint for get full list of available events.
+
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer Base64( API_CODE : API_KEY )
+        ```
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+
+        ## Events 
+        Events are made up of an object with two fundamental properties *(name, description)*
+        ```json
+        { 
+            name: 'user_signup', 
+            description: 'Event launched once an user complete registration on the TropiPay platform.' 
+        }
+        ```
+        The **name** is a key element because it determines the correct operation when registering, if it is specified with the wrong value the merchant will never receive the notification. 
 components:
   schemas:
     User:
