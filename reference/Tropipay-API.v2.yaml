@@ -172,11 +172,20 @@ paths:
             ```
         '500':
           description: |-
-            In case of error in the token encoding you will receive an internal error with a structure as shown below 
+            In case of error in the token encoding you will receive an internal error with a structure as shown below: 
             ```json
             {
                 "error": {
                     "code": "InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.",
+                    "message": "Failed to authenticate token for Merchant!"
+                }
+            }
+            ```
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown below: 
+            ```json
+            {
+                "error": {
+                    "code": "OperationError: Failed to validate merchant token!",
                     "message": "Failed to authenticate token for Merchant!"
                 }
             }
