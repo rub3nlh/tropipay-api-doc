@@ -1338,7 +1338,6 @@ paths:
                   securityCode: '966812'
       tags:
         - Transactions
-        - Pay Out
       description: 'Execute a Payment from the Tropipay account to a beneficiary. '
       parameters:
         - schema:
@@ -1471,10 +1470,11 @@ paths:
             schema:
               type: object
               properties: {}
+      tags:
+        - Transactions
 components:
   schemas: {}
 tags:
   - name: Transactions
-  - name: Pay Out
   - name: Pay In
   - name: Payment Link
