@@ -235,6 +235,18 @@ paths:
       description: |
         Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
 
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer Base64( API_CODE : API_KEY )
+        ```
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+
         ## Event 
         Events are made up of an object with three fundamental properties *(event, target, value)*
 
@@ -337,7 +349,19 @@ paths:
                 }
             }
             ```
-      description: 'Endopint that allows obtaining the url to obtain the login form of the TropiPay platform. Take in mind that the login url provides a form that must be rendered in a container, we recommend the use of *IFRAME*. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. '
+      description: |-
+        Endopint that allows obtaining the url to obtain the login form of the TropiPay platform. Take in mind that the login url provides a form that must be rendered in a container, we recommend the use of *IFRAME*. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer Base64( API_CODE : API_KEY )
+        ```
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
       requestBody:
         content:
           application/json:
