@@ -326,7 +326,7 @@ paths:
 
             ```json
             {
-                "url": "https://localhost:3001/m-login/1?signature=682987&redirectType=1&extraCSS=aHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4zLjcvY3NzL2Jvb3RzdHJhcC5taW4uY3Nz&redirectUrl=aHR0cHM6Ly9nZXRib290c3RyYXAuY29tL2RvY3M="
+                "url": "https://localhost:3000/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9"
             }
             ```
         '500':
