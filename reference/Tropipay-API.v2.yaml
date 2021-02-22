@@ -154,7 +154,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Events'
+                $ref: '#/components/schemas/EventList'
               examples:
                 Example:
                   value:
@@ -496,7 +496,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EventsResponse'
+                $ref: '#/components/schemas/EventsDescription'
               examples:
                 example-1:
                   value:
@@ -713,7 +713,7 @@ components:
           value: tonykssa@gmail.com
           createdAt: '2021-02-13T21:30:59.154Z'
           updatedAt: '2021-02-13T21:30:59.154Z'
-    Events:
+    EventList:
       title: Events
       type: array
       items:
@@ -791,7 +791,7 @@ components:
       x-examples:
         example-1:
           url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
-    EventsResponse:
+    EventsDescription:
       type: array
       description: ''
       minItems: 1
