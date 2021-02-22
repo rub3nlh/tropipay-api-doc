@@ -150,38 +150,24 @@ paths:
       tags: []
       responses:
         '200':
-          description: |-
-            Here we have an example of a valid response for a merchant who subscribed to two events:
-            ```json
-            [
-                {
-                    "event": "user_signup",
-                    "target": "email",
-                    "value": "tonykssa@gmail.com",
-                    "createdAt": "2021-02-13T21:30:59.154Z",
-                    "updatedAt": "2021-02-13T21:30:59.154Z"
-                },
-                {
-                    "event": "user_login",
-                    "target": "web",
-                    "value": "http://localhost:4000/api/user/login/listen",
-                    "createdAt": "2021-02-13T22:43:11.243Z",
-                    "updatedAt": "2021-02-13T22:43:11.243Z"
-                }
-            ]
-            ```
+          description: Here we have an example of a valid response for a merchant who subscribed to two events
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/Events'
               examples:
                 example-1:
                   value:
-                    event: string
-                    target: string
-                    value: string
-                    createdAt: string
-                    updatedAt: string
+                    - event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+                      createdAt: '2021-02-13T21:30:59.154Z'
+                      updatedAt: '2021-02-13T21:30:59.154Z'
+                    - event: user_login
+                      target: web
+                      value: 'http://localhost:4000/api/user/login/listen'
+                      createdAt: '2021-02-13T22:43:11.243Z'
+                      updatedAt: '2021-02-13T22:43:11.243Z'
         '500':
           description: |-
             In case of error in the token encoding you will receive an internal error with a structure as shown below: 
@@ -495,3 +481,26 @@ components:
             value: 'http://localhost:4000/api/user/login/listen'
             createdAt: '2021-02-13T22:43:11.243Z'
             updatedAt: '2021-02-13T22:43:11.243Z'
+    ErrorResponse:
+      description: ''
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              minLength: 1
+            message:
+              type: string
+              minLength: 1
+          required:
+            - code
+            - message
+      required:
+        - error
+      x-examples:
+        example-1:
+          error:
+            code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+            message: Failed to authenticate token for Merchant!
