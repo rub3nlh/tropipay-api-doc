@@ -360,6 +360,16 @@ paths:
                 "url": "https://localhost:3000/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9"
             }
             ```
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessOptions'
+              examples:
+                example-1:
+                  value:
+                    redirectType: 0
+                    extraCSS: string
+                    redirectUrl: string
         '500':
           description: |-
             In case of error in the token encoding you will receive an internal error with a structure as shown below: 
@@ -403,8 +413,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
+              $ref: '#/components/schemas/AccessRequest'
+            examples:
+              example-1:
+                value:
+                  redirectType: 1
+                  extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+                  redirectUrl: 'https://www.merchant.com/homr'
         description: |-
           -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
              * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
@@ -413,13 +428,6 @@ paths:
           -  **extraCSS"**: The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.
 
           Here we have an example of a valid request:
-          ```json
-          {
-              "redirectType": 1,
-              "extraCSS": "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-              "redirectUrl": "https://getbootstrap.com/docs"
-          }
-          ```
       parameters:
         - schema:
             type: string
@@ -543,7 +551,7 @@ components:
           error:
             code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
             message: Failed to authenticate token for Merchant!
-    AccessOptions:
+    AccessRequest:
       description: ''
       type: object
       properties:
