@@ -305,32 +305,55 @@ paths:
       tags: []
       responses:
         '200':
-          description: |-
-            Here we have an example of a valid response: 
-            ```json
-            [
-              { 
-                name: 'user_signup', 
-                description: 'Event launched once an user complete registration on the TropiPay platform.' 
-              },{ 
-                name: 'payment_in_state_change', 
-                description: 'The event is fired once a user changes their status payment in entry method.' 
-              },{ 
-                name: 'payment_out_state_change', 
-                description: 'The event is fired once a user changes their status payment out entry method.' 
-              }
-            ]
-            ```
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                example-1:
+                  value:
+                    - name: user_signup
+                      description: Event launched once an user complete registration on the TropiPay platform.
+                    - name: payment_in_state_change
+                      description: The event is fired once a user changes their status payment in entry method.
+                    - name: payment_out_state_change
+                      description: The event is fired once a user changes their status payment out entry method.
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
       operationId: get-api-v2-hook-events
       description: |
         Endpoint for get full list of available events.
 
-
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
-          Bearer Base64( API_CODE : API_KEY )
+          Bearer YOUR_TOKEN
         ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
         an example would be:
         ```
           Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
@@ -346,6 +369,14 @@ paths:
         }
         ```
         The **name** is a key element because it determines the correct operation when registering, if it is specified with the wrong value the merchant will never receive the notification. 
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
   /api/v2/access:
     post:
       summary: ''
@@ -411,14 +442,7 @@ paths:
                   redirectType: 1
                   extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
                   redirectUrl: 'https://www.merchant.com/homr'
-        description: |-
-          -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
-             * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
-             * 2: Set communication with your container using the *window.addEventListener* and *parent.postMessage messages*.
-          -  **redirectUrl**: Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
-          -  **extraCSS"**: The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.
-
-          Here we have an example of a valid request:
+        description: 'Here we have an example of a valid request:'
       parameters:
         - schema:
             type: string
@@ -580,3 +604,28 @@ components:
       x-examples:
         example-1:
           url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
+    EventsResponse:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: object
+        required:
+          - name
+          - description
+        properties:
+          name:
+            type: string
+            minLength: 1
+          description:
+            type: string
+            minLength: 1
+      x-examples:
+        example-1:
+          - name: user_signup
+            description: Event launched once an user complete registration on the TropiPay platform.
+          - name: payment_in_state_change
+            description: The event is fired once a user changes their status payment in entry method.
+          - name: payment_out_state_change
+            description: The event is fired once a user changes their status payment out entry method.
