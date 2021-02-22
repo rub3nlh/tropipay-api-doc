@@ -170,6 +170,18 @@ paths:
                 }
             ]
             ```
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+              examples:
+                example-1:
+                  value:
+                    event: string
+                    target: string
+                    value: string
+                    createdAt: string
+                    updatedAt: string
         '500':
           description: |-
             In case of error in the token encoding you will receive an internal error with a structure as shown below: 
@@ -194,17 +206,25 @@ paths:
       parameters:
         - schema:
             type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
           in: header
           name: Authorization
-          description: ' Bearer Base64( API_CODE : API_KEY )'
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
       description: |
         Endpoint for get event list hook by merchant. 
 
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
           Bearer Base64( API_CODE : API_KEY )
         ```
+
         an example would be:
         ```
           Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
@@ -426,3 +446,52 @@ components:
         - lastName
         - email
         - emailVerified
+    Event:
+      description: ''
+      type: object
+      properties:
+        event:
+          type: string
+          minLength: 1
+        target:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+      required:
+        - event
+        - target
+        - value
+        - createdAt
+        - updatedAt
+      x-examples:
+        example-1:
+          event: string
+          target: string
+          value: string
+          createdAt: string
+          updatedAt: string
+    Events:
+      title: Events
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
+      x-examples:
+        example-1:
+          - event: user_signup
+            target: email
+            value: tonykssa@gmail.com
+            createdAt: '2021-02-13T21:30:59.154Z'
+            updatedAt: '2021-02-13T21:30:59.154Z'
+          - event: user_login
+            target: web
+            value: 'http://localhost:4000/api/user/login/listen'
+            createdAt: '2021-02-13T22:43:11.243Z'
+            updatedAt: '2021-02-13T22:43:11.243Z'
