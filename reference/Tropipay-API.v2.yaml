@@ -237,12 +237,40 @@ paths:
       operationId: post-api-v2-hook
       responses:
         '200':
-          description: OK
+          description: 'Here we have an example of a valid response:'
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                example-1:
+                  value:
+                    action: insert
+                    status: success
+                    details:
+                      event: user_signup
+                      target: web
+                      value: 'https://www.merchant_domain.com/api/user/signup/listen'
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                ' Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
       description: |
         Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
 
@@ -299,6 +327,85 @@ paths:
           description: 'Bearer {your-token}'
           name: Authentication
           required: true
+    put:
+      summary: ''
+      operationId: put-api-v2-hook
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                example-1:
+                  value:
+                    action: update
+                    status: success
+                    details:
+                      event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      description: |
+        Endpoint allows a merchant update event subscription , specifying the options to receive information at the time it is trigger.Take into account the value of the name or denomination of the event cannot be modified, in case it is required to change this field, it is recommended to delete it and create a new subscription.
+
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: 'Authorization    '
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+            examples:
+              example-1:
+                value:
+                  event: user_signup
+                  target: email
+                  value: tonykssa@gmail.com
+        description: ''
   /api/v2/hook/events:
     get:
       summary: Your GET endpoint
@@ -629,3 +736,26 @@ components:
             description: The event is fired once a user changes their status payment in entry method.
           - name: payment_out_state_change
             description: The event is fired once a user changes their status payment out entry method.
+    EventResponse:
+      description: ''
+      type: object
+      properties:
+        action:
+          type: string
+          minLength: 1
+        status:
+          type: string
+          minLength: 1
+        details:
+          type: object
+          properties: {}
+          required: []
+      required:
+        - action
+        - status
+        - details
+      x-examples:
+        example-1:
+          action: update
+          status: success
+          details: {}
