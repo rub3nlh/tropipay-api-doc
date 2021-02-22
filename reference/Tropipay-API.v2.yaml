@@ -238,6 +238,11 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       description: |
         Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
 
@@ -245,8 +250,14 @@ paths:
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
           Bearer Base64( API_CODE : API_KEY )
         ```
+
         an example would be:
         ```
           Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
@@ -255,6 +266,15 @@ paths:
 
         ## Event 
         Events are made up of an object with three fundamental properties *(event, target, value)*
+        ```json
+        {
+              "event": "user_signup",
+              "target": "email",
+              "value": "tonykssa@gmail.com",
+              "createdAt": "2021-02-13T21:30:59.154Z",
+              "updatedAt": "2021-02-13T21:30:59.154Z"
+        }
+        ```
 
         * **event:** String that represents the name of the event, you must select from the list of available events, otherwise it will not produce an error but it will not be executed. For get full list of available events see endpoint **GET /api/v2/hook/events**.
         * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
@@ -263,17 +283,22 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties: {}
-        description: |-
-          Here we have an example of a valid params request:
-          ```json
-          {
-                "event": "user_signup",
-                "target": "web",
-                "value": "https://www.merchant_domain.com/api/user/signup/listen"
-          }
-          ```
+              $ref: '#/components/schemas/Event'
+            examples:
+              example-1:
+                value:
+                  event: user_signup
+                  target: web
+                  value: 'https://www.merchant_domain.com/api/user/signup/listen'
+        description: 'Here we have an example of a valid params request:'
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          description: 'Bearer {your-token}'
+          name: Authentication
+          required: true
   /api/v2/hook/events:
     get:
       summary: Your GET endpoint
