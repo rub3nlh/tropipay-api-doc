@@ -208,7 +208,7 @@ paths:
 
         YOUR_TOKEN is formed from: 
         ```
-          Bearer Base64( API_CODE : API_KEY )
+          Base64( API_CODE : API_KEY )
         ```
 
         an example would be:
@@ -255,7 +255,7 @@ paths:
 
         YOUR_TOKEN is formed from: 
         ```
-          Bearer Base64( API_CODE : API_KEY )
+          Base64( API_CODE : API_KEY )
         ```
 
         an example would be:
@@ -386,8 +386,14 @@ paths:
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
-          Bearer Base64( API_CODE : API_KEY )
+          Bearer YOUR_TOKEN
         ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
         an example would be:
         ```
           Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
@@ -414,6 +420,14 @@ paths:
               "redirectUrl": "https://getbootstrap.com/docs"
           }
           ```
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          description: 'Bearer {your-token}'
+          name: Authorization
+          required: true
 components:
   schemas:
     User:
@@ -529,3 +543,24 @@ components:
           error:
             code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
             message: Failed to authenticate token for Merchant!
+    AccessOptions:
+      description: ''
+      type: object
+      properties:
+        redirectType:
+          type: number
+        extraCSS:
+          type: string
+          minLength: 1
+        redirectUrl:
+          type: string
+          minLength: 1
+      required:
+        - redirectType
+        - extraCSS
+        - redirectUrl
+      x-examples:
+        example-1:
+          redirectType: 1
+          extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+          redirectUrl: 'https://my.merchant.com/home'
