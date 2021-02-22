@@ -473,11 +473,11 @@ components:
         - updatedAt
       x-examples:
         example-1:
-          event: string
-          target: string
-          value: string
-          createdAt: string
-          updatedAt: string
+          event: user_signup
+          target: email
+          value: tonykssa@gmail.com
+          createdAt: '2021-02-13T21:30:59.154Z'
+          updatedAt: '2021-02-13T21:30:59.154Z'
     Events:
       title: Events
       type: array
