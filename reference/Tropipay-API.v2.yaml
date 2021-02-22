@@ -761,24 +761,30 @@ components:
         -  **redirectUrl**: Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
         -  **extraCSS"**: The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.
       type: object
-      properties:
-        redirectType:
-          type: number
-        extraCSS:
-          type: string
-          minLength: 1
-        redirectUrl:
-          type: string
-          minLength: 1
-      required:
-        - redirectType
-        - extraCSS
-        - redirectUrl
       x-examples:
         example-1:
           redirectType: 1
           extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
           redirectUrl: 'https://my.merchant.com/home'
+      properties:
+        redirectType:
+          type: number
+          description: |-
+            the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
+               * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
+               * 2: Set communication with your container using the *window.addEventListener* and *parent.postMessage messages*.
+        extraCSS:
+          type: string
+          minLength: 1
+          description: 'The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.'
+        redirectUrl:
+          type: string
+          minLength: 1
+          description: 'Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.'
+      required:
+        - redirectType
+        - extraCSS
+        - redirectUrl
     AccessResponse:
       description: ''
       type: object
