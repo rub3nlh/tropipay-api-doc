@@ -156,7 +156,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Events'
               examples:
-                example-1:
+                Example:
                   value:
                     - event: user_signup
                       target: email
@@ -170,24 +170,24 @@ paths:
                       updatedAt: '2021-02-13T22:43:11.243Z'
         '500':
           description: |-
-            In case of error in the token encoding you will receive an internal error with a structure as shown below: 
-            ```json
-            {
-                "error": {
-                    "code": "InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.",
-                    "message": "Failed to authenticate token for Merchant!"
-                }
-            }
-            ```
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown below: 
-            ```json
-            {
-                "error": {
-                    "code": "OperationError: Failed to validate merchant token!",
-                    "message": "Failed to authenticate token for Merchant!"
-                }
-            }
-            ```
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
       operationId: get-api-v2-hook
       parameters:
         - schema:
