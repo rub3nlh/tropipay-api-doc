@@ -240,6 +240,8 @@ paths:
           description: 'Bearer {your-token}'
           name: Authentication
           required: true
+      tags:
+        - Hooks
     put:
       summary: ''
       operationId: put-api-v2-hook
