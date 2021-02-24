@@ -690,6 +690,91 @@ paths:
             ```
       operationId: get-api-countries
       description: Endpoint that allows obtaining the list of countries
+  /api/countries/destinations:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: |-
+            ```
+            {
+                "count": 48,
+                "rows": [
+                    {
+                        "id": 5,
+                        "name": "Alemania",
+                        "sepaZone": true,
+                        "state": 1,
+                        "slug": "DE",
+                        "callingCode": 49,
+                        "isDestination": true,
+                        "createdAt": "2019-05-14T09:37:40.349Z",
+                        "updatedAt": "2019-05-14T09:37:40.349Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 22,
+                                "countryDestinationId": 5,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:56:59.669Z",
+                                "updatedAt": "2020-07-31T09:56:59.669Z"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 41,
+                        "name": "Andorra",
+                        "sepaZone": true,
+                        "state": 1,
+                        "slug": "AD",
+                        "callingCode": 376,
+                        "isDestination": true,
+                        "createdAt": "2019-09-03T15:22:26.411Z",
+                        "updatedAt": "2019-10-18T10:21:13.673Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 30,
+                                "countryDestinationId": 41,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:57:20.913Z",
+                                "updatedAt": "2020-07-31T09:57:20.913Z"
+                            }
+                        ]
+                    },
+                    ...
+                    {
+                        "id": 31,
+                        "name": "Uruguay",
+                        "sepaZone": false,
+                        "state": 1,
+                        "slug": "UY",
+                        "callingCode": 598,
+                        "isDestination": true,
+                        "createdAt": "2019-07-24T10:22:09.286Z",
+                        "updatedAt": "2019-07-24T10:22:09.286Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 9,
+                                "countryDestinationId": 31,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:56:38.686Z",
+                                "updatedAt": "2020-07-31T09:56:38.686Z"
+                            }
+                        ]
+                    }
+                ],
+                "limit": 300,
+                "offset": 0
+            }
+            ```
+      operationId: get-api-countries-destinations
+      description: Endpoint that allows obtaining the list of countries destinations
 components:
   schemas:
     User:
