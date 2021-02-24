@@ -147,7 +147,8 @@ paths:
   /api/v2/hook:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Hooks
       responses:
         '200':
           description: Here we have an example of a valid response for a merchant who subscribed to two events
@@ -489,7 +490,6 @@ paths:
   /api/v2/hook/events:
     get:
       summary: Your GET endpoint
-      tags: []
       responses:
         '200':
           description: 'Here we have an example of a valid response: '
@@ -564,6 +564,8 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
+      tags:
+        - Hooks
   /api/v2/access:
     post:
       summary: ''
@@ -638,10 +640,13 @@ paths:
           description: 'Bearer {your-token}'
           name: Authorization
           required: true
+      tags:
+        - Authentication
   /api/countries:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: |-
@@ -693,7 +698,8 @@ paths:
   /api/countries/destinations:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Countries
       responses:
         '200':
           description: |-
@@ -778,7 +784,8 @@ paths:
   /api/occupations:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Occupations
       responses:
         '200':
           description: |-
