@@ -4,7 +4,8 @@ info:
   version: '2.0'
   description: Tropipay API V2.0
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'https://tropipay-dev.herokuapp.com/api/v2'
+    description: Develop
 paths:
   '/users/{userId}':
     parameters:
@@ -144,7 +145,7 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
-  /api/v2/hook:
+  /hook:
     get:
       summary: Your GET endpoint
       tags:
@@ -487,7 +488,8 @@ paths:
                 value:
                   event: user_signup
         description: ''
-  /api/v2/hook/events:
+    parameters: []
+  /hook/events:
     get:
       summary: Your GET endpoint
       responses:
@@ -566,7 +568,8 @@ paths:
           required: true
       tags:
         - Hooks
-  /api/v2/access:
+    parameters: []
+  /access:
     post:
       summary: ''
       operationId: post-api-v2-access
@@ -642,7 +645,8 @@ paths:
           required: true
       tags:
         - Authentication
-  /api/countries:
+    parameters: []
+  /countries:
     get:
       summary: Your GET endpoint
       tags:
@@ -695,7 +699,8 @@ paths:
             ```
       operationId: get-api-countries
       description: Endpoint that allows obtaining the list of countries
-  /api/countries/destinations:
+    parameters: []
+  /countries/destinations:
     get:
       summary: Your GET endpoint
       tags:
@@ -781,7 +786,8 @@ paths:
             ```
       operationId: get-api-countries-destinations
       description: Endpoint that allows obtaining the list of countries destinations
-  /api/occupations:
+    parameters: []
+  /occupations:
     get:
       summary: Your GET endpoint
       tags:
@@ -828,6 +834,7 @@ paths:
             ```
       operationId: get-api-occupations
       description: Endpoint that allows obtaining the list of occupations
+    parameters: []
 components:
   schemas:
     User:
