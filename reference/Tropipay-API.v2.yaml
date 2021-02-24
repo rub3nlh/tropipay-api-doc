@@ -145,6 +145,93 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
   /api/v2/hook:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Here we have an example of a valid response for a merchant who subscribed to two events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+              examples:
+                Example:
+                  value:
+                    - event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+                      createdAt: '2021-02-13T21:30:59.154Z'
+                      updatedAt: '2021-02-13T21:30:59.154Z'
+                    - event: user_login
+                      target: web
+                      value: 'http://localhost:4000/api/user/login/listen'
+                      createdAt: '2021-02-13T22:43:11.243Z'
+                      updatedAt: '2021-02-13T22:43:11.243Z'
+        '500':
+          description: |-
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      operationId: get-api-v2-hook
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
+      description: |
+        Endpoint for get event list hook by merchant. 
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+
+        ## Event 
+        Events are made up of an object with three fundamental properties *(event, target, value)*
+        ```json
+        {
+              "event": "user_signup",
+              "target": "email",
+              "value": "tonykssa@gmail.com",
+              "createdAt": "2021-02-13T21:30:59.154Z",
+              "updatedAt": "2021-02-13T21:30:59.154Z"
+        }
+        ```
+
+        * **event:** String that represents the name of the event, you must select from the list of available events, otherwise it will not produce an error but it will not be executed. For get full list of available events see endpoint **GET /api/v2/hook/events**.
+        * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
+        * **value:** String that represents the value depending on the type of selected event determined by the 'target' property, for example if the selected 'target' is email the value would be an email address, likewise if the selected 'target' is 'web' the expected value corresponds to a url that receives information through the HTTP POST method. 
     post:
       summary: ''
       operationId: post-api-v2-hook
@@ -240,8 +327,6 @@ paths:
           description: 'Bearer {your-token}'
           name: Authentication
           required: true
-      tags:
-        - Hooks
     put:
       summary: ''
       operationId: put-api-v2-hook
@@ -404,6 +489,7 @@ paths:
   /api/v2/hook/events:
     get:
       summary: Your GET endpoint
+      tags: []
       responses:
         '200':
           description: 'Here we have an example of a valid response: '
@@ -478,8 +564,6 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
-      tags:
-        - Hooks
   /api/v2/access:
     post:
       summary: ''
@@ -554,60 +638,10 @@ paths:
           description: 'Bearer {your-token}'
           name: Authorization
           required: true
-      tags:
-        - Authentication
-  /api/v2/occupations:
+  /api/countries:
     get:
       summary: Your GET endpoint
-      tags:
-        - Occupation
-      responses:
-        '200':
-          description: |-
-            ```
-            {
-                "count": 29,
-                "rows": [
-                    {
-                        "id": 15,
-                        "name": "Administrativo/a",
-                        "description": null,
-                        "code": "15",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.228Z",
-                        "updatedAt": "2019-09-03T15:22:26.228Z"
-                    },
-                    {
-                        "id": 4,
-                        "name": "Agricultura",
-                        "description": null,
-                        "code": "2",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.218Z",
-                        "updatedAt": "2019-09-03T15:22:26.218Z"
-                    },
-                    ...
-                    {
-                        "id": 28,
-                        "name": "Transportista",
-                        "description": null,
-                        "code": "29",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.236Z",
-                        "updatedAt": "2019-09-03T15:22:26.236Z"
-                    }
-                ],
-                "limit": 100,
-                "offset": 0
-            }
-            ```
-      operationId: get-api-v2-occupations
-      description: Endpoint that returns all occupations
-  /api/v2/countries:
-    get:
-      summary: Your GET endpoint
-      tags:
-        - Country
+      tags: []
       responses:
         '200':
           description: |-
@@ -654,94 +688,8 @@ paths:
                 "offset": 0
             }
             ```
-      operationId: get-api-v2-countries
-      description: Endpoint that returns all countries
-  /api/v2/countries/destinations:
-    get:
-      summary: Your GET endpoint
-      responses:
-        '200':
-          description: |-
-            ```
-            {
-                "count": 48,
-                "rows": [
-                    {
-                        "id": 5,
-                        "name": "Alemania",
-                        "sepaZone": true,
-                        "state": 1,
-                        "slug": "DE",
-                        "callingCode": 49,
-                        "isDestination": true,
-                        "createdAt": "2019-05-14T09:37:40.349Z",
-                        "updatedAt": "2019-05-14T09:37:40.349Z",
-                        "countryPaymentTypes": [
-                            {
-                                "id": 22,
-                                "countryDestinationId": 5,
-                                "paymentTypeId": 2,
-                                "paymentType": "Depósito",
-                                "active": true,
-                                "createdAt": "2020-07-31T09:56:59.669Z",
-                                "updatedAt": "2020-07-31T09:56:59.669Z"
-                            }
-                        ]
-                    },
-                    {
-                        "id": 41,
-                        "name": "Andorra",
-                        "sepaZone": true,
-                        "state": 1,
-                        "slug": "AD",
-                        "callingCode": 376,
-                        "isDestination": true,
-                        "createdAt": "2019-09-03T15:22:26.411Z",
-                        "updatedAt": "2019-10-18T10:21:13.673Z",
-                        "countryPaymentTypes": [
-                            {
-                                "id": 30,
-                                "countryDestinationId": 41,
-                                "paymentTypeId": 2,
-                                "paymentType": "Depósito",
-                                "active": true,
-                                "createdAt": "2020-07-31T09:57:20.913Z",
-                                "updatedAt": "2020-07-31T09:57:20.913Z"
-                            }
-                        ]
-                    },
-                    ...
-                    {
-                        "id": 31,
-                        "name": "Uruguay",
-                        "sepaZone": false,
-                        "state": 1,
-                        "slug": "UY",
-                        "callingCode": 598,
-                        "isDestination": true,
-                        "createdAt": "2019-07-24T10:22:09.286Z",
-                        "updatedAt": "2019-07-24T10:22:09.286Z",
-                        "countryPaymentTypes": [
-                            {
-                                "id": 9,
-                                "countryDestinationId": 31,
-                                "paymentTypeId": 2,
-                                "paymentType": "Depósito",
-                                "active": true,
-                                "createdAt": "2020-07-31T09:56:38.686Z",
-                                "updatedAt": "2020-07-31T09:56:38.686Z"
-                            }
-                        ]
-                    }
-                ],
-                "limit": 300,
-                "offset": 0
-            }
-            ```
-      operationId: get-api-v2-countries-destinations
-      tags:
-        - Country
-      description: Endpoint that returns all destination countries
+      operationId: get-api-countries
+      description: Endpoint that allows obtaining the list of countries
 components:
   schemas:
     User:
@@ -949,6 +897,3 @@ components:
           action: update
           status: success
           details: {}
-tags:
-  - name: Hooks
-  - name: Authentication
