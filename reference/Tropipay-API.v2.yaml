@@ -775,6 +775,52 @@ paths:
             ```
       operationId: get-api-countries-destinations
       description: Endpoint that allows obtaining the list of countries destinations
+  /api/occupations:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: |-
+            ```
+            {
+                "count": 29,
+                "rows": [
+                    {
+                        "id": 15,
+                        "name": "Administrativo/a",
+                        "description": null,
+                        "code": "15",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.228Z",
+                        "updatedAt": "2019-09-03T15:22:26.228Z"
+                    },
+                    {
+                        "id": 4,
+                        "name": "Agricultura",
+                        "description": null,
+                        "code": "2",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.218Z",
+                        "updatedAt": "2019-09-03T15:22:26.218Z"
+                    },
+                    ...
+                    {
+                        "id": 28,
+                        "name": "Transportista",
+                        "description": null,
+                        "code": "29",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.236Z",
+                        "updatedAt": "2019-09-03T15:22:26.236Z"
+                    }
+                ],
+                "limit": 100,
+                "offset": 0
+            }
+            ```
+      operationId: get-api-occupations
+      description: Endpoint that allows obtaining the list of occupations
 components:
   schemas:
     User:
