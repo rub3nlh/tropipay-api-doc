@@ -834,7 +834,7 @@ paths:
             ```
       operationId: get-api-occupations
       description: Endpoint that allows obtaining the list of occupations
-  api/v2/access/signup:
+  /access/signup:
     post:
       summary: User SignUp
       operationId: post-access-signup
