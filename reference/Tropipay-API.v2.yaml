@@ -1412,14 +1412,14 @@ paths:
                 - paymentType
   '/depositaccounts/:id':
     get:
-      summary: Your GET endpoint
+      summary: Get Deposit Account information
       tags: []
       responses: {}
       operationId: 'get-depositaccounts-:id'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     put:
-      summary: ''
+      summary: Update Deposit Account information
       operationId: 'put-depositaccounts-:id'
       responses:
         '200':
@@ -1427,7 +1427,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     delete:
-      summary: ''
+      summary: Delete Deposit Account
       operationId: 'delete-depositaccounts-:id'
       responses:
         '200':
