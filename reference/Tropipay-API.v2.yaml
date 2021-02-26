@@ -844,7 +844,7 @@ paths:
             {
                 "user": "66291db0-77a2-11eb-a197-a1853f6310fa"
             }
-      description: This endpoint allow you to add a new user to the system
+      description: This endpoint allows you to add a new user to the system
       requestBody:
         content:
           application/json:
@@ -943,10 +943,11 @@ paths:
                 - validationCode
         description: |-
           To create a new user in the system, you have to make a POST with all mandatory fields.
-          ### warning
-          Before doing this request make sure to verify user email address by hitting 
-          ```/api/v2/access/sendEmailCode```
-          to get validationToken
+          <!-- theme: warning -->
+          >### warning
+          >Before doing this request make sure to verify user email address by [sending email code]( 
+          >Tropipay-API.v2.yaml/paths/~1access~1sendEmailCode)
+          >to get validationToken
       parameters:
         - schema:
             type: string
@@ -1206,134 +1207,7 @@ paths:
       operationId: post-depositaccounts
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: ''
-                type: object
-                properties:
-                  accountNumber:
-                    type: string
-                    minLength: 1
-                  alias:
-                    type: string
-                    minLength: 1
-                  swift:
-                    type: string
-                    minLength: 1
-                  type:
-                    type: number
-                  country: {}
-                  firstName:
-                    type: string
-                    minLength: 1
-                  userId:
-                    type: string
-                    minLength: 1
-                  countryDestinationId:
-                    type: number
-                  lastName:
-                    type: string
-                    minLength: 1
-                  secondLastName:
-                    type: string
-                    minLength: 1
-                  documentNumber:
-                    type: string
-                    minLength: 1
-                  userRelationTypeId:
-                    type: number
-                  city:
-                    type: string
-                    minLength: 1
-                  postalCode:
-                    type: number
-                  address:
-                    type: string
-                    minLength: 1
-                  phone:
-                    type: string
-                    minLength: 1
-                  checked:
-                    type: boolean
-                  province:
-                    type: string
-                    minLength: 1
-                  beneficiaryType:
-                    type: number
-                  relatedUserId: {}
-                  currency:
-                    type: string
-                    minLength: 1
-                  correspondent: {}
-                  location: {}
-                  office: {}
-                  officeValue: {}
-                  paymentType:
-                    type: number
-                  verified: {}
-                  documentTypeId: {}
-                  documentExpirationDate: {}
-                required:
-                  - accountNumber
-                  - alias
-                  - swift
-                  - type
-                  - firstName
-                  - userId
-                  - countryDestinationId
-                  - lastName
-                  - secondLastName
-                  - documentNumber
-                  - userRelationTypeId
-                  - city
-                  - postalCode
-                  - address
-                  - phone
-                  - checked
-                  - province
-                  - beneficiaryType
-                  - currency
-                  - paymentType
-              examples:
-                Example:
-                  value:
-                    id: 45461
-                    accountNumber: 9111 1234 5678 9012
-                    alias: Joe Account
-                    swift: BSOBUSHHXXX
-                    type: 3
-                    country: null
-                    firstName: John
-                    default: null
-                    state: 1
-                    userId: b168e810-e0bb-11ea-8b91-bc41f597fbe4
-                    countryDestinationId: 1
-                    lastName: Doe
-                    documentNumber: '831108111111'
-                    userRelationTypeId: 4
-                    city: Barcelona
-                    postalCode: 11300
-                    address: '110, Some Street'
-                    phone: '+3412341245'
-                    checked: true
-                    province: Cataluña
-                    beneficiaryType: 2
-                    relatedUserId: null
-                    currency: USD
-                    correspondent: null
-                    location: null
-                    office: null
-                    officeValue: null
-                    paymentType: 2
-                    paymentEntityBeneficiaryId: 11111
-                    paymentEntityAccountId: 22222
-                    verified: null
-                    documentTypeId: null
-                    documentExpirationDate: null
-                    createdAt: '2020-11-27T02:43:47.108Z'
-                    updatedAt: '2021-02-11T22:41:32.518Z'
+          $ref: '#/components/responses/depositAccount'
       description: Adds a new beneficiary to logged user.
       parameters:
         - in: unknown
@@ -1414,7 +1288,9 @@ paths:
     get:
       summary: Get Deposit Account information
       tags: []
-      responses: {}
+      responses:
+        '200':
+          $ref: '#/components/responses/depositAccount'
       operationId: 'get-depositaccounts-:id'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
@@ -1423,7 +1299,7 @@ paths:
       operationId: 'put-depositaccounts-:id'
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/depositAccount'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     delete:
@@ -1431,7 +1307,7 @@ paths:
       operationId: 'delete-depositaccounts-:id'
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/depositAccount'
       description: Deletes the beneficiary indicated by id
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
@@ -1661,3 +1537,148 @@ components:
       schema:
         type: string
       description: 'Bearer {your-token}'
+  responses:
+    depositAccount:
+      description: This is the entire DepositAccount object stored
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              id:
+                type: number
+              accountNumber:
+                type: string
+                minLength: 1
+              alias:
+                type: string
+                minLength: 1
+              swift:
+                type: string
+                minLength: 1
+              type:
+                type: number
+              country: {}
+              firstName:
+                type: string
+                minLength: 1
+              default: {}
+              state:
+                type: number
+              userId:
+                type: string
+                minLength: 1
+              countryDestinationId:
+                type: number
+              lastName:
+                type: string
+                minLength: 1
+              documentNumber:
+                type: string
+                minLength: 1
+              userRelationTypeId:
+                type: number
+              city:
+                type: string
+                minLength: 1
+              postalCode:
+                type: number
+              address:
+                type: string
+                minLength: 1
+              phone:
+                type: string
+                minLength: 1
+              checked:
+                type: boolean
+              province:
+                type: string
+                minLength: 1
+              beneficiaryType:
+                type: number
+              relatedUserId: {}
+              currency:
+                type: string
+                minLength: 1
+              correspondent: {}
+              location: {}
+              office: {}
+              officeValue: {}
+              paymentType:
+                type: number
+              paymentEntityBeneficiaryId:
+                type: number
+              paymentEntityAccountId:
+                type: number
+              verified: {}
+              documentTypeId: {}
+              documentExpirationDate: {}
+              createdAt:
+                type: string
+                minLength: 1
+              updatedAt:
+                type: string
+                minLength: 1
+            required:
+              - id
+              - accountNumber
+              - alias
+              - type
+              - state
+              - userId
+              - countryDestinationId
+              - lastName
+              - documentNumber
+              - userRelationTypeId
+              - city
+              - postalCode
+              - address
+              - phone
+              - checked
+              - province
+              - beneficiaryType
+              - currency
+              - paymentType
+              - paymentEntityBeneficiaryId
+              - paymentEntityAccountId
+              - createdAt
+              - updatedAt
+          examples:
+            Example:
+              value:
+                id: 45461
+                accountNumber: 9111 1234 5678 9012
+                alias: Joe Account
+                swift: BSOBUSHHXXX
+                type: 3
+                country: null
+                firstName: John
+                default: null
+                state: 1
+                userId: b168e810-e0bb-11ea-8b91-bc41f597fbe4
+                countryDestinationId: 1
+                lastName: Doe
+                documentNumber: '831108111111'
+                userRelationTypeId: 4
+                city: Barcelona
+                postalCode: 11300
+                address: '110, Some Street'
+                phone: '+3412341245'
+                checked: true
+                province: Cataluña
+                beneficiaryType: 2
+                relatedUserId: null
+                currency: USD
+                correspondent: null
+                location: null
+                office: null
+                officeValue: null
+                paymentType: 2
+                paymentEntityBeneficiaryId: 11111
+                paymentEntityAccountId: 22222
+                verified: null
+                documentTypeId: null
+                documentExpirationDate: null
+                createdAt: '2020-11-27T02:43:47.108Z'
+                updatedAt: '2021-02-11T22:41:32.518Z'
