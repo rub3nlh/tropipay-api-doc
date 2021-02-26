@@ -997,8 +997,9 @@ paths:
         - Authentication
   /depositaccounts:
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: Deposit Accounts
+      tags:
+        - DepositAccounts
       responses:
         '200':
           description: OK
@@ -1015,32 +1016,7 @@ paths:
                     uniqueItems: true
                     minItems: 1
                     items:
-                      required:
-                        - id
-                        - accountNumber
-                        - alias
-                        - swift
-                        - type
-                        - firstName
-                        - state
-                        - userId
-                        - countryDestinationId
-                        - lastName
-                        - documentNumber
-                        - userRelationTypeId
-                        - city
-                        - postalCode
-                        - address
-                        - phone
-                        - checked
-                        - province
-                        - beneficiaryType
-                        - currency
-                        - paymentType
-                        - paymentEntityBeneficiaryId
-                        - paymentEntityAccountId
-                        - createdAt
-                        - updatedAt
+                      type: object
                       properties:
                         id:
                           type: number
@@ -1053,12 +1029,14 @@ paths:
                         swift:
                           type: string
                           minLength: 1
+                          description: SWIFT code of destination account. Ignored when beneficiaryType == 1
                         type:
                           type: number
                         country: {}
                         firstName:
                           type: string
                           minLength: 1
+                          description: Beneficiary Name. Ignored when beneficiaryType == 1
                         default: {}
                         state:
                           type: number
@@ -1070,6 +1048,7 @@ paths:
                         lastName:
                           type: string
                           minLength: 1
+                          description: Beneficiary LastName. Ignored when beneficiaryType == 1
                         documentNumber:
                           type: string
                           minLength: 1
@@ -1116,6 +1095,29 @@ paths:
                         updatedAt:
                           type: string
                           minLength: 1
+                      required:
+                        - id
+                        - accountNumber
+                        - alias
+                        - type
+                        - state
+                        - userId
+                        - countryDestinationId
+                        - documentNumber
+                        - userRelationTypeId
+                        - city
+                        - postalCode
+                        - address
+                        - phone
+                        - checked
+                        - province
+                        - beneficiaryType
+                        - currency
+                        - paymentType
+                        - paymentEntityBeneficiaryId
+                        - paymentEntityAccountId
+                        - createdAt
+                        - updatedAt
                 required:
                   - count
                   - rows
@@ -1201,7 +1203,7 @@ paths:
             type: string
           in: header
           name: Authorization
-          description: Bearer
+          description: 'Bearer {your-token}'
 components:
   schemas:
     User:
