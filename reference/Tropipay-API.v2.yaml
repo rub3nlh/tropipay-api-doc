@@ -1199,12 +1199,8 @@ paths:
       operationId: get-depositaccounts
       description: 'Returns the list of beneficiaries (depositAccounts) of logged user. Beneficiaries can be active (status: 0) or inactive (status: 1) '
       parameters:
-        - schema:
-            type: string
-          in: header
-          name: Authorization
-          description: 'Bearer {your-token}'
-          required: true
+        - in: unknown
+        - $ref: '#/components/parameters/User-Authorization-Token'
     post:
       summary: ''
       operationId: post-depositaccounts
@@ -1340,12 +1336,8 @@ paths:
                     updatedAt: '2021-02-11T22:41:32.518Z'
       description: Adds a new beneficiary to logged user.
       parameters:
-        - schema:
-            type: string
-          in: header
-          description: 'Bearer {your-token}'
-          name: Authorization
-          required: true
+        - in: unknown
+        - $ref: '#/components/parameters/User-Authorization-Token'
       requestBody:
         content:
           application/json:
@@ -1418,6 +1410,31 @@ paths:
                 - beneficiaryType
                 - currency
                 - paymentType
+  '/depositaccounts/:id':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: 'get-depositaccounts-:id'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    put:
+      summary: ''
+      operationId: 'put-depositaccounts-:id'
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    delete:
+      summary: ''
+      operationId: 'delete-depositaccounts-:id'
+      responses:
+        '200':
+          description: OK
+      description: Deletes the beneficiary indicated by id
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
@@ -1626,3 +1643,11 @@ components:
           status: success
           details: {}
   securitySchemes: {}
+  parameters:
+    User-Authorization-Token:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'Bearer {your-token}'
