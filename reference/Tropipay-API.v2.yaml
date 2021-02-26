@@ -235,7 +235,7 @@ paths:
         * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
         * **value:** String that represents the value depending on the type of selected event determined by the 'target' property, for example if the selected 'target' is email the value would be an email address, likewise if the selected 'target' is 'web' the expected value corresponds to a url that receives information through the HTTP POST method. 
     post:
-      summary: ''
+      summary: Subscribe to new hook
       operationId: post-api-v2-hook
       responses:
         '200':
@@ -571,7 +571,7 @@ paths:
     parameters: []
   /access:
     post:
-      summary: ''
+      summary: Obtain login URL
       operationId: post-api-v2-access
       responses:
         '200':
@@ -834,6 +834,154 @@ paths:
             ```
       operationId: get-api-occupations
       description: Endpoint that allows obtaining the list of occupations
+  api/v2/access/signup:
+    post:
+      summary: User SignUp
+      operationId: post-access-signup
+      responses:
+        '200':
+          description: |-
+            {
+                "user": "66291db0-77a2-11eb-a197-a1853f6310fa"
+            }
+      description: This endpoint allow you to add a new user to the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                mid:
+                  type: number
+                clientTypeId:
+                  type: number
+                email:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                t_c_version:
+                  type: string
+                  minLength: 1
+                state:
+                  type: number
+                kycLevel: {}
+                name:
+                  type: string
+                  minLength: 1
+                surname:
+                  type: string
+                  minLength: 1
+                birthDate:
+                  type: string
+                  minLength: 1
+                occupationId:
+                  type: number
+                otherOccupationDetail:
+                  type: string
+                  minLength: 1
+                isPublicOffice:
+                  type: boolean
+                birthCountryId:
+                  type: number
+                documentId:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                address:
+                  type: string
+                  minLength: 1
+                countryDestinationId:
+                  type: number
+                city:
+                  type: string
+                  minLength: 1
+                province:
+                  type: string
+                  minLength: 1
+                postalCode:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+                callingCode:
+                  type: string
+                  minLength: 1
+                validationCode:
+                  type: string
+                  minLength: 1
+              required:
+                - mid
+                - clientTypeId
+                - email
+                - password
+                - t_c_version
+                - state
+                - name
+                - surname
+                - birthDate
+                - occupationId
+                - otherOccupationDetail
+                - isPublicOffice
+                - birthCountryId
+                - documentId
+                - lang
+                - groupId
+                - address
+                - countryDestinationId
+                - city
+                - province
+                - postalCode
+                - phone
+                - callingCode
+                - validationCode
+        description: |-
+          To create a new user in the system, you have to make a POST with all mandatory fields.
+          ### warning
+          Before doing this request make sure to verify user email address by hitting 
+          ```/api/v2/access/sendEmailCode```
+          to get validationToken
+      parameters:
+        - schema:
+            type: string
+          in: header
+    parameters: []
+  /api/v2/access/sendEmailCode:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: |-
+            {
+                "error": {
+                    "code": "VALIDATION_ERROR",
+                    "message": "That email is already registered"
+                }
+            }
+      operationId: get-api-v2-access-getVerificationCode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                email:
+                  type: string
+                  minLength: 1
+              required:
+                - email
+        description: ''
+      description: 'In order to subscribe a new user, you have first to validate user email. This can be done by POSTing the new user email '
     parameters: []
 components:
   schemas:
@@ -1042,3 +1190,4 @@ components:
           action: update
           status: success
           details: {}
+  securitySchemes: {}
