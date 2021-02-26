@@ -951,6 +951,8 @@ paths:
         - schema:
             type: string
           in: header
+      tags:
+        - Authentication
     parameters: []
   /api/v2/access/sendEmailCode:
     get:
