@@ -993,6 +993,8 @@ paths:
       responses:
         '200':
           description: OK
+      tags:
+        - Authentication
 components:
   schemas:
     User:
@@ -1110,9 +1112,9 @@ components:
             message: Failed to authenticate token for Merchant!
     AccessRequest:
       description: |-
-        -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
+        -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
            * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
-           * 2: Set communication with your container using the *window.addEventListener* and *parent.postMessage messages*.
+           * 2: Set communication with the iframe parent container using the *window.addEventListener* and *parent.postMessage messages*.
         -  **redirectUrl**: Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
         -  **extraCSS"**: The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.
       type: object
