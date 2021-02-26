@@ -955,35 +955,6 @@ paths:
         - Authentication
     parameters: []
   /access/sendEmailCode:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: |-
-            {
-                "error": {
-                    "code": "VALIDATION_ERROR",
-                    "message": "That email is already registered"
-                }
-            }
-      operationId: get-api-v2-access-getVerificationCode
-      requestBody:
-        content:
-          application/json:
-            schema:
-              description: ''
-              type: object
-              properties:
-                email:
-                  type: string
-                  minLength: 1
-              required:
-                - email
-        description: ''
-      description: 'In order to subscribe a new user, you have first to validate user email. This can be done by POSTing the new user email '
     parameters: []
     post:
       summary: ''
@@ -1013,6 +984,15 @@ paths:
                 value:
                   email: john@doe.com
         description: ''
+      tags:
+        - Authentication
+  /access/sendPhoneCode:
+    post:
+      summary: ''
+      operationId: post-access-sendPhoneCode
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     User:
