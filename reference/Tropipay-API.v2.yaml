@@ -964,13 +964,33 @@ paths:
         '200':
           description: OK
         '400':
-          description: |-
-            {
-                "error": {
-                    "code": "VALIDATION_ERROR",
-                    "message": "That email is already registered"
-                }
-            }
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        minLength: 1
+                      message:
+                        type: string
+                        minLength: 1
+                    required:
+                      - code
+                      - message
+                required:
+                  - error
+              examples:
+                example:
+                  value:
+                    error:
+                      code: VALIDATION_ERROR
+                      message: That email is already registered
       description: 'In order to subscribe a new user, you have first to validate user email. This can be done by POSTing the new user email '
       requestBody:
         content:
@@ -980,6 +1000,9 @@ paths:
               properties:
                 email:
                   type: string
+                name:
+                  type: string
+                  description: User Name to show in email
             examples:
               example-1:
                 value:
