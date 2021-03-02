@@ -640,13 +640,7 @@ paths:
                   redirectUrl: 'https://www.merchant.com/homr'
         description: 'Here we have an example of a valid request:'
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          description: 'Bearer {your-token}'
-          name: Authorization
-          required: true
+        - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Authentication
     parameters: []
