@@ -604,7 +604,7 @@ paths:
                     error:
                       code: 'OperationError: Failed to validate merchant token!'
                       message: Failed to authenticate token for Merchant!
-      description: |-
+      description: |
         Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an *IFRAME*. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
 
         ## Authentication
@@ -625,8 +625,79 @@ paths:
         Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colon symbol ( : )
 
         <!-- theme: info -->
-        >### info
+        >#### info
         > Don't forget the spaces around the colon symbol
+
+        ### Request Parameters
+
+        #### **redirectType** 
+        The type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
+           * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
+           * 2: Set communication with the iframe parent container using the *window.addEventListener* and *parent.postMessage messages*.
+
+        #### **extraCSS**
+        The login form Look and Feel can be customized by the injection of CSS styles, this property defines the url of the remote css to apply.
+
+        Feel free to explore the source code of the login form. Some of the available CSS Classes are as follows:
+        - tpp-container: The parent container of the entire form
+        - tpp-input: All form inputs have this class
+        - tpp-button-container: Each button is contained in a div with this class
+        - tpp-button-next: The NEXT button
+        - tpp-input-email: the class for email field all the time
+        - tpp-input-email-0: the email field when in step 0 (only email input visible)
+        - tpp-input-email-1: the email field when in step 1 (normal login)
+        - tpp-input-email-2: the email field when in step 2 (first-time login)
+        - tpp-input-email-3: the email field when in step 3 (resetting user password)
+        - tpp-input-pass: all password type inputs have this class
+        - tpp-input-pass-2: password inputs for first-time login
+        - tpp-input-pass-3: password inputs when resetting user password
+        - tpp-input-token: the input for typing the secutity token for password reset
+
+        Bellow is an example css stylesheet to render inputs side by side. Use it as a basic example of it's power and be creative ;)
+
+        <!--
+        title: "customStyles.css"
+        lineNumbers: true
+        -->
+
+        ```css
+        .tpp-container{
+            max-width: 2900px;
+        }
+
+        .tpp-input input {
+            color: red;
+        }
+
+        .tpp-input, .tpp-button-container{
+            width: 20%;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .tpp-button-container-3{
+            width: 47%;
+        }
+
+        .tpp-input-3{
+            width: 23%;
+        }
+
+        .tpp-input-email-0{
+            width: 48%;
+        }
+
+        .tpp-button-container{
+            margin-top: 1rem !important;
+        }
+
+        .tpp-button-container button{
+            height: 56px;
+        }
+        ```
+
+        #### **redirectUrl** 
+        Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
       requestBody:
         content:
           application/json:
