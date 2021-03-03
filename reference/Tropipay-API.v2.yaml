@@ -557,7 +557,19 @@ paths:
             description: 'Event launched once an user complete registration on the TropiPay platform.' 
         }
         ```
-        The **name** is a key element because it determines the correct operation when registering, if it is specified with the wrong value the merchant will never receive the notification. 
+        + **user_signup:** Event launched once an user complete registration on the TropiPay platform. 
+        + **user_login:** Event launched once an user complete login on the TropiPay platform.
+        + **user_kyc:** Event launched once an user complete KYC process, indicated in each case the status of process.
+        ```js
+              {
+                  userId: String;
+                  status: String;
+                  message: String;
+                  event: String;
+              }
+        ```
+        + **payment_in_state_change:** The event is fired once a user changes their status payment in entry method.
+        + **payment_out_state_change:** The event is fired once a user changes their status payment out entry method.
       parameters:
         - schema:
             type: string
@@ -1413,6 +1425,67 @@ paths:
       description: 'This allows to validate some user phone number by a secret code previously sent to user by SMS. See [SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1sendPhoneCode) for details on how to send validation codes'
       tags:
         - Authentication
+  /kyc:
+    post:
+      summary: ''
+      operationId: post-kyc
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycResponse'
+              examples:
+                example-1:
+                  value:
+                    status: success
+                    url: 'https://localhost:3001/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiIzMyIsInNpZ25hdHVyZSI6IjYzNzcxMGY0MWQxMTc4OTlhNzNhMTYyZmE1NTgxYmQ5IiwiY29kZSI6MTYxNDc0MjY1MTY0Nn0='
+        '400':
+          description: 'Here we have an example of a Bad Request:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationParams'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code:
+                        - msg: Invalid value
+                          param: userId
+                          location: body
+                        - msg: Invalid value
+                          param: userId
+                          location: body
+                      message: Invalid Parameter
+      description: |
+        Endpoint for generate KYC wizard link.
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
 components:
   schemas:
     User:
@@ -1620,6 +1693,68 @@ components:
           action: update
           status: success
           details: {}
+    KycResponse:
+      description: ''
+      type: object
+      properties:
+        status:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - url
+      x-examples:
+        example-1:
+          status: success
+          url: 'https://signup.getmati.com/?merchantToken=5cd02b2e7a7dc7001b331bfc&flowId=121212121212121&metadata=%7B%22userId%22:%22rwqerq34r345534545345%22%7D'
+    ValidationParams:
+      description: ''
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                required:
+                  - msg
+                  - param
+                  - location
+                properties:
+                  msg:
+                    type: string
+                    minLength: 1
+                  param:
+                    type: string
+                    minLength: 1
+                  location:
+                    type: string
+                    minLength: 1
+            message:
+              type: string
+              minLength: 1
+          required:
+            - code
+            - message
+      required:
+        - error
+      x-examples:
+        example-1:
+          error:
+            code:
+              - msg: Invalid value
+                param: userId
+                location: body
+              - msg: Invalid value
+                param: userId
+                location: body
+            message: Invalid Parameter
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
