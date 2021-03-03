@@ -1349,7 +1349,15 @@ paths:
       responses: {}
       operationId: get-kyc
       description: |
-        Endpoint for get get avalible KYC wizard link.
+        Endpoint for generate KYC wizard link.
+  /kyc/url:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-kyc-url
+      description: |
+        Endpoint for get avalible KYC wizard link by user id.
 components:
   schemas:
     User:
