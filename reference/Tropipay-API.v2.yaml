@@ -1342,6 +1342,14 @@ paths:
       description: 'This allows to validate some user phone number by a secret code previously sent to user by SMS. See [SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1sendPhoneCode) for details on how to send validation codes'
       tags:
         - Authentication
+  /kyc:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-kyc
+      description: |
+        Endpoint for get get avalible KYC wizard link.
 components:
   schemas:
     User:
