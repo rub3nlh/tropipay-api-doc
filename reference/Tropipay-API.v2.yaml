@@ -1350,6 +1350,31 @@ paths:
       operationId: get-kyc
       description: |
         Endpoint for generate KYC wizard link.
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
+          name: Authorization
   /kyc/url:
     get:
       summary: Your GET endpoint
@@ -1358,6 +1383,31 @@ paths:
       operationId: get-kyc-url
       description: |
         Endpoint for get avalible KYC wizard link by user id.
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
 components:
   schemas:
     User:
