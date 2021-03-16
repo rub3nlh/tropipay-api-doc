@@ -1440,7 +1440,7 @@ paths:
                 example-1:
                   value:
                     status: success
-                    url: 'https://localhost:3001/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiIzMyIsInNpZ25hdHVyZSI6IjYzNzcxMGY0MWQxMTc4OTlhNzNhMTYyZmE1NTgxYmQ5IiwiY29kZSI6MTYxNDc0MjY1MTY0Nn0='
+                    url: 'https://localhost:3000/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiIzMyIsInNpZ25hdHVyZSI6IjYzNzcxMGY0MWQxMTc4OTlhNzNhMTYyZmE1NTgxYmQ5IiwiY29kZSI6MTYxNDc0MjY1MTY0Nn0='
         '400':
           description: 'Here we have an example of a Bad Request:'
           content:
