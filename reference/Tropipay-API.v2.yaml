@@ -559,13 +559,13 @@ paths:
         ```
         + **user_signup:** Event launched once an user complete registration on the TropiPay platform. 
         + **user_login:** Event launched once an user complete login on the TropiPay platform.
-        + **user_kyc:** Event launched once an user complete KYC process, indicated in each case the status of process.
+        + **user_kyc:** Event launched once an user complete KYC process, indicated in each case the process status. Payload of response:
         ```js
               {
                   userId: String;
                   status: String;
-                  message: String;
                   event: String;
+                  user: Object;
               }
         ```
         + **payment_in_state_change:** The event is fired once a user changes their status payment in entry method.
