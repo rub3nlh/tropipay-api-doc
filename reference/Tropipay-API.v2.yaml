@@ -1486,6 +1486,61 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
+  /configure:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSettingList'
+              examples:
+                example-1:
+                  value:
+                    - key: publicPrice
+                      value: '2.5'
+                      section: public
+                      state: '1'
+                      createdAt: '2021-03-18T20:10:37.670Z'
+                      updatedAt: '2021-03-18T20:10:37.670Z'
+                    - key: merchantPrice
+                      value: '2.10'
+                      section: public
+                      state: '1'
+                      createdAt: '2021-03-18T04:00:00.000Z'
+                      updatedAt: '2021-03-18T04:00:00.000Z'
+      operationId: configure
+      description: |
+        Endpoint that allows obtaining the list of merchant public setting.
+
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
 components:
   schemas:
     User:
@@ -1755,6 +1810,99 @@ components:
                 param: userId
                 location: body
             message: Invalid Parameter
+    MerchantSetting:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        key:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+        section:
+          type: string
+          minLength: 1
+        merchantId:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - key
+        - value
+        - section
+        - merchantId
+        - state
+        - createdAt
+        - updatedAt
+      x-examples:
+        example-1:
+          id: 5
+          key: publicPrice
+          value: '2.5'
+          section: public
+          merchantId: '1'
+          state: '1'
+          createdAt: '2021-03-18T20:10:37.670Z'
+          updatedAt: '2021-03-18T20:10:37.670Z'
+    MerchantSettingList:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: object
+        required:
+          - key
+          - value
+          - section
+          - state
+          - createdAt
+          - updatedAt
+        properties:
+          key:
+            type: string
+            minLength: 1
+          value:
+            type: string
+            minLength: 1
+          section:
+            type: string
+            minLength: 1
+          state:
+            type: string
+            minLength: 1
+          createdAt:
+            type: string
+            minLength: 1
+          updatedAt:
+            type: string
+            minLength: 1
+      x-examples:
+        example-1:
+          - key: publicPrice
+            value: '2.5'
+            section: public
+            state: '1'
+            createdAt: '2021-03-18T20:10:37.670Z'
+            updatedAt: '2021-03-18T20:10:37.670Z'
+          - key: merchantPrice
+            value: '2.10'
+            section: public
+            state: '1'
+            createdAt: '2021-03-18T04:00:00.000Z'
+            updatedAt: '2021-03-18T04:00:00.000Z'
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
