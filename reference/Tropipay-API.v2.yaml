@@ -1541,6 +1541,118 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
+  /configure/price:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSetting'
+              examples:
+                example-1:
+                  value:
+                    key: publicPrice
+                    value: '2.5'
+                    section: public
+                    state: '1'
+                    createdAt: '2021-03-18T20:10:37.670Z'
+                    updatedAt: '2021-03-18T20:10:37.670Z'
+      operationId: get-configure-price
+      description: |
+        Endpoint that allows obtaining the public price.
+
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
+    post:
+      summary: ''
+      operationId: post-configure-price
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSetting'
+              examples:
+                example-1:
+                  value:
+                    key: publicPrice
+                    value: '2.5'
+                    section: public
+                    state: '1'
+                    createdAt: '2021-03-18T20:10:37.670Z'
+                    updatedAt: '2021-03-18T20:10:37.670Z'
+      description: |-
+        Endpoint that allows set the public price.
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer YOUR_TOKEN
+        ```
+
+        YOUR_TOKEN is formed from: 
+        ```
+          Base64( API_CODE : API_KEY )
+        ```
+
+        an example would be:
+        ```
+          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+        ```
+        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      parameters:
+        - schema:
+            type: string
+            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
+          in: header
+          name: Authorization
+          description: 'Bearer {YOUR_TOKEN}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                publicPrice:
+                  type: string
+                  minLength: 1
+              required:
+                - publicPrice
+            examples:
+              example-1:
+                value:
+                  publicPrice: '2.5'
+        description: Here we have an example of a valid request
 components:
   schemas:
     User:
@@ -1813,9 +1925,15 @@ components:
     MerchantSetting:
       description: ''
       type: object
+      x-examples:
+        example-1:
+          key: publicPrice
+          value: '2.5'
+          section: public
+          state: '1'
+          createdAt: '2021-03-18T20:10:37.670Z'
+          updatedAt: '2021-03-18T20:10:37.670Z'
       properties:
-        id:
-          type: number
         key:
           type: string
           minLength: 1
@@ -1823,9 +1941,6 @@ components:
           type: string
           minLength: 1
         section:
-          type: string
-          minLength: 1
-        merchantId:
           type: string
           minLength: 1
         state:
@@ -1838,24 +1953,12 @@ components:
           type: string
           minLength: 1
       required:
-        - id
         - key
         - value
         - section
-        - merchantId
         - state
         - createdAt
         - updatedAt
-      x-examples:
-        example-1:
-          id: 5
-          key: publicPrice
-          value: '2.5'
-          section: public
-          merchantId: '1'
-          state: '1'
-          createdAt: '2021-03-18T20:10:37.670Z'
-          updatedAt: '2021-03-18T20:10:37.670Z'
     MerchantSettingList:
       type: array
       description: ''
