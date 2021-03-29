@@ -1653,6 +1653,806 @@ paths:
                 value:
                   publicPrice: '2.5'
         description: Here we have an example of a valid request
+  /movements/in/charge:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-movements-in-charge
+    post:
+      summary: ''
+      operationId: post-movements-in-charge
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                provider:
+                  type: number
+                providerName:
+                  type: string
+                bookingDate:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                amountToShow:
+                  type: string
+                agree:
+                  type: boolean
+                amountToCharge:
+                  type: string
+                depositaccountId:
+                  type: string
+                destinationAccount:
+                  type: string
+                currency:
+                  type: string
+                  minLength: 1
+                widgetUrl: {}
+                rate:
+                  type: number
+                error:
+                  type: boolean
+                paymentCardLoaded:
+                  type: boolean
+                verifyClose:
+                  type: boolean
+                loading:
+                  type: boolean
+                accounts:
+                  type: array
+                  items:
+                    required: []
+                    properties: {}
+                countries:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - sepaZone
+                      - state
+                      - slug
+                      - callingCode
+                      - isDestination
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      sepaZone:
+                        type: boolean
+                      state:
+                        type: number
+                      slug:
+                        type: string
+                        minLength: 1
+                      callingCode:
+                        type: number
+                      isDestination:
+                        type: boolean
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                redsysData: {}
+                services:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - slug
+                      - service_fee_percent
+                      - service_fee_fixed
+                      - tp_fee_percent
+                      - tp_fee_fixed
+                      - type
+                      - order
+                      - createdAt
+                      - updatedAt
+                      - disabled
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      slug:
+                        type: string
+                        minLength: 1
+                      service_fee_percent:
+                        type: number
+                      service_fee_fixed:
+                        type: number
+                      tp_fee_percent:
+                        type: number
+                      tp_fee_fixed:
+                        type: number
+                      type:
+                        type: string
+                        minLength: 1
+                      order:
+                        type: number
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                      permissions:
+                        type: array
+                        items:
+                          required: []
+                          properties: {}
+                      disabled:
+                        type: boolean
+                service:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                      minLength: 1
+                    slug:
+                      type: string
+                      minLength: 1
+                    service_fee_percent:
+                      type: number
+                    service_fee_fixed:
+                      type: number
+                    tp_fee_percent:
+                      type: number
+                    tp_fee_fixed:
+                      type: number
+                    type:
+                      type: string
+                      minLength: 1
+                    order:
+                      type: number
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                    permissions:
+                      type: array
+                      items:
+                        required: []
+                        properties: {}
+                    disabled:
+                      type: boolean
+                  required:
+                    - id
+                    - name
+                    - slug
+                    - service_fee_percent
+                    - service_fee_fixed
+                    - tp_fee_percent
+                    - tp_fee_fixed
+                    - type
+                    - order
+                    - createdAt
+                    - updatedAt
+                    - permissions
+                    - disabled
+                concept:
+                  type: string
+                description:
+                  type: string
+                reasons:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - active
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      description: {}
+                      active:
+                        type: boolean
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                singleUse:
+                  type: boolean
+                showPaymentGenerated:
+                  type: boolean
+                sendSMS:
+                  type: boolean
+                sendEmail:
+                  type: boolean
+                smsTo:
+                  type: string
+                notifyEmail:
+                  type: string
+                step:
+                  type: number
+                reasonId:
+                  type: string
+                reasonDes:
+                  type: string
+                message: {}
+                showMessage:
+                  type: boolean
+                cardObj: {}
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                    surname:
+                      type: string
+                      minLength: 1
+                    company: {}
+                    email:
+                      type: string
+                      minLength: 1
+                    phone:
+                      type: string
+                      minLength: 1
+                    address:
+                      type: string
+                      minLength: 1
+                    walletId:
+                      type: string
+                      minLength: 1
+                    t_c_version:
+                      type: string
+                      minLength: 1
+                    role:
+                      type: string
+                      minLength: 1
+                    nationality: {}
+                    state:
+                      type: number
+                    balance:
+                      type: number
+                    birthDate:
+                      type: string
+                      minLength: 1
+                    countryDestinationId:
+                      type: number
+                    city:
+                      type: string
+                      minLength: 1
+                    postalCode:
+                      type: string
+                      minLength: 1
+                    kycLevel:
+                      type: number
+                    occupationId:
+                      type: number
+                    clientTypeId:
+                      type: number
+                    isPublicOffice:
+                      type: boolean
+                    birthCountryId:
+                      type: number
+                    province:
+                      type: string
+                      minLength: 1
+                    groupId:
+                      type: number
+                    lastLogin:
+                      type: string
+                      minLength: 1
+                    pendingIn:
+                      type: number
+                    pendingOut:
+                      type: number
+                    lang:
+                      type: string
+                      minLength: 1
+                    shortId:
+                      type: string
+                      minLength: 1
+                    documentTypeId:
+                      type: number
+                    documentExpirationDate:
+                      type: string
+                      minLength: 1
+                    contracts: {}
+                    liveProof:
+                      type: boolean
+                    needMigration:
+                      type: boolean
+                    twoFaType:
+                      type: number
+                    twoFaMode:
+                      type: number
+                    otherOccupationDetail:
+                      type: string
+                      minLength: 1
+                    merchantId:
+                      type: number
+                    errorPaymentEntityId: {}
+                    errorWalletId: {}
+                    verified: {}
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                    group:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        permissions:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - id
+                              - name
+                              - label
+                              - createdAt
+                              - updatedAt
+                            properties:
+                              id:
+                                type: number
+                              name:
+                                type: string
+                                minLength: 1
+                              label:
+                                type: string
+                                minLength: 1
+                              createdAt:
+                                type: string
+                                minLength: 1
+                              updatedAt:
+                                type: string
+                                minLength: 1
+                              GroupPermission:
+                                type: object
+                                properties:
+                                  createdAt:
+                                    type: string
+                                    minLength: 1
+                                  updatedAt:
+                                    type: string
+                                    minLength: 1
+                                  groupId:
+                                    type: number
+                                  permissionId:
+                                    type: number
+                                required:
+                                  - createdAt
+                                  - updatedAt
+                                  - groupId
+                                  - permissionId
+                      required:
+                        - id
+                        - name
+                        - createdAt
+                        - updatedAt
+                        - permissions
+                    operation:
+                      type: boolean
+                  required:
+                    - id
+                    - name
+                    - surname
+                    - email
+                    - phone
+                    - address
+                    - walletId
+                    - t_c_version
+                    - role
+                    - state
+                    - balance
+                    - birthDate
+                    - countryDestinationId
+                    - city
+                    - postalCode
+                    - kycLevel
+                    - occupationId
+                    - clientTypeId
+                    - isPublicOffice
+                    - birthCountryId
+                    - province
+                    - groupId
+                    - lastLogin
+                    - pendingIn
+                    - pendingOut
+                    - lang
+                    - shortId
+                    - documentTypeId
+                    - documentExpirationDate
+                    - liveProof
+                    - needMigration
+                    - twoFaType
+                    - twoFaMode
+                    - otherOccupationDetail
+                    - merchantId
+                    - createdAt
+                    - updatedAt
+                    - group
+                    - operation
+                callingCode:
+                  type: string
+                phone:
+                  type: string
+                expirationDays:
+                  type: number
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                expirationDate:
+                  type: string
+                serviceDate:
+                  type: string
+                errorCode:
+                  type: string
+                voucherCode:
+                  type: string
+                voucher: {}
+                scrollToTop:
+                  type: boolean
+                amountToSend:
+                  type: string
+                currencyToSend:
+                  type: string
+                  minLength: 1
+                amountToReceive:
+                  type: string
+                currencyToReceive:
+                  type: string
+                  minLength: 1
+                cryptoPayment: {}
+                cryptoPaymentState: {}
+                cryptoPaymentExpirationDate: {}
+                cryptoRate: {}
+                criteria: {}
+                days:
+                  type: string
+                destinationAmount:
+                  type: number
+                destinationCurrency:
+                  type: string
+                  minLength: 1
+                originalCurrencyAmount:
+                  type: number
+                conversionRate:
+                  type: number
+              required:
+                - reference
+                - provider
+                - providerName
+                - bookingDate
+                - amount
+                - amountToShow
+                - agree
+                - amountToCharge
+                - depositaccountId
+                - destinationAccount
+                - currency
+                - rate
+                - error
+                - paymentCardLoaded
+                - verifyClose
+                - loading
+                - accounts
+                - countries
+                - services
+                - service
+                - concept
+                - description
+                - reasons
+                - singleUse
+                - showPaymentGenerated
+                - sendSMS
+                - sendEmail
+                - smsTo
+                - notifyEmail
+                - step
+                - reasonId
+                - reasonDes
+                - showMessage
+                - user
+                - callingCode
+                - phone
+                - expirationDays
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - expirationDate
+                - serviceDate
+                - errorCode
+                - voucherCode
+                - scrollToTop
+                - amountToSend
+                - currencyToSend
+                - amountToReceive
+                - currencyToReceive
+                - days
+                - destinationAmount
+                - destinationCurrency
+                - originalCurrencyAmount
+                - conversionRate
+            examples:
+              example-1:
+                value:
+                  reference: TE5NN77
+                  provider: 1
+                  providerName: ''
+                  bookingDate: '2021-03-24'
+                  amount: 19500
+                  amountToShow: ''
+                  agree: true
+                  amountToCharge: ''
+                  depositaccountId: ''
+                  destinationAccount: ''
+                  currency: EUR
+                  widgetUrl: null
+                  rate: 1.1
+                  error: false
+                  paymentCardLoaded: false
+                  verifyClose: false
+                  loading: false
+                  accounts: []
+                  countries:
+                    - id: 44
+                      name: Afghanistan
+                      sepaZone: false
+                      state: 1
+                      slug: AF
+                      callingCode: 93
+                      isDestination: false
+                      createdAt: '2019-09-03T15:22:26.410Z'
+                      updatedAt: '2019-09-03T15:22:26.410Z'
+                    - id: 254
+                      name: Zimbabwe
+                      sepaZone: false
+                      state: 1
+                      slug: ZW
+                      callingCode: 263
+                      isDestination: false
+                      createdAt: '2019-09-03T15:22:26.514Z'
+                      updatedAt: '2019-09-03T15:22:26.514Z'
+                  redsysData: null
+                  services:
+                    - id: 1
+                      name: Charge OTA Cards
+                      slug: CHARGE_OTA_CARDS
+                      service_fee_percent: 300
+                      service_fee_fixed: 0
+                      tp_fee_percent: 500
+                      tp_fee_fixed: 0
+                      type: PAYMENT
+                      order: 1
+                      createdAt: '2019-10-29T12:12:07.133Z'
+                      updatedAt: '2019-10-29T12:12:07.133Z'
+                      permissions: []
+                      disabled: false
+                    - id: 5
+                      name: External TopUp
+                      slug: EXTERNAL_TOPUP
+                      service_fee_percent: 0
+                      service_fee_fixed: 0
+                      tp_fee_percent: 300
+                      tp_fee_fixed: 0
+                      type: PAYMENT
+                      order: 6
+                      createdAt: '2020-01-08T11:16:12.292Z'
+                      updatedAt: '2020-01-08T15:17:23.151Z'
+                      permissions: []
+                      disabled: false
+                  service:
+                    id: 1
+                    name: Charge OTA Cards
+                    slug: CHARGE_OTA_CARDS
+                    service_fee_percent: 300
+                    service_fee_fixed: 0
+                    tp_fee_percent: 500
+                    tp_fee_fixed: 0
+                    type: PAYMENT
+                    order: 1
+                    createdAt: '2019-10-29T12:12:07.133Z'
+                    updatedAt: '2019-10-29T12:12:07.133Z'
+                    permissions: []
+                    disabled: false
+                  concept: ''
+                  description: ''
+                  reasons:
+                    - id: 1
+                      name: Arreglo de vivienda
+                      description: null
+                      active: true
+                      createdAt: '2021-01-21T03:50:17.227Z'
+                      updatedAt: '2021-01-21T03:50:17.227Z'
+                    - id: 11
+                      name: Turismo
+                      description: null
+                      active: true
+                      createdAt: '2021-01-21T03:50:17.227Z'
+                      updatedAt: '2021-01-21T03:50:17.227Z'
+                  singleUse: false
+                  showPaymentGenerated: false
+                  sendSMS: false
+                  sendEmail: false
+                  smsTo: ''
+                  notifyEmail: ''
+                  step: 2
+                  reasonId: ''
+                  reasonDes: ''
+                  message: null
+                  showMessage: false
+                  cardObj: null
+                  user:
+                    id: e2931920-e402-11ea-a30d-83c978a74aaa
+                    name: 'Antonio '
+                    surname: Membrides Espinosa
+                    company: null
+                    email: tonykssa@gmail.com
+                    phone: '+5359996545'
+                    address: 'reparto Pueblo Griffo, edificio 55, 12 plantas, apto 1101'
+                    walletId: '2195'
+                    t_c_version: /terms/v0.0
+                    role: user
+                    nationality: null
+                    state: 1
+                    balance: 205000
+                    birthDate: '1985-10-31T00:00:00.000Z'
+                    countryDestinationId: 0
+                    city: Cienfuegos
+                    postalCode: '55504'
+                    kycLevel: 4
+                    occupationId: 30
+                    clientTypeId: 1
+                    isPublicOffice: false
+                    birthCountryId: 0
+                    province: Cienfuegos
+                    groupId: 1
+                    lastLogin: '2021-03-25T21:36:09.207Z'
+                    pendingIn: 0
+                    pendingOut: 0
+                    lang: es
+                    shortId: 00Y2
+                    documentTypeId: 5
+                    documentExpirationDate: '2021-04-02T00:00:00.000Z'
+                    contracts: null
+                    liveProof: true
+                    needMigration: false
+                    twoFaType: 1
+                    twoFaMode: 1
+                    otherOccupationDetail: Loco
+                    merchantId: 1
+                    errorPaymentEntityId: null
+                    errorWalletId: null
+                    verified: null
+                    createdAt: '2020-08-21T23:06:03.059Z'
+                    updatedAt: '2021-03-25T21:36:09.209Z'
+                    group:
+                      id: 1
+                      name: KYC3_FULL_ALLOW
+                      createdAt: '2019-10-29T12:19:30.340Z'
+                      updatedAt: '2020-06-04T14:09:10.754Z'
+                      permissions:
+                        - id: 1
+                          name: ALLOW_EXTERNAL_CHARGE
+                          label: payments
+                          createdAt: '2019-10-29T12:19:50.939Z'
+                          updatedAt: '2019-10-29T12:19:50.939Z'
+                          GroupPermission:
+                            createdAt: '2019-10-29T12:20:04.555Z'
+                            updatedAt: '2019-10-29T12:20:04.555Z'
+                            groupId: 1
+                            permissionId: 1
+                        - id: 18
+                          name: ALLOW_PAYMENT_OUT
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-05-19T08:34:04.850Z'
+                            updatedAt: '2020-05-19T08:34:04.850Z'
+                            groupId: 1
+                            permissionId: 18
+                        - id: 19
+                          name: ALLOW_MARKET_PURCHASES
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-05-19T08:34:13.683Z'
+                            updatedAt: '2020-05-19T08:34:13.683Z'
+                            groupId: 1
+                            permissionId: 19
+                        - id: 17
+                          name: ALLOW_PAYMENT_IN
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-12-23T21:24:16.683Z'
+                            updatedAt: '2020-12-23T21:24:16.683Z'
+                            groupId: 1
+                            permissionId: 17
+                    operation: true
+                  callingCode: ''
+                  phone: ''
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: ''
+                  serviceDate: ''
+                  errorCode: ''
+                  voucherCode: ''
+                  voucher: null
+                  scrollToTop: false
+                  amountToSend: ''
+                  currencyToSend: BTC
+                  amountToReceive: ''
+                  currencyToReceive: EUR
+                  cryptoPayment: null
+                  cryptoPaymentState: null
+                  cryptoPaymentExpirationDate: null
+                  cryptoRate: null
+                  criteria: null
+                  days: ''
+                  destinationAmount: 17940
+                  destinationCurrency: EUR
+                  originalCurrencyAmount: 19500
+                  conversionRate: 1
+      description: ''
 components:
   schemas:
     User:
