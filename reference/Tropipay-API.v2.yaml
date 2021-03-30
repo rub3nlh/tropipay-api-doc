@@ -1654,11 +1654,6 @@ paths:
                   publicPrice: '2.5'
         description: Here we have an example of a valid request
   /movements/in/charge:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-movements-in-charge
     post:
       summary: ''
       operationId: post-movements-in-charge
@@ -2604,11 +2599,6 @@ paths:
         description: 'Here we have an example of a valid request: '
       description: ''
   /movements/in/paylink:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-movements-in-paylink
     post:
       summary: ''
       operationId: post-movements-in-paylink
