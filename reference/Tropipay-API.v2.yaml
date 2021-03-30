@@ -2598,6 +2598,16 @@ paths:
                   conversionRate: 1
         description: 'Here we have an example of a valid request: '
       description: |
+        ### Charge an OTA Card:
+        Create a charge Url for an OTA Virtual Credit Card.
+
+        You Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.
+
+        > Note:  We are working on Webhooks structures to avoiding this send URL configuration step. 
+
+        ### How to complete the charge:
+        With the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  
+
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
