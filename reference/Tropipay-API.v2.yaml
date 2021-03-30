@@ -1775,7 +1775,7 @@ paths:
                     reference: null
                     bankOrderCode: '626382735590'
                     provider: null
-                    userId: e2931920-e402a30d-83c978a74qqq
+                    userId: e2931920-e402a30d78-a7-4qqq
                     bookingDate: null
                     days: 0
                     amount: 19500
@@ -1808,7 +1808,7 @@ paths:
                     reasonId: null
                     reasonDes: null
                     paymentUrl:
-                      chargeUrl: 'http://localhost:3000/redsys_payment/eyJwYXJhbXMiOiJleUpFVTE5TlJWSkRTRUZPVkY5QlRVOVZUbFFpT2pFNU5UQXdMQ0pFVTE5TlJWSkRTRUZPVkY5UFVrUkZVaUk2SWpZeU5qTTRNamN6TlRVNU1DSXNJa1JUWDAxRlVrTklRVTVVWDAxRlVrTklRVTVVUTA5RVJTSTZJakV5TkRRek9UY3hNaUlzSWtSVFgwMUZVa05JUVU1VVgwTlZVbEpGVGtOWklqb2lPVGM0SWl3aVJGTmZUVVZTUTBoQlRsUmZWRkpCVGxOQlExUkpUMDVVV1ZCRklqb3dMQ0pFVTE5TlJWSkRTRUZPVkY5TlJWSkRTRUZPVkZWU1RDSTZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZNekF3TUM5aGNHa3ZZMkZzYkdKaFkyc3ZjbVZrYzNseklpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVQwc2lPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDA5TElpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVMwOGlPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDB0UEluMD0iLCJzaWduYXR1cmUiOiJrS3prbEtGRGlsT05odGEwYk1HSU8yME9RTm5LSWh2VXZIdkJ6SWxQRTc0PSIsInJlZHN5c1VybCI6Imh0dHBzOi8vc2lzLXQucmVkc3lzLmVzOjI1NDQzL3Npcy9yZWFsaXphclBhZ28ifQ=='
+                      chargeUrl: 'https://wwwtropipay.com/eyJwYXJhbXMiOiJleUpFVTE5TlJWSkRTRUZPVkY5QlRVOVZUbFFpT2pFNU5UQXdMQ0pFVTE5TlJWSkRTRUZPVkY5UFVrUkZVaUk2SWpZeU5qTTRNamN6TlRVNU1DSXNJa1JUWDAxRlVrTklRVTVVWDAxRlVrTklRVTVVUTA5RVJTSTZJakV5TkRRek9UY3hNaUlzSWtSVFgwMUZVa05JUVU1VVgwTlZVbEpGVGtOWklqb2lPVGM0SWl3aVJGTmZUVVZTUTBoQlRsUmZWRkpCVGxOQlExUkpUMDVVV1ZCRklqb3dMQ0pFVTE5TlJWSkRTRUZPVkY5TlJWSkRTRUZPVkZWU1RDSTZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZNekF3TUM5aGNHa3ZZMkZzYkdKaFkyc3ZjbVZrYzNseklpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVQwc2lPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDA5TElpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVMwOGlPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDB0UEluMD0iLCJzaWduYXR1cmUiOiJrS3prbEtGRGlsT05odGEwYk1HSU8yME9RTm5LSWh2VXZIdkJ6SWxQRTc0PSIsInJlZHN5c1VybCI6Imh0dHBzOi8vc2lzLXQucmVkc3lzLmVzOjI1NDQzL3Npcy9yZWFsaXphclBhZ28ifQ=='
       requestBody:
         content:
           application/json:
@@ -2598,7 +2598,6 @@ paths:
                   conversionRate: 1
         description: 'Here we have an example of a valid request: '
       description: |
-
         ## Authentication
         Fot the authentication you need to send the Authorization header with the value: 
         ```
