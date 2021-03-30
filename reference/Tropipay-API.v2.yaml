@@ -1664,7 +1664,156 @@ paths:
       operationId: post-movements-in-charge
       responses:
         '200':
-          description: OK
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  isInternal:
+                    type: boolean
+                  riskFlag:
+                    type: number
+                  riskScore:
+                    type: number
+                  id:
+                    type: number
+                  reference: {}
+                  bankOrderCode:
+                    type: string
+                    minLength: 1
+                  provider: {}
+                  userId:
+                    type: string
+                    minLength: 1
+                  bookingDate: {}
+                  days:
+                    type: number
+                  amount:
+                    type: number
+                  currency: {}
+                  originalCurrencyAmount:
+                    type: string
+                    minLength: 1
+                  destinationAmount:
+                    type: number
+                  destinationCurrency: {}
+                  conversionRate:
+                    type: number
+                  providerFee:
+                    type: number
+                  ourFee:
+                    type: number
+                  serviceId:
+                    type: number
+                  payProviderFee:
+                    type: boolean
+                  state:
+                    type: number
+                  movementTypeId:
+                    type: number
+                  ip: {}
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  depositaccountId: {}
+                  tmpDestinationAmount:
+                    type: number
+                  realBankFee: {}
+                  paymentcardId: {}
+                  expirationDate: {}
+                  balanceBefore: {}
+                  balanceAfter: {}
+                  agent:
+                    type: string
+                    minLength: 1
+                  transactionId: {}
+                  paymentEntityStatus:
+                    type: number
+                  paymentEntityBalance: {}
+                  errorReason: {}
+                  reasonId: {}
+                  reasonDes: {}
+                  paymentUrl:
+                    type: object
+                    properties:
+                      chargeUrl:
+                        type: string
+                        minLength: 1
+                    required:
+                      - chargeUrl
+                required:
+                  - isInternal
+                  - riskFlag
+                  - riskScore
+                  - id
+                  - bankOrderCode
+                  - userId
+                  - days
+                  - amount
+                  - originalCurrencyAmount
+                  - destinationAmount
+                  - conversionRate
+                  - providerFee
+                  - ourFee
+                  - serviceId
+                  - payProviderFee
+                  - state
+                  - movementTypeId
+                  - updatedAt
+                  - createdAt
+                  - tmpDestinationAmount
+                  - agent
+                  - paymentEntityStatus
+                  - paymentUrl
+              examples:
+                example-1:
+                  value:
+                    isInternal: false
+                    riskFlag: 0
+                    riskScore: 0
+                    id: 327790
+                    reference: null
+                    bankOrderCode: '626382735590'
+                    provider: null
+                    userId: e2931920-e402a30d-83c978a74qqq
+                    bookingDate: null
+                    days: 0
+                    amount: 19500
+                    currency: null
+                    originalCurrencyAmount: '19500'
+                    destinationAmount: 17940
+                    destinationCurrency: null
+                    conversionRate: 1
+                    providerFee: 300
+                    ourFee: 500
+                    serviceId: 1
+                    payProviderFee: false
+                    state: 1
+                    movementTypeId: 2
+                    ip: null
+                    updatedAt: '2021-03-26T14:22:20.939Z'
+                    createdAt: '2021-03-26T14:21:25.400Z'
+                    depositaccountId: null
+                    tmpDestinationAmount: 0
+                    realBankFee: null
+                    paymentcardId: null
+                    expirationDate: null
+                    balanceBefore: null
+                    balanceAfter: null
+                    agent: TROPIPAY
+                    transactionId: null
+                    paymentEntityStatus: 99
+                    paymentEntityBalance: null
+                    errorReason: null
+                    reasonId: null
+                    reasonDes: null
+                    paymentUrl:
+                      chargeUrl: 'http://localhost:3000/redsys_payment/eyJwYXJhbXMiOiJleUpFVTE5TlJWSkRTRUZPVkY5QlRVOVZUbFFpT2pFNU5UQXdMQ0pFVTE5TlJWSkRTRUZPVkY5UFVrUkZVaUk2SWpZeU5qTTRNamN6TlRVNU1DSXNJa1JUWDAxRlVrTklRVTVVWDAxRlVrTklRVTVVUTA5RVJTSTZJakV5TkRRek9UY3hNaUlzSWtSVFgwMUZVa05JUVU1VVgwTlZVbEpGVGtOWklqb2lPVGM0SWl3aVJGTmZUVVZTUTBoQlRsUmZWRkpCVGxOQlExUkpUMDVVV1ZCRklqb3dMQ0pFVTE5TlJWSkRTRUZPVkY5TlJWSkRTRUZPVkZWU1RDSTZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZNekF3TUM5aGNHa3ZZMkZzYkdKaFkyc3ZjbVZrYzNseklpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVQwc2lPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDA5TElpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVMwOGlPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDB0UEluMD0iLCJzaWduYXR1cmUiOiJrS3prbEtGRGlsT05odGEwYk1HSU8yME9RTm5LSWh2VXZIdkJ6SWxQRTc0PSIsInJlZHN5c1VybCI6Imh0dHBzOi8vc2lzLXQucmVkc3lzLmVzOjI1NDQzL3Npcy9yZWFsaXphclBhZ28ifQ=='
       requestBody:
         content:
           application/json:
@@ -2452,6 +2601,7 @@ paths:
                   destinationCurrency: EUR
                   originalCurrencyAmount: 19500
                   conversionRate: 1
+        description: 'Here we have an example of a valid request: '
       description: ''
 components:
   schemas:
