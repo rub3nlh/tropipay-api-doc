@@ -2597,7 +2597,27 @@ paths:
                   originalCurrencyAmount: 19500
                   conversionRate: 1
         description: 'Here we have an example of a valid request: '
-      description: ''
+      description: |
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer USER_TOKEN
+        ```
+        requires that the user is authenticated, obtain the user token through **'/access/login'** 
+
+        an example would be:
+        ```
+          Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
+        ```
+      parameters:
+        - schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
+          in: header
+          name: Authorization
+          description: Bearer USER_TOKEN
+          required: true
   /movements/in/paylink:
     post:
       summary: ''
@@ -2802,6 +2822,28 @@ paths:
                   expirationDate: '2021-03-31'
                   serviceDate: ''
         description: 'Here we have an example of a valid request: '
+      description: |
+        This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges. 
+
+        ## Authentication
+        Fot the authentication you need to send the Authorization header with the value: 
+        ```
+          Bearer USER_TOKEN
+        ```
+        requires that the user is authenticated, obtain the user token through **'/access/login'** 
+
+        an example would be:
+        ```
+          Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
+        ```
+      parameters:
+        - schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
+          in: header
+          name: Authorization
+          description: Bearer USER_TOKEN
+          required: true
 components:
   schemas:
     User:
