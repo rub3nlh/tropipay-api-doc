@@ -2603,6 +2603,215 @@ paths:
                   conversionRate: 1
         description: 'Here we have an example of a valid request: '
       description: ''
+  /movements/in/paylink:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-movements-in-paylink
+    post:
+      summary: ''
+      operationId: post-movements-in-paylink
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  reference:
+                    type: string
+                    minLength: 1
+                  concept:
+                    type: string
+                    minLength: 1
+                  description:
+                    type: string
+                    minLength: 1
+                  amount:
+                    type: number
+                  currency:
+                    type: string
+                    minLength: 1
+                  singleUse:
+                    type: boolean
+                  reasonId:
+                    type: number
+                  reasonDes:
+                    type: string
+                  expirationDays:
+                    type: number
+                  userId:
+                    type: string
+                    minLength: 1
+                  lang:
+                    type: string
+                    minLength: 1
+                  state:
+                    type: number
+                  urlSuccess:
+                    type: string
+                  urlFailed:
+                    type: string
+                  urlNotification:
+                    type: string
+                  expirationDate:
+                    type: string
+                    minLength: 1
+                  serviceDate: {}
+                  hasClient:
+                    type: boolean
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  qrImage:
+                    type: string
+                    minLength: 1
+                  shortUrl:
+                    type: string
+                    minLength: 1
+                  paymentUrl: {}
+                required:
+                  - id
+                  - reference
+                  - concept
+                  - description
+                  - amount
+                  - currency
+                  - singleUse
+                  - reasonId
+                  - reasonDes
+                  - expirationDays
+                  - userId
+                  - lang
+                  - state
+                  - urlSuccess
+                  - urlFailed
+                  - urlNotification
+                  - expirationDate
+                  - hasClient
+                  - updatedAt
+                  - createdAt
+                  - qrImage
+                  - shortUrl
+              examples:
+                example-1:
+                  value:
+                    id: 5a5cdfb0-8d9d-11eb-bfee-1922dac72c62
+                    reference: demo23232323
+                    concept: locura
+                    description: es una cosa loca este cobro
+                    amount: 11500
+                    currency: EUR
+                    singleUse: true
+                    reasonId: 4
+                    reasonDes: ''
+                    expirationDays: 0
+                    userId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    lang: es
+                    state: 1
+                    urlSuccess: ''
+                    urlFailed: ''
+                    urlNotification: ''
+                    expirationDate: '2021-03-31T00:00:00.000Z'
+                    serviceDate: null
+                    hasClient: false
+                    updatedAt: '2021-03-25T19:07:33.083Z'
+                    createdAt: '2021-03-25T19:07:33.035Z'
+                    qrImage: 'data:image/png;base64,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'
+                    shortUrl: 'https://www.tropipay.com/money-request/5a5cdfb0-8d9d-11eb-bfee-1922dac72c62'
+                    paymentUrl: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                concept:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                singleUse:
+                  type: boolean
+                reasonId:
+                  type: number
+                reasonDes:
+                  type: string
+                expirationDays:
+                  type: number
+                userId:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                expirationDate:
+                  type: string
+                  minLength: 1
+                serviceDate:
+                  type: string
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - reasonDes
+                - expirationDays
+                - userId
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - expirationDate
+                - serviceDate
+            examples:
+              example-1:
+                value:
+                  reference: demo23232323
+                  concept: locura
+                  description: es una cosa loca este cobro
+                  amount: 11500
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  reasonDes: ''
+                  expirationDays: 1
+                  userId: e2931920-e402-11ea-a30d-83c978a74aaa
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: '2021-03-31'
+                  serviceDate: ''
+        description: 'Here we have an example of a valid request: '
 components:
   schemas:
     User:
