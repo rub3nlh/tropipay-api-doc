@@ -779,7 +779,7 @@ paths:
             }
             ```
       operationId: get-api-countries
-      description: Endpoint that allows obtaining the list of countries
+      description: 'Endpoint that allows obtaining the list of countries. Useful to get country ids required when creating new users ("birthCountryId" and "countryDestinationid" fields of User model) '
     parameters: []
   /countries/destinations:
     get:
