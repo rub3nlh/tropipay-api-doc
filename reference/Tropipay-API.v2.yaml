@@ -933,8 +933,6 @@ paths:
               description: ''
               type: object
               properties:
-                mid:
-                  type: number
                 clientTypeId:
                   type: number
                 email:
@@ -998,7 +996,6 @@ paths:
                   type: string
                   minLength: 1
               required:
-                - mid
                 - clientTypeId
                 - email
                 - password
@@ -1030,9 +1027,7 @@ paths:
           >Tropipay-API.v2.yaml/paths/~1access~1sendEmailCode)
           >to get validationToken
       parameters:
-        - schema:
-            type: string
-          in: header
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Authentication
     parameters: []
@@ -1072,7 +1067,10 @@ paths:
                     error:
                       code: VALIDATION_ERROR
                       message: That email is already registered
-      description: 'In order to subscribe a new user, you have first to validate user email. This can be done by POSTing the new user email '
+      description: |-
+        This is the very first step in order to subscribe a new user, this allows you to validate user email. Upon successful POST an email will be sent to the specified address with a time-limited token.
+
+        When making later the signup POST, this token will be the required parameter "validationCode" 
       requestBody:
         content:
           application/json:
@@ -1084,6 +1082,11 @@ paths:
                 name:
                   type: string
                   description: User Name to show in email
+                lang:
+                  type: string
+                  description: The email text language
+              required:
+                - email
             examples:
               example-1:
                 value:
@@ -1091,6 +1094,8 @@ paths:
         description: ''
       tags:
         - Authentication
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
   /access/sendPhoneCode:
     post:
       summary: Send Phone Validation Code to user
@@ -3215,6 +3220,13 @@ components:
       schema:
         type: string
       description: 'Bearer {your-token}'
+    Merchant-Authorization-Token:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'Bearer {merchant-token}'
   responses:
     depositAccount:
       description: This is the entire DepositAccount object stored
