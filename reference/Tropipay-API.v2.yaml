@@ -150,7 +150,7 @@ paths:
       description: Create a new user.
       tags:
         - Users
-  /hook:
+  /hooks:
     get:
       summary: Get a list of all events subscribed with Hooks
       tags:
@@ -1053,7 +1053,7 @@ paths:
       tags:
         - Authentication
     parameters: []
-  /access/sendEmailCode:
+  /access/send_email_code:
     parameters: []
     post:
       summary: 'SignUp workflow step 1: Send Email Validation Code to user'
@@ -1126,7 +1126,7 @@ paths:
         - Authentication
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
-  /access/sendPhoneCode:
+  /access/send_phone_code:
     post:
       summary: 'SignUp workflow step 3: Send Phone Validation Code to user'
       operationId: post-access-sendPhoneCode
@@ -1161,6 +1161,7 @@ paths:
                 - callingCode
                 - phone
                 - lang
+    parameters: []
   /depositaccounts:
     get:
       summary: Get Deposit Accounts List
@@ -1483,7 +1484,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - DepositAccounts
-  /access/validatePhone:
+  /access/validate_phone:
     post:
       summary: 'SignUp workflow step 4: Validate user Phone number'
       operationId: post-access-validatePhone
@@ -1495,6 +1496,7 @@ paths:
         - Authentication
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
+    parameters: []
   /kyc:
     post:
       summary: Get a Link for an User KYC
