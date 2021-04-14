@@ -583,7 +583,7 @@ paths:
     parameters: []
   /access:
     post:
-      summary: Obtain login URL
+      summary: 'Login Workflow step 1: Obtain login URL'
       operationId: post-api-v2-access
       responses:
         '200':
@@ -617,10 +617,10 @@ paths:
                       code: 'OperationError: Failed to validate merchant token!'
                       message: Failed to authenticate token for Merchant!
       description: |
-        Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an *IFRAME*. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
+        Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an ```<IFRAME>```. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
 
         ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
+        For the authentication you need to send the Authorization header with the value: 
         ```
           Bearer YOUR_TOKEN
         ```
@@ -723,7 +723,7 @@ paths:
                   redirectUrl: 'https://www.merchant.com/homr'
         description: 'Here we have an example of a valid request:'
       parameters:
-        - $ref: '#/components/parameters/User-Authorization-Token'
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Authentication
     parameters: []
@@ -779,7 +779,14 @@ paths:
             }
             ```
       operationId: get-api-countries
-      description: 'Endpoint that allows obtaining the list of countries. Useful to get country ids required when creating new users ("birthCountryId" and "countryDestinationid" fields of User model) '
+      description: |
+        Endpoint that allows obtaining the list of countries. Useful to get country ids required when creating new users (```birthCountryId``` and ```countryDestinationid``` fields of User model)
+
+        <!-- theme: info -->
+        >### info
+        > when sending birthCountryId and countryDestinationId values, you can use country Slugs >instead of country Ids using [two-letter codes from ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). 
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
     parameters: []
   /countries/destinations:
     get:
@@ -917,7 +924,7 @@ paths:
       description: Endpoint that allows obtaining the list of occupations
   /access/signup:
     post:
-      summary: User SignUp
+      summary: 'SignUp workflow step 2: Register user data'
       operationId: post-access-signup
       responses:
         '200':
@@ -963,7 +970,9 @@ paths:
                 isPublicOffice:
                   type: boolean
                 birthCountryId:
-                  type: number
+                  type:
+                    - string
+                    - number
                 documentId:
                   type: string
                   minLength: 1
@@ -976,7 +985,9 @@ paths:
                   type: string
                   minLength: 1
                 countryDestinationId:
-                  type: number
+                  type:
+                    - string
+                    - number
                 city:
                   type: string
                   minLength: 1
@@ -1034,11 +1045,15 @@ paths:
   /access/sendEmailCode:
     parameters: []
     post:
-      summary: Send Email Validation Code to user
+      summary: 'SignUp workflow step 1: Send Email Validation Code to user'
       operationId: post-access-sendEmailCode
       responses:
         '200':
-          description: OK
+          description: |-
+            {
+                "message": "Security Code Sent",
+                "response": "OK"
+            }
         '400':
           description: BAD REQUEST
           content:
@@ -1067,10 +1082,14 @@ paths:
                     error:
                       code: VALIDATION_ERROR
                       message: That email is already registered
+            application/xml:
+              schema:
+                type: object
+                properties: {}
       description: |-
         This is the very first step in order to subscribe a new user, this allows you to validate user email. Upon successful POST an email will be sent to the specified address with a time-limited token.
 
-        When making later the signup POST, this token will be the required parameter "validationCode" 
+        Later, when making the signup POST, this token will be the required parameter ```validationCode``` 
       requestBody:
         content:
           application/json:
@@ -1098,13 +1117,39 @@ paths:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
   /access/sendPhoneCode:
     post:
-      summary: Send Phone Validation Code to user
+      summary: 'SignUp workflow step 3: Send Phone Validation Code to user'
       operationId: post-access-sendPhoneCode
       responses:
         '200':
           description: OK
       tags:
         - Authentication
+      description: 'Once the User has been registered, his phone number should be verified. In order to accomplish this, a secret code should be sent to user phone through this endpoint. Note that the received code by SMS will be required in order to validate the user phone number in [step 4](Tropipay-API.v2.yaml/paths/~1access~1validatePhone)'
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                callingCode:
+                  type: string
+                  minLength: 1
+                  description: The corresponding country phone code
+                phone:
+                  type: string
+                  minLength: 1
+                  description: The phone number tu send SMS to
+                lang:
+                  type: string
+                  minLength: 1
+                  description: The message language
+              required:
+                - callingCode
+                - phone
+                - lang
   /depositaccounts:
     get:
       summary: Deposit Accounts
@@ -1422,14 +1467,16 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
   /access/validatePhone:
     post:
-      summary: Validate user Phone number
+      summary: 'SignUp workflow step 4: Validate user Phone number'
       operationId: post-access-validatePhone
       responses:
         '200':
           description: OK
-      description: 'This allows to validate some user phone number by a secret code previously sent to user by SMS. See [SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1sendPhoneCode) for details on how to send validation codes'
+      description: 'This allows to validate some user phone number by a secret code previously sent to user by SMS. See [Step 3: SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1sendPhoneCode) for details on how to send validation codes'
       tags:
         - Authentication
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
   /kyc:
     post:
       summary: ''
