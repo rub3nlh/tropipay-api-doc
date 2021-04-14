@@ -2938,9 +2938,9 @@ paths:
 components:
   schemas:
     User:
-      title: User
+      title: User Model
       type: object
-      description: User Model for Tropipay Clients
+      description: ''
       x-examples:
         Alice Smith:
           id: 1423
