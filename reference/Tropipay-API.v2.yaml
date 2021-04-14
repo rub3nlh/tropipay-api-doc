@@ -1441,7 +1441,8 @@ paths:
   '/depositaccounts/:id':
     get:
       summary: Get Deposit Account information
-      tags: []
+      tags:
+        - DepositAccounts
       responses:
         '200':
           $ref: '#/components/responses/depositAccount'
@@ -1538,10 +1539,13 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
+      tags:
+        - kyc
   /configure:
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: Obtaining list of settings
+      tags:
+        - Configure
       responses:
         '200':
           description: Here we have an example of a valid response
@@ -1595,8 +1599,9 @@ paths:
           required: true
   /configure/price:
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: Obtaining Prices
+      tags:
+        - Configure
       responses:
         '200':
           description: Here we have an example of a valid response
@@ -1643,7 +1648,7 @@ paths:
           description: 'Bearer {YOUR_TOKEN}'
           required: true
     post:
-      summary: ''
+      summary: Setting the public price
       operationId: post-configure-price
       responses:
         '200':
@@ -2679,6 +2684,9 @@ paths:
           name: Authorization
           description: Bearer USER_TOKEN
           required: true
+      tags:
+        - movements
+        - movements-in
   /movements/in/paylink:
     post:
       summary: ''
@@ -2905,6 +2913,9 @@ paths:
           name: Authorization
           description: Bearer USER_TOKEN
           required: true
+      tags:
+        - movements
+        - movements-in
 components:
   schemas:
     User:
