@@ -500,7 +500,7 @@ paths:
       tags:
         - Hooks
     parameters: []
-  /hook/events:
+  /hooks/events:
     get:
       summary: Get a list with all events that allow a subscription
       responses:
