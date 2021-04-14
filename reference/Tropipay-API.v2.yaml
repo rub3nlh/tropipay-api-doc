@@ -16,7 +16,7 @@ paths:
         required: true
         description: Id of an existing user.
     get:
-      summary: Get User Info by User ID
+      summary: Get User Info Detail
       responses:
         '200':
           description: User Found
@@ -92,6 +92,8 @@ paths:
                   lastName: Baker
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
+      tags:
+        - Users
   /user:
     post:
       summary: Create New User
@@ -150,7 +152,7 @@ paths:
         - Users
   /hook:
     get:
-      summary: Your GET endpoint
+      summary: Get a list of all events subscribed with Hooks
       tags:
         - Hooks
       responses:
@@ -238,7 +240,7 @@ paths:
         * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
         * **value:** String that represents the value depending on the type of selected event determined by the 'target' property, for example if the selected 'target' is email the value would be an email address, likewise if the selected 'target' is 'web' the expected value corresponds to a url that receives information through the HTTP POST method. 
     post:
-      summary: Subscribe to new hook
+      summary: Subscribe to new event with a hook
       operationId: post-api-v2-hook
       responses:
         '200':
@@ -332,8 +334,10 @@ paths:
           description: 'Bearer {your-token}'
           name: Authentication
           required: true
+      tags:
+        - Hooks
     put:
-      summary: ''
+      summary: Update subscription to an event
       operationId: put-api-v2-hook
       responses:
         '200':
@@ -411,8 +415,10 @@ paths:
                   target: email
                   value: tonykssa@gmail.com
         description: ''
+      tags:
+        - Hooks
     delete:
-      summary: ''
+      summary: Delete the subscription to an event
       operationId: delete-api-v2-hook
       responses:
         '200':
@@ -491,10 +497,12 @@ paths:
                 value:
                   event: user_signup
         description: ''
+      tags:
+        - Hooks
     parameters: []
   /hook/events:
     get:
-      summary: Your GET endpoint
+      summary: Get a list with all events that allow a subscription
       responses:
         '200':
           description: 'Here we have an example of a valid response: '
@@ -880,7 +888,7 @@ paths:
     parameters: []
   /occupations:
     get:
-      summary: Your GET endpoint
+      summary: Get Occupations List
       tags:
         - Occupations
       responses:
@@ -1155,7 +1163,7 @@ paths:
                 - lang
   /depositaccounts:
     get:
-      summary: Deposit Accounts
+      summary: Get Deposit Accounts List
       tags:
         - DepositAccounts
       responses:
@@ -1360,7 +1368,7 @@ paths:
         - in: unknown
         - $ref: '#/components/parameters/User-Authorization-Token'
     post:
-      summary: ''
+      summary: Create a new Deposit Account
       operationId: post-depositaccounts
       responses:
         '200':
@@ -1441,9 +1449,11 @@ paths:
                 - beneficiaryType
                 - currency
                 - paymentType
+      tags:
+        - DepositAccounts
   '/depositaccounts/:id':
     get:
-      summary: Get Deposit Account information
+      summary: Get Deposit Account detail information
       tags:
         - DepositAccounts
       responses:
@@ -1453,15 +1463,17 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     put:
-      summary: Update Deposit Account information
+      summary: Update a Deposit Account
       operationId: 'put-depositaccounts-:id'
       responses:
         '200':
           $ref: '#/components/responses/depositAccount'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - DepositAccounts
     delete:
-      summary: Delete Deposit Account
+      summary: Delete a Deposit Account
       operationId: 'delete-depositaccounts-:id'
       responses:
         '200':
@@ -1469,6 +1481,8 @@ paths:
       description: Deletes the beneficiary indicated by id
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - DepositAccounts
   /access/validatePhone:
     post:
       summary: 'SignUp workflow step 4: Validate user Phone number'
@@ -1483,7 +1497,7 @@ paths:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
   /kyc:
     post:
-      summary: ''
+      summary: Get a Link for an User KYC
       operationId: post-kyc
       responses:
         '200':
@@ -1713,9 +1727,11 @@ paths:
                 value:
                   publicPrice: '2.5'
         description: Here we have an example of a valid request
+      tags:
+        - Configure
   /movements/in/charge:
     post:
-      summary: ''
+      summary: Create a new OTA Virtual Card Charge
       operationId: post-movements-in-charge
       responses:
         '200':
@@ -2692,7 +2708,7 @@ paths:
         - movements-in
   /movements/in/paylink:
     post:
-      summary: ''
+      summary: Create a new PayLink Charge
       operationId: post-movements-in-paylink
       responses:
         '200':
