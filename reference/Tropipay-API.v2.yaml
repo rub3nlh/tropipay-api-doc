@@ -150,7 +150,7 @@ paths:
       description: Create a new user.
       tags:
         - Users
-  /hooks:
+  /merchant/hooks:
     get:
       summary: Get a list of all events subscribed with Hooks
       tags:
@@ -500,7 +500,7 @@ paths:
       tags:
         - Hooks
     parameters: []
-  /hooks/events:
+  /merchant/hooks/events:
     get:
       summary: Get a list with all events that allow a subscription
       responses:
@@ -1162,7 +1162,7 @@ paths:
                 - phone
                 - lang
     parameters: []
-  /depositaccounts:
+  /deposit_accounts:
     get:
       summary: Get Deposit Accounts List
       tags:
@@ -1452,7 +1452,8 @@ paths:
                 - paymentType
       tags:
         - DepositAccounts
-  '/depositaccounts/:id':
+    parameters: []
+  '/deposit_accounts/:id':
     get:
       summary: Get Deposit Account detail information
       tags:
@@ -1484,6 +1485,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - DepositAccounts
+    parameters: []
   /access/validate_phone:
     post:
       summary: 'SignUp workflow step 4: Validate user Phone number'
@@ -1497,7 +1499,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
     parameters: []
-  /kyc:
+  /merchant/kyc:
     post:
       summary: Get a Link for an User KYC
       operationId: post-kyc
@@ -1560,7 +1562,8 @@ paths:
           required: true
       tags:
         - Users
-  /configure:
+    parameters: []
+  /merchant/settings:
     get:
       summary: Obtaining list of settings
       tags:
@@ -1616,7 +1619,8 @@ paths:
           name: Authorization
           description: 'Bearer {YOUR_TOKEN}'
           required: true
-  /configure/price:
+    parameters: []
+  /settings/price:
     get:
       summary: Obtaining Prices
       tags:
@@ -1731,6 +1735,7 @@ paths:
         description: Here we have an example of a valid request
       tags:
         - Configure
+    parameters: []
   /movements/in/charge:
     post:
       summary: Create a new OTA Virtual Card Charge
@@ -2937,6 +2942,89 @@ paths:
       tags:
         - movements
         - movements-in
+  /movements/in/charge_user_card:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-movements-in-charge_user_card
+  /merchant/settings/get_prices:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Configure
+      responses:
+        '200':
+          description: |-
+            {
+                "rate": 1.1997,
+                "viability": null,
+                "prices": [
+                    {
+                        "agent": "TROPIPAY",
+                        "path": "BANK DEPOSIT",
+                        "paymentType": 2,
+                        "toSend": 83668,
+                        "toGet": 94900,
+                        "rate": "1.1348",
+                        "fee": 5015,
+                        "bankFee": 1865,
+                        "destinationCurrency": "USD",
+                        "toGetEUR": 83668,
+                        "cuc": 94900
+                    },
+                    {
+                        "agent": "T - FINCIMEX - TARJETA AIS",
+                        "agentId": "T070",
+                        "subAgentId": "2",
+                        "path": "TARJETA AIS",
+                        "paymentType": 4,
+                        "toSend": "100000",
+                        "toGet": 95200,
+                        "rate": "0.9520",
+                        "fee": 3832,
+                        "bankFee": 600,
+                        "destinationCurrency": "CUC",
+                        "toGetEUR": 79652
+                    },
+                    {
+                        "agent": "T - FINCIMEX - TARJETA AIS USD",
+                        "agentId": "T070",
+                        "subAgentId": "5",
+                        "path": "TARJETA AIS",
+                        "paymentType": 4,
+                        "toSend": "100000",
+                        "toGet": 94900,
+                        "rate": "0.9490",
+                        "fee": 4202,
+                        "bankFee": 900,
+                        "destinationCurrency": "USD",
+                        "toGetEUR": 79401
+                    }
+                ]
+            }
+      operationId: get-merchant-settings-get_prices
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+        - schema:
+            type: string
+          in: query
+          name: country
+          description: Destination Country
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: amountToSend
+          description: The amount to send in cents
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: currencyToSend
+          description: The currency to send
+          required: true
+      description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is usefull to build an online calculator to show costs to clients'
 components:
   schemas:
     User:
