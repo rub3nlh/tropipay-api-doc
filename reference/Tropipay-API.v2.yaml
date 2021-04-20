@@ -630,26 +630,6 @@ paths:
       description: |
         Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an ```<IFRAME>```. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
 
-        ## Authentication
-        For the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colon symbol ( : )
-
-        <!-- theme: info -->
-        >#### info
-        > Don't forget the spaces around the colon symbol
 
         ### Request Parameters
 
@@ -1110,12 +1090,13 @@ paths:
               properties:
                 email:
                   type: string
+                  description: The email to verify
                 name:
                   type: string
                   description: User Name to show in email
                 lang:
                   type: string
-                  description: The email text language
+                  description: The email body language
               required:
                 - email
             examples:
@@ -1594,7 +1575,7 @@ paths:
                       updatedAt: '2021-03-18T04:00:00.000Z'
       operationId: configure
       description: |
-        Endpoint that allows obtaining the list of merchant public setting.
+        Endpoint that allows obtaining the list of merchant settings.
 
 
         ## Authentication
