@@ -1472,6 +1472,45 @@ paths:
               properties: {}
       tags:
         - Transactions
+  /booking/sendSecurityCode:
+    post:
+      summary: Send Security Code.
+      operationId: post-booking-sendSecurityCode
+      responses:
+        '200':
+          description: For develep use the code isnt sent you can use 123456.
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  message:
+                    type: string
+                    minLength: 1
+                  response:
+                    type: string
+                    minLength: 1
+                required:
+                  - message
+                  - response
+              examples:
+                example-1:
+                  value:
+                    message: Security Code Sent
+                    response: OK
+      description: |
+        Send a security Code to User phone. 
+        This code allow an User sign a transfer or make change in configuration. 
+        It is valid only if the User doesn't have the Google Auth Token like 2FA, In this case The security code will be provider by Google Authenticar. 
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
+      tags:
+        - Transactions
 components:
   schemas: {}
 tags:
