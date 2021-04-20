@@ -2625,13 +2625,15 @@ paths:
         - movements
         - movements-in
   /movements/in/charge_user_card:
-    get:
-      summary: Your GET endpoint
-      responses: {}
-      operationId: get-movements-in-charge_user_card
+    post:
+      summary: ''
+      operationId: post-movements-in-charge_user_card
+      responses:
+        '200':
+          description: OK
+      description: This gives the url to get the bank form to charge the user personal debit or credit cards
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
-      description: This gives the url to get the bank form to charge the user personal debit or credit cards
       tags:
         - movements
         - movements-in
