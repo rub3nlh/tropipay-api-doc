@@ -42,6 +42,10 @@ Get the value and add the corresponding header to all subsequent requests. The h
 ```
   Bearer USER_TOKEN
 ```
+an example header would be:
+```
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
+```
 
 <!-- theme: info -->
 >#### info

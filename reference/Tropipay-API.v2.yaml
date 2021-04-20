@@ -40,6 +40,8 @@ paths:
       description: Retrieve the information of the user with the matching user ID.
       tags:
         - Users
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -92,62 +94,6 @@ paths:
                   lastName: Baker
                   dateOfBirth: '1985-10-02'
         description: Patch user properties to update.
-      tags:
-        - Users
-  /user:
-    post:
-      summary: Create New User
-      operationId: post-user
-      responses:
-        '200':
-          description: User Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                New User Bob Fellow:
-                  value:
-                    id: 12
-                    firstName: Bob
-                    lastName: Fellow
-                    email: bob.fellow@gmail.com
-                    dateOfBirth: '1996-08-24'
-                    emailVerified: false
-                    createDate: '2020-11-18'
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                dateOfBirth:
-                  type: string
-                  format: date
-              required:
-                - firstName
-                - lastName
-                - email
-                - dateOfBirth
-            examples:
-              Create User Bob Fellow:
-                value:
-                  firstName: Bob
-                  lastName: Fellow
-                  email: bob.fellow@gmail.com
-                  dateOfBirth: '1996-08-24'
-        description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
       tags:
         - Users
   /merchant/hooks:
@@ -448,23 +394,6 @@ paths:
       description: |
         Endpoint for get full list of available events.
 
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
-
         ## Events 
         Events are made up of an object with two fundamental properties *(name, description)*
         ```json
@@ -487,13 +416,7 @@ paths:
         + **payment_in_state_change:** The event is fired once a user changes their status payment in entry method.
         + **payment_out_state_change:** The event is fired once a user changes their status payment out entry method.
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Hooks
     parameters: []
@@ -1424,32 +1347,9 @@ paths:
                           location: body
                       message: Invalid Parameter
       description: |
-        Endpoint for generate KYC wizard link.
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+        This endpoint is for generating KYC wizard link. the received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Users
     parameters: []
@@ -1481,34 +1381,9 @@ paths:
                       createdAt: '2021-03-18T04:00:00.000Z'
                       updatedAt: '2021-03-18T04:00:00.000Z'
       operationId: configure
-      description: |
-        Endpoint that allows obtaining the list of merchant settings.
-
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      description: Endpoint that allows obtaining the list of merchant settings.
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
     parameters: []
   /settings/price:
     get:
@@ -1534,32 +1409,8 @@ paths:
       operationId: get-configure-price
       description: |
         Endpoint that allows obtaining the public price.
-
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
     post:
       summary: Setting the public price
       operationId: post-configure-price
@@ -1579,33 +1430,10 @@ paths:
                     state: '1'
                     createdAt: '2021-03-18T20:10:37.670Z'
                     updatedAt: '2021-03-18T20:10:37.670Z'
-      description: |-
-        Endpoint that allows set the public price.
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+      description: |
+        Endpoint that allows to set the public price.
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       requestBody:
         content:
           application/json:
@@ -2580,26 +2408,8 @@ paths:
 
         ### How to complete the charge:
         With the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer USER_TOKEN
-        ```
-        requires that the user is authenticated, obtain the user token through **'/access/login'** 
-
-        an example would be:
-        ```
-          Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
-        ```
       parameters:
-        - schema:
-            type: string
-            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
-          in: header
-          name: Authorization
-          description: Bearer USER_TOKEN
-          required: true
+        - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - movements
         - movements-in
@@ -2809,26 +2619,8 @@ paths:
         description: 'Here we have an example of a valid request: '
       description: |
         This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges. 
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer USER_TOKEN
-        ```
-        requires that the user is authenticated, obtain the user token through **'/access/login'** 
-
-        an example would be:
-        ```
-          Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
-        ```
       parameters:
-        - schema:
-            type: string
-            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyOTMxOTIwLWU0MDItMTFlYS1hMzBkLTgzYzk3OGE3NGFhYSIsImVtYWlsIjoidG9ueWtzc2FAZ21haWwuY29tIiwiaWF0IjoxNjE2NzAxMDY2LCJleHAiOjE2MTY3ODc0NjZ9.1JCk_lYwBLlUxPC-UHrSUrpHecDJZeW-1H_cH13T37w
-          in: header
-          name: Authorization
-          description: Bearer USER_TOKEN
-          required: true
+        - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - movements
         - movements-in
@@ -2838,6 +2630,9 @@ paths:
       tags: []
       responses: {}
       operationId: get-movements-in-charge_user_card
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: This gives the url to get the bank form to charge the user personal debit or credit cards
   /merchant/settings/get_prices:
     get:
       summary: Your GET endpoint
@@ -2914,7 +2709,7 @@ paths:
           name: currencyToSend
           description: The currency to send
           required: true
-      description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is usefull to build an online calculator to show costs to clients'
+      description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
 components:
   schemas:
     User:
