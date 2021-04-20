@@ -2753,6 +2753,8 @@ components:
         - lastName
         - email
         - emailVerified
+      x-tags:
+        - Users
     Event:
       description: ''
       type: object
