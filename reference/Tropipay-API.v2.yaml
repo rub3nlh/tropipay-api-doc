@@ -1017,6 +1017,7 @@ paths:
                 validationCode:
                   type: string
                   minLength: 1
+                  description: A verification code sent before to user. See /access/send_email_code
               required:
                 - clientTypeId
                 - email
@@ -1046,7 +1047,7 @@ paths:
           <!-- theme: warning -->
           >### warning
           >Before doing this request make sure to verify user email address by [sending email code]( 
-          >Tropipay-API.v2.yaml/paths/~1access~1sendEmailCode)
+          >Tropipay-API.v2.yaml/paths/~1access~1send_email_code)
           >to get validationToken
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
@@ -1135,7 +1136,7 @@ paths:
           description: OK
       tags:
         - Authentication
-      description: 'Once the User has been registered, his phone number should be verified. In order to accomplish this, a secret code should be sent to user phone through this endpoint. Note that the received code by SMS will be required in order to validate the user phone number in [step 4](Tropipay-API.v2.yaml/paths/~1access~1validatePhone)'
+      description: 'Once the User has been registered, his phone number should be verified. In order to accomplish this, a secret code should be sent to user phone through this endpoint. Note that the received code by SMS will be required in order to validate the user phone number in [step 4](Tropipay-API.v2.yaml/paths/~1access~1validate_phone)'
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       requestBody:
@@ -1455,7 +1456,7 @@ paths:
     parameters: []
   '/deposit_accounts/:id':
     get:
-      summary: Get Deposit Account detail information
+      summary: Get Deposit Account Detail
       tags:
         - DepositAccounts
       responses:
@@ -1464,6 +1465,7 @@ paths:
       operationId: 'get-depositaccounts-:id'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      description: This returns details of a specific Deposit Account (beneficiary) specified by its ID
     put:
       summary: Update a Deposit Account
       operationId: 'put-depositaccounts-:id'
@@ -1493,7 +1495,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'This allows to validate some user phone number by a secret code previously sent to user by SMS. See [Step 3: SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1sendPhoneCode) for details on how to send validation codes'
+      description: 'This allows to validate some user phone number through a secret code previously sent to user by SMS. See [Step 3: SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1send_phone_code) for details on how to send validation codes'
       tags:
         - Authentication
       parameters:
@@ -3386,7 +3388,7 @@ components:
       required: true
       schema:
         type: string
-      description: 'Bearer {your-token}'
+      description: 'Bearer {user-token}'
     Merchant-Authorization-Token:
       name: Authorization
       in: header
