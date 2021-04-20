@@ -2627,12 +2627,14 @@ paths:
   /movements/in/charge_user_card:
     get:
       summary: Your GET endpoint
-      tags: []
       responses: {}
       operationId: get-movements-in-charge_user_card
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       description: This gives the url to get the bank form to charge the user personal debit or credit cards
+      tags:
+        - movements
+        - movements-in
   /merchant/settings/get_prices:
     get:
       summary: Your GET endpoint
@@ -2753,8 +2755,6 @@ components:
         - lastName
         - email
         - emailVerified
-      x-tags:
-        - Users
     Event:
       description: ''
       type: object
