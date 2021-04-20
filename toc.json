@@ -1,13 +1,27 @@
 {
   "items": [
     {
-      "type": "divider",
-      "title": "TPP API V1"
-    },
-    {
       "type": "item",
       "title": "Getting Starter",
       "uri": "docs/1 - Getting started/Getting-started.md"
+    },
+    {
+      "type": "item",
+      "title": "Global Constants",
+      "uri": "docs/2 - Masters/Masters-Tables-Data.md"
+    },
+    {
+      "type": "divider",
+      "title": "TPP API V1.0"
+    },
+    {
+      "type": "item",
+      "title": "API v1.0 Reference",
+      "uri": "reference/Tropipay-API.v1.yaml"
+    },
+    {
+      "type": "divider",
+      "title": "TPP API V2.0"
     },
     {
       "type": "group",
@@ -29,6 +43,11 @@
           "uri": "docs/3 - Api-V2/SignUp.md"
         }
       ]
+    },
+    {
+      "type": "item",
+      "title": "API v2.0 Reference",
+      "uri": "reference/Tropipay-API.v2.yaml"
     }
   ]
 }
