@@ -1,0 +1,3226 @@
+openapi: 3.0.0
+info:
+  title: TPP API v2.0
+  version: '2.0'
+  description: Tropipay API V2.0
+servers:
+  - url: 'https://tropipay-dev.herokuapp.com/api/v2'
+    description: Develop
+paths:
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    get:
+      summary: Get User Info Detail
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+        '404':
+          description: User Not Found
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Updated User Rebecca Baker:
+                  value:
+                    id: 13
+                    firstName: Rebecca
+                    lastName: Baker
+                    email: rebecca@gmail.com
+                    dateOfBirth: '1985-10-02'
+                    emailVerified: false
+                    createDate: '2019-08-24'
+        '404':
+          description: User Not Found
+        '409':
+          description: Email Already Taken
+      description: Update the infromation of an existing user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                  description: 'If a new email is given, the user''s email verified property will be set to false.'
+                dateOfBirth:
+                  type: string
+            examples:
+              Update First Name:
+                value:
+                  firstName: Rebecca
+              Update Email:
+                value:
+                  email: rebecca@gmail.com
+              Update Last Name & Date of Birth:
+                value:
+                  lastName: Baker
+                  dateOfBirth: '1985-10-02'
+        description: Patch user properties to update.
+      tags:
+        - Users
+  /merchant/hooks:
+    get:
+      summary: Get a list of all events subscribed with Hooks
+      tags:
+        - Hooks
+      responses:
+        '200':
+          description: Here we have an example of a valid response for a merchant who subscribed to two events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+              examples:
+                Example:
+                  value:
+                    - event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+                      createdAt: '2021-02-13T21:30:59.154Z'
+                      updatedAt: '2021-02-13T21:30:59.154Z'
+                    - event: user_login
+                      target: web
+                      value: 'http://localhost:4000/api/user/login/listen'
+                      createdAt: '2021-02-13T22:43:11.243Z'
+                      updatedAt: '2021-02-13T22:43:11.243Z'
+        '500':
+          description: |-
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      operationId: get-api-v2-hook
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      description: |
+        Endpoint for getting event hooks list by merchant. 
+
+        ## Event 
+        Events are made up of an object with three fundamental properties *(event, target, value)*
+        ```json
+        {
+              "event": "user_signup",
+              "target": "email",
+              "value": "user@mail.com",
+              "createdAt": "2021-02-13T21:30:59.154Z",
+              "updatedAt": "2021-02-13T21:30:59.154Z"
+        }
+        ```
+
+        * **event:** String that represents the name of the event, you must select from the list of available events, otherwise it will not produce an error but it will not be executed. For get full list of available events see endpoint **GET /api/v2/hook/events**.
+        * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
+        * **value:** String that represents the value depending on the type of selected event determined by the 'target' property, for example if the selected 'target' is email the value would be an email address, likewise if the selected 'target' is 'web' the expected value corresponds to a url that receives information through the HTTP POST method. 
+    post:
+      summary: Subscribe to new event with a hook
+      operationId: post-api-v2-hook
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                example-1:
+                  value:
+                    action: insert
+                    status: success
+                    details:
+                      event: user_signup
+                      target: web
+                      value: 'https://www.merchant_domain.com/api/user/signup/listen'
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                ' Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      description: |
+        Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
+
+        ## Event 
+        Events are made up of an object with three fundamental properties *(event, target, value)*
+        ```json
+        {
+              "event": "user_signup",
+              "target": "email",
+              "value": "tonykssa@gmail.com",
+              "createdAt": "2021-02-13T21:30:59.154Z",
+              "updatedAt": "2021-02-13T21:30:59.154Z"
+        }
+        ```
+
+        * **event:** String that represents the name of the event, you must select from the list of available events, otherwise it will not produce an error but it will not be executed. For get full list of available events see endpoint **GET /api/v2/hook/events**.
+        * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
+        * **value:** String that represents the value depending on the type of selected event determined by the 'target' property, for example if the selected 'target' is email the value would be an email address, likewise if the selected 'target' is 'web' the expected value corresponds to a url that receives information through the HTTP POST method. 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+            examples:
+              example-1:
+                value:
+                  event: user_signup
+                  target: web
+                  value: 'https://www.merchant_domain.com/api/user/signup/listen'
+        description: 'Here we have an example of a valid params request:'
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Hooks
+    put:
+      summary: Update subscription to an event
+      operationId: put-api-v2-hook
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                example-1:
+                  value:
+                    action: update
+                    status: success
+                    details:
+                      event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      description: |
+        Endpoint allows a merchant update event subscription , specifying the options to receive information at the time it is trigger.Take into account the value of the name or denomination of the event cannot be modified, in case it is required to change this field, it is recommended to delete it and create a new subscription.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+            examples:
+              example-1:
+                value:
+                  event: user_signup
+                  target: email
+                  value: tonykssa@gmail.com
+        description: ''
+      tags:
+        - Hooks
+    delete:
+      summary: Delete the subscription to an event
+      operationId: delete-api-v2-hook
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventResponse'
+              examples:
+                example-1:
+                  value:
+                    action: delete
+                    status: success
+                    details:
+                      event: user_signup
+                      target: email
+                      value: tonykssa@gmail.com
+        '500':
+          description: |-
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      description: |
+        This Endpoint allows a merchant to unsubscribe from an event by name or denomination.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event:
+                  type: string
+            examples:
+              example-1:
+                value:
+                  event: user_signup
+        description: ''
+      tags:
+        - Hooks
+    parameters: []
+  /merchant/hooks/events:
+    get:
+      summary: Get a list with all events that allow a subscription
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListDescription'
+              examples:
+                example-1:
+                  value:
+                    - name: user_signup
+                      description: Event launched once an user complete registration on the TropiPay platform.
+                    - name: payment_in_state_change
+                      description: The event is fired once a user changes their status payment in entry method.
+                    - name: payment_out_state_change
+                      description: The event is fired once a user changes their status payment out entry method.
+        '500':
+          description: |
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      operationId: get-api-v2-hook-events
+      description: |
+        Endpoint for get full list of available events.
+
+        ## Events 
+        Events are made up of an object with two fundamental properties *(name, description)*
+        ```json
+        { 
+            name: 'user_signup', 
+            description: 'Event launched once an user complete registration on the TropiPay platform.' 
+        }
+        ```
+        + **user_signup:** Event launched once an user complete registration on the TropiPay platform. 
+        + **user_login:** Event launched once an user complete login on the TropiPay platform.
+        + **user_kyc:** Event launched once an user complete KYC process, indicated in each case the process status. Payload of response:
+        ```js
+              {
+                  userId: String;
+                  status: String;
+                  event: String;
+                  user: Object;
+              }
+        ```
+        + **payment_in_state_change:** The event is fired once a user changes their status payment in entry method.
+        + **payment_out_state_change:** The event is fired once a user changes their status payment out entry method.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Hooks
+    parameters: []
+  /access:
+    post:
+      summary: 'Login Workflow step 1: Obtain login URL'
+      operationId: post-api-v2-access
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessResponse'
+              examples:
+                example-1:
+                  value:
+                    url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
+        '500':
+          description: |-
+            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+             
+            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                'Example 1: Bad token encoding':
+                  value:
+                    error:
+                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                      message: Failed to authenticate token for Merchant!
+                'Example 2: Bad token keys':
+                  value:
+                    error:
+                      code: 'OperationError: Failed to validate merchant token!'
+                      message: Failed to authenticate token for Merchant!
+      description: |
+        Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an ```<IFRAME>```. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
+
+
+        ### Request Parameters
+
+        #### **redirectType** 
+        The type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
+           * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
+           * 2: Set communication with the iframe parent container using the *window.addEventListener* and *parent.postMessage messages*.
+
+        #### **extraCSS**
+        The login form Look and Feel can be customized by the injection of CSS styles, this property defines the url of the remote css to apply.
+
+        Feel free to explore the source code of the login form. Some of the available CSS Classes are as follows:
+        - tpp-container: The parent container of the entire form
+        - tpp-input: All form inputs have this class
+        - tpp-button-container: Each button is contained in a div with this class
+        - tpp-button-next: The NEXT button
+        - tpp-input-email: the class for email field all the time
+        - tpp-input-email-0: the email field when in step 0 (only email input visible)
+        - tpp-input-email-1: the email field when in step 1 (normal login)
+        - tpp-input-email-2: the email field when in step 2 (first-time login)
+        - tpp-input-email-3: the email field when in step 3 (resetting user password)
+        - tpp-input-pass: all password type inputs have this class
+        - tpp-input-pass-2: password inputs for first-time login
+        - tpp-input-pass-3: password inputs when resetting user password
+        - tpp-input-token: the input for typing the secutity token for password reset
+
+        Bellow is an example css stylesheet to render inputs side by side. Use it as a basic example of it's power and be creative ;)
+
+        <!--
+        title: "customStyles.css"
+        lineNumbers: true
+        -->
+
+        ```css
+        .tpp-container{
+            max-width: 2900px;
+        }
+
+        .tpp-input input {
+            color: red;
+        }
+
+        .tpp-input, .tpp-button-container{
+            width: 20%;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .tpp-button-container-3{
+            width: 47%;
+        }
+
+        .tpp-input-3{
+            width: 23%;
+        }
+
+        .tpp-input-email-0{
+            width: 48%;
+        }
+
+        .tpp-button-container{
+            margin-top: 1rem !important;
+        }
+
+        .tpp-button-container button{
+            height: 56px;
+        }
+        ```
+
+        #### **redirectUrl** 
+        Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessRequest'
+            examples:
+              example-1:
+                value:
+                  redirectType: 1
+                  extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+                  redirectUrl: 'https://www.merchant.com/homr'
+        description: 'Here we have an example of a valid request:'
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Authentication
+    parameters: []
+  /countries:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Countries
+      responses:
+        '200':
+          description: |-
+            ```
+            {
+                "count": 245,
+                "rows": [
+                    {
+                        "id": 44,
+                        "name": "Afghanistan",
+                        "sepaZone": false,
+                        "state": 1,
+                        "slug": "AF",
+                        "callingCode": 93,
+                        "isDestination": false,
+                        "createdAt": "2019-09-03T15:22:26.410Z",
+                        "updatedAt": "2019-09-03T15:22:26.410Z"
+                    },
+                    {
+                        "id": 43,
+                        "name": "Albania",
+                        "sepaZone": false,
+                        "state": 1,
+                        "slug": "AL",
+                        "callingCode": 355,
+                        "isDestination": false,
+                        "createdAt": "2019-09-03T15:22:26.410Z",
+                        "updatedAt": "2019-09-03T15:22:26.410Z"
+                    },
+                    ...
+                    {
+                        "id": 254,
+                        "name": "Zimbabwe",
+                        "sepaZone": false,
+                        "state": 1,
+                        "slug": "ZW",
+                        "callingCode": 263,
+                        "isDestination": false,
+                        "createdAt": "2019-09-03T15:22:26.514Z",
+                        "updatedAt": "2019-09-03T15:22:26.514Z"
+                    }
+                ],
+                "limit": 300,
+                "offset": 0
+            }
+            ```
+      operationId: get-api-countries
+      description: |
+        Endpoint that allows obtaining the list of countries. Useful to get country ids required when creating new users (```birthCountryId``` and ```countryDestinationid``` fields of User model)
+
+        <!-- theme: info -->
+        >### info
+        > when sending birthCountryId and countryDestinationId values, you can use country Slugs >instead of country Ids using [two-letter codes from ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). 
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+    parameters: []
+  /countries/destinations:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Countries
+      responses:
+        '200':
+          description: |-
+            ```
+            {
+                "count": 48,
+                "rows": [
+                    {
+                        "id": 5,
+                        "name": "Alemania",
+                        "sepaZone": true,
+                        "state": 1,
+                        "slug": "DE",
+                        "callingCode": 49,
+                        "isDestination": true,
+                        "createdAt": "2019-05-14T09:37:40.349Z",
+                        "updatedAt": "2019-05-14T09:37:40.349Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 22,
+                                "countryDestinationId": 5,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:56:59.669Z",
+                                "updatedAt": "2020-07-31T09:56:59.669Z"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 41,
+                        "name": "Andorra",
+                        "sepaZone": true,
+                        "state": 1,
+                        "slug": "AD",
+                        "callingCode": 376,
+                        "isDestination": true,
+                        "createdAt": "2019-09-03T15:22:26.411Z",
+                        "updatedAt": "2019-10-18T10:21:13.673Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 30,
+                                "countryDestinationId": 41,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:57:20.913Z",
+                                "updatedAt": "2020-07-31T09:57:20.913Z"
+                            }
+                        ]
+                    },
+                    ...
+                    {
+                        "id": 31,
+                        "name": "Uruguay",
+                        "sepaZone": false,
+                        "state": 1,
+                        "slug": "UY",
+                        "callingCode": 598,
+                        "isDestination": true,
+                        "createdAt": "2019-07-24T10:22:09.286Z",
+                        "updatedAt": "2019-07-24T10:22:09.286Z",
+                        "countryPaymentTypes": [
+                            {
+                                "id": 9,
+                                "countryDestinationId": 31,
+                                "paymentTypeId": 2,
+                                "paymentType": "Depósito",
+                                "active": true,
+                                "createdAt": "2020-07-31T09:56:38.686Z",
+                                "updatedAt": "2020-07-31T09:56:38.686Z"
+                            }
+                        ]
+                    }
+                ],
+                "limit": 300,
+                "offset": 0
+            }
+            ```
+      operationId: get-api-countries-destinations
+      description: Endpoint that allows obtaining the list of valid countries to send funds to. Useful when adding new beneficiaries to some user.
+    parameters: []
+  /occupations:
+    get:
+      summary: Get Occupations List
+      tags:
+        - Occupations
+      responses:
+        '200':
+          description: |-
+            ```
+            {
+                "count": 29,
+                "rows": [
+                    {
+                        "id": 15,
+                        "name": "Administrativo/a",
+                        "description": null,
+                        "code": "15",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.228Z",
+                        "updatedAt": "2019-09-03T15:22:26.228Z"
+                    },
+                    {
+                        "id": 4,
+                        "name": "Agricultura",
+                        "description": null,
+                        "code": "2",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.218Z",
+                        "updatedAt": "2019-09-03T15:22:26.218Z"
+                    },
+                    ...
+                    {
+                        "id": 28,
+                        "name": "Transportista",
+                        "description": null,
+                        "code": "29",
+                        "active": true,
+                        "createdAt": "2019-09-03T15:22:26.236Z",
+                        "updatedAt": "2019-09-03T15:22:26.236Z"
+                    }
+                ],
+                "limit": 100,
+                "offset": 0
+            }
+            ```
+      operationId: get-api-occupations
+      description: Endpoint that allows obtaining the list of occupations
+  /access/signup:
+    post:
+      summary: 'SignUp workflow step 2: Register user data'
+      operationId: post-access-signup
+      responses:
+        '200':
+          description: |-
+            {
+                "user": "66291db0-77a2-11eb-a197-a1853f6310fa"
+            }
+      description: This endpoint allows you to add a new user to the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                clientTypeId:
+                  type: number
+                email:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                t_c_version:
+                  type: string
+                  minLength: 1
+                state:
+                  type: number
+                kycLevel: {}
+                name:
+                  type: string
+                  minLength: 1
+                surname:
+                  type: string
+                  minLength: 1
+                birthDate:
+                  type: string
+                  minLength: 1
+                occupationId:
+                  type: number
+                otherOccupationDetail:
+                  type: string
+                  minLength: 1
+                isPublicOffice:
+                  type: boolean
+                birthCountryId:
+                  type:
+                    - string
+                    - number
+                documentId:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                address:
+                  type: string
+                  minLength: 1
+                countryDestinationId:
+                  type:
+                    - string
+                    - number
+                city:
+                  type: string
+                  minLength: 1
+                province:
+                  type: string
+                  minLength: 1
+                postalCode:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+                callingCode:
+                  type: string
+                  minLength: 1
+                validationCode:
+                  type: string
+                  minLength: 1
+                  description: A verification code sent before to user. See /access/send_email_code
+              required:
+                - clientTypeId
+                - email
+                - password
+                - t_c_version
+                - state
+                - name
+                - surname
+                - birthDate
+                - occupationId
+                - otherOccupationDetail
+                - isPublicOffice
+                - birthCountryId
+                - documentId
+                - lang
+                - groupId
+                - address
+                - countryDestinationId
+                - city
+                - province
+                - postalCode
+                - phone
+                - callingCode
+                - validationCode
+        description: |-
+          To create a new user in the system, you have to make a POST with all mandatory fields.
+          <!-- theme: warning -->
+          >### warning
+          >Before doing this request make sure to verify user email address by [sending email code]( 
+          >Tropipay-API.v2.yaml/paths/~1access~1send_email_code)
+          >to get validationToken
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Authentication
+    parameters: []
+  /access/send_email_code:
+    parameters: []
+    post:
+      summary: 'SignUp workflow step 1: Send Email Validation Code to user'
+      operationId: post-access-sendEmailCode
+      responses:
+        '200':
+          description: |-
+            {
+                "message": "Security Code Sent",
+                "response": "OK"
+            }
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        minLength: 1
+                      message:
+                        type: string
+                        minLength: 1
+                    required:
+                      - code
+                      - message
+                required:
+                  - error
+              examples:
+                example:
+                  value:
+                    error:
+                      code: VALIDATION_ERROR
+                      message: That email is already registered
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      description: |-
+        This is the very first step in order to subscribe a new user, this allows you to validate user email. Upon successful POST an email will be sent to the specified address with a time-limited token.
+
+        Later, when making the signup POST, this token will be the required parameter ```validationCode``` 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email to verify
+                name:
+                  type: string
+                  description: User Name to show in email
+                lang:
+                  type: string
+                  description: The email body language
+              required:
+                - email
+            examples:
+              example-1:
+                value:
+                  email: john@doe.com
+        description: ''
+      tags:
+        - Authentication
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+  /access/send_phone_code:
+    post:
+      summary: 'SignUp workflow step 3: Send Phone Validation Code to user'
+      operationId: post-access-sendPhoneCode
+      responses:
+        '200':
+          description: OK
+      tags:
+        - Authentication
+      description: 'Once the User has been registered, his phone number should be verified. In order to accomplish this, a secret code should be sent to user phone through this endpoint. Note that the received code by SMS will be required in order to validate the user phone number in [step 4](Tropipay-API.v2.yaml/paths/~1access~1validate_phone)'
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                callingCode:
+                  type: string
+                  minLength: 1
+                  description: The corresponding country phone code
+                phone:
+                  type: string
+                  minLength: 1
+                  description: The phone number tu send SMS to
+                lang:
+                  type: string
+                  minLength: 1
+                  description: The message language
+              required:
+                - callingCode
+                - phone
+                - lang
+    parameters: []
+  /deposit_accounts:
+    get:
+      summary: Get Deposit Accounts List
+      tags:
+        - DepositAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  count:
+                    type: number
+                  rows:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        accountNumber:
+                          type: string
+                          minLength: 1
+                        alias:
+                          type: string
+                          minLength: 1
+                        swift:
+                          type: string
+                          minLength: 1
+                          description: SWIFT code of destination account. Ignored when beneficiaryType == 1
+                        type:
+                          type: number
+                        country: {}
+                        firstName:
+                          type: string
+                          minLength: 1
+                          description: Beneficiary Name. Ignored when beneficiaryType == 1
+                        default: {}
+                        state:
+                          type: number
+                        userId:
+                          type: string
+                          minLength: 1
+                        countryDestinationId:
+                          type: number
+                        lastName:
+                          type: string
+                          minLength: 1
+                          description: Beneficiary LastName. Ignored when beneficiaryType == 1
+                        documentNumber:
+                          type: string
+                          minLength: 1
+                        userRelationTypeId:
+                          type: number
+                        city:
+                          type: string
+                          minLength: 1
+                        postalCode:
+                          type: number
+                        address:
+                          type: string
+                          minLength: 1
+                        phone:
+                          type: string
+                          minLength: 1
+                        checked:
+                          type: boolean
+                        province:
+                          type: string
+                          minLength: 1
+                        beneficiaryType:
+                          type: number
+                        relatedUserId: {}
+                        currency:
+                          type: string
+                          minLength: 1
+                        correspondent: {}
+                        location: {}
+                        office: {}
+                        officeValue: {}
+                        paymentType:
+                          type: number
+                        paymentEntityBeneficiaryId:
+                          type: number
+                        paymentEntityAccountId:
+                          type: number
+                        verified: {}
+                        documentTypeId: {}
+                        documentExpirationDate: {}
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                      required:
+                        - id
+                        - accountNumber
+                        - alias
+                        - type
+                        - state
+                        - userId
+                        - countryDestinationId
+                        - documentNumber
+                        - userRelationTypeId
+                        - city
+                        - postalCode
+                        - address
+                        - phone
+                        - checked
+                        - province
+                        - beneficiaryType
+                        - currency
+                        - paymentType
+                        - paymentEntityBeneficiaryId
+                        - paymentEntityAccountId
+                        - createdAt
+                        - updatedAt
+                required:
+                  - count
+                  - rows
+              examples:
+                example:
+                  value:
+                    count: 2
+                    rows:
+                      - id: 45461
+                        accountNumber: 9111 1234 5678 9012
+                        alias: Joe Account
+                        swift: BSOBUSHHXXX
+                        type: 3
+                        country: null
+                        firstName: John
+                        default: null
+                        state: 1
+                        userId: b168e810-e0bb-11ea-8b91-bc41f597fbe4
+                        countryDestinationId: 1
+                        lastName: Doe
+                        documentNumber: '831108111111'
+                        userRelationTypeId: 4
+                        city: Barcelona
+                        postalCode: 11300
+                        address: '110, Some Street'
+                        phone: '+3412341245'
+                        checked: true
+                        province: Cataluña
+                        beneficiaryType: 2
+                        relatedUserId: null
+                        currency: USD
+                        correspondent: null
+                        location: null
+                        office: null
+                        officeValue: null
+                        paymentType: 2
+                        paymentEntityBeneficiaryId: 11111
+                        paymentEntityAccountId: 22222
+                        verified: null
+                        documentTypeId: null
+                        documentExpirationDate: null
+                        createdAt: '2020-11-27T02:43:47.108Z'
+                        updatedAt: '2021-02-11T22:41:32.518Z'
+                      - id: 49021
+                        accountNumber: Jane.doe@gmail.com
+                        alias: Jane Tropipay
+                        swift: null
+                        type: 9
+                        country: null
+                        firstName: Jane
+                        default: null
+                        state: 0
+                        userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+                        countryDestinationId: 1
+                        lastName: Doe
+                        documentNumber: null
+                        userRelationTypeId: 4
+                        city: La Habana
+                        postalCode: 11300
+                        address: 'Calle 41 #112 e/1ra y 3ra, Miramar, Playa'
+                        phone: '+5351234567'
+                        checked: true
+                        province: La Habana
+                        beneficiaryType: 1
+                        relatedUserId: 17e9f790-492c-11eb-9c96-bfb9401b8daa
+                        currency: null
+                        correspondent: null
+                        location: null
+                        office: null
+                        officeValue: null
+                        paymentType: 99
+                        paymentEntityBeneficiaryId: null
+                        paymentEntityAccountId: null
+                        verified: null
+                        documentTypeId: null
+                        documentExpirationDate: null
+                        createdAt: '2020-12-28T16:50:52.235Z'
+                        updatedAt: '2020-12-28T16:50:52.235Z'
+      operationId: get-depositaccounts
+      description: 'Returns the list of beneficiaries (depositAccounts) of logged user. Beneficiaries can be active (status: 0) or inactive (status: 1) '
+      parameters:
+        - in: unknown
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    post:
+      summary: Create a new Deposit Account
+      operationId: post-depositaccounts
+      responses:
+        '200':
+          $ref: '#/components/responses/depositAccount'
+      description: Adds a new beneficiary to the user account.
+      parameters:
+        - in: unknown
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                accountNumber:
+                  type: string
+                  minLength: 1
+                alias:
+                  type: string
+                  minLength: 1
+                swift:
+                  type: string
+                  minLength: 1
+                type:
+                  type: number
+                country: {}
+                firstName:
+                  type: string
+                  minLength: 1
+                countryDestinationId:
+                  type: number
+                lastName:
+                  type: string
+                  minLength: 1
+                secondLastName:
+                  type: string
+                  minLength: 1
+                documentNumber:
+                  type: string
+                  minLength: 1
+                userRelationTypeId:
+                  type: number
+                city:
+                  type: string
+                  minLength: 1
+                postalCode:
+                  type: number
+                address:
+                  type: string
+                  minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+                province:
+                  type: string
+                  minLength: 1
+                beneficiaryType:
+                  type: number
+                relatedUserId: {}
+                currency:
+                  type: string
+                  minLength: 1
+                correspondent: {}
+                location: {}
+                office: {}
+                officeValue: {}
+                paymentType:
+                  type: number
+                verified: {}
+                documentTypeId: {}
+                documentExpirationDate: {}
+              required:
+                - accountNumber
+                - alias
+                - type
+                - userRelationTypeId
+                - beneficiaryType
+                - currency
+                - paymentType
+      tags:
+        - DepositAccounts
+    parameters: []
+  '/deposit_accounts/:id':
+    get:
+      summary: Get Deposit Account Detail
+      tags:
+        - DepositAccounts
+      responses:
+        '200':
+          $ref: '#/components/responses/depositAccount'
+      operationId: 'get-depositaccounts-:id'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: This returns details of a specific Deposit Account (beneficiary) specified by its ID
+    put:
+      summary: Update a Deposit Account
+      operationId: 'put-depositaccounts-:id'
+      responses:
+        '200':
+          $ref: '#/components/responses/depositAccount'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - DepositAccounts
+      description: |
+        Updates certain beneficiary data.
+    delete:
+      summary: Delete a Deposit Account
+      operationId: 'delete-depositaccounts-:id'
+      responses:
+        '200':
+          $ref: '#/components/responses/depositAccount'
+      description: Deletes the beneficiary indicated by id
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - DepositAccounts
+    parameters: []
+  /access/validate_phone:
+    post:
+      summary: 'SignUp workflow step 4: Validate user Phone number'
+      operationId: post-access-validatePhone
+      responses:
+        '200':
+          description: OK
+      description: 'This allows to validate some user phone number through a secret code previously sent to user by SMS. See [Step 3: SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1send_phone_code) for details on how to send validation codes'
+      tags:
+        - Authentication
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+    parameters: []
+  /merchant/kyc:
+    post:
+      summary: Get a Link for an User KYC
+      operationId: post-kyc
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KycResponse'
+              examples:
+                example-1:
+                  value:
+                    status: success
+                    url: 'https://localhost:3000/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiIzMyIsInNpZ25hdHVyZSI6IjYzNzcxMGY0MWQxMTc4OTlhNzNhMTYyZmE1NTgxYmQ5IiwiY29kZSI6MTYxNDc0MjY1MTY0Nn0='
+        '400':
+          description: 'Here we have an example of a Bad Request:'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationParams'
+              examples:
+                example-1:
+                  value:
+                    error:
+                      code:
+                        - msg: Invalid value
+                          param: userId
+                          location: body
+                        - msg: Invalid value
+                          param: userId
+                          location: body
+                      message: Invalid Parameter
+      description: |
+        This endpoint is for generating KYC wizard link. the received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Users
+    parameters: []
+  /merchant/settings:
+    get:
+      summary: Obtaining list of settings
+      tags:
+        - Configure
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSettingList'
+              examples:
+                example-1:
+                  value:
+                    - key: publicPrice
+                      value: '2.5'
+                      section: public
+                      state: '1'
+                      createdAt: '2021-03-18T20:10:37.670Z'
+                      updatedAt: '2021-03-18T20:10:37.670Z'
+                    - key: merchantPrice
+                      value: '2.10'
+                      section: public
+                      state: '1'
+                      createdAt: '2021-03-18T04:00:00.000Z'
+                      updatedAt: '2021-03-18T04:00:00.000Z'
+      operationId: configure
+      description: Endpoint that allows obtaining the list of merchant settings.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+    parameters: []
+  /settings/price:
+    get:
+      summary: Obtaining Prices
+      tags:
+        - Configure
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSetting'
+              examples:
+                example-1:
+                  value:
+                    key: publicPrice
+                    value: '2.5'
+                    section: public
+                    state: '1'
+                    createdAt: '2021-03-18T20:10:37.670Z'
+                    updatedAt: '2021-03-18T20:10:37.670Z'
+      operationId: get-configure-price
+      description: |
+        Endpoint that allows obtaining the public price.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+    post:
+      summary: Setting the public price
+      operationId: post-configure-price
+      responses:
+        '200':
+          description: Here we have an example of a valid response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchantSetting'
+              examples:
+                example-1:
+                  value:
+                    key: publicPrice
+                    value: '2.5'
+                    section: public
+                    state: '1'
+                    createdAt: '2021-03-18T20:10:37.670Z'
+                    updatedAt: '2021-03-18T20:10:37.670Z'
+      description: |
+        Endpoint that allows to set the public price.
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                publicPrice:
+                  type: string
+                  minLength: 1
+              required:
+                - publicPrice
+            examples:
+              example-1:
+                value:
+                  publicPrice: '2.5'
+        description: Here we have an example of a valid request
+      tags:
+        - Configure
+    parameters: []
+  /movements/in/charge:
+    post:
+      summary: Create a new OTA Virtual Card Charge
+      operationId: post-movements-in-charge
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  isInternal:
+                    type: boolean
+                  riskFlag:
+                    type: number
+                  riskScore:
+                    type: number
+                  id:
+                    type: number
+                  reference: {}
+                  bankOrderCode:
+                    type: string
+                    minLength: 1
+                  provider: {}
+                  userId:
+                    type: string
+                    minLength: 1
+                  bookingDate: {}
+                  days:
+                    type: number
+                  amount:
+                    type: number
+                  currency: {}
+                  originalCurrencyAmount:
+                    type: string
+                    minLength: 1
+                  destinationAmount:
+                    type: number
+                  destinationCurrency: {}
+                  conversionRate:
+                    type: number
+                  providerFee:
+                    type: number
+                  ourFee:
+                    type: number
+                  serviceId:
+                    type: number
+                  payProviderFee:
+                    type: boolean
+                  state:
+                    type: number
+                  movementTypeId:
+                    type: number
+                  ip: {}
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  depositaccountId: {}
+                  tmpDestinationAmount:
+                    type: number
+                  realBankFee: {}
+                  paymentcardId: {}
+                  expirationDate: {}
+                  balanceBefore: {}
+                  balanceAfter: {}
+                  agent:
+                    type: string
+                    minLength: 1
+                  transactionId: {}
+                  paymentEntityStatus:
+                    type: number
+                  paymentEntityBalance: {}
+                  errorReason: {}
+                  reasonId: {}
+                  reasonDes: {}
+                  paymentUrl:
+                    type: object
+                    properties:
+                      chargeUrl:
+                        type: string
+                        minLength: 1
+                    required:
+                      - chargeUrl
+                required:
+                  - isInternal
+                  - riskFlag
+                  - riskScore
+                  - id
+                  - bankOrderCode
+                  - userId
+                  - days
+                  - amount
+                  - originalCurrencyAmount
+                  - destinationAmount
+                  - conversionRate
+                  - providerFee
+                  - ourFee
+                  - serviceId
+                  - payProviderFee
+                  - state
+                  - movementTypeId
+                  - updatedAt
+                  - createdAt
+                  - tmpDestinationAmount
+                  - agent
+                  - paymentEntityStatus
+                  - paymentUrl
+              examples:
+                example-1:
+                  value:
+                    isInternal: false
+                    riskFlag: 0
+                    riskScore: 0
+                    id: 327790
+                    reference: null
+                    bankOrderCode: '626382735590'
+                    provider: null
+                    userId: e2931920-e402a30d78-a7-4qqq
+                    bookingDate: null
+                    days: 0
+                    amount: 19500
+                    currency: null
+                    originalCurrencyAmount: '19500'
+                    destinationAmount: 17940
+                    destinationCurrency: null
+                    conversionRate: 1
+                    providerFee: 300
+                    ourFee: 500
+                    serviceId: 1
+                    payProviderFee: false
+                    state: 1
+                    movementTypeId: 2
+                    ip: null
+                    updatedAt: '2021-03-26T14:22:20.939Z'
+                    createdAt: '2021-03-26T14:21:25.400Z'
+                    depositaccountId: null
+                    tmpDestinationAmount: 0
+                    realBankFee: null
+                    paymentcardId: null
+                    expirationDate: null
+                    balanceBefore: null
+                    balanceAfter: null
+                    agent: TROPIPAY
+                    transactionId: null
+                    paymentEntityStatus: 99
+                    paymentEntityBalance: null
+                    errorReason: null
+                    reasonId: null
+                    reasonDes: null
+                    paymentUrl:
+                      chargeUrl: 'https://wwwtropipay.com/eyJwYXJhbXMiOiJleUpFVTE5TlJWSkRTRUZPVkY5QlRVOVZUbFFpT2pFNU5UQXdMQ0pFVTE5TlJWSkRTRUZPVkY5UFVrUkZVaUk2SWpZeU5qTTRNamN6TlRVNU1DSXNJa1JUWDAxRlVrTklRVTVVWDAxRlVrTklRVTVVUTA5RVJTSTZJakV5TkRRek9UY3hNaUlzSWtSVFgwMUZVa05JUVU1VVgwTlZVbEpGVGtOWklqb2lPVGM0SWl3aVJGTmZUVVZTUTBoQlRsUmZWRkpCVGxOQlExUkpUMDVVV1ZCRklqb3dMQ0pFVTE5TlJWSkRTRUZPVkY5TlJWSkRTRUZPVkZWU1RDSTZJbWgwZEhBNkx5OXNiMk5oYkdodmMzUTZNekF3TUM5aGNHa3ZZMkZzYkdKaFkyc3ZjbVZrYzNseklpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVQwc2lPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDA5TElpd2lSRk5mVFVWU1EwaEJUbFJmVlZKTVMwOGlPaUpvZEhSd09pOHZiRzlqWVd4b2IzTjBPak13TURBdlkyaGhjbWRsWDB0UEluMD0iLCJzaWduYXR1cmUiOiJrS3prbEtGRGlsT05odGEwYk1HSU8yME9RTm5LSWh2VXZIdkJ6SWxQRTc0PSIsInJlZHN5c1VybCI6Imh0dHBzOi8vc2lzLXQucmVkc3lzLmVzOjI1NDQzL3Npcy9yZWFsaXphclBhZ28ifQ=='
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                provider:
+                  type: number
+                providerName:
+                  type: string
+                bookingDate:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                amountToShow:
+                  type: string
+                agree:
+                  type: boolean
+                amountToCharge:
+                  type: string
+                depositaccountId:
+                  type: string
+                destinationAccount:
+                  type: string
+                currency:
+                  type: string
+                  minLength: 1
+                widgetUrl: {}
+                rate:
+                  type: number
+                error:
+                  type: boolean
+                paymentCardLoaded:
+                  type: boolean
+                verifyClose:
+                  type: boolean
+                loading:
+                  type: boolean
+                accounts:
+                  type: array
+                  items:
+                    required: []
+                    properties: {}
+                countries:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - sepaZone
+                      - state
+                      - slug
+                      - callingCode
+                      - isDestination
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      sepaZone:
+                        type: boolean
+                      state:
+                        type: number
+                      slug:
+                        type: string
+                        minLength: 1
+                      callingCode:
+                        type: number
+                      isDestination:
+                        type: boolean
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                redsysData: {}
+                services:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - slug
+                      - service_fee_percent
+                      - service_fee_fixed
+                      - tp_fee_percent
+                      - tp_fee_fixed
+                      - type
+                      - order
+                      - createdAt
+                      - updatedAt
+                      - disabled
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      slug:
+                        type: string
+                        minLength: 1
+                      service_fee_percent:
+                        type: number
+                      service_fee_fixed:
+                        type: number
+                      tp_fee_percent:
+                        type: number
+                      tp_fee_fixed:
+                        type: number
+                      type:
+                        type: string
+                        minLength: 1
+                      order:
+                        type: number
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                      permissions:
+                        type: array
+                        items:
+                          required: []
+                          properties: {}
+                      disabled:
+                        type: boolean
+                service:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                      minLength: 1
+                    slug:
+                      type: string
+                      minLength: 1
+                    service_fee_percent:
+                      type: number
+                    service_fee_fixed:
+                      type: number
+                    tp_fee_percent:
+                      type: number
+                    tp_fee_fixed:
+                      type: number
+                    type:
+                      type: string
+                      minLength: 1
+                    order:
+                      type: number
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                    permissions:
+                      type: array
+                      items:
+                        required: []
+                        properties: {}
+                    disabled:
+                      type: boolean
+                  required:
+                    - id
+                    - name
+                    - slug
+                    - service_fee_percent
+                    - service_fee_fixed
+                    - tp_fee_percent
+                    - tp_fee_fixed
+                    - type
+                    - order
+                    - createdAt
+                    - updatedAt
+                    - permissions
+                    - disabled
+                concept:
+                  type: string
+                description:
+                  type: string
+                reasons:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    required:
+                      - id
+                      - name
+                      - active
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      id:
+                        type: number
+                      name:
+                        type: string
+                        minLength: 1
+                      description: {}
+                      active:
+                        type: boolean
+                      createdAt:
+                        type: string
+                        minLength: 1
+                      updatedAt:
+                        type: string
+                        minLength: 1
+                singleUse:
+                  type: boolean
+                showPaymentGenerated:
+                  type: boolean
+                sendSMS:
+                  type: boolean
+                sendEmail:
+                  type: boolean
+                smsTo:
+                  type: string
+                notifyEmail:
+                  type: string
+                step:
+                  type: number
+                reasonId:
+                  type: string
+                reasonDes:
+                  type: string
+                message: {}
+                showMessage:
+                  type: boolean
+                cardObj: {}
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    name:
+                      type: string
+                      minLength: 1
+                    surname:
+                      type: string
+                      minLength: 1
+                    company: {}
+                    email:
+                      type: string
+                      minLength: 1
+                    phone:
+                      type: string
+                      minLength: 1
+                    address:
+                      type: string
+                      minLength: 1
+                    walletId:
+                      type: string
+                      minLength: 1
+                    t_c_version:
+                      type: string
+                      minLength: 1
+                    role:
+                      type: string
+                      minLength: 1
+                    nationality: {}
+                    state:
+                      type: number
+                    balance:
+                      type: number
+                    birthDate:
+                      type: string
+                      minLength: 1
+                    countryDestinationId:
+                      type: number
+                    city:
+                      type: string
+                      minLength: 1
+                    postalCode:
+                      type: string
+                      minLength: 1
+                    kycLevel:
+                      type: number
+                    occupationId:
+                      type: number
+                    clientTypeId:
+                      type: number
+                    isPublicOffice:
+                      type: boolean
+                    birthCountryId:
+                      type: number
+                    province:
+                      type: string
+                      minLength: 1
+                    groupId:
+                      type: number
+                    lastLogin:
+                      type: string
+                      minLength: 1
+                    pendingIn:
+                      type: number
+                    pendingOut:
+                      type: number
+                    lang:
+                      type: string
+                      minLength: 1
+                    shortId:
+                      type: string
+                      minLength: 1
+                    documentTypeId:
+                      type: number
+                    documentExpirationDate:
+                      type: string
+                      minLength: 1
+                    contracts: {}
+                    liveProof:
+                      type: boolean
+                    needMigration:
+                      type: boolean
+                    twoFaType:
+                      type: number
+                    twoFaMode:
+                      type: number
+                    otherOccupationDetail:
+                      type: string
+                      minLength: 1
+                    merchantId:
+                      type: number
+                    errorPaymentEntityId: {}
+                    errorWalletId: {}
+                    verified: {}
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                    group:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        permissions:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - id
+                              - name
+                              - label
+                              - createdAt
+                              - updatedAt
+                            properties:
+                              id:
+                                type: number
+                              name:
+                                type: string
+                                minLength: 1
+                              label:
+                                type: string
+                                minLength: 1
+                              createdAt:
+                                type: string
+                                minLength: 1
+                              updatedAt:
+                                type: string
+                                minLength: 1
+                              GroupPermission:
+                                type: object
+                                properties:
+                                  createdAt:
+                                    type: string
+                                    minLength: 1
+                                  updatedAt:
+                                    type: string
+                                    minLength: 1
+                                  groupId:
+                                    type: number
+                                  permissionId:
+                                    type: number
+                                required:
+                                  - createdAt
+                                  - updatedAt
+                                  - groupId
+                                  - permissionId
+                      required:
+                        - id
+                        - name
+                        - createdAt
+                        - updatedAt
+                        - permissions
+                    operation:
+                      type: boolean
+                  required:
+                    - id
+                    - name
+                    - surname
+                    - email
+                    - phone
+                    - address
+                    - walletId
+                    - t_c_version
+                    - role
+                    - state
+                    - balance
+                    - birthDate
+                    - countryDestinationId
+                    - city
+                    - postalCode
+                    - kycLevel
+                    - occupationId
+                    - clientTypeId
+                    - isPublicOffice
+                    - birthCountryId
+                    - province
+                    - groupId
+                    - lastLogin
+                    - pendingIn
+                    - pendingOut
+                    - lang
+                    - shortId
+                    - documentTypeId
+                    - documentExpirationDate
+                    - liveProof
+                    - needMigration
+                    - twoFaType
+                    - twoFaMode
+                    - otherOccupationDetail
+                    - merchantId
+                    - createdAt
+                    - updatedAt
+                    - group
+                    - operation
+                callingCode:
+                  type: string
+                phone:
+                  type: string
+                expirationDays:
+                  type: number
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                expirationDate:
+                  type: string
+                serviceDate:
+                  type: string
+                errorCode:
+                  type: string
+                voucherCode:
+                  type: string
+                voucher: {}
+                scrollToTop:
+                  type: boolean
+                amountToSend:
+                  type: string
+                currencyToSend:
+                  type: string
+                  minLength: 1
+                amountToReceive:
+                  type: string
+                currencyToReceive:
+                  type: string
+                  minLength: 1
+                cryptoPayment: {}
+                cryptoPaymentState: {}
+                cryptoPaymentExpirationDate: {}
+                cryptoRate: {}
+                criteria: {}
+                days:
+                  type: string
+                destinationAmount:
+                  type: number
+                destinationCurrency:
+                  type: string
+                  minLength: 1
+                originalCurrencyAmount:
+                  type: number
+                conversionRate:
+                  type: number
+              required:
+                - reference
+                - provider
+                - providerName
+                - bookingDate
+                - amount
+                - amountToShow
+                - agree
+                - amountToCharge
+                - depositaccountId
+                - destinationAccount
+                - currency
+                - rate
+                - error
+                - paymentCardLoaded
+                - verifyClose
+                - loading
+                - accounts
+                - countries
+                - services
+                - service
+                - concept
+                - description
+                - reasons
+                - singleUse
+                - showPaymentGenerated
+                - sendSMS
+                - sendEmail
+                - smsTo
+                - notifyEmail
+                - step
+                - reasonId
+                - reasonDes
+                - showMessage
+                - user
+                - callingCode
+                - phone
+                - expirationDays
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - expirationDate
+                - serviceDate
+                - errorCode
+                - voucherCode
+                - scrollToTop
+                - amountToSend
+                - currencyToSend
+                - amountToReceive
+                - currencyToReceive
+                - days
+                - destinationAmount
+                - destinationCurrency
+                - originalCurrencyAmount
+                - conversionRate
+            examples:
+              example-1:
+                value:
+                  reference: TE5NN77
+                  provider: 1
+                  providerName: ''
+                  bookingDate: '2021-03-24'
+                  amount: 19500
+                  amountToShow: ''
+                  agree: true
+                  amountToCharge: ''
+                  depositaccountId: ''
+                  destinationAccount: ''
+                  currency: EUR
+                  widgetUrl: null
+                  rate: 1.1
+                  error: false
+                  paymentCardLoaded: false
+                  verifyClose: false
+                  loading: false
+                  accounts: []
+                  countries:
+                    - id: 44
+                      name: Afghanistan
+                      sepaZone: false
+                      state: 1
+                      slug: AF
+                      callingCode: 93
+                      isDestination: false
+                      createdAt: '2019-09-03T15:22:26.410Z'
+                      updatedAt: '2019-09-03T15:22:26.410Z'
+                    - id: 254
+                      name: Zimbabwe
+                      sepaZone: false
+                      state: 1
+                      slug: ZW
+                      callingCode: 263
+                      isDestination: false
+                      createdAt: '2019-09-03T15:22:26.514Z'
+                      updatedAt: '2019-09-03T15:22:26.514Z'
+                  redsysData: null
+                  services:
+                    - id: 1
+                      name: Charge OTA Cards
+                      slug: CHARGE_OTA_CARDS
+                      service_fee_percent: 300
+                      service_fee_fixed: 0
+                      tp_fee_percent: 500
+                      tp_fee_fixed: 0
+                      type: PAYMENT
+                      order: 1
+                      createdAt: '2019-10-29T12:12:07.133Z'
+                      updatedAt: '2019-10-29T12:12:07.133Z'
+                      permissions: []
+                      disabled: false
+                    - id: 5
+                      name: External TopUp
+                      slug: EXTERNAL_TOPUP
+                      service_fee_percent: 0
+                      service_fee_fixed: 0
+                      tp_fee_percent: 300
+                      tp_fee_fixed: 0
+                      type: PAYMENT
+                      order: 6
+                      createdAt: '2020-01-08T11:16:12.292Z'
+                      updatedAt: '2020-01-08T15:17:23.151Z'
+                      permissions: []
+                      disabled: false
+                  service:
+                    id: 1
+                    name: Charge OTA Cards
+                    slug: CHARGE_OTA_CARDS
+                    service_fee_percent: 300
+                    service_fee_fixed: 0
+                    tp_fee_percent: 500
+                    tp_fee_fixed: 0
+                    type: PAYMENT
+                    order: 1
+                    createdAt: '2019-10-29T12:12:07.133Z'
+                    updatedAt: '2019-10-29T12:12:07.133Z'
+                    permissions: []
+                    disabled: false
+                  concept: ''
+                  description: ''
+                  reasons:
+                    - id: 1
+                      name: Arreglo de vivienda
+                      description: null
+                      active: true
+                      createdAt: '2021-01-21T03:50:17.227Z'
+                      updatedAt: '2021-01-21T03:50:17.227Z'
+                    - id: 11
+                      name: Turismo
+                      description: null
+                      active: true
+                      createdAt: '2021-01-21T03:50:17.227Z'
+                      updatedAt: '2021-01-21T03:50:17.227Z'
+                  singleUse: false
+                  showPaymentGenerated: false
+                  sendSMS: false
+                  sendEmail: false
+                  smsTo: ''
+                  notifyEmail: ''
+                  step: 2
+                  reasonId: ''
+                  reasonDes: ''
+                  message: null
+                  showMessage: false
+                  cardObj: null
+                  user:
+                    id: e2931920-e402-11ea-a30d-83c978a74aaa
+                    name: 'Antonio '
+                    surname: Membrides Espinosa
+                    company: null
+                    email: tonykssa@gmail.com
+                    phone: '+5359996545'
+                    address: 'reparto Pueblo Griffo, edificio 55, 12 plantas, apto 1101'
+                    walletId: '2195'
+                    t_c_version: /terms/v0.0
+                    role: user
+                    nationality: null
+                    state: 1
+                    balance: 205000
+                    birthDate: '1985-10-31T00:00:00.000Z'
+                    countryDestinationId: 0
+                    city: Cienfuegos
+                    postalCode: '55504'
+                    kycLevel: 4
+                    occupationId: 30
+                    clientTypeId: 1
+                    isPublicOffice: false
+                    birthCountryId: 0
+                    province: Cienfuegos
+                    groupId: 1
+                    lastLogin: '2021-03-25T21:36:09.207Z'
+                    pendingIn: 0
+                    pendingOut: 0
+                    lang: es
+                    shortId: 00Y2
+                    documentTypeId: 5
+                    documentExpirationDate: '2021-04-02T00:00:00.000Z'
+                    contracts: null
+                    liveProof: true
+                    needMigration: false
+                    twoFaType: 1
+                    twoFaMode: 1
+                    otherOccupationDetail: Loco
+                    merchantId: 1
+                    errorPaymentEntityId: null
+                    errorWalletId: null
+                    verified: null
+                    createdAt: '2020-08-21T23:06:03.059Z'
+                    updatedAt: '2021-03-25T21:36:09.209Z'
+                    group:
+                      id: 1
+                      name: KYC3_FULL_ALLOW
+                      createdAt: '2019-10-29T12:19:30.340Z'
+                      updatedAt: '2020-06-04T14:09:10.754Z'
+                      permissions:
+                        - id: 1
+                          name: ALLOW_EXTERNAL_CHARGE
+                          label: payments
+                          createdAt: '2019-10-29T12:19:50.939Z'
+                          updatedAt: '2019-10-29T12:19:50.939Z'
+                          GroupPermission:
+                            createdAt: '2019-10-29T12:20:04.555Z'
+                            updatedAt: '2019-10-29T12:20:04.555Z'
+                            groupId: 1
+                            permissionId: 1
+                        - id: 18
+                          name: ALLOW_PAYMENT_OUT
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-05-19T08:34:04.850Z'
+                            updatedAt: '2020-05-19T08:34:04.850Z'
+                            groupId: 1
+                            permissionId: 18
+                        - id: 19
+                          name: ALLOW_MARKET_PURCHASES
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-05-19T08:34:13.683Z'
+                            updatedAt: '2020-05-19T08:34:13.683Z'
+                            groupId: 1
+                            permissionId: 19
+                        - id: 17
+                          name: ALLOW_PAYMENT_IN
+                          label: generic
+                          createdAt: '2020-05-19T08:28:40.660Z'
+                          updatedAt: '2020-05-19T08:28:40.660Z'
+                          GroupPermission:
+                            createdAt: '2020-12-23T21:24:16.683Z'
+                            updatedAt: '2020-12-23T21:24:16.683Z'
+                            groupId: 1
+                            permissionId: 17
+                    operation: true
+                  callingCode: ''
+                  phone: ''
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: ''
+                  serviceDate: ''
+                  errorCode: ''
+                  voucherCode: ''
+                  voucher: null
+                  scrollToTop: false
+                  amountToSend: ''
+                  currencyToSend: BTC
+                  amountToReceive: ''
+                  currencyToReceive: EUR
+                  cryptoPayment: null
+                  cryptoPaymentState: null
+                  cryptoPaymentExpirationDate: null
+                  cryptoRate: null
+                  criteria: null
+                  days: ''
+                  destinationAmount: 17940
+                  destinationCurrency: EUR
+                  originalCurrencyAmount: 19500
+                  conversionRate: 1
+        description: 'Here we have an example of a valid request: '
+      description: |
+        ### Charge an OTA Card:
+        Create a charge Url for an OTA Virtual Credit Card.
+
+        You Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.
+
+        > Note:  We are working on Webhooks structures to avoiding this send URL configuration step. 
+
+        ### How to complete the charge:
+        With the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - movements
+        - movements-in
+  /movements/in/paylink:
+    post:
+      summary: Create a new PayLink Charge
+      operationId: post-movements-in-paylink
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  reference:
+                    type: string
+                    minLength: 1
+                  concept:
+                    type: string
+                    minLength: 1
+                  description:
+                    type: string
+                    minLength: 1
+                  amount:
+                    type: number
+                  currency:
+                    type: string
+                    minLength: 1
+                  singleUse:
+                    type: boolean
+                  reasonId:
+                    type: number
+                  reasonDes:
+                    type: string
+                  expirationDays:
+                    type: number
+                  userId:
+                    type: string
+                    minLength: 1
+                  lang:
+                    type: string
+                    minLength: 1
+                  state:
+                    type: number
+                  urlSuccess:
+                    type: string
+                  urlFailed:
+                    type: string
+                  urlNotification:
+                    type: string
+                  expirationDate:
+                    type: string
+                    minLength: 1
+                  serviceDate: {}
+                  hasClient:
+                    type: boolean
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  qrImage:
+                    type: string
+                    minLength: 1
+                  shortUrl:
+                    type: string
+                    minLength: 1
+                  paymentUrl: {}
+                required:
+                  - id
+                  - reference
+                  - concept
+                  - description
+                  - amount
+                  - currency
+                  - singleUse
+                  - reasonId
+                  - reasonDes
+                  - expirationDays
+                  - userId
+                  - lang
+                  - state
+                  - urlSuccess
+                  - urlFailed
+                  - urlNotification
+                  - expirationDate
+                  - hasClient
+                  - updatedAt
+                  - createdAt
+                  - qrImage
+                  - shortUrl
+              examples:
+                example-1:
+                  value:
+                    id: 5a5cdfb0-8d9d-11eb-bfee-1922dac72c62
+                    reference: demo23232323
+                    concept: locura
+                    description: es una cosa loca este cobro
+                    amount: 11500
+                    currency: EUR
+                    singleUse: true
+                    reasonId: 4
+                    reasonDes: ''
+                    expirationDays: 0
+                    userId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    lang: es
+                    state: 1
+                    urlSuccess: ''
+                    urlFailed: ''
+                    urlNotification: ''
+                    expirationDate: '2021-03-31T00:00:00.000Z'
+                    serviceDate: null
+                    hasClient: false
+                    updatedAt: '2021-03-25T19:07:33.083Z'
+                    createdAt: '2021-03-25T19:07:33.035Z'
+                    qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAklEQVR4AewaftIAAAdcSURBVO3BQW4sy7LgQDKg/W+ZfYY+SiBRJfV98d3M/mGtSxzWushhrYsc1rrIYa2LHNa6yGGtixzWushhrYsc1rrIYa2LHNa6yGGtixzWushhrYsc1rrIDx9S+UsVb6j8poonKlPFpDJVPFGZKj6hMlVMKn+p4hOHtS5yWOsih7Uu8sOXVXyTyicqJpWpYlKZKiaVSWWqeKIyVTxRmSomlaniiconKr5J5ZsOa13ksNZFDmtd5IdfpvJGxRsqn1CZKiaVqeKNikllUnlD5b9E5Y2K33RY6yKHtS5yWOsiP1yuYlKZKp5UvKEyVbxRMalMFZPKpPKkYlK5yWGtixzWushhrYv88H9MxRsqTyqmik+oTBWTypOK/8sOa13ksNZFDmtd5IdfVvGXKiaVqWJSmSreUJkqJpWpYlJ5ojJVPFGZKiaVb6r4LzmsdZHDWhc5rHWRH75M5WYVk8o3VUwqT1SmikllqphU3lD5LzusdZHDWhc5rHWRHz5U8V9W8U0qb1S8oTJVPKl4UvGJiv8lh7UucljrIoe1LvLDh1Smiknlmyqmir9U8YbKVDFVPFF5UjGpPKmYKp6ofFPFbzqsdZHDWhc5rHUR+4cPqDyp+CaVb6qYVKaKSeVJxW9SeaPim1SmijdUpopvOqx1kcNaFzmsdZEfPlQxqTxRmSomlU9UfKJiUpkqfpPKk4pJZap4ojJVTCqfUHlDZar4xGGtixzWushhrYv88MtUPlExqUwVk8qTiknlScUTlaniicpU8YbKGypTxRsVT1SmijdUvumw1kUOa13ksNZF7B++SOUTFZPKVPFE5Y2KSeVJxaTypOITKlPFpPKJiknl/6eKTxzWushhrYsc1rrIDx9SeaNiUnlS8URlqphUpopJ5RMVk8qk8omKSWWqeKIyVUwqTyomlaniv+Sw1kUOa13ksNZFfvhlFW+oPKl4o2JSmSreUHmj4g2VJxVPVJ6oTBWTyqTyROVJxaTypOITh7UucljrIoe1LvLDH1OZKiaVqWJSmSqeqEwVk8onKiaVSeVJxROVJxVTxScqJpU3Kp5UTCrfdFjrIoe1LnJY6yI/fFnFpPJEZaqYVJ6oTBVTxZOKSWWqmFQmlaniDZWpYlJ5Q+WNit+k8pcOa13ksNZFDmtdxP7hF6l8ouKJypOKN1Smikllqnii8qTiDZUnFW+oTBWfUJkqJpWp4psOa13ksNZFDmtdxP7hAypPKt5QeVLxCZUnFZPKGxXfpDJVfELlExVPVD5R8YnDWhc5rHWRw1oX+eGXqUwVk8qTikllqnij4onKVDGpTBVvqHyTylTxTRWTylTxpOKJyjcd1rrIYa2LHNa6iP3DB1Q+UTGpPKl4Q2WqmFSmiknlScWkMlU8UZkqJpX/kopJZaqYVKaK33RY6yKHtS5yWOsi9g8XUXlS8U0qU8UTlTcqJpWp4hMqTyreUJkq/tJhrYsc1rrIYa2L/PAhlTcqJpU3Kp5UTCqTyhsVk8obKlPFpDJVPKl4Q+VJxaTyROUTKk8qPnFY6yKHtS5yWOsiP3yoYlKZKp5UTCpTxaTypOKNit9U8YbKJyreUHmi8kbFGxXfdFjrIoe1LnJY6yI/fEjlEypTxaQyVUwqk8qTim+qeKLyRsUnVN6oeKIyVUwqT1SmikllqvjEYa2LHNa6yGGti9g/fEBlqphUporfpDJVTCpvVEwqTyqeqEwVT1TeqHhD5UnFpDJVTCpTxV86rHWRw1oXOax1kR/+mMqTikllqphUvqniScUTlScVk8pU8aTiEypvqEwVn1B5UvGJw1oXOax1kcNaF/nhl1V8ouJJxROVqWJS+YTKVPFEZaqYVKaKJypTxaTypGJSmSqeqHyi4psOa13ksNZFDmtdxP7hAypTxTepvFHxl1SeVHxCZaqYVP6XVPymw1oXOax1kcNaF7F/+B+m8kbFpPJGxROVqWJSmSomlaliUpkqnqhMFZPKVPGGypOKv3RY6yKHtS5yWOsiP3xI5S9VTBWTylQxqUwVT1QmlU9UTCpTxaQyVUwqU8U3qUwVTyomlTcqPnFY6yKHtS5yWOsiP3xZxTepPFGZKj6h8qRiUnmiMlVMFZPKE5Wp4jdVvKEyVUwqv+mw1kUOa13ksNZFfvhlKm9U/CWVqeITFU9Upoqp4onKE5WpYlJ5ovKJiknlLx3WushhrYsc1rrID5dR+U0qU8UTlScqn1D5popJZaqYVN6omFS+6bDWRQ5rXeSw1kV+uEzFE5WpYlJ5Q2WqmCreUHlS8YmKSeVJxZOKJxWTym86rHWRw1oXOax1kR9+WcVvqphUpoonKlPFE5Wp4onKk4rfpDJVvKEyVUwqTyqmiknlmw5rXeSw1kUOa13khy9T+Usqn6h4ovKGypOKSWWqmFQmlTcqJpWpYlL5RMWk8pcOa13ksNZFDmtdxP5hrUsc1rrIYa2LHNa6yGGtixzWushhrYsc1rrIYa2LHNa6yGGtixzWushhrYsc1rrIYa2LHNa6yP8Dr+q9lKnTBy8AAAAASUVORK5CYII='
+                    shortUrl: 'https://www.tropipay.com/money-request/5a5cdfb0-8d9d-11eb-bfee-1922dac72c62'
+                    paymentUrl: null
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                concept:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                singleUse:
+                  type: boolean
+                reasonId:
+                  type: number
+                reasonDes:
+                  type: string
+                expirationDays:
+                  type: number
+                userId:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                expirationDate:
+                  type: string
+                  minLength: 1
+                serviceDate:
+                  type: string
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - reasonDes
+                - expirationDays
+                - userId
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - expirationDate
+                - serviceDate
+            examples:
+              example-1:
+                value:
+                  reference: demo23232323
+                  concept: locura
+                  description: es una cosa loca este cobro
+                  amount: 11500
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  reasonDes: ''
+                  expirationDays: 1
+                  userId: e2931920-e402-11ea-a30d-83c978a74aaa
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: '2021-03-31'
+                  serviceDate: ''
+        description: 'Here we have an example of a valid request: '
+      description: |
+        This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges. 
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - movements
+        - movements-in
+  /movements/in/charge_user_card:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-movements-in-charge_user_card
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: This gives the url to get the bank form to charge the user personal debit or credit cards
+  /merchant/settings/get_prices:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Configure
+      responses:
+        '200':
+          description: |-
+            {
+                "rate": 1.1997,
+                "viability": null,
+                "prices": [
+                    {
+                        "agent": "TROPIPAY",
+                        "path": "BANK DEPOSIT",
+                        "paymentType": 2,
+                        "toSend": 83668,
+                        "toGet": 94900,
+                        "rate": "1.1348",
+                        "fee": 5015,
+                        "bankFee": 1865,
+                        "destinationCurrency": "USD",
+                        "toGetEUR": 83668,
+                        "cuc": 94900
+                    },
+                    {
+                        "agent": "T - FINCIMEX - TARJETA AIS",
+                        "agentId": "T070",
+                        "subAgentId": "2",
+                        "path": "TARJETA AIS",
+                        "paymentType": 4,
+                        "toSend": "100000",
+                        "toGet": 95200,
+                        "rate": "0.9520",
+                        "fee": 3832,
+                        "bankFee": 600,
+                        "destinationCurrency": "CUC",
+                        "toGetEUR": 79652
+                    },
+                    {
+                        "agent": "T - FINCIMEX - TARJETA AIS USD",
+                        "agentId": "T070",
+                        "subAgentId": "5",
+                        "path": "TARJETA AIS",
+                        "paymentType": 4,
+                        "toSend": "100000",
+                        "toGet": 94900,
+                        "rate": "0.9490",
+                        "fee": 4202,
+                        "bankFee": 900,
+                        "destinationCurrency": "USD",
+                        "toGetEUR": 79401
+                    }
+                ]
+            }
+      operationId: get-merchant-settings-get_prices
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+        - schema:
+            type: string
+          in: query
+          name: country
+          description: Destination Country
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: amountToSend
+          description: The amount to send in cents
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: currencyToSend
+          description: The currency to send
+          required: true
+      description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
+components:
+  schemas:
+    User:
+      title: User Model
+      type: object
+      description: ''
+      x-examples:
+        Alice Smith:
+          id: 1423
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1997-10-31'
+        emailVerified:
+          type: boolean
+          description: Set to true if the user's email has been verified.
+        createDate:
+          type: string
+          format: date
+          description: The date that the user was created.
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - emailVerified
+    Event:
+      description: ''
+      type: object
+      properties:
+        event:
+          type: string
+          minLength: 1
+        target:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+      required:
+        - event
+        - target
+        - value
+        - createdAt
+        - updatedAt
+      x-examples:
+        example-1:
+          event: user_signup
+          target: email
+          value: tonykssa@gmail.com
+          createdAt: '2021-02-13T21:30:59.154Z'
+          updatedAt: '2021-02-13T21:30:59.154Z'
+    EventList:
+      title: Events
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
+      x-examples:
+        example-1:
+          - event: user_signup
+            target: email
+            value: tonykssa@gmail.com
+            createdAt: '2021-02-13T21:30:59.154Z'
+            updatedAt: '2021-02-13T21:30:59.154Z'
+          - event: user_login
+            target: web
+            value: 'http://localhost:4000/api/user/login/listen'
+            createdAt: '2021-02-13T22:43:11.243Z'
+            updatedAt: '2021-02-13T22:43:11.243Z'
+    ErrorResponse:
+      description: ''
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              minLength: 1
+            message:
+              type: string
+              minLength: 1
+          required:
+            - code
+            - message
+      required:
+        - error
+      x-examples:
+        example-1:
+          error:
+            code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+            message: Failed to authenticate token for Merchant!
+    AccessRequest:
+      description: |-
+        -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
+           * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
+           * 2: Set communication with the iframe parent container using the *window.addEventListener* and *parent.postMessage messages*.
+        -  **redirectUrl**: Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.
+        -  **extraCSS"**: The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.
+      type: object
+      x-examples:
+        example-1:
+          redirectType: 1
+          extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+          redirectUrl: 'https://my.merchant.com/home'
+      properties:
+        redirectType:
+          type: number
+          description: |-
+            the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
+               * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
+               * 2: Set communication with your container using the *window.addEventListener* and *parent.postMessage messages*.
+        extraCSS:
+          type: string
+          minLength: 1
+          description: 'The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.'
+        redirectUrl:
+          type: string
+          minLength: 1
+          description: 'Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.'
+      required:
+        - redirectType
+        - extraCSS
+        - redirectUrl
+    AccessResponse:
+      description: ''
+      type: object
+      properties:
+        url:
+          type: string
+          minLength: 1
+      required:
+        - url
+      x-examples:
+        example-1:
+          url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
+    EventListDescription:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: object
+        required:
+          - name
+          - description
+        properties:
+          name:
+            type: string
+            minLength: 1
+          description:
+            type: string
+            minLength: 1
+      x-examples:
+        example-1:
+          - name: user_signup
+            description: Event launched once an user complete registration on the TropiPay platform.
+          - name: payment_in_state_change
+            description: The event is fired once a user changes their status payment in entry method.
+          - name: payment_out_state_change
+            description: The event is fired once a user changes their status payment out entry method.
+    EventResponse:
+      description: ''
+      type: object
+      properties:
+        action:
+          type: string
+          minLength: 1
+        status:
+          type: string
+          minLength: 1
+        details:
+          type: object
+          properties: {}
+          required: []
+      required:
+        - action
+        - status
+        - details
+      x-examples:
+        example-1:
+          action: update
+          status: success
+          details: {}
+    KycResponse:
+      description: ''
+      type: object
+      properties:
+        status:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          minLength: 1
+      required:
+        - status
+        - url
+      x-examples:
+        example-1:
+          status: success
+          url: 'https://signup.getmati.com/?merchantToken=5cd02b2e7a7dc7001b331bfc&flowId=121212121212121&metadata=%7B%22userId%22:%22rwqerq34r345534545345%22%7D'
+    ValidationParams:
+      description: ''
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                required:
+                  - msg
+                  - param
+                  - location
+                properties:
+                  msg:
+                    type: string
+                    minLength: 1
+                  param:
+                    type: string
+                    minLength: 1
+                  location:
+                    type: string
+                    minLength: 1
+            message:
+              type: string
+              minLength: 1
+          required:
+            - code
+            - message
+      required:
+        - error
+      x-examples:
+        example-1:
+          error:
+            code:
+              - msg: Invalid value
+                param: userId
+                location: body
+              - msg: Invalid value
+                param: userId
+                location: body
+            message: Invalid Parameter
+    MerchantSetting:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          key: publicPrice
+          value: '2.5'
+          section: public
+          state: '1'
+          createdAt: '2021-03-18T20:10:37.670Z'
+          updatedAt: '2021-03-18T20:10:37.670Z'
+      properties:
+        key:
+          type: string
+          minLength: 1
+        value:
+          type: string
+          minLength: 1
+        section:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+      required:
+        - key
+        - value
+        - section
+        - state
+        - createdAt
+        - updatedAt
+    MerchantSettingList:
+      type: array
+      description: ''
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: object
+        required:
+          - key
+          - value
+          - section
+          - state
+          - createdAt
+          - updatedAt
+        properties:
+          key:
+            type: string
+            minLength: 1
+          value:
+            type: string
+            minLength: 1
+          section:
+            type: string
+            minLength: 1
+          state:
+            type: string
+            minLength: 1
+          createdAt:
+            type: string
+            minLength: 1
+          updatedAt:
+            type: string
+            minLength: 1
+      x-examples:
+        example-1:
+          - key: publicPrice
+            value: '2.5'
+            section: public
+            state: '1'
+            createdAt: '2021-03-18T20:10:37.670Z'
+            updatedAt: '2021-03-18T20:10:37.670Z'
+          - key: merchantPrice
+            value: '2.10'
+            section: public
+            state: '1'
+            createdAt: '2021-03-18T04:00:00.000Z'
+            updatedAt: '2021-03-18T04:00:00.000Z'
+  securitySchemes: {}
+  parameters:
+    User-Authorization-Token:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'Bearer {user-token}'
+    Merchant-Authorization-Token:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'Bearer {merchant-token}'
+  responses:
+    depositAccount:
+      description: This is the entire DepositAccount object stored
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              id:
+                type: number
+              accountNumber:
+                type: string
+                minLength: 1
+              alias:
+                type: string
+                minLength: 1
+              swift:
+                type: string
+                minLength: 1
+              type:
+                type: number
+              country: {}
+              firstName:
+                type: string
+                minLength: 1
+              default: {}
+              state:
+                type: number
+              userId:
+                type: string
+                minLength: 1
+              countryDestinationId:
+                type: number
+              lastName:
+                type: string
+                minLength: 1
+              documentNumber:
+                type: string
+                minLength: 1
+              userRelationTypeId:
+                type: number
+              city:
+                type: string
+                minLength: 1
+              postalCode:
+                type: number
+              address:
+                type: string
+                minLength: 1
+              phone:
+                type: string
+                minLength: 1
+              checked:
+                type: boolean
+              province:
+                type: string
+                minLength: 1
+              beneficiaryType:
+                type: number
+              relatedUserId: {}
+              currency:
+                type: string
+                minLength: 1
+              correspondent: {}
+              location: {}
+              office: {}
+              officeValue: {}
+              paymentType:
+                type: number
+              paymentEntityBeneficiaryId:
+                type: number
+              paymentEntityAccountId:
+                type: number
+              verified: {}
+              documentTypeId: {}
+              documentExpirationDate: {}
+              createdAt:
+                type: string
+                minLength: 1
+              updatedAt:
+                type: string
+                minLength: 1
+            required:
+              - id
+              - accountNumber
+              - alias
+              - type
+              - state
+              - userId
+              - countryDestinationId
+              - lastName
+              - documentNumber
+              - userRelationTypeId
+              - city
+              - postalCode
+              - address
+              - phone
+              - checked
+              - province
+              - beneficiaryType
+              - currency
+              - paymentType
+              - paymentEntityBeneficiaryId
+              - paymentEntityAccountId
+              - createdAt
+              - updatedAt
+          examples:
+            Example:
+              value:
+                id: 45461
+                accountNumber: 9111 1234 5678 9012
+                alias: Joe Account
+                swift: BSOBUSHHXXX
+                type: 3
+                country: null
+                firstName: John
+                default: null
+                state: 1
+                userId: b168e810-e0bb-11ea-8b91-bc41f597fbe4
+                countryDestinationId: 1
+                lastName: Doe
+                documentNumber: '831108111111'
+                userRelationTypeId: 4
+                city: Barcelona
+                postalCode: 11300
+                address: '110, Some Street'
+                phone: '+3412341245'
+                checked: true
+                province: Cataluña
+                beneficiaryType: 2
+                relatedUserId: null
+                currency: USD
+                correspondent: null
+                location: null
+                office: null
+                officeValue: null
+                paymentType: 2
+                paymentEntityBeneficiaryId: 11111
+                paymentEntityAccountId: 22222
+                verified: null
+                documentTypeId: null
+                documentExpirationDate: null
+                createdAt: '2020-11-27T02:43:47.108Z'
+                updatedAt: '2021-02-11T22:41:32.518Z'
