@@ -1511,6 +1511,212 @@ paths:
           description: 'Bearer {your-token}'
       tags:
         - Transactions
+  /deposit:
+    get:
+      summary: Get a list of Deposits Accounts (Beneficiaries)
+      tags:
+        - DepositAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  count:
+                    type: number
+                  rows:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - accountNumber
+                        - alias
+                        - swift
+                        - type
+                        - firstName
+                        - state
+                        - userId
+                        - countryDestinationId
+                        - lastName
+                        - documentNumber
+                        - userRelationTypeId
+                        - city
+                        - postalCode
+                        - address
+                        - phone
+                        - checked
+                        - province
+                        - beneficiaryType
+                        - currency
+                        - paymentType
+                        - paymentEntityBeneficiaryId
+                        - paymentEntityAccountId
+                        - createdAt
+                        - updatedAt
+                      properties:
+                        id:
+                          type: number
+                        accountNumber:
+                          type: string
+                          minLength: 1
+                        alias:
+                          type: string
+                          minLength: 1
+                        swift:
+                          type: string
+                          minLength: 1
+                        type:
+                          type: number
+                        country: {}
+                        firstName:
+                          type: string
+                          minLength: 1
+                        default: {}
+                        state:
+                          type: number
+                        userId:
+                          type: string
+                          minLength: 1
+                        countryDestinationId:
+                          type: number
+                        lastName:
+                          type: string
+                          minLength: 1
+                        documentNumber:
+                          type: string
+                          minLength: 1
+                        userRelationTypeId:
+                          type: number
+                        city:
+                          type: string
+                          minLength: 1
+                        postalCode:
+                          type: number
+                        address:
+                          type: string
+                          minLength: 1
+                        phone:
+                          type: string
+                          minLength: 1
+                        checked:
+                          type: boolean
+                        province:
+                          type: string
+                          minLength: 1
+                        beneficiaryType:
+                          type: number
+                        relatedUserId: {}
+                        currency:
+                          type: string
+                          minLength: 1
+                        correspondent: {}
+                        location: {}
+                        office: {}
+                        officeValue: {}
+                        paymentType:
+                          type: number
+                        paymentEntityBeneficiaryId:
+                          type: number
+                        paymentEntityAccountId:
+                          type: number
+                        verified: {}
+                        documentTypeId: {}
+                        documentExpirationDate: {}
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                        countryDestination:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                              minLength: 1
+                            sepaZone:
+                              type: boolean
+                            state:
+                              type: number
+                            slug:
+                              type: string
+                              minLength: 1
+                            callingCode:
+                              type: number
+                            isDestination:
+                              type: boolean
+                            createdAt:
+                              type: string
+                              minLength: 1
+                            updatedAt:
+                              type: string
+                              minLength: 1
+                            countryFees:
+                              type: array
+                              uniqueItems: true
+                              minItems: 1
+                              items:
+                                required:
+                                  - id
+                                  - countryDestinationId
+                                  - type
+                                  - value
+                                  - min
+                                  - max
+                                  - realBankFee
+                                  - createdAt
+                                  - updatedAt
+                                properties:
+                                  id:
+                                    type: number
+                                  countryDestinationId:
+                                    type: number
+                                  type:
+                                    type: string
+                                    minLength: 1
+                                  value:
+                                    type: number
+                                  min:
+                                    type: number
+                                  max:
+                                    type: number
+                                  realBankFee:
+                                    type: number
+                                  createdAt:
+                                    type: string
+                                    minLength: 1
+                                  updatedAt:
+                                    type: string
+                                    minLength: 1
+                          required:
+                            - id
+                            - name
+                            - sepaZone
+                            - state
+                            - slug
+                            - callingCode
+                            - isDestination
+                            - createdAt
+                            - updatedAt
+                            - countryFees
+                required:
+                  - count
+                  - rows
+      operationId: get-deposit
+      description: Get a list of all deposit accounts of user.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {your-token}'
 components:
   schemas: {}
 tags:
