@@ -197,32 +197,9 @@ paths:
                       message: Failed to authenticate token for Merchant!
       operationId: get-api-v2-hook
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: Authorization
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       description: |
-        Endpoint for get event list hook by merchant. 
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+        Endpoint for getting event hooks list by merchant. 
 
         ## Event 
         Events are made up of an object with three fundamental properties *(event, target, value)*
@@ -230,7 +207,7 @@ paths:
         {
               "event": "user_signup",
               "target": "email",
-              "value": "tonykssa@gmail.com",
+              "value": "user@mail.com",
               "createdAt": "2021-02-13T21:30:59.154Z",
               "updatedAt": "2021-02-13T21:30:59.154Z"
         }
@@ -281,24 +258,6 @@ paths:
       description: |
         Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
 
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
-
         ## Event 
         Events are made up of an object with three fundamental properties *(event, target, value)*
         ```json
@@ -327,13 +286,7 @@ paths:
                   value: 'https://www.merchant_domain.com/api/user/signup/listen'
         description: 'Here we have an example of a valid params request:'
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          description: 'Bearer {your-token}'
-          name: Authentication
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Hooks
     put:
@@ -377,32 +330,8 @@ paths:
                       message: Failed to authenticate token for Merchant!
       description: |
         Endpoint allows a merchant update event subscription , specifying the options to receive information at the time it is trigger.Take into account the value of the name or denomination of the event cannot be modified, in case it is required to change this field, it is recommended to delete it and create a new subscription.
-
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: 'Authorization    '
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       requestBody:
         content:
           application/json:
@@ -457,33 +386,9 @@ paths:
                       code: 'OperationError: Failed to validate merchant token!'
                       message: Failed to authenticate token for Merchant!
       description: |
-        Endpoint allows a merchant to unsubscribe from an event by name or denomination.
-
-
-        ## Authentication
-        Fot the authentication you need to send the Authorization header with the value: 
-        ```
-          Bearer YOUR_TOKEN
-        ```
-
-        YOUR_TOKEN is formed from: 
-        ```
-          Base64( API_CODE : API_KEY )
-        ```
-
-        an example would be:
-        ```
-          Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-        ```
-        Where you must calculate the token by using a Base64 of your **API_CODE + " : " + API_KEY** including the colom symbol ( : )
+        This Endpoint allows a merchant to unsubscribe from an event by name or denomination.
       parameters:
-        - schema:
-            type: string
-            example: Bearer MTplMXczeTRydzVlcjNvNGY0azRjOHI3dHY0NXY=
-          in: header
-          name: 'Authorization    '
-          description: 'Bearer {YOUR_TOKEN}'
-          required: true
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
       requestBody:
         content:
           application/json:
@@ -864,7 +769,7 @@ paths:
             }
             ```
       operationId: get-api-countries-destinations
-      description: Endpoint that allows obtaining the list of countries destinations
+      description: Endpoint that allows obtaining the list of valid countries to send funds to. Useful when adding new beneficiaries to some user.
     parameters: []
   /occupations:
     get:
@@ -1356,7 +1261,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/depositAccount'
-      description: Adds a new beneficiary to logged user.
+      description: Adds a new beneficiary to the user account.
       parameters:
         - in: unknown
         - $ref: '#/components/parameters/User-Authorization-Token'
@@ -1457,6 +1362,8 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - DepositAccounts
+      description: |
+        Updates certain beneficiary data.
     delete:
       summary: Delete a Deposit Account
       operationId: 'delete-depositaccounts-:id'
