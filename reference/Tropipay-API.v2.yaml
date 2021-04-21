@@ -2929,6 +2929,10 @@ components:
                 type: string
               url:
                 type: string
+          examples:
+            example-1:
+              value:
+                url: 'http://localhost:3000/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiJmZTI4YTlmMC04NWZkLTExZWItOWExYi05NTEyZWFhNGI4MGUiLCJzaWduYXR1cmUiOiJjNzQ3YzQ0YmJhMDhjMTM5OWEyZTFhZDc1YTgxYTJjMSIsImNvZGUiOjE2MTkwMzY4NjMyMjN9'
     MerchantSetting:
       description: A single Merchant Setting
       content:
