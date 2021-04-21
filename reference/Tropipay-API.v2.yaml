@@ -2885,7 +2885,7 @@ components:
               updatedAt:
                 type: string
     MerchantSettingList:
-      description: ''
+      description: 'Here we have an example of a valid response: '
       content:
         application/json:
           schema:
