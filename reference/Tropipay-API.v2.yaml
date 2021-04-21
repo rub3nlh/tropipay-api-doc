@@ -2174,8 +2174,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements
         - movements-in
+        - Movements
   /movements/in/paylink:
     post:
       summary: Create a new PayLink Charge
@@ -2385,8 +2385,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements
         - movements-in
+        - Movements
   /movements/in/charge_user_card:
     post:
       summary: ''
@@ -2398,8 +2398,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements
         - movements-in
+        - Movements
   /merchant/settings/get_prices:
     get:
       summary: Getting Operation costs
@@ -2479,8 +2479,10 @@ paths:
         - Settings
   /movements/out/send_validation_code:
     get:
-      summary: Your GET endpoint
-      tags: []
+      summary: Send Operation Validation Code
+      tags:
+        - Movements
+        - movements-out
       responses:
         '200':
           $ref: '#/components/responses/SecurityCodeSent'
