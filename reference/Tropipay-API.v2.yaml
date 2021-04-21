@@ -2431,59 +2431,104 @@ paths:
       operationId: post-movements-in-charge_user_card
       responses:
         '200':
-          description: 'Here we have an example of a valid request: '
+          description: OK
           content:
             application/json:
               schema:
                 description: ''
                 type: object
                 properties:
+                  id:
+                    type: number
                   reference:
+                    type: string
+                    minLength: 1
+                  bankOrderCode:
                     type: string
                     minLength: 1
                   provider:
                     type: number
+                  userId:
+                    type: string
+                    minLength: 1
                   bookingDate:
                     type: string
                     minLength: 1
-                  originalCurrencyAmount:
+                  amount:
                     type: number
                   currency:
                     type: string
                     minLength: 1
-                  lang:
+                  originalCurrencyAmount:
+                    type: number
+                  destinationAmount:
+                    type: number
+                  destinationCurrency:
                     type: string
                     minLength: 1
-                  agree:
-                    type: boolean
-                  customUrlOK:
+                  conversionRate:
+                    type: number
+                  state:
+                    type: number
+                  serviceId:
+                    type: number
+                  movementTypeId:
+                    type: number
+                  updatedAt:
                     type: string
                     minLength: 1
-                  customUrlKO:
+                  createdAt:
                     type: string
                     minLength: 1
+                  paymentUrl:
+                    type: object
+                    properties:
+                      chargeUrl:
+                        type: string
+                        minLength: 1
+                    required:
+                      - chargeUrl
                 required:
+                  - id
                   - reference
+                  - bankOrderCode
                   - provider
+                  - userId
                   - bookingDate
-                  - originalCurrencyAmount
+                  - amount
                   - currency
-                  - lang
-                  - agree
-                  - customUrlOK
-                  - customUrlKO
+                  - originalCurrencyAmount
+                  - destinationAmount
+                  - destinationCurrency
+                  - conversionRate
+                  - state
+                  - serviceId
+                  - movementTypeId
+                  - updatedAt
+                  - createdAt
+                  - paymentUrl
               examples:
-                example-1:
+                Ex Charge URL created:
                   value:
+                    id: 29964
                     reference: referencia001
+                    bankOrderCode: k5ijdex8
                     provider: 1
-                    bookingDate: '2020-01-16'
-                    originalCurrencyAmount: 10055
+                    userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                    bookingDate: '2020-01-16T00:00:00.000Z'
+                    amount: 9012
                     currency: USD
-                    lang: es
-                    agree: true
-                    customUrlOK: 'https://google.com'
-                    customUrlKO: 'https://yahoo.es'
+                    originalCurrencyAmount: 10055
+                    destinationAmount: 8291
+                    destinationCurrency: EUR
+                    conversionRate: 1.1157
+                    state: 1
+                    serviceId: 1
+                    movementTypeId: 2
+                    updatedAt: '2020-01-17T19:08:43.353Z'
+                    createdAt: '2020-01-17T19:08:43.340Z'
+                    paymentUrl:
+                      chargeUrl: 'https://booking.charge.url/213oieoi2132'
       description: This gives the url to get the bank form to charge the user personal debit or credit cards
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
