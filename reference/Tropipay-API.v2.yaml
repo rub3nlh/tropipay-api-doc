@@ -375,7 +375,7 @@ paths:
     parameters: []
   /countries:
     get:
-      summary: Your GET endpoint
+      summary: Getting Users Countries List
       tags:
         - Countries
       responses:
@@ -436,7 +436,7 @@ paths:
     parameters: []
   /countries/destinations:
     get:
-      summary: Your GET endpoint
+      summary: Getting list of beneficiary countries
       tags:
         - Countries
       responses:
@@ -1128,8 +1128,6 @@ paths:
   /merchant/settings:
     get:
       summary: Obtaining list of settings
-      tags:
-        - Configure
       responses:
         '200':
           $ref: '#/components/responses/MerchantSettingList'
@@ -1137,12 +1135,12 @@ paths:
       description: Endpoint that allows obtaining the list of merchant settings.
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Settings
     parameters: []
   /settings/price:
     get:
       summary: Obtaining Prices
-      tags:
-        - Configure
       responses:
         '200':
           description: Here we have an example of a valid response
@@ -1164,6 +1162,8 @@ paths:
         Endpoint that allows obtaining the public price.
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - Settings
     post:
       summary: Setting the public price
       operationId: post-configure-price
@@ -1205,7 +1205,7 @@ paths:
                   publicPrice: '2.5'
         description: Here we have an example of a valid request
       tags:
-        - Configure
+        - Settings
     parameters: []
   /movements/in/charge:
     post:
@@ -2392,9 +2392,7 @@ paths:
         - movements-in
   /merchant/settings/get_prices:
     get:
-      summary: Your GET endpoint
-      tags:
-        - Configure
+      summary: Getting Operation costs
       responses:
         '200':
           description: |-
@@ -2467,6 +2465,8 @@ paths:
           description: The currency to send
           required: true
       description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
+      tags:
+        - Settings
 components:
   schemas:
     User:
