@@ -1179,6 +1179,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/MerchantSettingList'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: configure
       description: Endpoint that allows obtaining the list of merchant settings.
       parameters:
