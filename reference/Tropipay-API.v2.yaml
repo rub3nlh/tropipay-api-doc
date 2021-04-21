@@ -696,11 +696,21 @@ paths:
       operationId: post-access-sendEmailCode
       responses:
         '200':
-          description: |-
-            {
-                "message": "Security Code Sent",
-                "response": "OK"
-            }
+          description: This response indicates an email has been sent to the specified email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  response:
+                    type: string
+              examples:
+                Example:
+                  value:
+                    message: Security Code Sent
+                    response: OK
         '400':
           $ref: '#/components/responses/ErrorResponse'
       description: |-
