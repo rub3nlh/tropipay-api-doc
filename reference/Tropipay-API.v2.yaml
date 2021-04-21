@@ -103,44 +103,9 @@ paths:
         - Hooks
       responses:
         '200':
-          description: Here we have an example of a valid response for a merchant who subscribed to two events
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventList'
-              examples:
-                Example:
-                  value:
-                    - event: user_signup
-                      target: email
-                      value: tonykssa@gmail.com
-                      createdAt: '2021-02-13T21:30:59.154Z'
-                      updatedAt: '2021-02-13T21:30:59.154Z'
-                    - event: user_login
-                      target: web
-                      value: 'http://localhost:4000/api/user/login/listen'
-                      createdAt: '2021-02-13T22:43:11.243Z'
-                      updatedAt: '2021-02-13T22:43:11.243Z'
+          $ref: '#/components/responses/eventList'
         '500':
-          description: |-
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                'Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-api-v2-hook
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
@@ -167,40 +132,9 @@ paths:
       operationId: post-api-v2-hook
       responses:
         '200':
-          description: 'Here we have an example of a valid response:'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventResponse'
-              examples:
-                example-1:
-                  value:
-                    action: insert
-                    status: success
-                    details:
-                      event: user_signup
-                      target: web
-                      value: 'https://www.merchant_domain.com/api/user/signup/listen'
+          $ref: '#/components/responses/EventResponse'
         '500':
-          description: |
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                ' Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         Endpoint allows a merchant to subscribe to an event, specifying the options to receive information at the time it is trigger.
 
@@ -210,7 +144,7 @@ paths:
         {
               "event": "user_signup",
               "target": "email",
-              "value": "tonykssa@gmail.com",
+              "value": "user@mail.com",
               "createdAt": "2021-02-13T21:30:59.154Z",
               "updatedAt": "2021-02-13T21:30:59.154Z"
         }
@@ -240,40 +174,9 @@ paths:
       operationId: put-api-v2-hook
       responses:
         '200':
-          description: 'Here we have an example of a valid response:'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventResponse'
-              examples:
-                example-1:
-                  value:
-                    action: update
-                    status: success
-                    details:
-                      event: user_signup
-                      target: email
-                      value: tonykssa@gmail.com
+          $ref: '#/components/responses/EventResponse'
         '500':
-          description: |
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                'Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         Endpoint allows a merchant update event subscription , specifying the options to receive information at the time it is trigger.Take into account the value of the name or denomination of the event cannot be modified, in case it is required to change this field, it is recommended to delete it and create a new subscription.
       parameters:
@@ -297,40 +200,9 @@ paths:
       operationId: delete-api-v2-hook
       responses:
         '200':
-          description: 'Here we have an example of a valid response:'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventResponse'
-              examples:
-                example-1:
-                  value:
-                    action: delete
-                    status: success
-                    details:
-                      event: user_signup
-                      target: email
-                      value: tonykssa@gmail.com
+          $ref: '#/components/responses/EventResponse'
         '500':
-          description: |-
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                'Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         This Endpoint allows a merchant to unsubscribe from an event by name or denomination.
       parameters:
@@ -356,40 +228,9 @@ paths:
       summary: Get a list with all events that allow a subscription
       responses:
         '200':
-          description: 'Here we have an example of a valid response: '
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventListDescription'
-              examples:
-                example-1:
-                  value:
-                    - name: user_signup
-                      description: Event launched once an user complete registration on the TropiPay platform.
-                    - name: payment_in_state_change
-                      description: The event is fired once a user changes their status payment in entry method.
-                    - name: payment_out_state_change
-                      description: The event is fired once a user changes their status payment out entry method.
+          $ref: '#/components/responses/eventListDescription'
         '500':
-          description: |
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                'Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-api-v2-hook-events
       description: |
         Endpoint for get full list of available events.
@@ -436,25 +277,7 @@ paths:
                   value:
                     url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
         '500':
-          description: |-
-            In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
-             
-            In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                'Example 1: Bad token encoding':
-                  value:
-                    error:
-                      code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-                      message: Failed to authenticate token for Merchant!
-                'Example 2: Bad token keys':
-                  value:
-                    error:
-                      code: 'OperationError: Failed to validate merchant token!'
-                      message: Failed to authenticate token for Merchant!
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         Endopint that allows obtaining the url of the platform login form. Keep in mind that the login url provides a form that must be rendered inside a container. We recommend using an ```<IFRAME>```. For security reasons the login url will be valid for 30 seconds, after that term it will have to be requested again. 
 
@@ -540,6 +363,10 @@ paths:
                   redirectType: 1
                   extraCSS: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
                   redirectUrl: 'https://www.merchant.com/homr'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
         description: 'Here we have an example of a valid request:'
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
@@ -875,37 +702,7 @@ paths:
                 "response": "OK"
             }
         '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                description: ''
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      code:
-                        type: string
-                        minLength: 1
-                      message:
-                        type: string
-                        minLength: 1
-                    required:
-                      - code
-                      - message
-                required:
-                  - error
-              examples:
-                example:
-                  value:
-                    error:
-                      code: VALIDATION_ERROR
-                      message: That email is already registered
-            application/xml:
-              schema:
-                type: object
-                properties: {}
+          $ref: '#/components/responses/ErrorResponse'
       description: |-
         This is the very first step in order to subscribe a new user, this allows you to validate user email. Upon successful POST an email will be sent to the specified address with a time-limited token.
 
@@ -1318,34 +1115,9 @@ paths:
       operationId: post-kyc
       responses:
         '200':
-          description: 'Here we have an example of a valid response: '
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/KycResponse'
-              examples:
-                example-1:
-                  value:
-                    status: success
-                    url: 'https://localhost:3000/widget/kyc/eyJtZXJjaGFudElkIjoxLCJ1c2VySWQiOiIzMyIsInNpZ25hdHVyZSI6IjYzNzcxMGY0MWQxMTc4OTlhNzNhMTYyZmE1NTgxYmQ5IiwiY29kZSI6MTYxNDc0MjY1MTY0Nn0='
+          $ref: '#/components/responses/kycResponse'
         '400':
-          description: 'Here we have an example of a Bad Request:'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationParams'
-              examples:
-                example-1:
-                  value:
-                    error:
-                      code:
-                        - msg: Invalid value
-                          param: userId
-                          location: body
-                        - msg: Invalid value
-                          param: userId
-                          location: body
-                      message: Invalid Parameter
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         This endpoint is for generating KYC wizard link. the received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
       parameters:
@@ -1360,26 +1132,7 @@ paths:
         - Configure
       responses:
         '200':
-          description: Here we have an example of a valid response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MerchantSettingList'
-              examples:
-                example-1:
-                  value:
-                    - key: publicPrice
-                      value: '2.5'
-                      section: public
-                      state: '1'
-                      createdAt: '2021-03-18T20:10:37.670Z'
-                      updatedAt: '2021-03-18T20:10:37.670Z'
-                    - key: merchantPrice
-                      value: '2.10'
-                      section: public
-                      state: '1'
-                      createdAt: '2021-03-18T04:00:00.000Z'
-                      updatedAt: '2021-03-18T04:00:00.000Z'
+          $ref: '#/components/responses/MerchantSettingList'
       operationId: configure
       description: Endpoint that allows obtaining the list of merchant settings.
       parameters:
@@ -2757,78 +2510,6 @@ components:
         - lastName
         - email
         - emailVerified
-    Event:
-      description: ''
-      type: object
-      properties:
-        event:
-          type: string
-          minLength: 1
-        target:
-          type: string
-          minLength: 1
-        value:
-          type: string
-          minLength: 1
-        createdAt:
-          type: string
-          minLength: 1
-        updatedAt:
-          type: string
-          minLength: 1
-      required:
-        - event
-        - target
-        - value
-        - createdAt
-        - updatedAt
-      x-examples:
-        example-1:
-          event: user_signup
-          target: email
-          value: tonykssa@gmail.com
-          createdAt: '2021-02-13T21:30:59.154Z'
-          updatedAt: '2021-02-13T21:30:59.154Z'
-    EventList:
-      title: Events
-      type: array
-      items:
-        $ref: '#/components/schemas/Event'
-      x-examples:
-        example-1:
-          - event: user_signup
-            target: email
-            value: tonykssa@gmail.com
-            createdAt: '2021-02-13T21:30:59.154Z'
-            updatedAt: '2021-02-13T21:30:59.154Z'
-          - event: user_login
-            target: web
-            value: 'http://localhost:4000/api/user/login/listen'
-            createdAt: '2021-02-13T22:43:11.243Z'
-            updatedAt: '2021-02-13T22:43:11.243Z'
-    ErrorResponse:
-      description: ''
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              minLength: 1
-            message:
-              type: string
-              minLength: 1
-          required:
-            - code
-            - message
-      required:
-        - error
-      x-examples:
-        example-1:
-          error:
-            code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
-            message: Failed to authenticate token for Merchant!
     AccessRequest:
       description: |-
         -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
@@ -2845,10 +2526,7 @@ components:
       properties:
         redirectType:
           type: number
-          description: |-
-            the type of request defines the mode in which the login form interacts with its container, it can take values such as: 
-               * 1: Redirect the page to a specific address, this being specified in the parameters called *redirectUrl*. 
-               * 2: Set communication with your container using the *window.addEventListener* and *parent.postMessage messages*.
+          description: possible values 1 or 2
         extraCSS:
           type: string
           minLength: 1
@@ -2873,71 +2551,6 @@ components:
       x-examples:
         example-1:
           url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
-    EventListDescription:
-      type: array
-      description: ''
-      minItems: 1
-      uniqueItems: true
-      items:
-        type: object
-        required:
-          - name
-          - description
-        properties:
-          name:
-            type: string
-            minLength: 1
-          description:
-            type: string
-            minLength: 1
-      x-examples:
-        example-1:
-          - name: user_signup
-            description: Event launched once an user complete registration on the TropiPay platform.
-          - name: payment_in_state_change
-            description: The event is fired once a user changes their status payment in entry method.
-          - name: payment_out_state_change
-            description: The event is fired once a user changes their status payment out entry method.
-    EventResponse:
-      description: ''
-      type: object
-      properties:
-        action:
-          type: string
-          minLength: 1
-        status:
-          type: string
-          minLength: 1
-        details:
-          type: object
-          properties: {}
-          required: []
-      required:
-        - action
-        - status
-        - details
-      x-examples:
-        example-1:
-          action: update
-          status: success
-          details: {}
-    KycResponse:
-      description: ''
-      type: object
-      properties:
-        status:
-          type: string
-          minLength: 1
-        url:
-          type: string
-          minLength: 1
-      required:
-        - status
-        - url
-      x-examples:
-        example-1:
-          status: success
-          url: 'https://signup.getmati.com/?merchantToken=5cd02b2e7a7dc7001b331bfc&flowId=121212121212121&metadata=%7B%22userId%22:%22rwqerq34r345534545345%22%7D'
     ValidationParams:
       description: ''
       type: object
@@ -3020,53 +2633,21 @@ components:
         - state
         - createdAt
         - updatedAt
-    MerchantSettingList:
-      type: array
-      description: ''
-      minItems: 1
-      uniqueItems: true
-      items:
-        type: object
-        required:
-          - key
-          - value
-          - section
-          - state
-          - createdAt
-          - updatedAt
-        properties:
-          key:
-            type: string
-            minLength: 1
-          value:
-            type: string
-            minLength: 1
-          section:
-            type: string
-            minLength: 1
-          state:
-            type: string
-            minLength: 1
-          createdAt:
-            type: string
-            minLength: 1
-          updatedAt:
-            type: string
-            minLength: 1
-      x-examples:
-        example-1:
-          - key: publicPrice
-            value: '2.5'
-            section: public
-            state: '1'
-            createdAt: '2021-03-18T20:10:37.670Z'
-            updatedAt: '2021-03-18T20:10:37.670Z'
-          - key: merchantPrice
-            value: '2.10'
-            section: public
-            state: '1'
-            createdAt: '2021-03-18T04:00:00.000Z'
-            updatedAt: '2021-03-18T04:00:00.000Z'
+    Event:
+      title: Event
+      type: object
+      properties:
+        event:
+          type: string
+        target:
+          type: string
+        value:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      description: An Event to hook on
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
@@ -3228,3 +2809,105 @@ components:
                 documentExpirationDate: null
                 createdAt: '2020-11-27T02:43:47.108Z'
                 updatedAt: '2021-02-11T22:41:32.518Z'
+    eventList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                event:
+                  type: string
+                target:
+                  type: string
+                value:
+                  type: string
+                createdAt:
+                  type: string
+                updatedAt:
+                  type: string
+    kycResponse:
+      description: The response of KYC endpoint
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              url:
+                type: string
+    MerchantSetting:
+      description: A single Merchant Setting
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+              section:
+                type: string
+              state:
+                type: string
+              createdAt:
+                type: string
+              updatedAt:
+                type: string
+    MerchantSettingList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MerchantSetting'
+    eventListDescription:
+      description: A list of events
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+    ErrorResponse:
+      description: |-
+        Basic Error response estructure
+
+        In case of error in the token encoding you will receive an internal error with a structure as shown in example *'Example 1: Bad token encoding'*.
+         
+        In case of an error in the token keys or attempted security breach with the correct encoding, you will receive an internal error with a structure as shown in example *'Example 2: Bad token keys'*.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    EventResponse:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              action:
+                type: string
+              status:
+                type: string
+              details:
+                type: string
