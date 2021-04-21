@@ -682,7 +682,7 @@ paths:
           <!-- theme: warning -->
           >### warning
           >Before doing this request make sure to verify user email address by [sending email code]( 
-          >Tropipay-API.v2.yaml/paths/~1access~1send_email_code)
+          >/reference/Tropipay-API.v2.yaml/paths/~1access~1send_email_code)
           >to get validationToken
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
