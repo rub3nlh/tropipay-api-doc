@@ -1207,6 +1207,8 @@ paths:
                     state: '1'
                     createdAt: '2021-03-18T20:10:37.670Z'
                     updatedAt: '2021-03-18T20:10:37.670Z'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-configure-price
       description: |
         Endpoint that allows obtaining the public price.
@@ -1233,6 +1235,8 @@ paths:
                     state: '1'
                     createdAt: '2021-03-18T20:10:37.670Z'
                     updatedAt: '2021-03-18T20:10:37.670Z'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       description: |
         Endpoint that allows to set the public price.
       parameters:
