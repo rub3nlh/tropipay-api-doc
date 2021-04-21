@@ -2431,7 +2431,7 @@ paths:
       operationId: post-movements-in-charge_user_card
       responses:
         '200':
-          description: OK
+          description: 'Here we have an example of a valid response:'
           content:
             application/json:
               schema:
@@ -2535,6 +2535,60 @@ paths:
       tags:
         - movements-in
         - Movements
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                provider:
+                  type: number
+                bookingDate:
+                  type: string
+                  minLength: 1
+                originalCurrencyAmount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                agree:
+                  type: boolean
+                customUrlOK:
+                  type: string
+                  minLength: 1
+                customUrlKO:
+                  type: string
+                  minLength: 1
+              required:
+                - reference
+                - provider
+                - bookingDate
+                - originalCurrencyAmount
+                - currency
+                - lang
+                - agree
+                - customUrlOK
+                - customUrlKO
+            examples:
+              example-1:
+                value:
+                  reference: referencia001
+                  provider: 1
+                  bookingDate: '2020-01-16'
+                  originalCurrencyAmount: 10055
+                  currency: USD
+                  lang: es
+                  agree: true
+                  customUrlOK: 'https://google.com'
+                  customUrlKO: 'https://yahoo.es'
+        description: 'Here we have an example of a valid request:'
   /merchant/settings/get_prices:
     get:
       summary: Getting Operation costs
