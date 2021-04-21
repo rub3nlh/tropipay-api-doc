@@ -2700,6 +2700,8 @@ paths:
                         bankFee: 900
                         destinationCurrency: USD
                         toGetEUR: 79401
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-merchant-settings-get_prices
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
