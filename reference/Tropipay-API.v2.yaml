@@ -2540,11 +2540,11 @@ components:
         extraCSS:
           type: string
           minLength: 1
-          description: 'The login form allows to adjust its graphical interface through the injection of stylesheets, this property defines the url of the remote css that you want to insert to customize the mentioned form.'
+          description: url of custom CSS
         redirectUrl:
           type: string
           minLength: 1
-          description: 'Set url to which you want to redirect once the login process has been successfully completed, it depends on the value set in the *redirectType* property.'
+          description: redirection URL
       required:
         - redirectType
         - extraCSS
