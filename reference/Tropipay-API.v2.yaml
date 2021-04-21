@@ -2167,7 +2167,7 @@ paths:
 
         You Must send to ***soporte@tropipay.com*** an URL for receiving the Callback with the operation response.
 
-        > Note:  We are working on Webhooks structures to avoiding this send URL configuration step. 
+        > Note:  We are working on Webhooks structures to avoid this send URL configuration step. 
 
         ### How to complete the charge:
         With the response you will receive the **chargeUrl** parameter with the form to add the data card and complete the payment.  
@@ -2885,7 +2885,7 @@ components:
               updatedAt:
                 type: string
     MerchantSettingList:
-      description: Example response
+      description: ''
       content:
         application/json:
           schema:
