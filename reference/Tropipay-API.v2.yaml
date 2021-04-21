@@ -2910,6 +2910,14 @@ components:
                   type: string
                 updatedAt:
                   type: string
+          examples:
+            example-1:
+              value:
+                - event: string
+                  target: string
+                  value: string
+                  createdAt: string
+                  updatedAt: string
     kycResponse:
       description: The response of KYC endpoint
       content:
@@ -2995,20 +3003,39 @@ components:
                     type: string
                   message:
                     type: string
-          examples: {}
+          examples:
+            example-1:
+              value:
+                error:
+                  code: string
+                  message: string
     EventResponse:
       description: Example response
       content:
         application/json:
           schema:
+            description: ''
             type: object
             properties:
               action:
                 type: string
+                minLength: 1
               status:
                 type: string
+                minLength: 1
               details:
                 type: string
+                minLength: 1
+            required:
+              - action
+              - status
+              - details
+          examples:
+            example-1:
+              value:
+                action: update
+                status: success
+                details: user_signup
     SecurityCodeSent:
       description: a JSON response that confirms code was sent to customer
       content:
