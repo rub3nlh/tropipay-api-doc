@@ -528,44 +528,82 @@ paths:
         - Occupations
       responses:
         '200':
-          description: |-
-            ```
-            {
-                "count": 29,
-                "rows": [
-                    {
-                        "id": 15,
-                        "name": "Administrativo/a",
-                        "description": null,
-                        "code": "15",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.228Z",
-                        "updatedAt": "2019-09-03T15:22:26.228Z"
-                    },
-                    {
-                        "id": 4,
-                        "name": "Agricultura",
-                        "description": null,
-                        "code": "2",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.218Z",
-                        "updatedAt": "2019-09-03T15:22:26.218Z"
-                    },
-                    ...
-                    {
-                        "id": 28,
-                        "name": "Transportista",
-                        "description": null,
-                        "code": "29",
-                        "active": true,
-                        "createdAt": "2019-09-03T15:22:26.236Z",
-                        "updatedAt": "2019-09-03T15:22:26.236Z"
-                    }
-                ],
-                "limit": 100,
-                "offset": 0
-            }
-            ```
+          description: 'Here we have an example of a valid response:'
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  count:
+                    type: number
+                  rows:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - name
+                        - code
+                        - active
+                        - createdAt
+                        - updatedAt
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                          minLength: 1
+                        description: {}
+                        code:
+                          type: string
+                          minLength: 1
+                        active:
+                          type: boolean
+                        createdAt:
+                          type: string
+                          minLength: 1
+                        updatedAt:
+                          type: string
+                          minLength: 1
+                  limit:
+                    type: number
+                  offset:
+                    type: number
+                required:
+                  - count
+                  - rows
+                  - limit
+                  - offset
+              examples:
+                example-1:
+                  value:
+                    count: 29
+                    rows:
+                      - id: 15
+                        name: Administrativo/a
+                        description: null
+                        code: '15'
+                        active: true
+                        createdAt: '2019-09-03T15:22:26.228Z'
+                        updatedAt: '2019-09-03T15:22:26.228Z'
+                      - id: 4
+                        name: Agricultura
+                        description: null
+                        code: '2'
+                        active: true
+                        createdAt: '2019-09-03T15:22:26.218Z'
+                        updatedAt: '2019-09-03T15:22:26.218Z'
+                      - id: 28
+                        name: Transportista
+                        description: null
+                        code: '29'
+                        active: true
+                        createdAt: '2019-09-03T15:22:26.236Z'
+                        updatedAt: '2019-09-03T15:22:26.236Z'
+                    limit: 100
+                    offset: 0
       operationId: get-api-occupations
       description: Endpoint that allows obtaining the list of occupations
   /access/signup:
