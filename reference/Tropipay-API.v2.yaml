@@ -2405,54 +2405,110 @@ paths:
       summary: Getting Operation costs
       responses:
         '200':
-          description: |-
-            {
-                "rate": 1.1997,
-                "viability": null,
-                "prices": [
-                    {
-                        "agent": "TROPIPAY",
-                        "path": "BANK DEPOSIT",
-                        "paymentType": 2,
-                        "toSend": 83668,
-                        "toGet": 94900,
-                        "rate": "1.1348",
-                        "fee": 5015,
-                        "bankFee": 1865,
-                        "destinationCurrency": "USD",
-                        "toGetEUR": 83668,
-                        "cuc": 94900
-                    },
-                    {
-                        "agent": "T - FINCIMEX - TARJETA AIS",
-                        "agentId": "T070",
-                        "subAgentId": "2",
-                        "path": "TARJETA AIS",
-                        "paymentType": 4,
-                        "toSend": "100000",
-                        "toGet": 95200,
-                        "rate": "0.9520",
-                        "fee": 3832,
-                        "bankFee": 600,
-                        "destinationCurrency": "CUC",
-                        "toGetEUR": 79652
-                    },
-                    {
-                        "agent": "T - FINCIMEX - TARJETA AIS USD",
-                        "agentId": "T070",
-                        "subAgentId": "5",
-                        "path": "TARJETA AIS",
-                        "paymentType": 4,
-                        "toSend": "100000",
-                        "toGet": 94900,
-                        "rate": "0.9490",
-                        "fee": 4202,
-                        "bankFee": 900,
-                        "destinationCurrency": "USD",
-                        "toGetEUR": 79401
-                    }
-                ]
-            }
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  rate:
+                    type: number
+                  viability: {}
+                  prices:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - agent
+                        - agentId
+                        - subAgentId
+                        - path
+                        - paymentType
+                        - toSend
+                        - toGet
+                        - rate
+                        - fee
+                        - bankFee
+                        - destinationCurrency
+                        - toGetEUR
+                      properties:
+                        agent:
+                          type: string
+                          minLength: 1
+                        agentId:
+                          type: string
+                          minLength: 1
+                        subAgentId:
+                          type: string
+                          minLength: 1
+                        path:
+                          type: string
+                          minLength: 1
+                        paymentType:
+                          type: number
+                        toSend:
+                          type: string
+                          minLength: 1
+                        toGet:
+                          type: number
+                        rate:
+                          type: string
+                          minLength: 1
+                        fee:
+                          type: number
+                        bankFee:
+                          type: number
+                        destinationCurrency:
+                          type: string
+                          minLength: 1
+                        toGetEUR:
+                          type: number
+                required:
+                  - rate
+                  - prices
+              examples:
+                example-1:
+                  value:
+                    rate: 1.1997
+                    viability: null
+                    prices:
+                      - agent: TROPIPAY
+                        path: BANK DEPOSIT
+                        paymentType: 2
+                        toSend: 83668
+                        toGet: 94900
+                        rate: '1.1348'
+                        fee: 5015
+                        bankFee: 1865
+                        destinationCurrency: USD
+                        toGetEUR: 83668
+                        cuc: 94900
+                      - agent: T - FINCIMEX - TARJETA AIS
+                        agentId: T070
+                        subAgentId: '2'
+                        path: TARJETA AIS
+                        paymentType: 4
+                        toSend: '100000'
+                        toGet: 95200
+                        rate: '0.9520'
+                        fee: 3832
+                        bankFee: 600
+                        destinationCurrency: CUC
+                        toGetEUR: 79652
+                      - agent: T - FINCIMEX - TARJETA AIS USD
+                        agentId: T070
+                        subAgentId: '5'
+                        path: TARJETA AIS
+                        paymentType: 4
+                        toSend: '100000'
+                        toGet: 94900
+                        rate: '0.9490'
+                        fee: 4202
+                        bankFee: 900
+                        destinationCurrency: USD
+                        toGetEUR: 79401
       operationId: get-merchant-settings-get_prices
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
