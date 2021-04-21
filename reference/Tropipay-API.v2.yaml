@@ -263,7 +263,7 @@ paths:
     parameters: []
   /access:
     post:
-      summary: 'Login Workflow step 1: Obtain login URL'
+      summary: 'Login Workflow: Obtain login URL'
       operationId: post-api-v2-access
       responses:
         '200':
