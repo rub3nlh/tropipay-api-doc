@@ -2477,6 +2477,20 @@ paths:
       description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
       tags:
         - Settings
+  /movements/out/send_validation_code:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/SecurityCodeSent'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
+      operationId: get-out-send_validation_code
+      description: 'Every time a customer tries to transfer some money out, there is a mandatory validation parameter that needs to be set. When user account is configured to send 2FA through SMS, this endpoint will make the system send that code to user phone in order to confirm operation.'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    parameters: []
 components:
   schemas:
     User:
@@ -2908,6 +2922,7 @@ components:
                     type: string
                   message:
                     type: string
+          examples: {}
     EventResponse:
       description: Example response
       content:
@@ -2921,3 +2936,19 @@ components:
                 type: string
               details:
                 type: string
+    SecurityCodeSent:
+      description: a JSON response that confirms code was sent to customer
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              response:
+                type: string
+          examples:
+            example:
+              value:
+                message: Security Code Sent
+                response: OK
