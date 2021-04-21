@@ -535,7 +535,7 @@ paths:
                 serviceDate:
                   type: string
                   default: yyyy-mm-dd
-                  description: required if singleUse is true. The date of the service
+                  description: required if singleUse is true. The date of the service. The amount settlement will be after this date.
                   format: date
                   example: '2020-03-25'
                 directPayment:
