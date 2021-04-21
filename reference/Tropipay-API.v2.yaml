@@ -3004,11 +3004,16 @@ components:
                   message:
                     type: string
           examples:
-            example-1:
+            'Example 1: Bad token encoding':
               value:
                 error:
-                  code: string
-                  message: string
+                  code: 'InvalidCharacterError: Invalid character: the string to be decoded is not correctly encoded.'
+                  message: Failed to authenticate token for Merchant!
+            'Example 2: Bad token keys':
+              value:
+                error:
+                  code: 'OperationError: Failed to validate merchant token!'
+                  message: Failed to authenticate token for Merchant!
     EventResponse:
       description: Example response
       content:
