@@ -2892,6 +2892,21 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MerchantSetting'
+          examples:
+            example-1:
+              value:
+                - key: publicPrice
+                  value: '2.5'
+                  section: public
+                  state: '1'
+                  createdAt: '2021-03-18T20:10:37.670Z'
+                  updatedAt: '2021-03-18T20:10:37.670Z'
+                - key: merchantPrice
+                  value: '2.10'
+                  section: public
+                  state: '1'
+                  createdAt: '2021-03-18T04:00:00.000Z'
+                  updatedAt: '2021-03-18T04:00:00.000Z'
     eventListDescription:
       description: A list of events
       content:
