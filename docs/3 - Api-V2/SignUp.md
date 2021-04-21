@@ -15,4 +15,4 @@ This Steps should be executed in this order to complete user registration and ac
 
 > Info
 > In order to post to this endpoints, an ApiKey authentication is required. 
-> See [Authentication](/docs/3 - Api-V2/Authentication.md) section for more details
+> See [Authentication](</docs/3 - Api-V2/Authentication.md>) section for more details
