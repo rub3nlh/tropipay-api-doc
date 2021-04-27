@@ -1261,7 +1261,7 @@ paths:
       tags:
         - Settings
     parameters: []
-  /movements/in/charge:
+  /movements/in/charge_ota_card:
     post:
       summary: Create a new OTA Virtual Card Charge
       operationId: post-movements-in-charge
@@ -2220,6 +2220,7 @@ paths:
       tags:
         - movements-in
         - Movements
+    parameters: []
   /movements/in/paylink:
     post:
       summary: Create a new PayLink Charge
@@ -2746,6 +2747,30 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     parameters: []
+  /movements:
+    get:
+      summary: User Movements List
+      tags:
+        - Movements
+      responses:
+        '200':
+          $ref: '#/components/responses/MovementList'
+      operationId: get-movements
+      description: This returns a list of user movements with their details
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+  '/movements/:id':
+    get:
+      summary: Get Movement Data
+      tags:
+        - Movements
+      responses:
+        '200':
+          $ref: '#/components/responses/Movement'
+      operationId: 'get-movements-:id'
+      description: Fetch all data of a specific movement by its ID
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
@@ -2927,6 +2952,270 @@ components:
         updatedAt:
           type: string
       description: An Event to hook on
+    Movement:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        reference:
+          type: string
+          minLength: 1
+        bankOrderCode:
+          type: string
+          minLength: 1
+        provider:
+          type: number
+        userId:
+          type: string
+          minLength: 1
+        bookingDate:
+          type: string
+          minLength: 1
+        days: {}
+        amount:
+          type: number
+        currency:
+          type: string
+          minLength: 1
+        originalCurrencyAmount: {}
+        destinationAmount:
+          type: number
+        destinationCurrency:
+          type: string
+          minLength: 1
+        conversionRate: {}
+        providerFee: {}
+        ourFee: {}
+        realBankFee:
+          type: number
+        depositaccountId:
+          type: number
+        payProviderFee: {}
+        state:
+          type: number
+        serviceId: {}
+        paymentcardId: {}
+        expirationDate: {}
+        movementTypeId:
+          type: number
+        balanceBefore:
+          type: number
+        balanceAfter:
+          type: number
+        transactionId:
+          type: number
+        isInternal:
+          type: boolean
+        agent:
+          type: string
+          minLength: 1
+        ip:
+          type: string
+          minLength: 1
+        reasonId: {}
+        reasonDes: {}
+        paymentEntityStatus:
+          type: number
+        paymentEntityBalance:
+          type: number
+        errorReason: {}
+        riskFlag:
+          type: number
+        riskScore:
+          type: number
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+        depositaccount:
+          type: object
+          properties:
+            isInEP:
+              type: number
+            id:
+              type: number
+            accountNumber:
+              type: string
+              minLength: 1
+            alias:
+              type: string
+              minLength: 1
+            swift:
+              type: string
+              minLength: 1
+            type:
+              type: number
+            country:
+              type: number
+            firstName:
+              type: string
+              minLength: 1
+            default: {}
+            state:
+              type: number
+            userId:
+              type: string
+              minLength: 1
+            countryDestinationId:
+              type: number
+            lastName:
+              type: string
+              minLength: 1
+            documentNumber:
+              type: string
+              minLength: 1
+            userRelationTypeId:
+              type: number
+            city:
+              type: string
+              minLength: 1
+            postalCode:
+              type: number
+            address:
+              type: string
+              minLength: 1
+            phone:
+              type: string
+              minLength: 1
+            checked:
+              type: boolean
+            province:
+              type: string
+              minLength: 1
+            beneficiaryType:
+              type: number
+            relatedUserId: {}
+            currency:
+              type: string
+              minLength: 1
+            correspondent: {}
+            location: {}
+            office: {}
+            officeValue: {}
+            paymentType:
+              type: number
+            paymentEntityBeneficiaryId:
+              type: number
+            paymentEntityAccountId:
+              type: number
+            verified: {}
+            documentTypeId: {}
+            documentExpirationDate: {}
+            createdAt:
+              type: string
+              minLength: 1
+            updatedAt:
+              type: string
+              minLength: 1
+            countryDestination:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                sepaZone:
+                  type: boolean
+                state:
+                  type: number
+                slug:
+                  type: string
+                  minLength: 1
+                callingCode:
+                  type: number
+                isDestination:
+                  type: boolean
+                createdAt:
+                  type: string
+                  minLength: 1
+                updatedAt:
+                  type: string
+                  minLength: 1
+              required:
+                - id
+                - name
+                - sepaZone
+                - state
+                - slug
+                - callingCode
+                - isDestination
+                - createdAt
+                - updatedAt
+          required:
+            - isInEP
+            - id
+            - accountNumber
+            - alias
+            - swift
+            - type
+            - country
+            - firstName
+            - state
+            - userId
+            - countryDestinationId
+            - lastName
+            - documentNumber
+            - userRelationTypeId
+            - city
+            - postalCode
+            - address
+            - phone
+            - checked
+            - province
+            - beneficiaryType
+            - currency
+            - paymentType
+            - paymentEntityBeneficiaryId
+            - paymentEntityAccountId
+            - createdAt
+            - updatedAt
+            - countryDestination
+        service: {}
+        charges:
+          type: array
+          items:
+            required: []
+            properties: {}
+        purchases:
+          type: array
+          items:
+            required: []
+            properties: {}
+        consumedVoucher: {}
+      required:
+        - id
+        - reference
+        - bankOrderCode
+        - provider
+        - userId
+        - bookingDate
+        - amount
+        - currency
+        - destinationAmount
+        - destinationCurrency
+        - realBankFee
+        - depositaccountId
+        - state
+        - movementTypeId
+        - balanceBefore
+        - balanceAfter
+        - transactionId
+        - isInternal
+        - agent
+        - ip
+        - paymentEntityStatus
+        - paymentEntityBalance
+        - riskFlag
+        - riskScore
+        - createdAt
+        - updatedAt
+        - depositaccount
+        - charges
+        - purchases
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
@@ -3258,3 +3547,34 @@ components:
               value:
                 message: Security Code Sent
                 response: OK
+    Movement:
+      description: All the movement data
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Movement'
+    MovementList:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+                description: The total number of movements
+              rows:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movement'
+              limit:
+                type: number
+                description: The max number of objects to fetch
+              offset:
+                type: number
+                description: An offset number to start fetching from. Defaults to 0
