@@ -2771,6 +2771,47 @@ paths:
       description: Fetch all data of a specific movement by its ID
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  /movements/in/remittance:
+    get:
+      summary: Sending a Remittance from your personal cards
+      tags:
+        - Movements
+        - Movements-in
+      responses: {}
+      operationId: get-movements-in-remittance
+      description: 'When making a remittance, customers can opt to two options: extract and send money from their personal debit or credit cards or using their own balance. This endpoint is used to send money that will be extracted from customer''s personal card. It will respond with information related to the charge movement including an url to open the POST form to execute the extraction from customer card.'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                originalCurrencyAmount:
+                  type: number
+                country:
+                  type: number
+                paymentType:
+                  type: number
+                location:
+                  type: string
+                amountToReceive:
+                  type: number
+                currencyToReceive:
+                  type: string
+                currencyToSend:
+                  type: string
+                amountToSend:
+                  type: number
+                agent:
+                  type: string
+                beneficiaryId:
+                  type: number
+                reasonId:
+                  type: number
+                reasonDes:
+                  type: string
 components:
   schemas:
     User:
