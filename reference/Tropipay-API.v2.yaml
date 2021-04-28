@@ -2218,7 +2218,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements-in
         - Movements
     parameters: []
   /movements/in/paylink:
@@ -2430,7 +2429,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements-in
         - Movements
   /movements/in/charge_user_card:
     post:
@@ -2540,7 +2538,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - movements-in
         - Movements
       requestBody:
         content:
@@ -2732,24 +2729,23 @@ paths:
       tags:
         - Settings
   /movements/out/send_validation_code:
-    get:
-      summary: Send Operation Validation Code
-      tags:
-        - Movements
-        - movements-out
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-movements-out-send_validation_code
       responses:
         '200':
           $ref: '#/components/responses/SecurityCodeSent'
         '404':
           $ref: '#/components/responses/ErrorResponse'
-      operationId: get-out-send_validation_code
       description: 'Every time a customer tries to transfer some money out, there is a mandatory validation parameter that needs to be set. When user account is configured to send 2FA through SMS, this endpoint will make the system send that code to user phone in order to confirm operation.'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
-    parameters: []
+      tags:
+        - Movements
   /movements:
     get:
-      summary: User Movements List
+      summary: Get User Movements List
       tags:
         - Movements
       responses:
@@ -2761,7 +2757,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
   '/movements/:id':
     get:
-      summary: Get Movement Data
+      summary: Get User Movement Detail
       tags:
         - Movements
       responses:
