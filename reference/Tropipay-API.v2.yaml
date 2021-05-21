@@ -2285,12 +2285,6 @@ paths:
                 reasonDes:
                   type: string
   /movements/in/with_tpp_url:
-    get:
-      summary: Getting the Pay-with-Tropipay URL
-      tags:
-        - Movements
-      responses: {}
-      operationId: get-movements-in-with_tpp_url
     post:
       summary: Getting the Pay-with-Tropipay URL
       operationId: post-movements-in-with_tpp_url
