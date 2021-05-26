@@ -1077,7 +1077,7 @@ paths:
                   value: OK
       tags:
         - Payment Link
-      description: 'Send a notification with the paymeyt link url to someone. '
+      description: 'Send a notification with the payment link url to someone. '
       parameters:
         - schema:
             type: string

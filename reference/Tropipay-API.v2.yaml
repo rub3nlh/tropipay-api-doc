@@ -2284,6 +2284,101 @@ paths:
                   type: number
                 reasonDes:
                   type: string
+  /movements/in/with_tpp_url:
+    post:
+      summary: Getting the Pay-with-Tropipay URL
+      operationId: post-movements-in-with_tpp_url
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  url:
+                    type: string
+                    minLength: 1
+                required:
+                  - url
+                x-examples:
+                  example-1:
+                    url: 'http://localhost:3000/external-payment/with-tpp/eyJyZWZlcmVuY2UiOiJTUDAwMDUyMSIsImNvbmNlcHQiOiJjb21wcmEgZGUgcGFuZWxlcyIsImRlc2NyaXB0aW9uIjoibW9kZWxvIEFsaUJhYmEgMSIsImFtb3VudCI6MTAwMCwiY3VycmVuY3kiOiJVU0QiLCJyZWFzb25JZCI6MSwibGFuZyI6ImVzIiwidXJsU3VjZXNzIjoiaHR0cDovL3N1Y2Nlc3MubWVyY2hhbnQuY29tIiwidXJsRmFpbGVkIjoiaHR0cDovL2ZhaWxlZC5tZXJjaGFudC5jb20iLCJ1cmxOb3RpZmljYXRpb24iOiJodHRwOi8vaG9vay5tZXJjaGFudC5jb20iLCJ1c2VyIjp7ImlkIjoiYjE2OGU4MTAtZTBiYi0xMWVhLThiOTEtYmQzN2Y1OTdmYjY3IiwiZW1haWwiOiJzZXJndWl0dXNAZ21haWwuY29tIiwiaWF0IjoxNjIxMTkxMzI2LCJleHAiOjE2MjEyNzc3MjZ9LCJtZXJjaGFudE5hbWUiOiJTRVJHSU8gREFOSUVMIiwibWVyY2hhbnRBY2NvdW50Ijoic2VyZ3VpdHVzQGdtYWlsLmNvbSJ9'
+              examples:
+                Successful Response:
+                  value:
+                    url: 'http://tpp-develop.herokuapp.com/external-payment/with-tpp/eyJyZWZlcmVuY2UiOiJTUDAwMDUyMSIsImNvbmNlcHQiOiJjb21wcmEgZGUgcGFuZWxlcyIsImRlc2NyaXB0aW9uIjoibW9kZWxvIEFsaUJhYmEgMSIsImFtb3VudCI6MTAwMCwiY3VycmVuY3kiOiJVU0QiLCJyZWFzb25JZCI6MSwibGFuZyI6ImVzIiwidXJsU3VjZXNzIjoiaHR0cDovL3N1Y2Nlc3MubWVyY2hhbnQuY29tIiwidXJsRmFpbGVkIjoiaHR0cDovL2ZhaWxlZC5tZXJjaGFudC5jb20iLCJ1cmxOb3RpZmljYXRpb24iOiJodHRwOi8vaG9vay5tZXJjaGFudC5jb20iLCJ1c2VyIjp7ImlkIjoiYjE2OGU4MTAtZTBiYi0xMWVhLThiOTEtYmQzN2Y1OTdmYjY3IiwiZW1haWwiOiJzZXJndWl0dXNAZ21haWwuY29tIiwiaWF0IjoxNjIxMTkxMzI2LCJleHAiOjE2MjEyNzc3MjZ9LCJtZXJjaGFudE5hbWUiOiJTRVJHSU8gREFOSUVMIiwibWVyY2hhbnRBY2NvdW50Ijoic2VyZ3VpdHVzQGdtYWlsLmNvbSJ9'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: 'This endpoint gives the URL to be set as href parameter in your Pay-with-Tropipay button. This will allow you to set a new payment method for your users to use. Accessing that url, your customers will access their account at Tropipay.com, verify and confirm payment and return to your site'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  reference: SP000521
+                  concept: compra de paneles
+                  description: modelo AliBaba 1
+                  amount: 1000
+                  currency: USD
+                  reasonId: 1
+                  lang: es
+                  urlSuccess: 'http://success.merchant.com'
+                  urlFailed: 'http://failed.merchant.com'
+                  urlNotification: 'http://hook.merchant.com'
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                  description: the reference of your product in your shop
+                concept:
+                  type: string
+                  minLength: 1
+                  description: a payment concept to show to your customer
+                description:
+                  type: string
+                  minLength: 1
+                  description: A description of the product been bought
+                amount:
+                  type: number
+                  description: 'the amount IN CENTS to pay by the buyer '
+                currency:
+                  type: string
+                  minLength: 1
+                  description: ''
+                reasonId:
+                  type: number
+                  description: The reason Id for the transaction. See Reasons section
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                  minLength: 1
+                  description: The URL to redirect after successful transaction
+                urlFailed:
+                  type: string
+                  minLength: 1
+                  description: The URL to redirect user on Failed transaction
+                urlNotification:
+                  type: string
+                  minLength: 1
+                  description: The URL to send a callBack to your server
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - reasonId
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
 components:
   schemas:
     User:
