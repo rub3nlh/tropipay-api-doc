@@ -28,6 +28,15 @@ Once set the verification code and clicked the confirmation button, a Successful
 
 ![Payment Confirmation Screen](../../assets/images/paga-con-tropipay-5.jpg)
 
+#### Callback Signature: 
+
+The `urlNotification` parameter allows to specify an URL to which we will send a notification callback.
+All callbacks contains the parameter signature that validate it is a verified Tropipay Callback. 
+You need to check the signature of any callback for security reasons:
+
+`signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + originalCurrencyAmount )
+`
+
 Bellow you can see some designs that you can use to put your Pay-With-Tropipay button.
 
 ![Boton Tropipay EN](../../assets/images/boton-tropipay-en.png)
