@@ -12,23 +12,34 @@ You can integrate tropipay as a payment gateway in your site. It's as easy as ad
 If you are a developer making the integration, you will probably need to check [this link about generating payment flow URL](/reference/Tropipay-API.v2.yaml/paths/~1movements~1in~1with_tpp_url/post) in order to generate the url to redirect the customer to.
 
 Once clicked the button, customers will be first presented a login form you they can authenticate with their credentials. 
-***
-![Login Screen](../../assets/images/paga con tropipay-1.jpg)
-***
+
+![Login Screen](../../assets/images/paga-con-tropipay-1.jpg)
+
 After successful login, a small details box will be presented so they can verify purchase details
 
-***
-![Confirm Payment Screen](../../assets/images/paga con tropipay-2.jpg)
-***
+![Confirm Payment Screen](../../assets/images/paga-con-tropipay-2.jpg)
+
 
 Before executing payment, an operation validation code is required so user will either receive a verification code by SMS or be required to type a 2FA verification code to validate the transaction
 
-***
-![Verification Code Screen](../../assets/images/paga con tropipay-3.jpg)
-***
+![Verification Code Screen](../../assets/images/paga-con-tropipay-3.jpg)
 
 Once set the verification code and clicked the confirmation button, a Successful Operation page will be presented to the customer to confirm purchase and redirect her back to your site
 
-***
-![Payment Confirmation Screen](../../assets/images/paga con tropipay-5.jpg)
-***
+![Payment Confirmation Screen](../../assets/images/paga-con-tropipay-5.jpg)
+
+Bellow you can see some designs that you can use to put your Pay-With-Tropipay button.
+
+![Boton Tropipay EN](../../assets/images/boton-tropipay-en.png)
+
+![Boton Tropipay ES](../../assets/images/boton-tropipay-es.png)
+
+![Boton Tropipay Logo](../../assets/images/boton-tropipay-logo.png)
+
+![Boton Tropipay Recto EN](../../assets/images/boton-tropipay-recto-EN.png)
+
+![Boton Tropipay Recto ES](../../assets/images/boton-tropipay-recto-ES.png)
+
+![Boton Tropipay Redondo EN](../../assets/images/boton-tropipay-redondo-EN.png)
+
+![Boton Tropipay Redondo ES](../../assets/images/boton-tropipay-redondo-ES.png)
