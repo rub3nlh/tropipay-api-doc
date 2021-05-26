@@ -8,6 +8,10 @@ To access the different endpoints, you need to use an Authorization Header type 
 - Merchant configurations and actions endpoints
 - User actions endpoints
 
+<!-- theme: info -->
+>#### info
+> If you want to obtain authentication token to make user actions and you are not a merchant, you can use [this endpoint](/reference/Tropipay-API.v1.yaml/paths/~1access~1login/post)
+
 ## Merchant Actions
 
 For these endpoints's authentication you need to send the Authorization header with the value: 
