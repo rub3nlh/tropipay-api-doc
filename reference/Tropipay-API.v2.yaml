@@ -2311,7 +2311,7 @@ paths:
                     url: 'http://tpp-develop.herokuapp.com/external-payment/with-tpp/eyJyZWZlcmVuY2UiOiJTUDAwMDUyMSIsImNvbmNlcHQiOiJjb21wcmEgZGUgcGFuZWxlcyIsImRlc2NyaXB0aW9uIjoibW9kZWxvIEFsaUJhYmEgMSIsImFtb3VudCI6MTAwMCwiY3VycmVuY3kiOiJVU0QiLCJyZWFzb25JZCI6MSwibGFuZyI6ImVzIiwidXJsU3VjZXNzIjoiaHR0cDovL3N1Y2Nlc3MubWVyY2hhbnQuY29tIiwidXJsRmFpbGVkIjoiaHR0cDovL2ZhaWxlZC5tZXJjaGFudC5jb20iLCJ1cmxOb3RpZmljYXRpb24iOiJodHRwOi8vaG9vay5tZXJjaGFudC5jb20iLCJ1c2VyIjp7ImlkIjoiYjE2OGU4MTAtZTBiYi0xMWVhLThiOTEtYmQzN2Y1OTdmYjY3IiwiZW1haWwiOiJzZXJndWl0dXNAZ21haWwuY29tIiwiaWF0IjoxNjIxMTkxMzI2LCJleHAiOjE2MjEyNzc3MjZ9LCJtZXJjaGFudE5hbWUiOiJTRVJHSU8gREFOSUVMIiwibWVyY2hhbnRBY2NvdW50Ijoic2VyZ3VpdHVzQGdtYWlsLmNvbSJ9'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
-      description: 'This endpoint gives the URL to be set as href parameter in your Pay-with-Tropipay button. This will allow you to set a new payment method for your users to use. Accessing that url, your customers will access their account at Tropipay.com, verify and confirm payment and return to your site'
+      description: 'This endpoint gives the URL to be set as `href` parameter in your `Pay-with-Tropipay button`. This will allow you to set a new payment method for your users to use. Accessing that url, your customers will access their account at Tropipay.com, verify and confirm payment and return to your site. '
       requestBody:
         content:
           application/json:
@@ -2378,6 +2378,18 @@ paths:
                 - urlSuccess
                 - urlFailed
                 - urlNotification
+            examples:
+              'generating a Pay With Tropipay Url ':
+                value:
+                  reference: SP000521
+                  concept: Cakes and Coffee
+                  description: Only the best products
+                  amount: 1500
+                  currency: USD
+                  lang: es
+                  urlSuccess: 'http://e-commers.com/success'
+                  urlFailed: 'http://http://e-commers.com/failed'
+                  urlNotification: 'https://e-commers.com/callback_notification'
       tags:
         - Movements
         - Movements-in
