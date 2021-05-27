@@ -2374,7 +2374,6 @@ paths:
                 - description
                 - amount
                 - currency
-                - reasonId
                 - lang
                 - urlSuccess
                 - urlFailed
