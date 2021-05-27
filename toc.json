@@ -23,23 +23,34 @@
       "type": "divider",
       "title": "TPP API V2.0"
     },
-    {
+     {
       "type": "group",
-      "title": "Authentication",
+      "title": "Pay With Tropipay Button",
       "items": [
         {
           "type": "item",
-          "title": "Authentication",
+          "title": "Pay With Tropipay",
+          "uri": "docs/3 - Api-V2/PayWithTropipayFlow.md"
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "title": "White Label Authentication (White Label Merchants Only)",
+      "items": [
+        {
+          "type": "item",
+          "title": "White Label Authentication",
           "uri": "docs/3 - Api-V2/Authentication.md"
         },
         {
           "type": "item",
-          "title": "Login",
+          "title": "White Label Login",
           "uri": "docs/3 - Api-V2/Login.md"
         },
         {
           "type": "item",
-          "title": "Sign Up",
+          "title": "White Label Sign Up",
           "uri": "docs/3 - Api-V2/SignUp.md"
         }
       ]
