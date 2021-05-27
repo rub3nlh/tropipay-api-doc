@@ -11,7 +11,7 @@ You can integrate tropipay as a payment gateway in your site. It's as easy as ad
 
 If you are a developer making the integration, you will probably need to check [this link about generating payment flow URL](/reference/Tropipay-API.v2.yaml/paths/~1movements~1in~1with_tpp_url/post) in order to generate the url to redirect the customer to.
 
-Once clicked the button, customers will be first presented a login form you they can authenticate with their credentials. 
+Once clicked the button, customers will be first presented a login form you they can authenticate with their credentials. `This step is omitted if the user is already logged in to his Tropipay account`
 <br>
 <img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/paga-con-tropipay-1.jpg"  width="350" style="margin: auto;">
 
@@ -40,16 +40,23 @@ You need to check the signature of any callback for security reasons:
 
 Bellow you can see some designs that you can use to put your Pay-With-Tropipay button.
 
-![Boton Tropipay EN](../../assets/images/boton-tropipay-en.png)
+Button Transparent White (EN).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-en.png"  width="20%" style="background: #00000033;">
 
-![Boton Tropipay ES](../../assets/images/boton-tropipay-es.png)
+Button Transparent White (ES).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-es.png"  width="20%" style="background: #00000033;">
 
-![Boton Tropipay Logo](../../assets/images/boton-tropipay-logo.png)
+Button  Tropipay Logo Transparent (Only Logo).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-logo.png"  width="20%" style="background: #00000033;">
 
-![Boton Tropipay Recto EN](../../assets/images/boton-tropipay-recto-EN.png)
+Button  Tropipay Dark Blue (EN).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-recto-EN.png"  width="30%">
 
-![Boton Tropipay Recto ES](../../assets/images/boton-tropipay-recto-ES.png)
+Button  Tropipay Dark Blue (ES).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-recto-ES.png"  width="30%" style="background: #00000033;">
 
-![Boton Tropipay Redondo EN](../../assets/images/boton-tropipay-redondo-EN.png)
+Button  Tropipay Dark Blue  - Round Corner  (ES).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-redondo-EN.png"  width="30%">
 
-![Boton Tropipay Redondo ES](../../assets/images/boton-tropipay-redondo-ES.png)
+Button  Tropipay Dark Blue  - Round Corner (ES).
+<img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/boton-tropipay-redondo-ES.png"  width="30%">
