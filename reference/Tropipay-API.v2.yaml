@@ -1795,8 +1795,8 @@ paths:
                   value:
                     id: 5a5cdfb0-8d9d-11eb-bfee-1922dac72c62
                     reference: demo23232323
-                    concept: locura
-                    description: es una cosa loca este cobro
+                    concept: some product id
+                    description: some product description
                     amount: 11500
                     currency: EUR
                     singleUse: true
@@ -1884,8 +1884,8 @@ paths:
               example-1:
                 value:
                   reference: demo23232323
-                  concept: locura
-                  description: es una cosa loca este cobro
+                  concept: some product id
+                  description: some product description
                   amount: 11500
                   currency: EUR
                   singleUse: true
