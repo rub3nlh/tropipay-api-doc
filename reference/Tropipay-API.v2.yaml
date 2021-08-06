@@ -2575,7 +2575,7 @@ components:
           type: string
       description: An Event to hook on
     Movement:
-      description: Details of a movement
+      description: Details of a movement. Sent to notificationUrl upon completion of a transaction.
       type: object
       properties:
         signature:
@@ -2740,6 +2740,7 @@ components:
                   clientCountryId: 0
                   createdAt: '2019-11-19T20:13:55.666Z'
                   updatedAt: '2019-11-19T20:30:04.066Z'
+      x-internal: true
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
