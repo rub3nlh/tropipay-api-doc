@@ -2575,9 +2575,11 @@ components:
           type: string
       description: An Event to hook on
     Movement:
-      description: ''
+      description: Details of a movement
       type: object
       properties:
+        signature:
+          type: string
         id:
           type: number
         reference:
@@ -2594,7 +2596,8 @@ components:
         bookingDate:
           type: string
           minLength: 1
-        days: {}
+        days:
+          type: number
         amount:
           type: number
         currency:
@@ -2607,23 +2610,17 @@ components:
           type: string
           minLength: 1
         conversionRate: {}
-        providerFee: {}
-        ourFee: {}
-        realBankFee:
-          type: number
         depositaccountId:
           type: number
-        payProviderFee: {}
         state:
           type: number
-        serviceId: {}
-        paymentcardId: {}
-        expirationDate: {}
+        serviceId:
+          type: number
+        paymentcardId:
+          type: string
+        expirationDate:
+          type: string
         movementTypeId:
-          type: number
-        balanceBefore:
-          type: number
-        balanceAfter:
           type: number
         transactionId:
           type: number
@@ -2641,203 +2638,24 @@ components:
           type: number
         paymentEntityBalance:
           type: number
-        errorReason: {}
+        errorReason:
+          type: string
+        notificationUrl:
+          type: string
         riskFlag:
-          type: number
+          type: string
         riskScore:
-          type: number
+          type: string
         createdAt:
           type: string
           minLength: 1
         updatedAt:
           type: string
           minLength: 1
-        depositaccount:
-          type: object
-          properties:
-            isInEP:
-              type: number
-            id:
-              type: number
-            accountNumber:
-              type: string
-              minLength: 1
-            alias:
-              type: string
-              minLength: 1
-            swift:
-              type: string
-              minLength: 1
-            type:
-              type: number
-            country:
-              type: number
-            firstName:
-              type: string
-              minLength: 1
-            default: {}
-            state:
-              type: number
-            userId:
-              type: string
-              minLength: 1
-            countryDestinationId:
-              type: number
-            lastName:
-              type: string
-              minLength: 1
-            documentNumber:
-              type: string
-              minLength: 1
-            userRelationTypeId:
-              type: number
-            city:
-              type: string
-              minLength: 1
-            postalCode:
-              type: number
-            address:
-              type: string
-              minLength: 1
-            phone:
-              type: string
-              minLength: 1
-            checked:
-              type: boolean
-            province:
-              type: string
-              minLength: 1
-            beneficiaryType:
-              type: number
-            relatedUserId: {}
-            currency:
-              type: string
-              minLength: 1
-            correspondent: {}
-            location: {}
-            office: {}
-            officeValue: {}
-            paymentType:
-              type: number
-            paymentEntityBeneficiaryId:
-              type: number
-            paymentEntityAccountId:
-              type: number
-            verified: {}
-            documentTypeId: {}
-            documentExpirationDate: {}
-            createdAt:
-              type: string
-              minLength: 1
-            updatedAt:
-              type: string
-              minLength: 1
-            countryDestination:
-              type: object
-              properties:
-                id:
-                  type: number
-                name:
-                  type: string
-                  minLength: 1
-                sepaZone:
-                  type: boolean
-                state:
-                  type: number
-                slug:
-                  type: string
-                  minLength: 1
-                callingCode:
-                  type: number
-                isDestination:
-                  type: boolean
-                createdAt:
-                  type: string
-                  minLength: 1
-                updatedAt:
-                  type: string
-                  minLength: 1
-              required:
-                - id
-                - name
-                - sepaZone
-                - state
-                - slug
-                - callingCode
-                - isDestination
-                - createdAt
-                - updatedAt
-          required:
-            - isInEP
-            - id
-            - accountNumber
-            - alias
-            - swift
-            - type
-            - country
-            - firstName
-            - state
-            - userId
-            - countryDestinationId
-            - lastName
-            - documentNumber
-            - userRelationTypeId
-            - city
-            - postalCode
-            - address
-            - phone
-            - checked
-            - province
-            - beneficiaryType
-            - currency
-            - paymentType
-            - paymentEntityBeneficiaryId
-            - paymentEntityAccountId
-            - createdAt
-            - updatedAt
-            - countryDestination
-        service: {}
         charges:
           type: array
           items:
-            required: []
-            properties: {}
-        purchases:
-          type: array
-          items:
-            required: []
-            properties: {}
-        consumedVoucher: {}
-      required:
-        - id
-        - reference
-        - bankOrderCode
-        - provider
-        - userId
-        - bookingDate
-        - amount
-        - currency
-        - destinationAmount
-        - destinationCurrency
-        - realBankFee
-        - depositaccountId
-        - state
-        - movementTypeId
-        - balanceBefore
-        - balanceAfter
-        - transactionId
-        - isInternal
-        - agent
-        - ip
-        - paymentEntityStatus
-        - paymentEntityBalance
-        - riskFlag
-        - riskScore
-        - createdAt
-        - updatedAt
-        - depositaccount
-        - charges
-        - purchases
+            type: object
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
