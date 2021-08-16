@@ -2997,6 +2997,56 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: KO
+                    data: null
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+              examples:
+                if no exist:
+                  value:
+                    status: KO
+                    data: null
+                ok:
+                  value:
+                    status: OK
+                    data:
+                      id: 21
+                      type: 1
+                      name: demo2
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: a7df5204d7b83b242fab05a45c6efef6
+                      public: '1629138641702'
+                      prefix: Bearer
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      expiration: null
+                      refresh: 1d
+                      redirect: null
+                      groupId: 62
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      createdAt: '2021-08-16T18:30:21.636Z'
+                      updatedAt: '2021-08-16T18:30:41.724Z'
+                      group:
+                        name: demo2
+                        id: 62
+                        permissions:
+                          - name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                          - name: BLOCKED_MONEY_OUT
+                            label: payments
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
