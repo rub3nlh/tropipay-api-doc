@@ -2559,7 +2559,7 @@ paths:
                       redirect: null
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      description: |+
+      description: |
         This endpoint return a list credentials assigned to user. 
 
         There are different types of credentials:
@@ -2584,8 +2584,6 @@ paths:
         - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
         - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
         - **prefix:** determines the type of authentication token to use, **Bearer** assumes by default.
-
-
       requestBody:
         content:
           application/json:
@@ -2693,6 +2691,85 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data:
+                      type: 1
+                      name: demo2
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 8b9e91dc70aebf1d058a69966798d5c3
+                      public: '1629134913542'
+                      prefix: Bearer
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      expiration: null
+                      refresh: 1d
+                      redirect: null
+                      groupId: 45
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      updatedAt: '2021-08-16T17:28:33.577Z'
+                      group:
+                        name: demo2
+                        id: 45
+                        permissions:
+                          - name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                            GroupPermission:
+                              groupId: 45
+                              permissionId: 1
+                              createdAt: '2021-08-16T17:28:33.568Z'
+                              updatedAt: '2021-08-16T17:28:33.568Z'
+                          - name: BLOCKED_MONEY_OUT
+                            label: payments
+                            GroupPermission:
+                              groupId: 45
+                              permissionId: 2
+                              createdAt: '2021-08-16T17:28:33.573Z'
+                              updatedAt: '2021-08-16T17:28:33.573Z'
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                example-1:
+                  value:
+                    status: OK
+                    data:
+                      type: 1
+                      name: demo2
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 8b9e91dc70aebf1d058a69966798d5c3
+                      public: '1629134913542'
+                      prefix: Bearer
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      expiration: '2021-08-16T17:28:33.568Z'
+                      refresh: 1d
+                      redirect: 'https://my.domain.com/oauth'
+                      groupId: 45
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      updatedAt: '2021-08-16T17:28:33.577Z'
+                      group:
+                        name: demo2
+                        id: 45
+                        permissions:
+                          - name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                          - name: BLOCKED_MONEY_OUT
+                            label: payments
         '400':
           $ref: '#/components/responses/Movement'
         '401':
@@ -2701,6 +2778,12 @@ paths:
       description: This endpoint return an information about a credential by it name.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+        - schema:
+            type: string
+            example: demo2
+          in: query
+          name: name
+          description: Credential name
     put:
       summary: Update a credential by it name
       operationId: 'put-credential-:name'
