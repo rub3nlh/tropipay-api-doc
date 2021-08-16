@@ -2645,13 +2645,9 @@ paths:
         '401':
           $ref: '#/components/responses/SecurityCodeSent'
       operationId: 'get-credential-:name'
-      description: |-
-        This endpoint return a list credentials assigned to user. 
-
-        There are different types of credentials:
-        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
-        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
-        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.  
+      description: This endpoint return an information about a credential by it name.
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
     put:
       summary: Update a credential by it name
       operationId: 'put-credential-:name'
@@ -2661,6 +2657,8 @@ paths:
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       description: ''
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
     delete:
       summary: Delete a credential by it name
       operationId: 'delete-credential-:name'
@@ -2672,6 +2670,8 @@ paths:
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       description: ''
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
