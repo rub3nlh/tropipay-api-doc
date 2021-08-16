@@ -372,6 +372,7 @@ paths:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Authentication
+        - Security
     parameters: []
   /countries:
     get:
@@ -2396,7 +2397,8 @@ paths:
   /credential:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Security
       responses:
         '200':
           description: Example response
