@@ -2393,6 +2393,13 @@ paths:
       tags:
         - Movements
         - Movements-in
+  /credential:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-credential
+      description: crede
 components:
   schemas:
     User:
@@ -2741,6 +2748,188 @@ components:
                   createdAt: '2019-11-19T20:13:55.666Z'
                   updatedAt: '2019-11-19T20:30:04.066Z'
       x-internal: true
+    Credential:
+      description: ''
+      type: object
+      x-examples:
+        example-1:
+          type: 1
+          name: 5d6fd52d1796bd41632099cb5444b7f6
+          username: 991aea6a4587040942b8599a6d8fbebb
+          password: de78a9592729c63a5abe1447255e1429
+          public: '1629119418585'
+          prefix: Bearer
+          domain: .*tropipay.com.* www.demo.cu
+          status: 2
+          expiration: null
+          refresh: 1d
+          redirect: null
+          groupId: 42
+          ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+          createdAt: '2021-08-16T13:10:18.771Z'
+          updatedAt: '2021-08-16T13:10:18.771Z'
+          group:
+            id: 42
+            name: 5d6fd52d1796bd41632099cb5444b7f6
+            createdAt: '2021-08-16T13:10:18.595Z'
+            updatedAt: '2021-08-16T13:10:18.595Z'
+            permissions:
+              - id: 1
+                name: ALLOW_EXTERNAL_CHARGE
+                label: payments
+                createdAt: '2019-10-29T12:19:50.939Z'
+                updatedAt: '2019-10-29T12:19:50.939Z'
+                GroupPermission:
+                  groupId: 42
+                  permissionId: 1
+                  createdAt: '2021-08-16T13:10:18.755Z'
+                  updatedAt: '2021-08-16T13:10:18.755Z'
+              - id: 2
+                name: BLOCKED_MONEY_OUT
+                label: payments
+                createdAt: '2020-05-18T07:29:48.990Z'
+                updatedAt: '2020-05-18T07:29:48.990Z'
+                GroupPermission:
+                  groupId: 42
+                  permissionId: 2
+                  createdAt: '2021-08-16T13:10:18.768Z'
+                  updatedAt: '2021-08-16T13:10:18.768Z'
+          value:
+            type: 1
+            name: 5d6fd52d1796bd41632099cb5444b7f6
+            username: 991aea6a4587040942b8599a6d8fbebb
+            password: de78a9592729c63a5abe1447255e1429
+            public: '1629119418585'
+            prefix: Bearer
+            domain: .*tropipay.com.* www.demo.cu
+            status: 2
+            expiration: '2021-08-15'
+            refresh: 1d
+            redirect: 'http://my.demo.com/callback'
+            groupId: 42
+            ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+            createdAt: '2021-08-16T13:10:18.771Z'
+            updatedAt: '2021-08-16T13:10:18.771Z'
+            group:
+              id: 42
+              name: 5d6fd52d1796bd41632099cb5444b7f6
+              createdAt: '2021-08-16T13:10:18.595Z'
+              updatedAt: '2021-08-16T13:10:18.595Z'
+              permissions:
+                - id: 1
+                  name: ALLOW_EXTERNAL_CHARGE
+                  label: payments
+                  createdAt: '2019-10-29T12:19:50.939Z'
+                  updatedAt: '2019-10-29T12:19:50.939Z'
+                - id: 2
+                  name: BLOCKED_MONEY_OUT
+                  label: payments
+                  createdAt: '2020-05-18T07:29:48.990Z'
+                  updatedAt: '2020-05-18T07:29:48.990Z'
+      properties:
+        type:
+          type: number
+        name:
+          type: string
+          minLength: 1
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+        public:
+          type: string
+          minLength: 1
+        prefix:
+          type: string
+          minLength: 1
+        domain:
+          type: string
+          minLength: 1
+        status:
+          type: number
+        expiration:
+          type: string
+        refresh:
+          type: string
+          minLength: 1
+        redirect:
+          type: string
+        groupId:
+          type: number
+        ownerId:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        updatedAt:
+          type: string
+          minLength: 1
+        group:
+          type: object
+          required:
+            - id
+            - name
+            - createdAt
+            - updatedAt
+            - permissions
+          properties:
+            id:
+              type: number
+            name:
+              type: string
+              minLength: 1
+            createdAt:
+              type: string
+              minLength: 1
+            updatedAt:
+              type: string
+              minLength: 1
+            permissions:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                    minLength: 1
+                  label:
+                    type: string
+                    minLength: 1
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - name
+                  - label
+                  - createdAt
+                  - updatedAt
+      required:
+        - type
+        - name
+        - username
+        - password
+        - public
+        - prefix
+        - domain
+        - status
+        - refresh
+        - groupId
+        - ownerId
+        - createdAt
+        - updatedAt
+        - group
+      title: ''
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
