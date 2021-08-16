@@ -3332,6 +3332,13 @@ paths:
         ### Differences from OAuth 1.0
 
         OAuth 1.0 was largely based on existing proprietary protocols such as Flickr's "FlickrAuth" and Google's "AuthSub". The result represented the best solution based on actual implementation experience. However, after several years of working with the protocol, the community learned enough to rethink and improve the protocol in three main areas where OAuth 1.0 proved limited or confusing.
+
+
+        ### Bearer Tokens
+
+        Bearer tokens are a much simpler way of making API requests, since they don’t require cryptographic signing of each request. The tradeoff is that all API requests must be made over an HTTPS connection, since the request contains a plaintext token that could be used by anyone if it were intercepted. The advantage is that it doesn’t require complex libraries to make requests and is much simpler for both clients and servers to implement.
+
+        The downside to Bearer tokens is that there is nothing preventing other apps from using a Bearer token if it can get access to it. This is a common criticism of OAuth 2.0, although most providers only use Bearer tokens anyway. Under normal circumstances, when applications properly protect the access tokens under their control, this is not a problem, although technically it is less secure. If your service requires a more secure approach, you can a different access token type that may meet your security requirements.
 components:
   schemas:
     User:
