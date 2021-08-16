@@ -2397,8 +2397,6 @@ paths:
   /credential:
     get:
       summary: List Credentials
-      tags:
-        - Security
       responses:
         '200':
           description: Example response
@@ -2498,6 +2496,8 @@ paths:
         - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
     post:
       summary: Create Credential
       operationId: post-credential
@@ -2684,10 +2684,13 @@ paths:
                   redirect: 'https://my.domain.com/oauth'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
   '/credential/:name':
     get:
       summary: GET information about a credential by it name
-      tags: []
+      tags:
+        - Security
       responses:
         '200':
           description: OK
@@ -2991,6 +2994,8 @@ paths:
                 value:
                   grant_type: generate_password
         description: ''
+      tags:
+        - Security
     delete:
       summary: Delete a credential by it name
       operationId: 'delete-credential-:name'
@@ -3054,10 +3059,13 @@ paths:
       description: This endpoint allow to delete a credential by it name.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
   /credential/grant/list:
     get:
       summary: Your GET endpoint
-      tags: []
+      tags:
+        - Security
       responses:
         '200':
           description: OK
@@ -3279,6 +3287,9 @@ paths:
                                     permissions:
                                       - name: ALLOW_PAYMENT_OUT
                                       - name: ALLOW_EXTERNAL_CHARGE
+      tags:
+        - Security
+      description: ''
 components:
   schemas:
     User:
