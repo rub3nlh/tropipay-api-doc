@@ -2532,7 +2532,7 @@ paths:
           description: OK
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      description: |-
+      description: |
         This endpoint return a list credentials assigned to user. 
 
         There are different types of credentials:
@@ -2542,7 +2542,6 @@ paths:
 
         Take into account that the credential name must be unique, it is used to identify it, and it is the name that is registered in the list of applications of another user, when this authorizes an external credential to execute operations on his behalf. 
 
-
         ```json
         {
 
@@ -2551,6 +2550,11 @@ paths:
             "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
         }
         ```
+
+        Among the parameters that are specified as input are all those defined for a credential and some additional options that are described below:
+        - **grant_type:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
+        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
+        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
       requestBody:
         content:
           application/json:
