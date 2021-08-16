@@ -2516,12 +2516,143 @@ paths:
           $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: get-credential
       description: |-
-        This endpoint return a list credentials assigned to user. There are different types of credentials:
+        This endpoint return a list credentials assigned to user. 
+
+        There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
         - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
         - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+    post:
+      summary: ''
+      operationId: post-credential
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: |-
+        This endpoint return a list credentials assigned to user. 
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+
+        Take into account that the credential name must be unique, it is used to identify it, and it is the name that is registered in the list of applications of another user, when this authorizes an external credential to execute operations on his behalf. 
+
+
+        ```json
+        {
+
+            "grant_type":"generate_password",
+            "domain": ".*tropipay.com.* www.demo.cuuuu",
+            "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
+        }
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                type:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+                secret:
+                  type: string
+                  minLength: 1
+                public:
+                  type: string
+                prefix:
+                  type: string
+                  minLength: 1
+                domain:
+                  type: string
+                  minLength: 1
+                status:
+                  type: number
+                expiration:
+                  type: string
+                  minLength: 1
+                refresh:
+                  type: string
+                  minLength: 1
+                redirect:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                ownerId:
+                  type: number
+              required:
+                - type
+                - name
+                - username
+                - password
+                - secret
+                - public
+                - prefix
+                - domain
+                - status
+                - expiration
+                - refresh
+                - redirect
+                - groupId
+                - ownerId
+              x-examples:
+                example-1:
+                  type: 1
+                  name: gitlab.my
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
+            examples:
+              'Automatic password generation ':
+                value:
+                  grant_type: generate_password
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+              'Default restrictions ':
+                value:
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+              Full Request:
+                value:
+                  type: 1
+                  name: Gitlab.My
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
 components:
   schemas:
     User:
