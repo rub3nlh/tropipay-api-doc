@@ -3290,6 +3290,13 @@ paths:
       tags:
         - Security
       description: ''
+  /access/token:
+    post:
+      summary: ''
+      operationId: post-access-token
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     User:
