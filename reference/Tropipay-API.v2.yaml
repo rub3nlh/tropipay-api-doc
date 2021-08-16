@@ -2504,6 +2504,59 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data:
+                      name: demo2
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      refresh: 1d
+                      type: 1
+                      prefix: Bearer
+                      status: 0
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 4c1e2767717d7439af11d914ae3f941f
+                      public: '1629133999573'
+                      groupId: 45
+                      updatedAt: '2021-08-16T17:13:19.684Z'
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      domain: null
+                      expiration: null
+                      redirect: null
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                'Default credential only by name parameter ':
+                  value:
+                    status: OK
+                    data:
+                      name: demo2
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      refresh: 1d
+                      type: 1
+                      prefix: Bearer
+                      status: 0
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 4c1e2767717d7439af11d914ae3f941f
+                      public: '1629133999573'
+                      groupId: 45
+                      updatedAt: '2021-08-16T17:13:19.684Z'
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      domain: null
+                      expiration: null
+                      redirect: null
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       description: |
@@ -2610,10 +2663,9 @@ paths:
                   grant_type: generate_password
                   domain: .*tropipay.com.* www.demo.cuuuu
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
-              'Default restrictions ':
+              Default request:
                 value:
-                  domain: .*tropipay.com.* www.demo.cuuuu
-                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+                  name: demo2
               Full Request:
                 value:
                   type: 1
@@ -2623,14 +2675,11 @@ paths:
                   domain: .*tropipay.com.* www.demo.cuuuu
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
                   secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
-                  public: ''
                   prefix: Bearer
                   status: 2
                   expiration: '2021-08-20'
                   refresh: 1d
                   redirect: 'https://my.domain.com/oauth'
-                  groupId: 24
-                  ownerId: 21
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
   '/credential/:name':
@@ -2652,13 +2701,204 @@ paths:
       summary: Update a credential by it name
       operationId: 'put-credential-:name'
       responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data:
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      name: 5d6fd52d1796bd41632099cb5444b7f6
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      refresh: 1d
+                      type: 1
+                      prefix: Bearer
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: de78a9592729c63a5abe1447255e1429
+                      public: '1629119418585'
+                      groupId: 42
+                      updatedAt: '2021-08-16T13:10:18.771Z'
+                      createdAt: '2021-08-16T13:10:18.771Z'
+                      expiration: null
+                      redirect: null
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                example-1:
+                  value:
+                    status: OK
+                    data:
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      name: 5d6fd52d1796bd41632099cb5444b7f6
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      refresh: 1d
+                      type: 1
+                      prefix: Bearer
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: de78a9592729c63a5abe1447255e1429
+                      public: '1629119418585'
+                      groupId: 42
+                      updatedAt: '2021-08-16T13:10:18.771Z'
+                      createdAt: '2021-08-16T13:10:18.771Z'
+                      redirect: 'https://my.domain.com/oauth'
+                      expiration: '2021-08-20'
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      description: ''
+      description: |-
+        This endpoint allow to update a credential by it name.
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+
+        Take into account that the credential name must be unique, it is used to identify it, and it is the name that is registered in the list of applications of another user, when this authorizes an external credential to execute operations on his behalf. 
+
+        ```json
+        {
+
+            "grant_type":"generate_password",
+            "domain": ".*tropipay.com.* www.demo.cuuuu",
+            "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
+        }
+        ```
+
+        Among the parameters that are specified as input are all those defined for a credential and some additional options that are described below:
+        - **grant_type:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
+        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
+        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                type:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+                domain:
+                  type: string
+                  minLength: 1
+                scope:
+                  type: string
+                  minLength: 1
+                secret:
+                  type: string
+                  minLength: 1
+                public:
+                  type: string
+                prefix:
+                  type: string
+                  minLength: 1
+                status:
+                  type: number
+                expiration:
+                  type: string
+                  minLength: 1
+                refresh:
+                  type: string
+                  minLength: 1
+                redirect:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                ownerId:
+                  type: number
+              required:
+                - type
+                - name
+                - username
+                - password
+                - domain
+                - scope
+                - secret
+                - public
+                - prefix
+                - status
+                - expiration
+                - refresh
+                - redirect
+                - groupId
+                - ownerId
+              x-examples:
+                example-1:
+                  type: 1
+                  name: Gitlab.My
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
+            examples:
+              Full Request:
+                value:
+                  type: 1
+                  name: Gitlab.My
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  prefix: Bearer
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+              Auto Generate Password:
+                value:
+                  grant_type: generate_password
+              'Set security restrictions ':
+                value:
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Credential'
+            examples:
+              Generate Password:
+                value:
+                  grant_type: generate_password
+        description: ''
     delete:
       summary: Delete a credential by it name
       operationId: 'delete-credential-:name'
@@ -2669,7 +2909,7 @@ paths:
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      description: ''
+      description: This endpoint allow to delete a credential by it name.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
 components:
@@ -3021,7 +3261,11 @@ components:
                   updatedAt: '2019-11-19T20:30:04.066Z'
       x-internal: true
     Credential:
-      description: ''
+      description: |-
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.  
       type: object
       x-examples:
         example-1:
@@ -3201,7 +3445,7 @@ components:
         - createdAt
         - updatedAt
         - group
-      title: ''
+      title: Credential
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
@@ -3619,15 +3863,25 @@ components:
               error_description:
                 type: string
                 minLength: 1
+              error_uri:
+                type: string
+                minLength: 1
             required:
               - error
               - error_description
+              - error_uri
             x-examples:
               example-1:
-                error: invalid_request
-                error_description: Name must be Unique
+                error: invalid_client
+                error_description: Credential not found
+                error_uri: 'See the full API docs at https://authorization-server.com/docs/access_token'
           examples:
             Name must be Unique:
               value:
                 error: invalid_request
                 error_description: Name must be Unique
+            Invalid Client:
+              value:
+                error: invalid_client
+                error_description: Credential not found
+                error_uri: 'See the full API docs at https://authorization-server.com/docs/access_token'
