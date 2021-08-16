@@ -1166,8 +1166,7 @@ paths:
           $ref: '#/components/responses/kycResponse'
         '400':
           $ref: '#/components/responses/ErrorResponse'
-      description: |
-        This endpoint is for generating KYC wizard link. the received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
+      description: This endpoint is for generating KYC wizard link. The received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
@@ -2390,6 +2389,7 @@ paths:
                   urlSuccess: 'http://e-commers.com/success'
                   urlFailed: 'http://http://e-commers.com/failed'
                   urlNotification: 'https://e-commers.com/callback_notification'
+        description: ''
       tags:
         - Movements
         - Movements-in
@@ -2397,13 +2397,131 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: Example response
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data: []
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                example-1:
+                  value:
+                    status: string
+                    data:
+                      - type: 0
+                        name: string
+                        username: string
+                        password: string
+                        public: string
+                        prefix: string
+                        domain: string
+                        status: 0
+                        expiration: string
+                        refresh: string
+                        redirect: string
+                        groupId: 0
+                        ownerId: string
+                        createdAt: string
+                        updatedAt: string
+                        group:
+                          id: 0
+                          name: string
+                          createdAt: string
+                          updatedAt: string
+                          permissions:
+                            - id: 0
+                              name: string
+                              label: string
+                              createdAt: string
+                              updatedAt: string
+                example-2:
+                  value:
+                    status: OK
+                    data:
+                      - type: 1
+                        name: my.demo.1
+                        username: 991aea6a4587040942b8599a6d8fbebb
+                        password: de78a9592729c63a5abe1447255e1429
+                        public: '1629119418585'
+                        prefix: Bearer
+                        domain: .*tropipay.com.* www.demo.cu
+                        status: 2
+                        expiration: '2021-08-20T13:10:18.771Z'
+                        refresh: 1d
+                        redirect: 'https://my.web.app/oauth'
+                        groupId: 42
+                        ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                        createdAt: '2021-08-16T13:10:18.771Z'
+                        updatedAt: '2021-08-16T13:10:18.771Z'
+                        group:
+                          id: 42
+                          name: my.demo.1
+                          createdAt: '2021-08-16T13:10:18.595Z'
+                          updatedAt: '2021-08-16T13:10:18.595Z'
+                          permissions:
+                            - id: 1
+                              name: ALLOW_EXTERNAL_CHARGE
+                              label: payments
+                              createdAt: '2019-10-29T12:19:50.939Z'
+                              updatedAt: '2019-10-29T12:19:50.939Z'
+                            - id: 2
+                              name: BLOCKED_MONEY_OUT
+                              label: payments
+                              createdAt: '2020-05-18T07:29:48.990Z'
+                              updatedAt: '2020-05-18T07:29:48.990Z'
+                      - type: 1
+                        name: my.demo.2
+                        username: 991aea6a4587040942b8599a6d8fbebb
+                        password: de78a9592729c63a5abe1447255e1429
+                        public: '1629119418585'
+                        prefix: Bearer
+                        domain: .*tropipay.com.* www.demo.cu
+                        status: 2
+                        expiration: null
+                        refresh: 1d
+                        redirect: 'https://my.web.app/oauth'
+                        groupId: 42
+                        ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                        createdAt: '2021-08-16T13:10:18.771Z'
+                        updatedAt: '2021-08-16T13:10:18.771Z'
+                        group:
+                          id: 42
+                          name: my.demo.2
+                          createdAt: '2021-08-16T13:10:18.595Z'
+                          updatedAt: '2021-08-16T13:10:18.595Z'
+                          permissions:
+                            - id: 1
+                              name: ALLOW_EXTERNAL_CHARGE
+                              label: payments
+                              createdAt: '2019-10-29T12:19:50.939Z'
+                              updatedAt: '2019-10-29T12:19:50.939Z'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: get-credential
       description: |-
         This endpoint return a list credentials assigned to user. There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
-        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
         - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
@@ -3299,3 +3417,20 @@ components:
               - rows
               - limit
               - offset
+    FailedAuthenticateResponse:
+      description: 'Error when no token is provided or supplied token is wrong and authentication is required. '
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+          examples:
+            Supplied token is wrong:
+              value:
+                error:
+                  msg: Failed to authenticate token!
+            No token is provided:
+              value:
+                error:
+                  msg: No token!
