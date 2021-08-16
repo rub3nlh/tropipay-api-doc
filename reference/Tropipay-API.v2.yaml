@@ -2399,7 +2399,11 @@ paths:
       tags: []
       responses: {}
       operationId: get-credential
-      description: crede
+      description: |-
+        This endpoint return a list credentials assigned to user. There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
 components:
   schemas:
     User:
