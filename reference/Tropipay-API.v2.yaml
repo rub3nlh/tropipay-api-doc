@@ -2771,9 +2771,9 @@ paths:
                           - name: BLOCKED_MONEY_OUT
                             label: payments
         '400':
-          $ref: '#/components/responses/Movement'
+          $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
-          $ref: '#/components/responses/SecurityCodeSent'
+          $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: 'get-credential-:name'
       description: This endpoint return an information about a credential by it name.
       parameters:
