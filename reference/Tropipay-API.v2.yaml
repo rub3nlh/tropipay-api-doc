@@ -2423,37 +2423,7 @@ paths:
                   - status
                   - data
               examples:
-                example-1:
-                  value:
-                    status: string
-                    data:
-                      - type: 0
-                        name: string
-                        username: string
-                        password: string
-                        public: string
-                        prefix: string
-                        domain: string
-                        status: 0
-                        expiration: string
-                        refresh: string
-                        redirect: string
-                        groupId: 0
-                        ownerId: string
-                        createdAt: string
-                        updatedAt: string
-                        group:
-                          id: 0
-                          name: string
-                          createdAt: string
-                          updatedAt: string
-                          permissions:
-                            - id: 0
-                              name: string
-                              label: string
-                              createdAt: string
-                              updatedAt: string
-                example-2:
+                Example:
                   value:
                     status: OK
                     data:
@@ -2516,6 +2486,8 @@ paths:
                               updatedAt: '2019-10-29T12:19:50.939Z'
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: get-credential
       description: |-
         This endpoint return a list credentials assigned to user. 
@@ -2661,6 +2633,45 @@ paths:
                   ownerId: 21
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  '/credential/:name':
+    get:
+      summary: GET information about a credential by it name
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/Movement'
+        '401':
+          $ref: '#/components/responses/SecurityCodeSent'
+      operationId: 'get-credential-:name'
+      description: |-
+        This endpoint return a list credentials assigned to user. 
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.  
+    put:
+      summary: Update a credential by it name
+      operationId: 'put-credential-:name'
+      responses:
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: ''
+    delete:
+      summary: Delete a credential by it name
+      operationId: 'delete-credential-:name'
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: ''
 components:
   schemas:
     User:
