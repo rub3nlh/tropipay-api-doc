@@ -2657,6 +2657,8 @@ paths:
                   redirect: 'https://my.domain.com/oauth'
                   groupId: 24
                   ownerId: 21
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
