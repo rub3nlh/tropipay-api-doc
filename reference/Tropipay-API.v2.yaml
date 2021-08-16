@@ -3054,6 +3054,118 @@ paths:
       description: This endpoint allow to delete a credential by it name.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  /credential/grant/list:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - name
+                    - label
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    label:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - name: ALLOW_EXTERNAL_CHARGE
+                      label: payments
+                    - name: BLOCKED_MONEY_OUT
+                      label: payments
+                    - name: ALLOW_OTA_CHARGE
+                      label: payments_in
+                    - name: ALLOW_SELF_CHARGE
+                      label: payments_in
+                    - name: ALLOW_REDEEM_CODE
+                      label: payments_in
+                    - name: ALLOW_CHARGE_VOUCHER
+                      label: payments_in
+                    - name: ALLOW_EXTERNAL_TOPUP
+                      label: payments_in
+                    - name: ALLOW_INTERNAL_TRANSFER_IN
+                      label: payments_in
+                    - name: ALLOW_GIFT_CARD
+                      label: payments_out
+                    - name: ALLOW_RECHARGE
+                      label: payments_out
+                    - name: ALLOW_EXTERNAL_TRANSFER
+                      label: payments_out
+                    - name: ALLOW_INTERNAL_TRANSFER_OUT
+                      label: payments_out
+                    - name: ALLOW_CREATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_DELETE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_PROFILE
+                      label: app
+                    - name: ALLOW_PAYMENT_IN
+                      label: generic
+                    - name: ALLOW_PAYMENT_OUT
+                      label: generic
+                    - name: ALLOW_MARKET_PURCHASES
+                      label: generic
+                    - name: UPLOAD_DOCUMENT
+                      label: support
+              examples:
+                example-1:
+                  value:
+                    - name: ALLOW_EXTERNAL_CHARGE
+                      label: payments
+                    - name: BLOCKED_MONEY_OUT
+                      label: payments
+                    - name: ALLOW_OTA_CHARGE
+                      label: payments_in
+                    - name: ALLOW_SELF_CHARGE
+                      label: payments_in
+                    - name: ALLOW_REDEEM_CODE
+                      label: payments_in
+                    - name: ALLOW_CHARGE_VOUCHER
+                      label: payments_in
+                    - name: ALLOW_EXTERNAL_TOPUP
+                      label: payments_in
+                    - name: ALLOW_INTERNAL_TRANSFER_IN
+                      label: payments_in
+                    - name: ALLOW_GIFT_CARD
+                      label: payments_out
+                    - name: ALLOW_RECHARGE
+                      label: payments_out
+                    - name: ALLOW_EXTERNAL_TRANSFER
+                      label: payments_out
+                    - name: ALLOW_INTERNAL_TRANSFER_OUT
+                      label: payments_out
+                    - name: ALLOW_CREATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_DELETE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_PROFILE
+                      label: app
+                    - name: ALLOW_PAYMENT_IN
+                      label: generic
+                    - name: ALLOW_PAYMENT_OUT
+                      label: generic
+                    - name: ALLOW_MARKET_PURCHASES
+                      label: generic
+                    - name: UPLOAD_DOCUMENT
+                      label: support
+      operationId: get-credential-grant-list
 components:
   schemas:
     User:
