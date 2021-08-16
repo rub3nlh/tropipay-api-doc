@@ -2512,8 +2512,8 @@ paths:
                               label: payments
                               createdAt: '2019-10-29T12:19:50.939Z'
                               updatedAt: '2019-10-29T12:19:50.939Z'
-        '401':
-          $ref: '#/components/responses/FailedAuthenticateResponse'
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
       operationId: get-credential
       description: |-
         This endpoint return a list credentials assigned to user. 
@@ -3571,3 +3571,50 @@ components:
               value:
                 error:
                   msg: No token!
+    OauthBadRequestResponse:
+      description: |
+        There are two different kinds of errors to handle. The first kind of error is when the developer did something wrong when creating the authorization request. The other kind of error is when the user rejects the request (clicks the “Deny” button).
+
+        If there is something wrong with the syntax of the request, such as the *redirect_uri* or *client_id is invalid*, then it’s important not to redirect the user and instead you should show the error message directly. This is to avoid letting your authorization server be used as an open redirector.
+
+        If the *redirect_uri* and client_id are both valid, but there is still some other problem, it’s okay to redirect the user back to the redirect URI with the error in the query string.
+
+        When redirecting back to the application to indicate an error, the server adds the following parameters to the redirect URL: error a single ASCII error code from the following list:
+
+        - **invalid_request:** the request is missing a parameter, contains an invalid parameter, includes a parameter more than once, or is otherwise invalid.
+        - **access_denied:** the user or authorization server denied the request
+        - **unauthorized_client:** the client is not allowed to request an authorization code using this method, for example if a confidential client attempts to use the implicit grant type.
+        - **unsupported_response_type:** the server does not support obtaining an authorization code using this method, for example if the authorization server never implemented the implicit grant type.
+        - **invalid_scope:** the requested scope is invalid or unknown.
+        - **server_error:** instead of displaying a 500 Internal Server Error page to the user, the server can redirect with this error code.
+        - **temporarily_unavailable:** if the server is undergoing maintenance, or is otherwise unavailable, this error code can be returned instead of responding with a 503 Service Unavailable status code.
+
+        **error_description**
+        The authorization server can optionally include a human-readable description of the error. This parameter is intended for the developer to understand the error, and is not meant to be displayed to the end user. The valid characters for this parameter are the ASCII character set except for the double quote and backslash, specifically, hex codes 20-21, 23-5B and 5D-7E.
+
+        **error_uri**
+        The server can also return a URL to a human-readable web page with information about the error. This is intended for the developer to get more information about the error, and is not meant to be displayed to the end user.
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: string
+                minLength: 1
+              error_description:
+                type: string
+                minLength: 1
+            required:
+              - error
+              - error_description
+            x-examples:
+              example-1:
+                error: invalid_request
+                error_description: Name must be Unique
+          examples:
+            Name must be Unique:
+              value:
+                error: invalid_request
+                error_description: Name must be Unique
