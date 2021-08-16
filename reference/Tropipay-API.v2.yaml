@@ -3166,6 +3166,171 @@ paths:
                     - name: UPLOAD_DOCUMENT
                       label: support
       operationId: get-credential-grant-list
+  /credential/grant/allow:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  value:
+                    type: boolean
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          minLength: 1
+                        groups:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                              credentials:
+                                type: array
+                                uniqueItems: true
+                                minItems: 1
+                                items:
+                                  required:
+                                    - name
+                                  properties:
+                                    name:
+                                      type: string
+                                      minLength: 1
+                                    owner:
+                                      type: object
+                                      properties:
+                                        email:
+                                          type: string
+                                          minLength: 1
+                                        group:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                              minLength: 1
+                                            permissions:
+                                              type: array
+                                              uniqueItems: true
+                                              minItems: 1
+                                              items:
+                                                required:
+                                                  - name
+                                                properties:
+                                                  name:
+                                                    type: string
+                                                    minLength: 1
+                                                  GroupPermission:
+                                                    type: object
+                                                    properties:
+                                                      grou:
+                                                        type: number
+                                                      perm:
+                                                        type: number
+                                                      crea:
+                                                        type: string
+                                                        minLength: 1
+                                                      upda:
+                                                        type: string
+                                                        minLength: 1
+                                                    required:
+                                                      - grou
+                                                      - perm
+                                                      - crea
+                                                      - upda
+                                          required:
+                                            - name
+                                            - permissions
+                                      required:
+                                        - email
+                                        - group
+                              GroupPermission:
+                                type: object
+                                properties:
+                                  groupId:
+                                    type: number
+                                  permissionId:
+                                    type: number
+                                  createdAt:
+                                    type: string
+                                    minLength: 1
+                                  updatedAt:
+                                    type: string
+                                    minLength: 1
+                                required:
+                                  - groupId
+                                  - permissionId
+                                  - createdAt
+                                  - updatedAt
+                required:
+                  - value
+                  - data
+                x-examples:
+                  example-1:
+                    value: false
+                    data:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_OUT
+                                        GroupPermission:
+                                          grou: 1
+                                          perm: 18
+                                          crea: '2020-05-19T08:34:04.850Z'
+                                          upda: '2020-05-19T08:34:04.850Z'
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                                        GroupPermission:
+                                          grou: 1
+                                          perm: 1
+                                          crea: '2019-10-29T12:20:04.555Z'
+                                          upda: '2019-10-29T12:20:04.555Z'
+                            GroupPermission:
+                              groupId: 58
+                              permissionId: 1
+                              createdAt: '2021-08-14T01:52:36.485Z'
+                              updatedAt: '2021-08-14T01:52:36.485Z'
+              examples:
+                example-1:
+                  value:
+                    value: false
+                    data:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_OUT
+                                      - name: ALLOW_EXTERNAL_CHARGE
+      operationId: get-credential-grant-allow
 components:
   schemas:
     User:
