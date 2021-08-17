@@ -3352,6 +3352,48 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    minLength: 1
+                  refresh_token:
+                    type: string
+                    minLength: 1
+                  token_type:
+                    type: string
+                    minLength: 1
+                  scope:
+                    type: string
+                    minLength: 1
+                  expires_in:
+                    type: string
+                    minLength: 1
+                required:
+                  - access_token
+                  - refresh_token
+                  - token_type
+                  - scope
+                  - expires_in
+                x-examples:
+                  example-1:
+                    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MTczMTk3LCJleHAiOjE2MjkyNTk1OTd9.EMga30PwXdKU8eM7BnbV26pyZPx0dVj8fpB-wg7n2fo
+                    refresh_token: Z2l0bGFiLm15OmVhYjIwNTVkYWM0ODQyOTcwNWQ4YmEzYTRiMDRmZDBl
+                    token_type: Bearer
+                    scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+                    expires_in: 1d
+              examples:
+                example-1:
+                  value:
+                    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MTczMTk3LCJleHAiOjE2MjkyNTk1OTd9.EMga30PwXdKU8eM7BnbV26pyZPx0dVj8fpB-wg7n2fo
+                    refresh_token: Z2l0bGFiLm15OmVhYjIwNTVkYWM0ODQyOTcwNWQ4YmEzYTRiMDRmZDBl
+                    token_type: Bearer
+                    scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+                    expires_in: 1d
       tags:
         - Security
       description: |-
@@ -3422,7 +3464,7 @@ paths:
             examples:
               example-1:
                 value:
-                  name: client_credentials
+                  grant_type: client_credentials
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
 components:
