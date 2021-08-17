@@ -2831,7 +2831,7 @@ paths:
                   value:
                     status: OK
                     data:
-                      domain: .*tropipay.com.* www.demo.cu
+                      domain: .*tropipay.com.* www.demo.es .*localhost.* 127.0.0.1
                       status: 2
                       name: 5d6fd52d1796bd41632099cb5444b7f6
                       ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
@@ -2967,7 +2967,7 @@ paths:
                   name: Gitlab.My
                   username: 991aea6a4587040942b8599a6d8fbebb
                   password: 991aea6a458704094254545454545454
-                  domain: .*tropipay.com.* www.demo.cuuuu
+                  domain: .*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
                   secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
                   prefix: Bearer
@@ -2980,7 +2980,7 @@ paths:
                   grant_type: generate_password
               'Set security restrictions ':
                 value:
-                  domain: .*tropipay.com.* www.demo.cuuuu
+                  domain: .*tropipay.com.* www.demo.es .*localhost.* 127.0.0.1
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
           application/xml:
             schema:
