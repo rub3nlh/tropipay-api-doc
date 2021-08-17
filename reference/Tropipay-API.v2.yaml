@@ -2864,7 +2864,7 @@ paths:
         {
 
             "grant_type":"generate_password",
-            "domain": ".*tropipay.com.* www.demo.cuuuu",
+            "domain": ".*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*",
             "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
         }
         ```
