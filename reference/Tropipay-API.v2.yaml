@@ -3177,11 +3177,14 @@ paths:
       description: Get the list of available permits for scope field
   /credential/grant/allow:
     post:
-      summary: ''
+      summary: Check grant allow
       operationId: post-credential-grant-allow
       responses:
         '200':
-          description: OK
+          description: |-
+            - **value:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field.
+
+            - **data:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. 
           content:
             application/json:
               schema:
@@ -3288,11 +3291,13 @@ paths:
                                     permissions:
                                       - name: ALLOW_PAYMENT_OUT
                                       - name: ALLOW_EXTERNAL_CHARGE
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
       tags:
         - Security
-      description: |-
-        - **value:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field.
-        - **data:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. 
+      description: 'Allows you to check if a credential complies with a list of permissions, from the specification of the scope field.'
       requestBody:
         content:
           application/json:
@@ -3332,6 +3337,8 @@ paths:
               example-1:
                 value: {}
         description: ''
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
   /access/token:
     post:
       summary: ''
