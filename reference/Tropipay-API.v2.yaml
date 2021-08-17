@@ -3173,8 +3173,14 @@ paths:
                       label: generic
                     - name: UPLOAD_DOCUMENT
                       label: support
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: get-credential-grant-list
       description: Get the list of available permits for scope field
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
   /credential/grant/allow:
     post:
       summary: Check grant allow
