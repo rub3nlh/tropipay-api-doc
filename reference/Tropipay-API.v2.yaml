@@ -3063,7 +3063,7 @@ paths:
         - Security
   /credential/grant/list:
     get:
-      summary: Your GET endpoint
+      summary: List of available permits
       tags:
         - Security
       responses:
@@ -3174,6 +3174,7 @@ paths:
                     - name: UPLOAD_DOCUMENT
                       label: support
       operationId: get-credential-grant-list
+      description: Get the list of available permits for scope field
   /credential/grant/allow:
     post:
       summary: ''
