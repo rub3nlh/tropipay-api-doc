@@ -36,26 +36,26 @@
     },
     {
       "type": "group",
-      "title": "White Label Authentication (White Label Merchants Only)",
+      "title": "Authentication and Integration",
       "items": [
         {
           "type": "item",
-          "title": "White Label Authentication",
+          "title": "Authentication",
           "uri": "docs/3 - Api-V2/Authentication.md"
         },
         {
           "type": "item",
-          "title": "White Label Integration",
+          "title": "Integration",
           "uri": "docs/3 - Api-V2/Integration.md"
         },
         {
           "type": "item",
-          "title": "White Label Login",
+          "title": "Login",
           "uri": "docs/3 - Api-V2/Login.md"
         },
         {
           "type": "item",
-          "title": "White Label Sign Up",
+          "title": "Sign Up",
           "uri": "docs/3 - Api-V2/SignUp.md"
         }
       ]
