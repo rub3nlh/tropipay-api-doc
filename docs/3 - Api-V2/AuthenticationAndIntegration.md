@@ -118,9 +118,15 @@ RESPONSE {
 
 <!-- theme: info -->
 >#### info
-> Notice how the response returns an object with the username and password properties equivalent to client_id and Client_secret respectively.
+> Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
 
 2. It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
+
+```
+# Environment File <==> .env
+TROPIPAY_CLIENT_ID={response.data.username}
+TROPIPAY_CLIENT_SECRET={response.data.password}
+```
 
 3. Access endpoint with POST /api/v2/access/token to request your access token, specifying the Client_Id and the Client_Secret. 
 
