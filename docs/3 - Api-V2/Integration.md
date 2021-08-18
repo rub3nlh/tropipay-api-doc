@@ -159,7 +159,7 @@ Run command:
 
     node index.js
 
-Resonse:
+Response:
 
     {
         "status": "OK",
@@ -250,7 +250,7 @@ Run command:
 
     node index.js
 
-Resonse:
+Response:
 
     [
       { name: 'ALLOW_EXTERNAL_CHARGE', label: 'payments' },
