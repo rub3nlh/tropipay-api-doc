@@ -121,6 +121,7 @@ Example developed in Node Js:
 npm install dotenv axios
 ```
 
+Index.js with source code:
 ```js
 const axios = require('axios').default;
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IAloOV2JnRPKET1m8dmb-88';
@@ -142,6 +143,34 @@ axios({
 .catch(error => console.log(error));
 ```
 
+Run command:
+```
+node index.js
+```
+
+Resonse:
+```
+{
+    "status": "OK",
+    "data": {
+        "name": "my.app.cu",
+        "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+        "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+        "prefix": "Bearer",
+        "refresh": "1d",
+        "type": 1,
+        "status": 0,
+        "username": "991aea6a4587040942b8599a6d8fbebb",
+        "password": "ec51a20c4a8db60693e3ffae7b32222b",
+        "public": "1629304998681",
+        "groupId": 63,
+        "updatedAt": "2021-08-18T16:43:18.876Z",
+        "createdAt": "2021-08-18T16:43:18.876Z",
+        "expiration": null,
+        "redirect": null
+    }
+}
+```
 <!-- theme: info -->
 >#### info
 > Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
@@ -156,8 +185,37 @@ TROPIPAY_CLIENT_SECRET={response.data.password}
 
 3. Access endpoint with POST */api/v2/access/token* to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) 
 
+Index.js with source code:
+```js
+const axios = require('axios').default;
+axios({
+	method: 'post',
+	url: 'https://www.tropipay.com/api/v2/access/token',
+	data: {
+		"grant_type":"client_credentials",
+		"client_id": "991aea6a4587040942b8599a6d8fbebb",
+		"client_secret": "796c0519dace8efdeaf59e6ad40e811a"
+	}
+})
+.then(res => console.log(res.data))
+.catch(error => console.log(error));
+```
 
-
+Run command:
+```
+node index.js
+```
+ 
+Resonse:
+```json
+{
+  access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MzExMDM5LCJleHAiOjE2MjkzOTc0Mzl9.u2Ir3y2ADUZAscN051zbc7bLk7FtbvYzyb34s6R3voY",
+  refresh_token: "Z2l0bGFiLm15OmVhYjIwNTVkYWM0ODQyOTcwNWQ4YmEzYTRiMDRmZDBl",
+  token_type: "Bearer",
+  expires_in: 1629397439,
+  scope: "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT"
+}
+```
 4. Once the access token has been obtained, it will be able to consume the resources allowed for the credential.
 
 
