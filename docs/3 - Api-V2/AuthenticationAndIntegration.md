@@ -194,7 +194,7 @@ axios({
 	data: {
 		"grant_type":"client_credentials",
 		"client_id": "991aea6a4587040942b8599a6d8fbebb",
-		"client_secret": "796c0519dace8efdeaf59e6ad40e811a"
+		"client_secret": "ec51a20c4a8db60693e3ffae7b32222b"
 	}
 })
 .then(res => console.log(res.data))
@@ -218,6 +218,52 @@ Resonse:
 ```
 4. Once the access token has been obtained, it will be able to consume the resources allowed for the credential.
 
+Index.js with source code:
+```js
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MzExMDM5LCJleHAiOjE2MjkzOTc0Mzl9.u2Ir3y2ADUZAscN051zbc7bLk7FtbvYzyb34s6R3voY';
+
+axios({
+	headers: {
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer ' + token,
+	},
+	method: 'get',
+	url: 'https://www.tropipay.com/api/v2/credential/grant/list'
+})
+.then(res => console.log(res.data))
+.catch(error => console.log(error));
+```
+
+Run command:
+```
+node index.js
+```
+
+Resonse:
+```
+[
+  { name: 'ALLOW_EXTERNAL_CHARGE', label: 'payments' },
+  { name: 'BLOCKED_MONEY_OUT', label: 'payments' },
+  { name: 'ALLOW_OTA_CHARGE', label: 'payments_in' },
+  { name: 'ALLOW_SELF_CHARGE', label: 'payments_in' },
+  { name: 'ALLOW_REDEEM_CODE', label: 'payments_in' },
+  { name: 'ALLOW_CHARGE_VOUCHER', label: 'payments_in' },
+  { name: 'ALLOW_EXTERNAL_TOPUP', label: 'payments_in' },
+  { name: 'ALLOW_INTERNAL_TRANSFER_IN', label: 'payments_in' },
+  { name: 'ALLOW_GIFT_CARD', label: 'payments_out' },
+  { name: 'ALLOW_RECHARGE', label: 'payments_out' },
+  { name: 'ALLOW_EXTERNAL_TRANSFER', label: 'payments_out' },
+  { name: 'ALLOW_INTERNAL_TRANSFER_OUT', label: 'payments_out' },
+  { name: 'ALLOW_CREATE_BENEFICIARY', label: 'app' },
+  { name: 'ALLOW_UPDATE_BENEFICIARY', label: 'app' },
+  { name: 'ALLOW_DELETE_BENEFICIARY', label: 'app' },
+  { name: 'ALLOW_UPDATE_PROFILE', label: 'app' },
+  { name: 'ALLOW_PAYMENT_IN', label: 'generic' },
+  { name: 'ALLOW_PAYMENT_OUT', label: 'generic' },
+  { name: 'ALLOW_MARKET_PURCHASES', label: 'generic' },
+  { name: 'UPLOAD_DOCUMENT', label: 'support' }
+]
+```
 
 
 
