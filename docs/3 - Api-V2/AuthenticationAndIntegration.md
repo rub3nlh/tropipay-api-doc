@@ -116,6 +116,14 @@ RESPONSE {
 }
 ```
 
+<!-- theme: info -->
+>#### Note:
+> In this case we are indicating that with an access token generated from the credential *'my.app.cu'*, only actions based on permissions can be executed: 
+>- ALLOW_EXTERNAL_CHARGE 
+>- ALLOW_OTA_CHARGE
+
+
+
 Example developed in Node Js: 
 ```
 npm install dotenv axios
@@ -172,7 +180,7 @@ Resonse:
 }
 ```
 <!-- theme: info -->
->#### info
+>#### Note:
 > Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
 
 **1.3.2.** It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
