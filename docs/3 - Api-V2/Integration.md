@@ -224,7 +224,7 @@ Resonse:
   scope: "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT"
 }
 ```
-**1.3.4.** Once the access token has been obtained, it will be able to consume the resources allowed for the credential. For example let's see an example of consuming [credential/grant/list](/reference/Tropipay-API.v2.yaml/paths/~1credential~1grant~1list/post), this service returns the list of available permissions using your new access token: 
+**1.3.4.** Once the access token has been obtained, it will be able to consume the resources allowed for the credential. For example let's see how to consume  [credential/grant/list](/reference/Tropipay-API.v2.yaml/paths/~1credential~1grant~1list/post) using your new access token, this service returns the list of available permissions: 
 
 Index.js with source code:
 ```js
