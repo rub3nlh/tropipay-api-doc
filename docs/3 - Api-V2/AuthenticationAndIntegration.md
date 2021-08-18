@@ -1,6 +1,6 @@
 ## Integration
 
-El API de TropiPay da soporte de integracion basado en el estandar OAuth 2.
+The TropiPay API supports integration based on the OAuth 2 standard. 
 
 ## Protocol Flow
 
@@ -35,6 +35,8 @@ The most common OAuth grant types used in TropiPay are listed below:
 - **Refresh Token**
 
 ## Client Credentials
+
+Client Credentials is the appropriate flow when you need to integrate an external application with the TropiPay platform, it is what is known in other contexts as *backend to backend* integration. 
 
 One way to verify tokens you receive to your API service is to forward the token to the OAuth server to ask if it is valid. The downside to this method is each API request sent to your server requires a request sent to the OAuth server as well, which increases the time it takes for you to respond to your client. An alternative is to use something called local validation, a strategy popularized by JSON Web Tokens (JWT). A JWT contains your claims (client data) in unencrypted, machine-readable JSON.
 
