@@ -58,15 +58,15 @@ Now that you understand the basics of the OAuth 2.0 client credentials flow work
 
 ```
      +--------+                               +---------------+
-     |        |--(C)-- Authorization Grant -->| Authorization |
+     |        |--(A)-- Authorization Grant -->| Authorization |
      |        |                               |     Server    |
-     |        |<-(D)----- Access Token -------|               |
+     |        |<-(B)----- Access Token -------|               |
      |        |                               +---------------+
      | Client |
      |        |                               +---------------+
-     |        |--(E)----- Access Token ------>|    Resource   |
+     |        |--(C)----- Access Token ------>|    Resource   |
      |        |                               |     Server    |
-     |        |<-(F)--- Protected Resource ---|               |
+     |        |<-(D)--- Protected Resource ---|               |
      +--------+                               +---------------+
 ```
 
