@@ -215,7 +215,7 @@ Run command:
 
     node index.js
 
-Resonse:
+Response:
 
 ```json
 {
