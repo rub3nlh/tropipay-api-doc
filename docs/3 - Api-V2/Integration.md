@@ -118,7 +118,7 @@ RESPONSE {
 
 <!-- theme: info -->
 >#### Note:
-> In this case we are indicating that with an access token generated from the credential *'my.app.cu'*, only actions based on permissions can be executed: 
+> In this case we are indicating that with an access token generated from the credential *'my.app.cu'*, you can only run actions based on the list of permissions shown below: 
 >- ALLOW_EXTERNAL_CHARGE 
 >- ALLOW_OTA_CHARGE
 
