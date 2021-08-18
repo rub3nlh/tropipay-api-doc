@@ -175,7 +175,7 @@ Resonse:
 >#### info
 > Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
 
-2. It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
+**1.3.2.** It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
 
 ```
 # Environment File <==> .env
@@ -183,7 +183,7 @@ TROPIPAY_CLIENT_ID={response.data.username}
 TROPIPAY_CLIENT_SECRET={response.data.password}
 ```
 
-3. Access endpoint with POST */api/v2/access/token* to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) 
+**1.3.3.** Access endpoint with POST */api/v2/access/token* to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) 
 
 Index.js with source code:
 ```js
@@ -216,7 +216,7 @@ Resonse:
   scope: "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT"
 }
 ```
-4. Once the access token has been obtained, it will be able to consume the resources allowed for the credential. For example let's see an example of consuming [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential~1grant~1list/post), this service returns the list of available permissions using your new access token: 
+**1.3.4.** Once the access token has been obtained, it will be able to consume the resources allowed for the credential. For example let's see an example of consuming [credential/grant/list](/reference/Tropipay-API.v2.yaml/paths/~1credential~1grant~1list/post), this service returns the list of available permissions using your new access token: 
 
 Index.js with source code:
 ```js
