@@ -86,6 +86,8 @@ To create a credential, just make a POST request to the */api/v2/credential* end
 ```
 POST https://www.tropipay.com/api/v2/credential
 
+HEADER Authorization Bearer {USER-TOKEN}
+
 REQUEST {
     "name": "my.app.cu",
     "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
@@ -113,6 +115,10 @@ RESPONSE {
     }
 }
 ```
+
+<!-- theme: info -->
+>#### info
+> Notice how the response returns an object with the username and password properties equivalent to client_id and Client_secret respectively.
 
 2. It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
 
