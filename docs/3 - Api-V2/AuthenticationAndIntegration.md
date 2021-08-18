@@ -78,5 +78,10 @@ Instead of storing and managing API keys for your clients (other servers), you c
      +--------+                               +---------------+
 ```
 
+- **A)** Your app authenticates with the Auth0 Authorization Server using its Client ID (*like username for your app*) and Client Secret (*like password for your app*).
+- **B)** TropiPay Authorization Server validates the Client ID and Client Secret, and  responds with an Access Token.
+- **C)** Your application can use the Access Token to call an API on behalf of itself.
+- **D)** The API responds with requested data.
+
 Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
 
