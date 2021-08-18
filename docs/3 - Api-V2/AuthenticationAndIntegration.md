@@ -80,7 +80,21 @@ Instead of storing and managing API keys for your clients (other servers), you c
 ### 1.3 Example
 Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
 
-1. Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post) 
+1. Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
+
+```
+POST https://www.tropipay.com/api/v2/credential
+
+REQUEST {
+    "name": "my.app.cu",
+    "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+    "scope": "ALLOW_EXTERNAL_CHARGE ALLOW_OTA_CHARGE"
+}
+
+RESPONSE {
+
+}
+```
 
 2. It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
 
