@@ -1,5 +1,5 @@
 ---
-tags: [Integration, Authentication]
+tags: [Integration]
 ---
 
 ## Integration
