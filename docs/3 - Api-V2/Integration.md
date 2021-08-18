@@ -84,7 +84,7 @@ Instead of storing and managing API keys for your clients (other servers), you c
 
 ### 1.3 Example
 
-Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
+Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s create a complete example that contemplates the entire flow.
 
 **1.3.1.** Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
 
