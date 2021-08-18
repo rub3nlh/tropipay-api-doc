@@ -3188,7 +3188,9 @@ paths:
       responses:
         '200':
           description: |-
-            - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field.
+            The answer is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field: 
+
+            - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field. This is the field that determines whether or not the credential is valid for certain permissions
 
             - **domain:** it is of type boolean, it takes a true value if it complies with all the restrictions specified in the domain field. It also evaluates the status of the credential and if it has expired.
 
