@@ -116,6 +116,32 @@ RESPONSE {
 }
 ```
 
+Example developed in Node Js: 
+```
+npm install dotenv axios
+```
+
+```js
+const axios = require('axios').default;
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IAloOV2JnRPKET1m8dmb-88';
+
+axios({
+	headers: {
+		'Content-Type': 'application/json',
+		'Authorization': 'Bearer ' + token,
+	},
+	method: 'post',
+	url: 'https://www.tropipay.com/api/v2/credential',
+	data: {
+		"name": "my.app.cu",
+		"domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+		"scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
+	}
+})
+.then(res => console.log(res.data))
+.catch(error => console.log(error));
+```
+
 <!-- theme: info -->
 >#### info
 > Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
