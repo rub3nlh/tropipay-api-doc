@@ -30,14 +30,15 @@ Figure 1: Abstract Protocol Flow
 The OAuth framework specifies several grant types for different use cases, as well as a framework for creating new grant types.
 
 The most common OAuth grant types used in TropiPay are listed below:
-- **Client Credentials:** for External App to TropiPay integration. 
-- **Authorization Code with PKCE:** for External App to TropiPay User integration.
-- **Refresh Token**
+- **1. Client Credentials:** for External App to TropiPay integration. 
+- **2. Authorization Code with PKCE:** for External App to TropiPay User integration.
+- **3. Refresh Token**
 
-## Client Credentials
+## 1. Client Credentials
 
 Client Credentials is the appropriate flow when you need to integrate an external application with the TropiPay platform, it is what is known in other contexts as *backend to backend* integration. 
 
+### 1.1 Introduction
 One way to verify tokens you receive to your API service is to forward the token to the OAuth server to ask if it is valid. The downside to this method is each API request sent to your server requires a request sent to the OAuth server as well, which increases the time it takes for you to respond to your client. An alternative is to use something called local validation, a strategy popularized by JSON Web Tokens (JWT). A JWT contains your claims (client data) in unencrypted, machine-readable JSON.
 
 When using the local validation pattern to validate an API token (JWT), you can use math to validate that:
@@ -50,4 +51,22 @@ In a way, this is like a driver’s license or a passport. It’s quite difficul
 
 While similar in concept, a valid JWT would actually be far more difficult to forge. Someone with enough skill can create a convincing driver’s license, but without the private key it could take a modern computer years to brute force a valid JWT signature. Tokens should also have an expiration. While configurable, a solid default is one hour. This means a client would need to request a new token every 60 minutes if it needs to make a new request to your API server. This is an extra layer of security in case your token is compromised. Who knows? Maybe there’s a quantum computer out there that can recreate the signature within a couple hours.
 
-Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow .
+Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
+
+### 1.2 Flow
+
+
+```
+     +--------+                               +---------------+
+     |        |--(C)-- Authorization Grant -->| Authorization |
+     |        |                               |     Server    |
+     |        |<-(D)----- Access Token -------|               |
+     |        |                               +---------------+
+     | Client |
+     |        |                               +---------------+
+     |        |--(E)----- Access Token ------>|    Resource   |
+     |        |                               |     Server    |
+     |        |<-(F)--- Protected Resource ---|               |
+     +--------+                               +---------------+
+```
+
