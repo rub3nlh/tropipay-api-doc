@@ -3188,13 +3188,13 @@ paths:
       responses:
         '200':
           description: |-
-            The answer is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field: 
+            The answer is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field. 
 
             - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field. This is the field that determines whether or not the credential is valid for certain permissions
 
             - **domain:** it is of type boolean, it takes a true value if it complies with all the restrictions specified in the domain field. It also evaluates the status of the credential and if it has expired.
 
-            - **grants:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. 
+            - **grants:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. Note that for the grant to be valid, the credential must have all the requested permissions, if at least one of the requested permissions is not assigned to the credential, the valid field would take a false value. 
           content:
             application/json:
               schema:
@@ -3288,7 +3288,7 @@ paths:
                                     permissions:
                                       - name: ALLOW_PAYMENT_IN
               examples:
-                example-1:
+                Valid grants but no domain:
                   value:
                     valid: false
                     domain: false
@@ -3304,6 +3304,52 @@ paths:
                                     name: KYC3_FULL_ALLOW
                                     permissions:
                                       - name: ALLOW_PAYMENT_OUT
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                Valid domain but no grants:
+                  value:
+                    valid: false
+                    domain: true
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                'Valid ':
+                  value:
+                    valid: true
+                    domain: true
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                      - name: ALLOW_PAYMENT_IN
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
                                       - name: ALLOW_EXTERNAL_CHARGE
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
@@ -3342,7 +3388,7 @@ paths:
                   name: gitlab.my
                   permissions:
                     - ALLOW_EXTERNAL_CHARGE
-                    - ALLOW_PAYMENT_OUT
+                    - ALLOW_PAYMENT_IN
           application/xml:
             schema:
               type: object
