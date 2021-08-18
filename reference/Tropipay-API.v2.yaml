@@ -3188,18 +3188,22 @@ paths:
       responses:
         '200':
           description: |-
-            - **value:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field.
+            - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field.
 
-            - **data:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. 
+            - **domain:** it is of type boolean, it takes a true value if it complies with all the restrictions specified in the domain field. It also evaluates the status of the credential and if it has expired.
+
+            - **grants:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. 
           content:
             application/json:
               schema:
                 description: ''
                 type: object
                 properties:
-                  value:
+                  valid:
                     type: boolean
-                  data:
+                  domain:
+                    type: boolean
+                  grants:
                     type: array
                     uniqueItems: true
                     minItems: 1
@@ -3262,13 +3266,15 @@ paths:
                                         - email
                                         - group
                 required:
-                  - value
-                  - data
+                  - valid
+                  - domain
+                  - grants
                 x-examples:
                   example-1:
-                    value: false
-                    data:
-                      - name: ALLOW_EXTERNAL_CHARGE
+                    valid: false
+                    domain: false
+                    grants:
+                      - name: ALLOW_PAYMENT_IN
                         groups:
                           - name: gitlab.my
                             credentials:
@@ -3278,13 +3284,13 @@ paths:
                                   group:
                                     name: KYC3_FULL_ALLOW
                                     permissions:
-                                      - name: ALLOW_PAYMENT_OUT
-                                      - name: ALLOW_EXTERNAL_CHARGE
+                                      - name: ALLOW_PAYMENT_IN
               examples:
                 example-1:
                   value:
-                    value: false
-                    data:
+                    valid: false
+                    domain: false
+                    grants:
                       - name: ALLOW_EXTERNAL_CHARGE
                         groups:
                           - name: gitlab.my
