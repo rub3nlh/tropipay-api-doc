@@ -77,5 +77,17 @@ Instead of storing and managing API keys for your clients (other servers), you c
 - **C)** Your application can use the Access Token to call an API on behalf of itself.
 - **D)** The API responds with requested data.
 
+### 1.3 Example
 Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
+
+1. Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API.
+
+2. It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
+
+3. Access endpoint with POST /api/v2/access/token to request your access token, specifying the Client_Id and the Client_Secret. 
+
+4. Once the access token has been obtained, it will be able to consume the resources allowed for the credential.
+
+
+
 
