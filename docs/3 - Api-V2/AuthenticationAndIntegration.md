@@ -128,7 +128,9 @@ TROPIPAY_CLIENT_ID={response.data.username}
 TROPIPAY_CLIENT_SECRET={response.data.password}
 ```
 
-3. Access endpoint with POST /api/v2/access/token to request your access token, specifying the Client_Id and the Client_Secret. 
+3. Access endpoint with POST */api/v2/access/token* to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1tocken/post) 
+
+
 
 4. Once the access token has been obtained, it will be able to consume the resources allowed for the credential.
 
