@@ -51,8 +51,6 @@ In a way, this is like a driver’s license or a passport. It’s quite difficul
 
 While similar in concept, a valid JWT would actually be far more difficult to forge. Someone with enough skill can create a convincing driver’s license, but without the private key it could take a modern computer years to brute force a valid JWT signature. Tokens should also have an expiration. While configurable, a solid default is one hour. This means a client would need to request a new token every 60 minutes if it needs to make a new request to your API server. This is an extra layer of security in case your token is compromised. Who knows? Maybe there’s a quantum computer out there that can recreate the signature within a couple hours.
 
-Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
-
 ### 1.2 Flow
 
 
@@ -69,4 +67,6 @@ Now that you understand the basics of the OAuth 2.0 client credentials flow work
      |        |<-(D)--- Protected Resource ---|               |
      +--------+                               +---------------+
 ```
+
+Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
 
