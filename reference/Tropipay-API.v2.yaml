@@ -3521,6 +3521,7 @@ paths:
                   grant_type: client_credentials
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
 components:
   schemas:
     User:
