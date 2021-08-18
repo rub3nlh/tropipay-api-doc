@@ -1,48 +1,54 @@
+---
+tags: [Integration, Authentication]
+---
+
 ## Integration
 
 The TropiPay API supports integration based on the OAuth 2 standard. 
 
 ## Protocol Flow
 
-```
-     +--------+                               +---------------+
-     |        |--(A)- Authorization Request ->|   Resource    |
-     |        |                               |     Owner     |
-     |        |<-(B)-- Authorization Grant ---|               |
-     |        |                               +---------------+
-     |        |
-     |        |                               +---------------+
-     |        |--(C)-- Authorization Grant -->| Authorization |
-     | Client |                               |     Server    |
-     |        |<-(D)----- Access Token -------|               |
-     |        |                               +---------------+
-     |        |
-     |        |                               +---------------+
-     |        |--(E)----- Access Token ------>|    Resource   |
-     |        |                               |     Server    |
-     |        |<-(F)--- Protected Resource ---|               |
-     +--------+                               +---------------+
-```
+         +--------+                               +---------------+
+         |        |--(A)- Authorization Request ->|   Resource    |
+         |        |                               |     Owner     |
+         |        |<-(B)-- Authorization Grant ---|               |
+         |        |                               +---------------+
+         |        |
+         |        |                               +---------------+
+         |        |--(C)-- Authorization Grant -->| Authorization |
+         | Client |                               |     Server    |
+         |        |<-(D)----- Access Token -------|               |
+         |        |                               +---------------+
+         |        |
+         |        |                               +---------------+
+         |        |--(E)----- Access Token ------>|    Resource   |
+         |        |                               |     Server    |
+         |        |<-(F)--- Protected Resource ---|               |
+         +--------+                               +---------------+
+
 Figure 1: Abstract Protocol Flow
 
 An OAuth 2.0 flow has the following roles:
-- **Resource Owner:** Entity that can grant access to a protected resource. Typically, this is the end-user.
-- **Resource Server:** Server hosting the protected resources. This is the API you want to access.
-- **Client:** Application requesting access to a protected resource on behalf of the Resource Owner.
-- **Authorization Server:** Server that authenticates the Resource Owner and issues access tokens after getting proper authorization. In this case, Auth0.
+
+-   **Resource Owner:** Entity that can grant access to a protected resource. Typically, this is the end-user.
+-   **Resource Server:** Server hosting the protected resources. This is the API you want to access.
+-   **Client:** Application requesting access to a protected resource on behalf of the Resource Owner.
+-   **Authorization Server:** Server that authenticates the Resource Owner and issues access tokens after getting proper authorization. In this case, Auth0.
 
 ## OAuth Grant Types
 
 The OAuth framework specifies several grant types for different use cases, as well as a framework for creating new grant types. The most common OAuth grant types used in TropiPay are listed below:
-- **1. Client Credentials:** for External App to TropiPay integration. 
-- **2. Authorization Code with PKCE:** for External App to TropiPay User integration.
-- **3. Refresh Token**
+
+-   **1. Client Credentials:** for External App to TropiPay integration. 
+-   **2. Authorization Code with PKCE:** for External App to TropiPay User integration.
+-   **3. Refresh Token**
 
 ## 1. Client Credentials
 
-Client Credentials is the appropriate flow when you need to integrate an external application with the TropiPay platform, it is what is known in other contexts as *backend-to-backend* or *machine-to-machine (M2M)* integration. The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used by clients to access resources about themselves rather than to access a user's resources.
+Client Credentials is the appropriate flow when you need to integrate an external application with the TropiPay platform, it is what is known in other contexts as _backend-to-backend_ or _machine-to-machine (M2M)_ integration. The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used by clients to access resources about themselves rather than to access a user's resources.
 
 ### 1.1 Introduction
+
 One way to verify tokens you receive to your API service is to forward the token to the OAuth server to ask if it is valid. The downside to this method is each API request sent to your server requires a request sent to the OAuth server as well, which increases the time it takes for you to respond to your client. An alternative is to use something called local validation, a strategy popularized by JSON Web Tokens (JWT). A JWT contains your claims (client data) in unencrypted, machine-readable JSON.
 
 When using the local validation pattern to validate an API token (JWT), you can use math to validate that:
@@ -56,80 +62,78 @@ In a way, this is like a driver’s license or a passport. It’s quite difficul
 While similar in concept, a valid JWT would actually be far more difficult to forge. Someone with enough skill can create a convincing driver’s license, but without the private key it could take a modern computer years to brute force a valid JWT signature. Tokens should also have an expiration. While configurable, a solid default is one hour. This means a client would need to request a new token every 60 minutes if it needs to make a new request to your API server. This is an extra layer of security in case your token is compromised. Who knows? Maybe there’s a quantum computer out there that can recreate the signature within a couple hours.
 
 ### 1.2 Flow
+
 Instead of storing and managing API keys for your clients (other servers), you can use a third-party service to manage authorization for you. The way this works is that an API client sends a request to an OAuth server asking for an API token. That token is then sent from the API client to your API service along with their request. Once you have the client’s token, you can verify its validity without needing to store any information about the client.
 
-```
-     +--------+                               +---------------+
-     |        |--(A)-- Authorization Grant -->| Authorization |
-     |        |                               |     Server    |
-     |        |<-(B)----- Access Token -------|               |
-     |        |                               +---------------+
-     | Client |
-     |        |                               +---------------+
-     |        |--(C)----- Access Token ------>|    Resource   |
-     |        |                               |     Server    |
-     |        |<-(D)--- Protected Resource ---|               |
-     +--------+                               +---------------+
-```
+         +--------+                               +---------------+
+         |        |--(A)-- Authorization Grant -->| Authorization |
+         |        |                               |     Server    |
+         |        |<-(B)----- Access Token -------|               |
+         |        |                               +---------------+
+         | Client |
+         |        |                               +---------------+
+         |        |--(C)----- Access Token ------>|    Resource   |
+         |        |                               |     Server    |
+         |        |<-(D)--- Protected Resource ---|               |
+         +--------+                               +---------------+
 
-- **A)** Your app authenticates with the Auth0 Authorization Server using its Client ID (*like username for your app*) and Client Secret (*like password for your app*).
-- **B)** TropiPay Authorization Server validates the Client ID and Client Secret, and  responds with an Access Token.
-- **C)** Your application can use the Access Token to call an API on behalf of itself.
-- **D)** The API responds with requested data.
+-   **A)** Your app authenticates with the Auth0 Authorization Server using its Client ID (_like username for your app_) and Client Secret (_like password for your app_).
+-   **B)** TropiPay Authorization Server validates the Client ID and Client Secret, and  responds with an Access Token.
+-   **C)** Your application can use the Access Token to call an API on behalf of itself.
+-   **D)** The API responds with requested data.
 
 ### 1.3 Example
+
 Now that you understand the basics of the OAuth 2.0 client credentials flow works, let’s let's create a complete example that contemplates the entire flow.
 
 **1.3.1.** Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
 
-To create a credential, just make a POST request to the */api/v2/credential* endpoint specifying a few parameters, as shown in the example below: 
-```
-POST https://www.tropipay.com/api/v2/credential
+To create a credential, just make a POST request to the _/api/v2/credential_ endpoint specifying a few parameters, as shown in the example below: 
 
-HEADER Authorization Bearer {USER-TOKEN}
+    POST https://www.tropipay.com/api/v2/credential
 
-REQUEST {
-    "name": "my.app.cu",
-    "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-    "scope": "ALLOW_EXTERNAL_CHARGE ALLOW_OTA_CHARGE"
-}
+    HEADER Authorization Bearer {USER-TOKEN}
 
-RESPONSE {
-    "status": "OK",
-    "data": {
+    REQUEST {
         "name": "my.app.cu",
         "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-        "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
-        "prefix": "Bearer",
-        "refresh": "1d",
-        "type": 1,
-        "status": 0,
-        "username": "991aea6a4587040942b8599a6d8fbebb",
-        "password": "ec51a20c4a8db60693e3ffae7b32222b",
-        "public": "1629304998681",
-        "groupId": 63,
-        "updatedAt": "2021-08-18T16:43:18.876Z",
-        "createdAt": "2021-08-18T16:43:18.876Z",
-        "expiration": null,
-        "redirect": null
+        "scope": "ALLOW_EXTERNAL_CHARGE ALLOW_OTA_CHARGE"
     }
-}
-```
 
-<!-- theme: info -->
->#### Note:
-> In this case we are indicating that with an access token generated from the credential *'my.app.cu'*, you can only run actions based on the list of permissions shown below: 
->- ALLOW_EXTERNAL_CHARGE 
->- ALLOW_OTA_CHARGE
+    RESPONSE {
+        "status": "OK",
+        "data": {
+            "name": "my.app.cu",
+            "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+            "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+            "prefix": "Bearer",
+            "refresh": "1d",
+            "type": 1,
+            "status": 0,
+            "username": "991aea6a4587040942b8599a6d8fbebb",
+            "password": "ec51a20c4a8db60693e3ffae7b32222b",
+            "public": "1629304998681",
+            "groupId": 63,
+            "updatedAt": "2021-08-18T16:43:18.876Z",
+            "createdAt": "2021-08-18T16:43:18.876Z",
+            "expiration": null,
+            "redirect": null
+        }
+    }
 
-
+> #### Note:
+>
+> In this case we are indicating that with an access token generated from the credential _'my.app.cu'_, you can only run actions based on the list of permissions shown below: 
+>
+> -   ALLOW_EXTERNAL_CHARGE 
+> -   ALLOW_OTA_CHARGE
 
 Example developed in Node Js: 
-```
-npm install dotenv axios
-```
+
+    npm install dotenv axios
 
 Index.js with source code:
+
 ```js
 const axios = require('axios').default;
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IAloOV2JnRPKET1m8dmb-88';
@@ -152,48 +156,46 @@ axios({
 ```
 
 Run command:
-```
-node index.js
-```
+
+    node index.js
 
 Resonse:
-```
-{
-    "status": "OK",
-    "data": {
-        "name": "my.app.cu",
-        "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-        "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
-        "prefix": "Bearer",
-        "refresh": "1d",
-        "type": 1,
-        "status": 0,
-        "username": "991aea6a4587040942b8599a6d8fbebb",
-        "password": "ec51a20c4a8db60693e3ffae7b32222b",
-        "public": "1629304998681",
-        "groupId": 63,
-        "updatedAt": "2021-08-18T16:43:18.876Z",
-        "createdAt": "2021-08-18T16:43:18.876Z",
-        "expiration": null,
-        "redirect": null
+
+    {
+        "status": "OK",
+        "data": {
+            "name": "my.app.cu",
+            "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+            "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+            "prefix": "Bearer",
+            "refresh": "1d",
+            "type": 1,
+            "status": 0,
+            "username": "991aea6a4587040942b8599a6d8fbebb",
+            "password": "ec51a20c4a8db60693e3ffae7b32222b",
+            "public": "1629304998681",
+            "groupId": 63,
+            "updatedAt": "2021-08-18T16:43:18.876Z",
+            "createdAt": "2021-08-18T16:43:18.876Z",
+            "expiration": null,
+            "redirect": null
+        }
     }
-}
-```
-<!-- theme: info -->
->#### Note:
+
+> #### Note:
+>
 > Notice how the response returns an object with the **username** and **password** properties equivalent to **Client_Id** and **Client_Secret** respectively.
 
 **1.3.2.** It is strongly recommended that you store your credential data preferably in environment variables so that they are not exposed from the source code.
 
-```
-# Environment File <==> .env
-TROPIPAY_CLIENT_ID={response.data.username}
-TROPIPAY_CLIENT_SECRET={response.data.password}
-```
+    # Environment File <==> .env
+    TROPIPAY_CLIENT_ID={response.data.username}
+    TROPIPAY_CLIENT_SECRET={response.data.password}
 
-**1.3.3.** Access endpoint with POST */api/v2/access/token* to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) 
+**1.3.3.** Access endpoint with POST _/api/v2/access/token_ to request your access token, specifying the Client_Id and the Client_Secret. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) 
 
 Index.js with source code:
+
 ```js
 const axios = require('axios').default;
 axios({
@@ -210,11 +212,11 @@ axios({
 ```
 
 Run command:
-```
-node index.js
-```
- 
+
+    node index.js
+
 Resonse:
+
 ```json
 {
   access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MzExMDM5LCJleHAiOjE2MjkzOTc0Mzl9.u2Ir3y2ADUZAscN051zbc7bLk7FtbvYzyb34s6R3voY",
@@ -224,9 +226,11 @@ Resonse:
   scope: "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT"
 }
 ```
+
 **1.3.4.** Once the access token has been obtained, it will be able to consume the resources allowed for the credential. For example let's see how to consume  [credential/grant/list](/reference/Tropipay-API.v2.yaml/paths/~1credential~1grant~1list/post) using your new access token, this service returns the list of available permissions: 
 
 Index.js with source code:
+
 ```js
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MzExMDM5LCJleHAiOjE2MjkzOTc0Mzl9.u2Ir3y2ADUZAscN051zbc7bLk7FtbvYzyb34s6R3voY';
 
@@ -243,35 +247,30 @@ axios({
 ```
 
 Run command:
-```
-node index.js
-```
+
+    node index.js
 
 Resonse:
-```
-[
-  { name: 'ALLOW_EXTERNAL_CHARGE', label: 'payments' },
-  { name: 'BLOCKED_MONEY_OUT', label: 'payments' },
-  { name: 'ALLOW_OTA_CHARGE', label: 'payments_in' },
-  { name: 'ALLOW_SELF_CHARGE', label: 'payments_in' },
-  { name: 'ALLOW_REDEEM_CODE', label: 'payments_in' },
-  { name: 'ALLOW_CHARGE_VOUCHER', label: 'payments_in' },
-  { name: 'ALLOW_EXTERNAL_TOPUP', label: 'payments_in' },
-  { name: 'ALLOW_INTERNAL_TRANSFER_IN', label: 'payments_in' },
-  { name: 'ALLOW_GIFT_CARD', label: 'payments_out' },
-  { name: 'ALLOW_RECHARGE', label: 'payments_out' },
-  { name: 'ALLOW_EXTERNAL_TRANSFER', label: 'payments_out' },
-  { name: 'ALLOW_INTERNAL_TRANSFER_OUT', label: 'payments_out' },
-  { name: 'ALLOW_CREATE_BENEFICIARY', label: 'app' },
-  { name: 'ALLOW_UPDATE_BENEFICIARY', label: 'app' },
-  { name: 'ALLOW_DELETE_BENEFICIARY', label: 'app' },
-  { name: 'ALLOW_UPDATE_PROFILE', label: 'app' },
-  { name: 'ALLOW_PAYMENT_IN', label: 'generic' },
-  { name: 'ALLOW_PAYMENT_OUT', label: 'generic' },
-  { name: 'ALLOW_MARKET_PURCHASES', label: 'generic' },
-  { name: 'UPLOAD_DOCUMENT', label: 'support' }
-]
-```
 
-
-
+    [
+      { name: 'ALLOW_EXTERNAL_CHARGE', label: 'payments' },
+      { name: 'BLOCKED_MONEY_OUT', label: 'payments' },
+      { name: 'ALLOW_OTA_CHARGE', label: 'payments_in' },
+      { name: 'ALLOW_SELF_CHARGE', label: 'payments_in' },
+      { name: 'ALLOW_REDEEM_CODE', label: 'payments_in' },
+      { name: 'ALLOW_CHARGE_VOUCHER', label: 'payments_in' },
+      { name: 'ALLOW_EXTERNAL_TOPUP', label: 'payments_in' },
+      { name: 'ALLOW_INTERNAL_TRANSFER_IN', label: 'payments_in' },
+      { name: 'ALLOW_GIFT_CARD', label: 'payments_out' },
+      { name: 'ALLOW_RECHARGE', label: 'payments_out' },
+      { name: 'ALLOW_EXTERNAL_TRANSFER', label: 'payments_out' },
+      { name: 'ALLOW_INTERNAL_TRANSFER_OUT', label: 'payments_out' },
+      { name: 'ALLOW_CREATE_BENEFICIARY', label: 'app' },
+      { name: 'ALLOW_UPDATE_BENEFICIARY', label: 'app' },
+      { name: 'ALLOW_DELETE_BENEFICIARY', label: 'app' },
+      { name: 'ALLOW_UPDATE_PROFILE', label: 'app' },
+      { name: 'ALLOW_PAYMENT_IN', label: 'generic' },
+      { name: 'ALLOW_PAYMENT_OUT', label: 'generic' },
+      { name: 'ALLOW_MARKET_PURCHASES', label: 'generic' },
+      { name: 'UPLOAD_DOCUMENT', label: 'support' }
+    ]
