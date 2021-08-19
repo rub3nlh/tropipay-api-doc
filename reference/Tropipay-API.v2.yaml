@@ -3923,20 +3923,8 @@ components:
                   updatedAt: '2019-11-19T20:30:04.066Z'
       x-internal: true
     Credential:
-      description: |-
-        - **client_name:** Human-readable string name of the client to be presented to the end-user during authorization.  If omitted, the authorization server MAY display the raw "client_id" value to the end-user instead.  It is RECOMMENDED that clients always send this field. 
-
-        - **client_uri:** URL string of a web page providing information about the client. If present, the server SHOULD display this URL to the end-user in a clickable fashion.  It is RECOMMENDED that  clients always send this field.  The value of this field MUST point to a valid web page.  
-
-        - **logo_uri:**  URL string that references a logo for the client.  If present, the server SHOULD display this image to the end-user during approval. The value of this field MUST point to a valid image file.  
-
+      description: |
         - **scope:** String containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749]) that the client can use when requesting access tokens.  The semantics of values in this list are service specific.  If omitted, an authorization server MAY register a client with a default set of scopes.
-
-        - **contacts:** Array of strings representing ways to contact people responsible for this client, typically email addresses.  The authorization server MAY make these contact addresses available to end-users for support requests for the client.  
-
-        - **tos_uri:** URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  
-
-        - **policy_uri:** URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. 
 
         - **jwks_uri:** URL string referencing the client's JSON Web Key (JWK) Set [RFC7517] document, which contains the client's public keys. The value of this field MUST point to a valid JWK Set document.  These keys can be used by higher-level protocols that use signing or encryption.  For instance, these keys might be used by some applications for validating signed requests made to the token endpoint when using JWTs for client authentication [RFC7523].  Use of this parameter is preferred over the "jwks" parameter, as it allows for easier key rotation. The "jwks_uri" and "jwks" parameters MUST NOT both be present in the same request or response.
 
@@ -3944,125 +3932,8 @@ components:
 
         - **response_types:** Array of the OAuth 2.0 response type strings that the client can use at the authorization endpoint.
 
-        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
-
         - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
-
-        - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
-
-        - **prefix:** determines the type of authentication token to use, **Bearer** assumes by default.
       type: object
-      properties:
-        client_name:
-          type: string
-          minLength: 1
-        client_id:
-          type: string
-          minLength: 1
-        client_secret:
-          type: string
-          minLength: 1
-        client_id_issued_at:
-          type: string
-          minLength: 1
-        client_secret_expires_at:
-          type: number
-        client_public:
-          type: string
-          minLength: 1
-        type:
-          type: number
-        status:
-          type: number
-        prefix:
-          type: string
-          minLength: 1
-        domain:
-          type: string
-          minLength: 1
-        description:
-          type: string
-        groupId:
-          type: number
-        ownerId:
-          type: string
-          minLength: 1
-        logo_uri:
-          type: string
-        client_uri:
-          type: string
-        contacts:
-          type: array
-          items:
-            required: []
-            properties: {}
-        tos_uri:
-          type: string
-        policy_uri:
-          type: string
-        jwks_uri:
-          type: string
-        redirect_uris:
-          type: array
-          items:
-            required: []
-            properties: {}
-        token_endpoint_auth_method:
-          type: string
-          minLength: 1
-        grant_types:
-          type: array
-          items:
-            required: []
-            properties: {}
-        group:
-          type: object
-          properties:
-            name:
-              type: string
-              minLength: 1
-            permissions:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                required:
-                  - name
-                  - label
-                properties:
-                  name:
-                    type: string
-                    minLength: 1
-                  label:
-                    type: string
-                    minLength: 1
-          required:
-            - name
-            - permissions
-      required:
-        - client_name
-        - client_id
-        - client_secret
-        - client_id_issued_at
-        - client_secret_expires_at
-        - client_public
-        - type
-        - status
-        - prefix
-        - domain
-        - description
-        - groupId
-        - ownerId
-        - logo_uri
-        - client_uri
-        - contacts
-        - tos_uri
-        - policy_uri
-        - jwks_uri
-        - redirect_uris
-        - token_endpoint_auth_method
-        - grant_types
-        - group
       x-examples:
         example:
           value:
@@ -4105,6 +3976,103 @@ components:
       title: Credential
       x-tags:
         - Security
+      properties:
+        client_name:
+          type: string
+          minLength: 1
+          description: 'Human-readable string name of the client to be presented to the end-user during authorization.  If omitted, the authorization server MAY display the raw "client_id" value to the end-user instead.  It is RECOMMENDED that clients always send this field. '
+        client_id:
+          type: string
+          minLength: 1
+        client_secret:
+          type: string
+          minLength: 1
+        client_id_issued_at:
+          type: string
+          minLength: 1
+        client_secret_expires_at:
+          type: number
+        client_public:
+          type: string
+          minLength: 1
+        type:
+          type: number
+        status:
+          type: number
+          description: 'the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.'
+        prefix:
+          type: string
+          minLength: 1
+          description: 'determines the type of authentication token to use, **Bearer** assumes by default.'
+        domain:
+          type: string
+          minLength: 1
+          description: 'List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.'
+        description:
+          type: string
+        groupId:
+          type: number
+        ownerId:
+          type: string
+          minLength: 1
+        logo_uri:
+          type: string
+          description: |
+            URL string that references a logo for the client.  If present, the server SHOULD display this image to the end-user during approval. The value of this field MUST point to a valid image file.  
+        client_uri:
+          type: string
+          description: 'URL string of a web page providing information about the client. If present, the server SHOULD display this URL to the end-user in a clickable fashion.  It is RECOMMENDED that  clients always send this field.  The value of this field MUST point to a valid web page.  '
+        contacts:
+          type: array
+          description: 'Array of strings representing ways to contact people responsible for this client, typically email addresses.  The authorization server MAY make these contact addresses available to end-users for support requests for the client.  '
+          items:
+            type:
+              - object
+              - string
+        tos_uri:
+          type: string
+          description: 'URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  '
+        policy_uri:
+          type: string
+          description: 'URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. '
+        jwks_uri:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            type:
+              - object
+              - string
+        token_endpoint_auth_method:
+          type: string
+          minLength: 1
+        grant_types:
+          type: array
+          items:
+            type:
+              - object
+              - string
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+            permissions:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                  label:
+                    type: string
+                    minLength: 1
+      required:
+        - client_name
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
