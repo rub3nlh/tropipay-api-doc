@@ -2576,6 +2576,33 @@ paths:
             +-----------+
         ```
            Figure 1: Abstract Dynamic Client Registration Flow
+           
+        The abstract OAuth 2.0 client dynamic registration flow illustrated
+           in Figure 1 describes the interaction between the client or developer
+           and the endpoint defined in this specification.  This figure does not
+           demonstrate error conditions.  This flow includes the following
+           steps:
+
+        - (A)   Optionally, the client or developer is issued an initial access
+                 token giving access to the client registration endpoint.  The
+                 method by which the initial access token is issued to the
+                 client or developer is out of scope for this specification.
+
+        - (B)   Optionally, the client or developer is issued a software
+                 statement for use with the client registration endpoint.  The
+                 method by which the software statement is issued to the client
+                 or developer is out of scope for this specification.
+
+        - (C)   The client or developer calls the client registration endpoint
+                 with the client's desired registration metadata, optionally
+                 including the initial access token from (A) if one is required
+                 by the authorization server.
+
+        - (D)   The authorization server registers the client and returns:
+            *  the client's registered metadata,
+            *  a client identifier that is unique at the server, and
+            *  a set of client credentials such as a client secret, if applicable for this client.
+                    
 
         There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
