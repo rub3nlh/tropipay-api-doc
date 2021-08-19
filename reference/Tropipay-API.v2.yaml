@@ -2563,7 +2563,7 @@ paths:
         This endpoint return a list credentials assigned to user. 
 
         ```
-                +--------(A)- Initial Access Token (OPTIONAL)
+                +--------(A)- Initial Access Token
                 |
                 |   +----(B)- Software Statement (OPTIONAL)
                 |   |
