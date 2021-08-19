@@ -309,12 +309,12 @@ Index.js with source code:
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MzExMDM5LCJleHAiOjE2MjkzOTc0Mzl9.u2Ir3y2ADUZAscN051zbc7bLk7FtbvYzyb34s6R3voY';
 
 axios({
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': 'Bearer ' + token,
-	},
-	method: 'get',
-	url: 'https://www.tropipay.com/api/v2/credential/grant/list'
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token,
+  },
+  method: 'get',
+  url: 'https://www.tropipay.com/api/v2/credential/grant/list'
 })
 .then(res => console.log(res.data))
 .catch(error => console.log(error));
