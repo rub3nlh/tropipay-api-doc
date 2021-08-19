@@ -3943,6 +3943,14 @@ components:
         - **grant_types:** Array of OAuth 2.0 grant type strings that the client can use at the token endpoint. If the token endpoint is used in the grant type, the value of this parameter MUST be the same as the value of the "grant_type" parameter passed to the token endpoint defined in the grant type definition.  Authorization servers MAY allow for other values as defined in the grant type extension process described in OAuth 2.0, If omitted, the default behavior is that the client will use only the "authorization_code" Grant Type.
 
         - **response_types:** Array of the OAuth 2.0 response type strings that the client can use at the authorization endpoint.
+
+        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
+
+        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
+
+        - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
+
+        - **prefix:** determines the type of authentication token to use, **Bearer** assumes by default.
       type: object
       properties:
         client_name:
