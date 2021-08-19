@@ -2728,7 +2728,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Security
-  '/credential/:name':
+  '/credential/:client_id':
     get:
       summary: GET information about a credential by it name
       tags:
@@ -2820,7 +2820,7 @@ paths:
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: 'get-credential-:name'
-      description: This endpoint return an information about a credential by it name.
+      description: This endpoint return an information about a credential by it Client Id or username.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
         - schema:
@@ -2886,7 +2886,7 @@ paths:
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       description: |-
-        This endpoint allow to update a credential by it name.
+        This endpoint allow to update a credential by it Client Id or username.
 
         There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
@@ -3051,62 +3051,60 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    status: KO
-                    data: null
-                properties:
-                  status:
-                    type: string
-                    minLength: 1
-                  data:
-                    $ref: '#/components/schemas/Credential'
-                required:
-                  - status
+                $ref: '#/components/schemas/Credential'
               examples:
-                if no exist:
-                  value:
-                    status: KO
-                    data: null
+                if no exist: {}
                 ok:
                   value:
-                    status: OK
-                    data:
-                      id: 21
-                      type: 1
-                      name: demo2
-                      username: 991aea6a4587040942b8599a6d8fbebb
-                      password: a7df5204d7b83b242fab05a45c6efef6
-                      public: '1629138641702'
-                      prefix: Bearer
-                      domain: .*tropipay.com.* www.demo.cu
-                      status: 2
-                      expiration: null
-                      refresh: 1d
-                      redirect: null
-                      groupId: 62
-                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-                      createdAt: '2021-08-16T18:30:21.636Z'
-                      updatedAt: '2021-08-16T18:30:41.724Z'
-                      group:
-                        name: demo2
-                        id: 62
-                        permissions:
-                          - name: ALLOW_EXTERNAL_CHARGE
-                            label: payments
-                          - name: BLOCKED_MONEY_OUT
-                            label: payments
+                    client_name: GitLab LoL
+                    client_id: 5d6fd52d1796bd41632099cb5444b7f6
+                    client_secret: 48c0dcaa3e209ec5c4c2623154ab52ab
+                    client_id_issued_at: '2021-08-19T20:10:19.199Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629409307441'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 52
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      description: This endpoint allow to delete a credential by it name.
+      description: This endpoint allow to delete a credential by it Client Id or username.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Security
+    parameters: []
   /credential/grant/list:
     get:
       summary: List of available permits
