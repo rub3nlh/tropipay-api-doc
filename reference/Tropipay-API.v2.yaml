@@ -4037,38 +4037,7 @@ components:
         - grant_types
         - group
       x-examples:
-        example-1:
-          client_name: gitlab.my
-          client_id: 991aea6a4587040942b8599a6d8fbebb
-          client_secret: cf97e9d9482400ec5e05b40cac550916
-          client_id_issued_at: '2021-08-19T04:53:16.993Z'
-          client_secret_expires_at: 0
-          client_public: '1629348796847'
-          type: 1
-          status: 0
-          prefix: Bearer
-          domain: .*tropipay.com.* www.demo.cuuuu
-          description: ''
-          groupId: 42
-          ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-          logo_uri: ''
-          client_uri: ''
-          contacts: []
-          tos_uri: ''
-          policy_uri: ''
-          jwks_uri: ''
-          redirect_uris: []
-          token_endpoint_auth_method: client_secret_basic
-          grant_types: []
-          group:
-            name: gitlab.my
-            permissions:
-              - name: ALLOW_EXTERNAL_CHARGE
-                label: payments
-              - name: BLOCKED_MONEY_OUT
-                label: payments
-              - name: ALLOW_OTA_CHARGE
-                label: payments_in
+        example:
           value:
             client_name: gitlab.my
             client_id: 991aea6a4587040942b8599a6d8fbebb
@@ -4083,15 +4052,20 @@ components:
             description: ''
             groupId: 42
             ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-            logo_uri: ''
-            client_uri: ''
-            contacts: []
-            tos_uri: ''
-            policy_uri: ''
-            jwks_uri: ''
-            redirect_uris: []
+            logo_uri: 'https://my.app.com/logo'
+            client_uri: 'https://my.app.com'
+            contacts:
+              - support@my.app.com
+            tos_uri: 'https://my.app.com/tos'
+            policy_uri: 'https://my.app.com/policy'
+            jwks_uri: 'https://my.app.com/jwks'
+            redirect_uris:
+              - 'https://my.app.com/oauth'
             token_endpoint_auth_method: client_secret_basic
-            grant_types: []
+            grant_types:
+              - authorization_code
+              - refresh_token
+              - client_credential
             group:
               name: gitlab.my
               permissions:
