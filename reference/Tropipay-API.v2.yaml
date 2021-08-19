@@ -4066,6 +4066,9 @@ components:
           type: array
           items:
             type: string
+      x-tags:
+        - Segurity
+      title: ''
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
