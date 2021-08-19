@@ -160,7 +160,8 @@ To create a credential, just make a POST request to the _/api/v2/credential_ end
 > In this case we are indicating that with an access token generated from the credential _'my.app.cu'_, you can only run actions based on the list of permissions shown below: 
 >
 > -   ALLOW_EXTERNAL_CHARGE 
-> -   ALLOW_OTA_CHARGE
+> -   BLOCKED_MONEY_OUT
+> -   ALLOW_PAYMENT_OUT
 
 Example developed in Node Js: 
 
