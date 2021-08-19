@@ -2507,56 +2507,49 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    status: OK
-                    data:
-                      name: demo2
-                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-                      refresh: 1d
-                      type: 1
-                      prefix: Bearer
-                      status: 0
-                      username: 991aea6a4587040942b8599a6d8fbebb
-                      password: 4c1e2767717d7439af11d914ae3f941f
-                      public: '1629133999573'
-                      groupId: 45
-                      updatedAt: '2021-08-16T17:13:19.684Z'
-                      createdAt: '2021-08-16T17:13:19.684Z'
-                      domain: null
-                      expiration: null
-                      redirect: null
-                properties:
-                  status:
-                    type: string
-                    minLength: 1
-                  data:
-                    $ref: '#/components/schemas/Credential'
-                required:
-                  - status
-                  - data
+                $ref: '#/components/schemas/Credential'
               examples:
-                'Default credential only by name parameter ':
+                Example:
                   value:
-                    status: OK
-                    data:
-                      name: demo2
-                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-                      refresh: 1d
-                      type: 1
-                      prefix: Bearer
-                      status: 0
-                      username: 991aea6a4587040942b8599a6d8fbebb
-                      password: 4c1e2767717d7439af11d914ae3f941f
-                      public: '1629133999573'
-                      groupId: 45
-                      updatedAt: '2021-08-16T17:13:19.684Z'
-                      createdAt: '2021-08-16T17:13:19.684Z'
-                      domain: null
-                      expiration: null
-                      redirect: null
+                    client_name: GitLab LoL
+                    client_id: b47ed30efa808f7d193058be8cd44970
+                    client_secret: e7a42b71db5984614887051dee0ac239
+                    client_id_issued_at: '2021-08-19T22:05:51.346Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629410751300'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 56
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/b47ed30efa808f7d193058be8cd44970'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       description: |
@@ -2613,7 +2606,6 @@ paths:
 
         ```json
         {
-
             "automate":"generate_password",
             "domain": ".*tropipay.com.* www.demo.cuuuu",
             "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
@@ -2712,18 +2704,28 @@ paths:
                   name: demo2
               Full Request:
                 value:
-                  type: 1
-                  name: Gitlab.My
-                  username: 991aea6a4587040942b8599a6d8fbebb
-                  password: 991aea6a458704094254545454545454
-                  domain: .*tropipay.com.* www.demo.cuuuu
-                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
-                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
-                  prefix: Bearer
+                  client_name: GitLab LoL
+                  domain:
+                    - .*gitlab.lol.com/.*
+                    - 127.0.0.1
+                  scope:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - BLOCKED_MONEY_OUT
+                    - ALLOW_PAYMENT_OUT
                   status: 2
-                  expiration: '2021-08-20'
-                  refresh: 1d
-                  redirect: 'https://my.domain.com/oauth'
+                  logo_uri: 'https://gitlab.lol.com/logo'
+                  client_uri: 'https://gitlab.lol.com'
+                  policy_uri: 'https://gitlab.lol.com/policy'
+                  tos_uri: 'https://gitlab.lol.com/tos'
+                  jwks_uri: 'https://gitlab.lol.com/jwks'
+                  description: My Local server for projects dev
+                  redirect_uri: 'https://gitlab.lol.com/callback'
+                  redirect_uris:
+                    - 'https://gitlab.lol.com/callback2'
+                    - 'https://gitlab.lol.com/callback3'
+                  contacts:
+                    - support@gitlab.lol.com
+                    - help@gitlab.lol.com
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
