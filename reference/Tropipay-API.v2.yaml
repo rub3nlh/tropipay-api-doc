@@ -3923,59 +3923,50 @@ components:
                   updatedAt: '2019-11-19T20:30:04.066Z'
       x-internal: true
     Credential:
-      description: |
-        - **scope:** String containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749]) that the client can use when requesting access tokens.  The semantics of values in this list are service specific.  If omitted, an authorization server MAY register a client with a default set of scopes.
-
-        - **jwks_uri:** URL string referencing the client's JSON Web Key (JWK) Set [RFC7517] document, which contains the client's public keys. The value of this field MUST point to a valid JWK Set document.  These keys can be used by higher-level protocols that use signing or encryption.  For instance, these keys might be used by some applications for validating signed requests made to the token endpoint when using JWTs for client authentication [RFC7523].  Use of this parameter is preferred over the "jwks" parameter, as it allows for easier key rotation. The "jwks_uri" and "jwks" parameters MUST NOT both be present in the same request or response.
-
-        - **grant_types:** Array of OAuth 2.0 grant type strings that the client can use at the token endpoint. If the token endpoint is used in the grant type, the value of this parameter MUST be the same as the value of the "grant_type" parameter passed to the token endpoint defined in the grant type definition.  Authorization servers MAY allow for other values as defined in the grant type extension process described in OAuth 2.0, If omitted, the default behavior is that the client will use only the "authorization_code" Grant Type.
-
-        - **response_types:** Array of the OAuth 2.0 response type strings that the client can use at the authorization endpoint.
-
-        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
+      description: ''
       type: object
       x-examples:
         example:
           value:
-            client_name: gitlab.my
-            client_id: 991aea6a4587040942b8599a6d8fbebb
-            client_secret: cf97e9d9482400ec5e05b40cac550916
-            client_id_issued_at: '2021-08-19T04:53:16.993Z'
+            client_name: GitLab LoL
+            client_id: 5d6fd52d1796bd41632099cb5444b7f6
+            client_secret: fde8bc69b86e2a652137d900ed37a4b7
+            client_id_issued_at: '2021-08-19T20:10:19.199Z'
             client_secret_expires_at: 0
-            client_public: '1629348796847'
+            client_public: '1629403819159'
             type: 1
-            status: 0
+            status: 2
             prefix: Bearer
-            domain: .*tropipay.com.* www.demo.cuuuu
-            description: ''
-            groupId: 42
+            description: My Local server for projects dev
+            groupId: 52
             ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-            logo_uri: 'https://my.app.com/logo'
-            client_uri: 'https://my.app.com'
-            contacts:
-              - support@my.app.com
-            tos_uri: 'https://my.app.com/tos'
-            policy_uri: 'https://my.app.com/policy'
-            jwks_uri: 'https://my.app.com/jwks'
-            redirect_uris:
-              - 'https://my.app.com/oauth'
+            logo_uri: 'https://gitlab.lol.com/logo'
+            client_uri: 'https://gitlab.lol.com'
+            tos_uri: 'https://gitlab.lol.com/tos'
+            policy_uri: 'https://gitlab.lol.com/policy'
+            jwks_uri: 'https://gitlab.lol.com/jwks'
+            registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+            userinfo_encrypted_response_alg: RSA1_5
+            userinfo_encrypted_response_enc: A128CBC-HS256
             token_endpoint_auth_method: client_secret_basic
+            scope:
+              - ALLOW_EXTERNAL_CHARGE
+              - BLOCKED_MONEY_OUT
+              - ALLOW_PAYMENT_OUT
+            domain:
+              - .*gitlab.lol.com/.*
+              - 127.0.0.1
+            contacts:
+              - support@gitlab.lol.com
+              - help@gitlab.lol.com
+            redirect_uris:
+              - 'https://gitlab.lol.com/callback2'
+              - 'https://gitlab.lol.com/callback3'
+              - 'https://gitlab.lol.com/callback'
             grant_types:
               - authorization_code
               - refresh_token
               - client_credential
-            group:
-              name: gitlab.my
-              permissions:
-                - name: ALLOW_EXTERNAL_CHARGE
-                  label: payments
-                - name: BLOCKED_MONEY_OUT
-                  label: payments
-                - name: ALLOW_OTA_CHARGE
-                  label: payments_in
-      title: Credential
-      x-tags:
-        - Security
       properties:
         client_name:
           type: string
@@ -3988,7 +3979,7 @@ components:
         client_secret:
           type: string
           minLength: 1
-          description: 'OPTIONAL. Client Secret. The same Client Secret value MUST NOT be assigned to multiple Clients. This value is used by Confidential Clients to authenticate to the Token Endpoint, as described in Section 2.3.1 of OAuth 2.0, and for the derivation of symmetric encryption key values, as described in Section 10.2 of OpenID Connect Core 1.0 [OpenID.Core]. It is not needed for Clients selecting a token_endpoint_auth_method of private_key_jwt unless symmetric encryption will be used. '
+          description: 'Client Secret. The same Client Secret value MUST NOT be assigned to multiple Clients. This value is used by Confidential Clients to authenticate to the Token Endpoint, as described in Section 2.3.1 of OAuth 2.0, and for the derivation of symmetric encryption key values, as described in Section 10.2 of OpenID Connect Core 1.0 [OpenID.Core]. It is not needed for Clients selecting a token_endpoint_auth_method of private_key_jwt unless symmetric encryption will be used. '
         client_id_issued_at:
           type: string
           minLength: 1
@@ -4003,17 +3994,14 @@ components:
           type: number
         status:
           type: number
-          description: 'the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.'
+          description: 'The status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.'
         prefix:
           type: string
           minLength: 1
-          description: 'determines the type of authentication token to use, **Bearer** assumes by default.'
-        domain:
-          type: string
-          minLength: 1
-          description: 'List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.'
+          description: 'Determines the type of authentication token to use, **Bearer** assumes by default.'
         description:
           type: string
+          minLength: 1
         groupId:
           type: number
         ownerId:
@@ -4021,66 +4009,61 @@ components:
           minLength: 1
         logo_uri:
           type: string
-          description: |
-            URL string that references a logo for the client.  If present, the server SHOULD display this image to the end-user during approval. The value of this field MUST point to a valid image file.  
+          minLength: 1
+          description: 'URL string that references a logo for the client.  If present, the server SHOULD display this image to the end-user during approval. The value of this field MUST point to a valid image file.  '
         client_uri:
           type: string
+          minLength: 1
           description: 'URL string of a web page providing information about the client. If present, the server SHOULD display this URL to the end-user in a clickable fashion.  It is RECOMMENDED that  clients always send this field.  The value of this field MUST point to a valid web page.  '
+        tos_uri:
+          type: string
+          minLength: 1
+          description: 'URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  '
+        policy_uri:
+          type: string
+          minLength: 1
+          description: 'URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. '
+        jwks_uri:
+          type: string
+          minLength: 1
+          description: 'URL for the Client''s JSON Web Key Set [JWK] document. If the Client signs requests to the Server, it contains the signing key(s) the Server uses to validate signatures from the Client. The JWK Set MAY also contain the Client''s encryption keys(s), which are used by the Server to encrypt responses to the Client. When both signing and encryption keys are made available, a use (Key Use) parameter value is REQUIRED for all keys in the referenced JWK Set to indicate each key''s intended usage. Although some algorithms allow the same key to be used for both signatures and encryption, doing so is NOT RECOMMENDED, as it is less secure. The JWK x5c parameter MAY be used to provide X.509 representations of keys provided. When used, the bare key values MUST still be present and MUST match those in the certificate. '
+        registration_client_uri:
+          type: string
+          minLength: 1
+        userinfo_encrypted_response_alg:
+          type: string
+          minLength: 1
+        userinfo_encrypted_response_enc:
+          type: string
+          minLength: 1
+        token_endpoint_auth_method:
+          type: string
+          minLength: 1
+          description: 'Requested Client Authentication method for the Token Endpoint. The options are client_secret_post, client_secret_basic, client_secret_jwt, private_key_jwt, and none, as described in Section 9 of OpenID Connect Core 1.0 [OpenID.Core]. Other authentication methods MAY be defined by extensions. If omitted, the default is client_secret_basic -- the HTTP Basic Authentication Scheme specified in Section 2.3.1 of OAuth 2.0 [RFC6749]'
+        scope:
+          type: array
+          description: 'String or Array that containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 RFC6749) that the client can use when requesting access tokens. The semantics of values in this list are service specific. If omitted, an authorization server MAY register a client with a default set of scopes.'
+          items:
+            type: string
+        domain:
+          type: array
+          description: 'List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.'
+          items:
+            type: string
         contacts:
           type: array
           description: 'Array of strings representing ways to contact people responsible for this client, typically email addresses.  The authorization server MAY make these contact addresses available to end-users for support requests for the client.  '
           items:
-            type:
-              - object
-              - string
-        tos_uri:
-          type: string
-          description: 'URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  '
-        policy_uri:
-          type: string
-          description: 'URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. '
-        jwks_uri:
-          type: string
-          description: '     OPTIONAL. URL for the Client''s JSON Web Key Set [JWK] document. If the Client signs requests to the Server, it contains the signing key(s) the Server uses to validate signatures from the Client. The JWK Set MAY also contain the Client''s encryption keys(s), which are used by the Server to encrypt responses to the Client. When both signing and encryption keys are made available, a use (Key Use) parameter value is REQUIRED for all keys in the referenced JWK Set to indicate each key''s intended usage. Although some algorithms allow the same key to be used for both signatures and encryption, doing so is NOT RECOMMENDED, as it is less secure. The JWK x5c parameter MAY be used to provide X.509 representations of keys provided. When used, the bare key values MUST still be present and MUST match those in the certificate. '
+            type: string
         redirect_uris:
           type: array
           description: 'Array of Redirection URI values used by the Client. One of these registered Redirection URI values MUST exactly match the redirect_uri parameter value used in each Authorization Request, with the matching performed as described in Section 6.2.1 of [RFC3986] (Simple String Comparison). '
           items:
-            type:
-              - object
-              - string
-        token_endpoint_auth_method:
-          type: string
-          minLength: 1
-          description: 'OPTIONAL. Requested Client Authentication method for the Token Endpoint. The options are client_secret_post, client_secret_basic, client_secret_jwt, private_key_jwt, and none, as described in Section 9 of OpenID Connect Core 1.0 [OpenID.Core]. Other authentication methods MAY be defined by extensions. If omitted, the default is client_secret_basic -- the HTTP Basic Authentication Scheme specified in Section 2.3.1 of OAuth 2.0 [RFC6749]'
+            type: string
         grant_types:
           type: array
-          description: ' OPTIONAL. JSON array containing a list of the OAuth 2.0 Grant Types that the Client is declaring that it will restrict itself to using. '
           items:
-            type:
-              - object
-              - string
-        group:
-          type: object
-          properties:
-            name:
-              type: string
-              minLength: 1
-            permissions:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    minLength: 1
-                  label:
-                    type: string
-                    minLength: 1
-      required:
-        - client_name
+            type: string
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
