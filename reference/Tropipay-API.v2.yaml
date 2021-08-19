@@ -4076,6 +4076,8 @@ components:
                 - name: ALLOW_OTA_CHARGE
                   label: payments_in
       title: ''
+      x-tags:
+        - Security
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
