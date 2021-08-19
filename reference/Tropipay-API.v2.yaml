@@ -3939,6 +3939,10 @@ components:
         - **policy_uri:** URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. 
 
         - **jwks_uri:** URL string referencing the client's JSON Web Key (JWK) Set [RFC7517] document, which contains the client's public keys. The value of this field MUST point to a valid JWK Set document.  These keys can be used by higher-level protocols that use signing or encryption.  For instance, these keys might be used by some applications for validating signed requests made to the token endpoint when using JWTs for client authentication [RFC7523].  Use of this parameter is preferred over the "jwks" parameter, as it allows for easier key rotation. The "jwks_uri" and "jwks" parameters MUST NOT both be present in the same request or response.
+
+        - **grant_types:** Array of OAuth 2.0 grant type strings that the client can use at the token endpoint. If the token endpoint is used in the grant type, the value of this parameter MUST be the same as the value of the "grant_type" parameter passed to the token endpoint defined in the grant type definition.  Authorization servers MAY allow for other values as defined in the grant type extension process described in OAuth 2.0, If omitted, the default behavior is that the client will use only the "authorization_code" Grant Type.
+
+        - **response_types:** Array of the OAuth 2.0 response type strings that the client can use at the authorization endpoint.
       type: object
       properties:
         client_name:
