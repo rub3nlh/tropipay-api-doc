@@ -90,32 +90,70 @@ To create a credential, just make a POST request to the _/api/v2/credential_ end
     HEADER Authorization Bearer {USER-TOKEN}
 
     REQUEST {
-        "name": "my.app.cu",
-        "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-        "scope": "ALLOW_EXTERNAL_CHARGE ALLOW_OTA_CHARGE"
+        "domain": [".*gitlab.lol.com/.*", "127.0.0.1"],
+        "scope": ["ALLOW_EXTERNAL_CHARGE", "BLOCKED_MONEY_OUT", "ALLOW_PAYMENT_OUT"],
+        "status": 2,
+        "logo_uri": "https://gitlab.lol.com/logo",
+        "client_uri": "https://gitlab.lol.com",
+        "policy_uri": "https://gitlab.lol.com/policy",
+        "tos_uri": "https://gitlab.lol.com/tos",
+        "jwks_uri": "https://gitlab.lol.com/jwks",
+        "description": "My Local server for projects dev",
+        "client_name": "GitLab LoL",
+        "redirect_uri":  "https://gitlab.lol.com/callback",
+        "redirect_uris": [
+            "https://gitlab.lol.com/callback2",
+            "https://gitlab.lol.com/callback3"
+        ],
+        "contacts": ["support@gitlab.lol.com", "help@gitlab.lol.com"]
     }
 
     RESPONSE {
-        "status": "OK",
-        "data": {
-            "client_name": "my.app.cu",
-            "client_id": "991aea6a4587040942b8599a6d8fbebb",
-            "client_secret": "ec51a20c4a8db60693e3ffae7b32222b",
-            "client_id_issued_at": "2021-08-19T04:53:16.993Z",
-            "client_secret_expires_at": 0,
-            "client_public": "1629348796847",
-            "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-            "token_endpoint_auth_method": "client_secret_basic",
-            "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
-            "prefix": "Bearer",
-            "refresh": "1d",
-            "type": 1,
-            "status": 0,
-            "groupId": 63,
-            "expiration": "",
-            "redirect": ""
-        }
-    }
+        "client_name": "GitLab LoL",
+        "client_id": "5d6fd52d1796bd41632099cb5444b7f6",
+        "client_secret": "48c0dcaa3e209ec5c4c2623154ab52ab",
+        "client_id_issued_at": "2021-08-19T20:10:19.199Z",
+        "client_secret_expires_at": 0,
+        "client_public": "1629409307441",
+        "type": 1,
+        "status": 2,
+        "prefix": "Bearer",
+        "description": "My Local server for projects dev",
+        "groupId": 52,
+        "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+        "logo_uri": "https://gitlab.lol.com/logo",
+        "client_uri": "https://gitlab.lol.com",
+        "tos_uri": "https://gitlab.lol.com/tos",
+        "policy_uri": "https://gitlab.lol.com/policy",
+        "jwks_uri": "https://gitlab.lol.com/jwks",
+        "registration_client_uri": "https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6",
+        "userinfo_encrypted_response_alg": "RSA1_5",
+        "userinfo_encrypted_response_enc": "A128CBC-HS256",
+        "token_endpoint_auth_method": "client_secret_basic",
+        "scope": [
+            "ALLOW_EXTERNAL_CHARGE",
+            "BLOCKED_MONEY_OUT",
+            "ALLOW_PAYMENT_OUT"
+        ],
+        "domain": [
+            ".*gitlab.lol.com/.*",
+            "127.0.0.1"
+        ],
+        "contacts": [
+            "support@gitlab.lol.com",
+            "help@gitlab.lol.com"
+        ],
+        "redirect_uris": [
+            "https://gitlab.lol.com/callback2",
+            "https://gitlab.lol.com/callback3",
+            "https://gitlab.lol.com/callback"
+        ],
+        "grant_types": [
+            "authorization_code",
+            "refresh_token",
+            "client_credential"
+        ]
+}
 
 > #### Note:
 >
@@ -135,49 +173,88 @@ const axios = require('axios').default;
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IAloOV2JnRPKET1m8dmb-88';
 
 axios({
-	headers: {
-		'Content-Type': 'application/json',
-		'Authorization': 'Bearer ' + token,
-	},
-	method: 'post',
-	url: 'https://www.tropipay.com/api/v2/credential',
-	data: {
-		"client_name": "my.app.cu",
-		"domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-		"scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
-	}
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + token,
+  },
+  method: 'post',
+  url: 'https://www.tropipay.com/api/v2/credential',
+  data: {
+      "domain": [".*gitlab.lol.com/.*", "127.0.0.1"],
+      "scope": ["ALLOW_EXTERNAL_CHARGE", "BLOCKED_MONEY_OUT", "ALLOW_PAYMENT_OUT"],
+      "status": 2,
+      "logo_uri": "https://gitlab.lol.com/logo",
+      "client_uri": "https://gitlab.lol.com",
+      "policy_uri": "https://gitlab.lol.com/policy",
+      "tos_uri": "https://gitlab.lol.com/tos",
+      "jwks_uri": "https://gitlab.lol.com/jwks",
+      "description": "My Local server for projects dev",
+      "client_name": "GitLab LoL",
+      "redirect_uri":  "https://gitlab.lol.com/callback",
+      "redirect_uris": [
+          "https://gitlab.lol.com/callback2",
+          "https://gitlab.lol.com/callback3"
+      ],
+      "contacts": ["support@gitlab.lol.com", "help@gitlab.lol.com"]
+  }
 })
 .then(res => console.log(res.data))
 .catch(error => console.log(error));
 ```
 
 Run command:
-
+```
     node index.js
-
+```
 Response:
-
-    {
-        "status": "OK",
-        "data": {
-            "client_name": "my.app.cu",
-            "client_id": "991aea6a4587040942b8599a6d8fbebb",
-            "client_secret": "ec51a20c4a8db60693e3ffae7b32222b",
-            "client_id_issued_at": "2021-08-19T04:53:16.993Z",
-            "client_secret_expires_at": 0,
-            "client_public": "1629348796847",
-            "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
-            "token_endpoint_auth_method": "client_secret_basic",
-            "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
-            "prefix": "Bearer",
-            "refresh": "1d",
-            "type": 1,
-            "status": 0,
-            "groupId": 63,
-            "expiration": "",
-            "redirect": ""
-        }
-    }
+```json
+{
+    "client_name": "GitLab LoL",
+    "client_id": "5d6fd52d1796bd41632099cb5444b7f6",
+    "client_secret": "48c0dcaa3e209ec5c4c2623154ab52ab",
+    "client_id_issued_at": "2021-08-19T20:10:19.199Z",
+    "client_secret_expires_at": 0,
+    "client_public": "1629409307441",
+    "type": 1,
+    "status": 2,
+    "prefix": "Bearer",
+    "description": "My Local server for projects dev",
+    "groupId": 52,
+    "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+    "logo_uri": "https://gitlab.lol.com/logo",
+    "client_uri": "https://gitlab.lol.com",
+    "tos_uri": "https://gitlab.lol.com/tos",
+    "policy_uri": "https://gitlab.lol.com/policy",
+    "jwks_uri": "https://gitlab.lol.com/jwks",
+    "registration_client_uri": "https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6",
+    "userinfo_encrypted_response_alg": "RSA1_5",
+    "userinfo_encrypted_response_enc": "A128CBC-HS256",
+    "token_endpoint_auth_method": "client_secret_basic",
+    "scope": [
+        "ALLOW_EXTERNAL_CHARGE",
+        "BLOCKED_MONEY_OUT",
+        "ALLOW_PAYMENT_OUT"
+    ],
+    "domain": [
+        ".*gitlab.lol.com/.*",
+        "127.0.0.1"
+    ],
+    "contacts": [
+        "support@gitlab.lol.com",
+        "help@gitlab.lol.com"
+    ],
+    "redirect_uris": [
+        "https://gitlab.lol.com/callback2",
+        "https://gitlab.lol.com/callback3",
+        "https://gitlab.lol.com/callback"
+    ],
+    "grant_types": [
+        "authorization_code",
+        "refresh_token",
+        "client_credential"
+    ]
+}
+```
 
 > #### Note:
 >
@@ -196,13 +273,13 @@ Index.js with source code:
 ```js
 const axios = require('axios').default;
 axios({
-	method: 'post',
-	url: 'https://www.tropipay.com/api/v2/access/token',
-	data: {
-		"grant_type":"client_credentials",
-		"client_id": "991aea6a4587040942b8599a6d8fbebb",
-		"client_secret": "ec51a20c4a8db60693e3ffae7b32222b"
-	}
+  method: 'post',
+  url: 'https://www.tropipay.com/api/v2/access/token',
+  data: {
+    "grant_type":"client_credentials",
+    "client_id": "991aea6a4587040942b8599a6d8fbebb",
+    "client_secret": "ec51a20c4a8db60693e3ffae7b32222b"
+  }
 })
 .then(res => console.log(res.data))
 .catch(error => console.log(error));
@@ -248,26 +325,27 @@ Run command:
     node index.js
 
 Response:
-
-    [
-      { name: 'ALLOW_EXTERNAL_CHARGE', label: 'payments' },
-      { name: 'BLOCKED_MONEY_OUT', label: 'payments' },
-      { name: 'ALLOW_OTA_CHARGE', label: 'payments_in' },
-      { name: 'ALLOW_SELF_CHARGE', label: 'payments_in' },
-      { name: 'ALLOW_REDEEM_CODE', label: 'payments_in' },
-      { name: 'ALLOW_CHARGE_VOUCHER', label: 'payments_in' },
-      { name: 'ALLOW_EXTERNAL_TOPUP', label: 'payments_in' },
-      { name: 'ALLOW_INTERNAL_TRANSFER_IN', label: 'payments_in' },
-      { name: 'ALLOW_GIFT_CARD', label: 'payments_out' },
-      { name: 'ALLOW_RECHARGE', label: 'payments_out' },
-      { name: 'ALLOW_EXTERNAL_TRANSFER', label: 'payments_out' },
-      { name: 'ALLOW_INTERNAL_TRANSFER_OUT', label: 'payments_out' },
-      { name: 'ALLOW_CREATE_BENEFICIARY', label: 'app' },
-      { name: 'ALLOW_UPDATE_BENEFICIARY', label: 'app' },
-      { name: 'ALLOW_DELETE_BENEFICIARY', label: 'app' },
-      { name: 'ALLOW_UPDATE_PROFILE', label: 'app' },
-      { name: 'ALLOW_PAYMENT_IN', label: 'generic' },
-      { name: 'ALLOW_PAYMENT_OUT', label: 'generic' },
-      { name: 'ALLOW_MARKET_PURCHASES', label: 'generic' },
-      { name: 'UPLOAD_DOCUMENT', label: 'support' }
-    ]
+```json
+[
+  { name: "ALLOW_EXTERNAL_CHARGE", label: "payments" },
+  { name: "BLOCKED_MONEY_OUT", label: "payments" },
+  { name: "ALLOW_OTA_CHARGE", label: "payments_in" },
+  { name: "ALLOW_SELF_CHARGE", label: "payments_in" },
+  { name: "ALLOW_REDEEM_CODE", label: "payments_in" },
+  { name: "ALLOW_CHARGE_VOUCHER", label: "payments_in" },
+  { name: "ALLOW_EXTERNAL_TOPUP", label: "payments_in" },
+  { name: "ALLOW_INTERNAL_TRANSFER_IN", label: "payments_in" },
+  { name: "ALLOW_GIFT_CARD", label: "payments_out" },
+  { name: "ALLOW_RECHARGE", label: "payments_out" },
+  { name: "ALLOW_EXTERNAL_TRANSFER", label: "payments_out" },
+  { name: "ALLOW_INTERNAL_TRANSFER_OUT", label: "payments_out" },
+  { name: "ALLOW_CREATE_BENEFICIARY", label: "app" },
+  { name: "ALLOW_UPDATE_BENEFICIARY", label: "app" },
+  { name: "ALLOW_DELETE_BENEFICIARY", label: "app" },
+  { name: "ALLOW_UPDATE_PROFILE", label: "app" },
+  { name: "ALLOW_PAYMENT_IN", label: "generic" },
+  { name: "ALLOW_PAYMENT_OUT", label: "generic" },
+  { name: "ALLOW_MARKET_PURCHASES", label: "generic" },
+  { name: "UPLOAD_DOCUMENT", label: "support" }
+]
+```
