@@ -3924,7 +3924,6 @@ components:
       x-internal: true
     Credential:
       description: |-
-
         - **client_name:** Human-readable string name of the client to be presented to the end-user during authorization.  If omitted, the authorization server MAY display the raw "client_id" value to the end-user instead.  It is RECOMMENDED that clients always send this field. 
 
         - **client_uri:** URL string of a web page providing information about the client. If present, the server SHOULD display this URL to the end-user in a clickable fashion.  It is RECOMMENDED that  clients always send this field.  The value of this field MUST point to a valid web page.  
@@ -3934,6 +3933,10 @@ components:
         - **scope:** String containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749]) that the client can use when requesting access tokens.  The semantics of values in this list are service specific.  If omitted, an authorization server MAY register a client with a default set of scopes.
 
         - **contacts:** Array of strings representing ways to contact people responsible for this client, typically email addresses.  The authorization server MAY make these contact addresses available to end-users for support requests for the client.  
+
+        - **tos_uri:** URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  
+
+        - **policy_uri:** URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. 
       type: object
       properties:
         client_name:
