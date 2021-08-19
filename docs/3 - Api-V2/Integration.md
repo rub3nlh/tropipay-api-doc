@@ -204,7 +204,7 @@ axios({
 
 Run command:
 ```
-    node index.js
+node index.js
 ```
 Response:
 ```json
