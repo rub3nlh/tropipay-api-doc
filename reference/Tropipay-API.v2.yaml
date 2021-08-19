@@ -2562,6 +2562,21 @@ paths:
       description: |
         This endpoint return a list credentials assigned to user. 
 
+        ```
+                +--------(A)- Initial Access Token (OPTIONAL)
+                |
+                |   +----(B)- Software Statement (OPTIONAL)
+                |   |
+                v   v
+            +-----------+                                      +---------------+
+            |           |--(C)- Client Registration Request -->|    Client     |
+            | Client or |                                      | Registration  |
+            | Developer |<-(D)- Client Information Response ---|   Endpoint    |
+            |           |        or Client Error Response      +---------------+
+            +-----------+
+        ```
+           Figure 1: Abstract Dynamic Client Registration Flow
+
         There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
         - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
