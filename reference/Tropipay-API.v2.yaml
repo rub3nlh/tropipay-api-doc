@@ -2838,56 +2838,49 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    status: OK
-                    data:
-                      domain: .*tropipay.com.* www.demo.cu
-                      status: 2
-                      name: 5d6fd52d1796bd41632099cb5444b7f6
-                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-                      refresh: 1d
-                      type: 1
-                      prefix: Bearer
-                      username: 991aea6a4587040942b8599a6d8fbebb
-                      password: de78a9592729c63a5abe1447255e1429
-                      public: '1629119418585'
-                      groupId: 42
-                      updatedAt: '2021-08-16T13:10:18.771Z'
-                      createdAt: '2021-08-16T13:10:18.771Z'
-                      expiration: null
-                      redirect: null
-                properties:
-                  status:
-                    type: string
-                    minLength: 1
-                  data:
-                    $ref: '#/components/schemas/Credential'
-                required:
-                  - status
-                  - data
+                $ref: '#/components/schemas/Credential'
               examples:
-                example-1:
+                example:
                   value:
-                    status: OK
-                    data:
-                      domain: .*tropipay.com.* www.demo.es .*localhost.* 127.0.0.1
-                      status: 2
-                      name: 5d6fd52d1796bd41632099cb5444b7f6
-                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-                      refresh: 1d
-                      type: 1
-                      prefix: Bearer
-                      username: 991aea6a4587040942b8599a6d8fbebb
-                      password: de78a9592729c63a5abe1447255e1429
-                      public: '1629119418585'
-                      groupId: 42
-                      updatedAt: '2021-08-16T13:10:18.771Z'
-                      createdAt: '2021-08-16T13:10:18.771Z'
-                      redirect: 'https://my.domain.com/oauth'
-                      expiration: '2021-08-20'
+                    client_name: GitLab LoL
+                    client_id: 5d6fd52d1796bd41632099cb5444b7f6
+                    client_secret: 48c0dcaa3e209ec5c4c2623154ab52ab
+                    client_id_issued_at: '2021-08-19T20:10:19.199Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629409307441'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 52
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
@@ -3005,18 +2998,29 @@ paths:
             examples:
               Full Request:
                 value:
-                  type: 1
-                  client_name: Gitlab.My
-                  client_id: 991aea6a4587040942b8599a6d8fbebb
-                  client_secret: 991aea6a458704094254545454545454
-                  domain: .*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*
-                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
-                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
-                  prefix: Bearer
+                  domain:
+                    - .*gitlab.lol.com/.*
+                    - 127.0.0.1
+                  scope:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - BLOCKED_MONEY_OUT
+                    - ALLOW_PAYMENT_OUT
                   status: 2
-                  expiration: '2021-08-20'
-                  refresh: 1d
-                  redirect: 'https://my.domain.com/oauth'
+                  logo_uri: 'https://gitlab.lol.com/logo'
+                  client_uri: 'https://gitlab.lol.com'
+                  policy_uri: 'https://gitlab.lol.com/policy'
+                  tos_uri: 'https://gitlab.lol.com/tos'
+                  jwks_uri: 'https://gitlab.lol.com/jwks'
+                  description: My Local server for projects dev
+                  client_name: GitLab LoL
+                  redirect_uri: 'https://gitlab.lol.com/callback'
+                  redirect_uris:
+                    - 'https://gitlab.lol.com/callback2'
+                    - 'https://gitlab.lol.com/callback3'
+                  contacts:
+                    - support@gitlab.lol.com
+                    - help@gitlab.lol.com
+                  automate: generate_password
               Auto Generate Password:
                 value:
                   automate: generate_password
@@ -3236,53 +3240,163 @@ paths:
 
             - **domain:** it is of type boolean, it takes a true value if it complies with all the restrictions specified in the domain field. It also evaluates the status of the credential and if it has expired.
 
-            - **scope:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. Note that for the grant to be valid, the credential must have all the requested permissions, if at least one of the requested permissions is not assigned to the credential, the valid field would take a false value. 
+            - **grants:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. Note that for the grant to be valid, the credential must have all the requested permissions, if at least one of the requested permissions is not assigned to the credential, the valid field would take a false value. 
           content:
             application/json:
               schema:
                 description: ''
                 type: object
-                x-examples:
-                  example-1:
-                    valid: false
-                    domain: false
-                    scope:
-                      - ALLOW_EXTERNAL_CHARGE
-                      - ALLOW_PAYMENT_OUT
                 properties:
                   valid:
                     type: boolean
                   domain:
                     type: boolean
-                  scope:
+                  grants:
                     type: array
+                    uniqueItems: true
+                    minItems: 1
                     items:
-                      type: string
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          minLength: 1
+                        groups:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                              credentials:
+                                type: array
+                                uniqueItems: true
+                                minItems: 1
+                                items:
+                                  required:
+                                    - name
+                                  properties:
+                                    name:
+                                      type: string
+                                      minLength: 1
+                                    owner:
+                                      type: object
+                                      properties:
+                                        email:
+                                          type: string
+                                          minLength: 1
+                                        group:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                              minLength: 1
+                                            permissions:
+                                              type: array
+                                              uniqueItems: true
+                                              minItems: 1
+                                              items:
+                                                required:
+                                                  - name
+                                                properties:
+                                                  name:
+                                                    type: string
+                                                    minLength: 1
+                                          required:
+                                            - name
+                                            - permissions
+                                      required:
+                                        - email
+                                        - group
                 required:
                   - valid
                   - domain
-                  - scope
+                  - grants
+                x-examples:
+                  example-1:
+                    valid: false
+                    domain: false
+                    grants:
+                      - name: ALLOW_PAYMENT_IN
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
               examples:
                 Valid grants but no domain:
                   value:
                     valid: false
                     domain: false
-                    scope:
-                      - ALLOW_EXTERNAL_CHARGE
-                      - ALLOW_PAYMENT_OUT
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_OUT
+                                      - name: ALLOW_EXTERNAL_CHARGE
                 Valid domain but no grants:
                   value:
                     valid: false
                     domain: true
-                    scope:
-                      - ALLOW_EXTERNAL_CHARGE
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
                 'Valid ':
                   value:
                     valid: true
                     domain: true
-                    scope:
-                      - ALLOW_EXTERNAL_CHARGE
-                      - ALLOW_PAYMENT_OUT
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                      - name: ALLOW_PAYMENT_IN
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
         '400':
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
