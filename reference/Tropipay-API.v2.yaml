@@ -3937,6 +3937,8 @@ components:
         - **tos_uri:** URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  
 
         - **policy_uri:** URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. 
+
+        - **jwks_uri:** URL string referencing the client's JSON Web Key (JWK) Set [RFC7517] document, which contains the client's public keys. The value of this field MUST point to a valid JWK Set document.  These keys can be used by higher-level protocols that use signing or encryption.  For instance, these keys might be used by some applications for validating signed requests made to the token endpoint when using JWTs for client authentication [RFC7523].  Use of this parameter is preferred over the "jwks" parameter, as it allows for easier key rotation. The "jwks_uri" and "jwks" parameters MUST NOT both be present in the same request or response.
       type: object
       properties:
         client_name:
