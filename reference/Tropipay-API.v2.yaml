@@ -3926,48 +3926,68 @@ components:
       description: ''
       type: object
       properties:
+        client_name:
+          type: string
+          minLength: 1
+        client_id:
+          type: string
+          minLength: 1
+        client_secret:
+          type: string
+          minLength: 1
+        client_id_issued_at:
+          type: string
+          minLength: 1
+        client_secret_expires_at:
+          type: number
+        client_public:
+          type: string
+          minLength: 1
         type:
           type: number
-        name:
-          type: string
-          minLength: 1
-        username:
-          type: string
-          minLength: 1
-        password:
-          type: string
-          minLength: 1
-        public:
-          type: string
-          minLength: 1
-        prefix:
-          type: string
-          minLength: 1
         status:
           type: number
-        refresh:
-          type: string
-          minLength: 1
-        expiration:
+        prefix:
           type: string
           minLength: 1
         domain:
           type: string
           minLength: 1
-        redirect:
+        description:
           type: string
-          minLength: 1
         groupId:
           type: number
         ownerId:
           type: string
           minLength: 1
-        createdAt:
+        logo_uri:
+          type: string
+        client_uri:
+          type: string
+        contacts:
+          type: array
+          items:
+            required: []
+            properties: {}
+        tos_uri:
+          type: string
+        policy_uri:
+          type: string
+        jwks_uri:
+          type: string
+        redirect_uris:
+          type: array
+          items:
+            required: []
+            properties: {}
+        token_endpoint_auth_method:
           type: string
           minLength: 1
-        updatedAt:
-          type: string
-          minLength: 1
+        grant_types:
+          type: array
+          items:
+            required: []
+            properties: {}
         group:
           type: object
           properties:
@@ -3993,46 +4013,94 @@ components:
             - name
             - permissions
       required:
+        - client_name
+        - client_id
+        - client_secret
+        - client_id_issued_at
+        - client_secret_expires_at
+        - client_public
         - type
-        - name
-        - username
-        - password
-        - public
-        - prefix
         - status
-        - refresh
-        - expiration
+        - prefix
         - domain
-        - redirect
+        - description
         - groupId
         - ownerId
-        - createdAt
-        - updatedAt
+        - logo_uri
+        - client_uri
+        - contacts
+        - tos_uri
+        - policy_uri
+        - jwks_uri
+        - redirect_uris
+        - token_endpoint_auth_method
+        - grant_types
         - group
       x-examples:
         example-1:
+          client_name: gitlab.my
+          client_id: 991aea6a4587040942b8599a6d8fbebb
+          client_secret: cf97e9d9482400ec5e05b40cac550916
+          client_id_issued_at: '2021-08-19T04:53:16.993Z'
+          client_secret_expires_at: 0
+          client_public: '1629348796847'
           type: 1
-          name: my.app.demo
-          username: 991aea6a4587040942b8599a6d8fbebb
-          password: de78a9592729c63a5abe1447255e1429
-          public: '1629119418585'
+          status: 0
           prefix: Bearer
-          status: 2
-          refresh: 1d
-          expiration: '2021-08-15T13:10:18.771Z'
-          domain: .*tropipay.com.* www.demo.cu .*localhost.*
-          redirect: 'http://my.demo.com/callback'
+          domain: .*tropipay.com.* www.demo.cuuuu
+          description: ''
           groupId: 42
           ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
-          createdAt: '2021-08-16T13:10:18.771Z'
-          updatedAt: '2021-08-16T13:10:18.771Z'
+          logo_uri: ''
+          client_uri: ''
+          contacts: []
+          tos_uri: ''
+          policy_uri: ''
+          jwks_uri: ''
+          redirect_uris: []
+          token_endpoint_auth_method: client_secret_basic
+          grant_types: []
           group:
-            name: my.app.demo
+            name: gitlab.my
             permissions:
               - name: ALLOW_EXTERNAL_CHARGE
                 label: payments
               - name: BLOCKED_MONEY_OUT
                 label: payments
+              - name: ALLOW_OTA_CHARGE
+                label: payments_in
+          value:
+            client_name: gitlab.my
+            client_id: 991aea6a4587040942b8599a6d8fbebb
+            client_secret: cf97e9d9482400ec5e05b40cac550916
+            client_id_issued_at: '2021-08-19T04:53:16.993Z'
+            client_secret_expires_at: 0
+            client_public: '1629348796847'
+            type: 1
+            status: 0
+            prefix: Bearer
+            domain: .*tropipay.com.* www.demo.cuuuu
+            description: ''
+            groupId: 42
+            ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+            logo_uri: ''
+            client_uri: ''
+            contacts: []
+            tos_uri: ''
+            policy_uri: ''
+            jwks_uri: ''
+            redirect_uris: []
+            token_endpoint_auth_method: client_secret_basic
+            grant_types: []
+            group:
+              name: gitlab.my
+              permissions:
+                - name: ALLOW_EXTERNAL_CHARGE
+                  label: payments
+                - name: BLOCKED_MONEY_OUT
+                  label: payments
+                - name: ALLOW_OTA_CHARGE
+                  label: payments_in
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
