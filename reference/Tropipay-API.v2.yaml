@@ -2905,14 +2905,14 @@ paths:
         ```json
         {
 
-            "grant_type":"generate_password",
+            "automate":"generate_password",
             "domain": ".*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*",
             "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
         }
         ```
 
         Among the parameters that are specified as input are all those defined for a credential and some additional options that are described below:
-        - **grant_type:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
+        - **automate:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
         - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
         - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
         - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
@@ -3006,9 +3006,9 @@ paths:
               Full Request:
                 value:
                   type: 1
-                  name: Gitlab.My
-                  username: 991aea6a4587040942b8599a6d8fbebb
-                  password: 991aea6a458704094254545454545454
+                  client_name: Gitlab.My
+                  client_id: 991aea6a4587040942b8599a6d8fbebb
+                  client_secret: 991aea6a458704094254545454545454
                   domain: .*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
                   secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
@@ -3019,7 +3019,7 @@ paths:
                   redirect: 'https://my.domain.com/oauth'
               Auto Generate Password:
                 value:
-                  grant_type: generate_password
+                  automate: generate_password
               'Set security restrictions ':
                 value:
                   domain: .*tropipay.com.* www.demo.es .*localhost.* 127.0.0.1
@@ -4075,6 +4075,7 @@ components:
                   label: payments
                 - name: ALLOW_OTA_CHARGE
                   label: payments_in
+      title: ''
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
