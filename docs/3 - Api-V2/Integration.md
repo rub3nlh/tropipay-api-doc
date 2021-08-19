@@ -101,18 +101,19 @@ To create a credential, just make a POST request to the _/api/v2/credential_ end
             "client_name": "my.app.cu",
             "client_id": "991aea6a4587040942b8599a6d8fbebb",
             "client_secret": "ec51a20c4a8db60693e3ffae7b32222b",
+            "client_id_issued_at": "2021-08-19T04:53:16.993Z",
+            "client_secret_expires_at": 0,
+            "client_public": "1629348796847",
             "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+            "token_endpoint_auth_method": "client_secret_basic",
             "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
             "prefix": "Bearer",
             "refresh": "1d",
             "type": 1,
             "status": 0,
-            "public": "1629304998681",
             "groupId": 63,
-            "updatedAt": "2021-08-18T16:43:18.876Z",
-            "createdAt": "2021-08-18T16:43:18.876Z",
-            "expiration": null,
-            "redirect": null
+            "expiration": "",
+            "redirect": ""
         }
     }
 
@@ -141,7 +142,7 @@ axios({
 	method: 'post',
 	url: 'https://www.tropipay.com/api/v2/credential',
 	data: {
-		"name": "my.app.cu",
+		"client_name": "my.app.cu",
 		"domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
 		"scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
 	}
@@ -160,20 +161,21 @@ Response:
         "status": "OK",
         "data": {
             "client_name": "my.app.cu",
+            "client_id": "991aea6a4587040942b8599a6d8fbebb",
+            "client_secret": "ec51a20c4a8db60693e3ffae7b32222b",
+            "client_id_issued_at": "2021-08-19T04:53:16.993Z",
+            "client_secret_expires_at": 0,
+            "client_public": "1629348796847",
             "domain": ".*tropipay.com.* www.my.app.cu *.localhost.*",
+            "token_endpoint_auth_method": "client_secret_basic",
             "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
             "prefix": "Bearer",
             "refresh": "1d",
             "type": 1,
             "status": 0,
-            "client_id": "991aea6a4587040942b8599a6d8fbebb",
-            "client_secret": "ec51a20c4a8db60693e3ffae7b32222b",
-            "public": "1629304998681",
             "groupId": 63,
-            "updatedAt": "2021-08-18T16:43:18.876Z",
-            "createdAt": "2021-08-18T16:43:18.876Z",
-            "expiration": null,
-            "redirect": null
+            "expiration": "",
+            "redirect": ""
         }
     }
 
