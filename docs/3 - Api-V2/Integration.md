@@ -84,77 +84,77 @@ Now that you understand the basics of the OAuth 2.0 client credentials flow work
 **1.3.1.** Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
 
 To create a credential, just make a POST request to the _/api/v2/credential_ endpoint specifying a few parameters, as shown in the example below: 
+```
+  POST https://www.tropipay.com/api/v2/credential
 
-    POST https://www.tropipay.com/api/v2/credential
+  HEADER Authorization Bearer {USER-TOKEN}
 
-    HEADER Authorization Bearer {USER-TOKEN}
+  REQUEST {
+      "domain": [".*gitlab.lol.com/.*", "127.0.0.1"],
+      "scope": ["ALLOW_EXTERNAL_CHARGE", "BLOCKED_MONEY_OUT", "ALLOW_PAYMENT_OUT"],
+      "status": 2,
+      "logo_uri": "https://gitlab.lol.com/logo",
+      "client_uri": "https://gitlab.lol.com",
+      "policy_uri": "https://gitlab.lol.com/policy",
+      "tos_uri": "https://gitlab.lol.com/tos",
+      "jwks_uri": "https://gitlab.lol.com/jwks",
+      "description": "My Local server for projects dev",
+      "client_name": "GitLab LoL",
+      "redirect_uri":  "https://gitlab.lol.com/callback",
+      "redirect_uris": [
+          "https://gitlab.lol.com/callback2",
+          "https://gitlab.lol.com/callback3"
+      ],
+      "contacts": ["support@gitlab.lol.com", "help@gitlab.lol.com"]
+  }
 
-    REQUEST {
-        "domain": [".*gitlab.lol.com/.*", "127.0.0.1"],
-        "scope": ["ALLOW_EXTERNAL_CHARGE", "BLOCKED_MONEY_OUT", "ALLOW_PAYMENT_OUT"],
-        "status": 2,
-        "logo_uri": "https://gitlab.lol.com/logo",
-        "client_uri": "https://gitlab.lol.com",
-        "policy_uri": "https://gitlab.lol.com/policy",
-        "tos_uri": "https://gitlab.lol.com/tos",
-        "jwks_uri": "https://gitlab.lol.com/jwks",
-        "description": "My Local server for projects dev",
-        "client_name": "GitLab LoL",
-        "redirect_uri":  "https://gitlab.lol.com/callback",
-        "redirect_uris": [
-            "https://gitlab.lol.com/callback2",
-            "https://gitlab.lol.com/callback3"
-        ],
-        "contacts": ["support@gitlab.lol.com", "help@gitlab.lol.com"]
-    }
-
-    RESPONSE {
-        "client_name": "GitLab LoL",
-        "client_id": "5d6fd52d1796bd41632099cb5444b7f6",
-        "client_secret": "48c0dcaa3e209ec5c4c2623154ab52ab",
-        "client_id_issued_at": "2021-08-19T20:10:19.199Z",
-        "client_secret_expires_at": 0,
-        "client_public": "1629409307441",
-        "type": 1,
-        "status": 2,
-        "prefix": "Bearer",
-        "description": "My Local server for projects dev",
-        "groupId": 52,
-        "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
-        "logo_uri": "https://gitlab.lol.com/logo",
-        "client_uri": "https://gitlab.lol.com",
-        "tos_uri": "https://gitlab.lol.com/tos",
-        "policy_uri": "https://gitlab.lol.com/policy",
-        "jwks_uri": "https://gitlab.lol.com/jwks",
-        "registration_client_uri": "https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6",
-        "userinfo_encrypted_response_alg": "RSA1_5",
-        "userinfo_encrypted_response_enc": "A128CBC-HS256",
-        "token_endpoint_auth_method": "client_secret_basic",
-        "scope": [
-            "ALLOW_EXTERNAL_CHARGE",
-            "BLOCKED_MONEY_OUT",
-            "ALLOW_PAYMENT_OUT"
-        ],
-        "domain": [
-            ".*gitlab.lol.com/.*",
-            "127.0.0.1"
-        ],
-        "contacts": [
-            "support@gitlab.lol.com",
-            "help@gitlab.lol.com"
-        ],
-        "redirect_uris": [
-            "https://gitlab.lol.com/callback2",
-            "https://gitlab.lol.com/callback3",
-            "https://gitlab.lol.com/callback"
-        ],
-        "grant_types": [
-            "authorization_code",
-            "refresh_token",
-            "client_credential"
-        ]
-}
-
+  RESPONSE {
+      "client_name": "GitLab LoL",
+      "client_id": "5d6fd52d1796bd41632099cb5444b7f6",
+      "client_secret": "48c0dcaa3e209ec5c4c2623154ab52ab",
+      "client_id_issued_at": "2021-08-19T20:10:19.199Z",
+      "client_secret_expires_at": 0,
+      "client_public": "1629409307441",
+      "type": 1,
+      "status": 2,
+      "prefix": "Bearer",
+      "description": "My Local server for projects dev",
+      "groupId": 52,
+      "ownerId": "e2931920-e402-11ea-a30d-83c978a74aaa",
+      "logo_uri": "https://gitlab.lol.com/logo",
+      "client_uri": "https://gitlab.lol.com",
+      "tos_uri": "https://gitlab.lol.com/tos",
+      "policy_uri": "https://gitlab.lol.com/policy",
+      "jwks_uri": "https://gitlab.lol.com/jwks",
+      "registration_client_uri": "https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6",
+      "userinfo_encrypted_response_alg": "RSA1_5",
+      "userinfo_encrypted_response_enc": "A128CBC-HS256",
+      "token_endpoint_auth_method": "client_secret_basic",
+      "scope": [
+          "ALLOW_EXTERNAL_CHARGE",
+          "BLOCKED_MONEY_OUT",
+          "ALLOW_PAYMENT_OUT"
+      ],
+      "domain": [
+          ".*gitlab.lol.com/.*",
+          "127.0.0.1"
+      ],
+      "contacts": [
+          "support@gitlab.lol.com",
+          "help@gitlab.lol.com"
+      ],
+      "redirect_uris": [
+          "https://gitlab.lol.com/callback2",
+          "https://gitlab.lol.com/callback3",
+          "https://gitlab.lol.com/callback"
+      ],
+      "grant_types": [
+          "authorization_code",
+          "refresh_token",
+          "client_credential"
+      ]
+  }
+```
 > #### Note:
 >
 > In this case we are indicating that with an access token generated from the credential _'my.app.cu'_, you can only run actions based on the list of permissions shown below: 
