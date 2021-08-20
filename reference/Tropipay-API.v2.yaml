@@ -372,6 +372,7 @@ paths:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
         - Authentication
+        - Security
     parameters: []
   /countries:
     get:
@@ -1166,8 +1167,7 @@ paths:
           $ref: '#/components/responses/kycResponse'
         '400':
           $ref: '#/components/responses/ErrorResponse'
-      description: |
-        This endpoint is for generating KYC wizard link. the received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
+      description: This endpoint is for generating KYC wizard link. The received url must be embeded in an *iframe* in order for the user to follow the KYC verification.
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
@@ -1795,8 +1795,8 @@ paths:
                   value:
                     id: 5a5cdfb0-8d9d-11eb-bfee-1922dac72c62
                     reference: demo23232323
-                    concept: locura
-                    description: es una cosa loca este cobro
+                    concept: some product id
+                    description: some product description
                     amount: 11500
                     currency: EUR
                     singleUse: true
@@ -1884,8 +1884,8 @@ paths:
               example-1:
                 value:
                   reference: demo23232323
-                  concept: locura
-                  description: es una cosa loca este cobro
+                  concept: some product id
+                  description: some product description
                   amount: 11500
                   currency: EUR
                   singleUse: true
@@ -2390,9 +2390,1194 @@ paths:
                   urlSuccess: 'http://e-commers.com/success'
                   urlFailed: 'http://http://e-commers.com/failed'
                   urlNotification: 'https://e-commers.com/callback_notification'
+        description: ''
       tags:
         - Movements
         - Movements-in
+  /credential:
+    get:
+      summary: List Credentials
+      responses:
+        '200':
+          description: Example response
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data: []
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                Example:
+                  value:
+                    status: OK
+                    data:
+                      - type: 1
+                        name: my.demo.1
+                        username: 991aea6a4587040942b8599a6d8fbebb
+                        password: de78a9592729c63a5abe1447255e1429
+                        public: '1629119418585'
+                        prefix: Bearer
+                        domain: .*tropipay.com.* www.demo.cu
+                        status: 2
+                        expiration: '2021-08-20T13:10:18.771Z'
+                        refresh: 1d
+                        redirect: 'https://my.web.app/oauth'
+                        groupId: 42
+                        ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                        createdAt: '2021-08-16T13:10:18.771Z'
+                        updatedAt: '2021-08-16T13:10:18.771Z'
+                        group:
+                          id: 42
+                          name: my.demo.1
+                          createdAt: '2021-08-16T13:10:18.595Z'
+                          updatedAt: '2021-08-16T13:10:18.595Z'
+                          permissions:
+                            - id: 1
+                              name: ALLOW_EXTERNAL_CHARGE
+                              label: payments
+                              createdAt: '2019-10-29T12:19:50.939Z'
+                              updatedAt: '2019-10-29T12:19:50.939Z'
+                            - id: 2
+                              name: BLOCKED_MONEY_OUT
+                              label: payments
+                              createdAt: '2020-05-18T07:29:48.990Z'
+                              updatedAt: '2020-05-18T07:29:48.990Z'
+                      - type: 1
+                        name: my.demo.2
+                        username: 991aea6a4587040942b8599a6d8fbebb
+                        password: de78a9592729c63a5abe1447255e1429
+                        public: '1629119418585'
+                        prefix: Bearer
+                        domain: .*tropipay.com.* www.demo.cu
+                        status: 2
+                        expiration: null
+                        refresh: 1d
+                        redirect: 'https://my.web.app/oauth'
+                        groupId: 42
+                        ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                        createdAt: '2021-08-16T13:10:18.771Z'
+                        updatedAt: '2021-08-16T13:10:18.771Z'
+                        group:
+                          id: 42
+                          name: my.demo.2
+                          createdAt: '2021-08-16T13:10:18.595Z'
+                          updatedAt: '2021-08-16T13:10:18.595Z'
+                          permissions:
+                            - id: 1
+                              name: ALLOW_EXTERNAL_CHARGE
+                              label: payments
+                              createdAt: '2019-10-29T12:19:50.939Z'
+                              updatedAt: '2019-10-29T12:19:50.939Z'
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      operationId: get-credential
+      description: |-
+        This endpoint return a list credentials assigned to user. 
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
+    post:
+      summary: Create Credential
+      operationId: post-credential
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+              examples:
+                Example:
+                  value:
+                    client_name: GitLab LoL
+                    client_id: b47ed30efa808f7d193058be8cd44970
+                    client_secret: e7a42b71db5984614887051dee0ac239
+                    client_id_issued_at: '2021-08-19T22:05:51.346Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629410751300'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 56
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/b47ed30efa808f7d193058be8cd44970'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: |
+        This endpoint return a list credentials assigned to user. 
+
+        ```
+                +--------(A)- Initial Access Token
+                |
+                |   +----(B)- Software Statement (OPTIONAL)
+                |   |
+                v   v
+            +-----------+                                      +---------------+
+            |           |--(C)- Client Registration Request -->|    Client     |
+            | Client or |                                      | Registration  |
+            | Developer |<-(D)- Client Information Response ---|   Endpoint    |
+            |           |        or Client Error Response      +---------------+
+            +-----------+
+        ```
+           Figure 1: Abstract Dynamic Client Registration Flow
+           
+        The abstract OAuth 2.0 client dynamic registration flow illustrated
+           in Figure 1 describes the interaction between the client or developer
+           and the endpoint defined in this specification.  This figure does not
+           demonstrate error conditions.  This flow includes the following
+           steps:
+
+        - (A)   Optionally, the client or developer is issued an initial access
+                 token giving access to the client registration endpoint.  The
+                 method by which the initial access token is issued to the
+                 client or developer is out of scope for this specification.
+
+        - (B)   Optionally, the client or developer is issued a software
+                 statement for use with the client registration endpoint.  The
+                 method by which the software statement is issued to the client
+                 or developer is out of scope for this specification.
+
+        - (C)   The client or developer calls the client registration endpoint
+                 with the client's desired registration metadata, optionally
+                 including the initial access token from (A) if one is required
+                 by the authorization server.
+
+        - (D)   The authorization server registers the client and returns:
+            *  the client's registered metadata,
+            *  a client identifier that is unique at the server, and
+            *  a set of client credentials such as a client secret, if applicable for this client.
+                    
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+
+        Take into account that the credential name must be unique, it is used to identify it, and it is the name that is registered in the list of applications of another user, when this authorizes an external credential to execute operations on his behalf. 
+
+        ```json
+        {
+            "automate":"generate_password",
+            "domain": ".*tropipay.com.* www.demo.cuuuu",
+            "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
+        }
+        ```
+
+        Among the parameters that are specified as input are all those defined for a credential and some additional options that are described below:
+        - **automate:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
+        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
+        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
+        - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
+        - **prefix:** determines the type of authentication token to use, **Bearer** assumes by default.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                type:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+                secret:
+                  type: string
+                  minLength: 1
+                public:
+                  type: string
+                prefix:
+                  type: string
+                  minLength: 1
+                domain:
+                  type: string
+                  minLength: 1
+                status:
+                  type: number
+                expiration:
+                  type: string
+                  minLength: 1
+                refresh:
+                  type: string
+                  minLength: 1
+                redirect:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                ownerId:
+                  type: number
+              required:
+                - type
+                - name
+                - username
+                - password
+                - secret
+                - public
+                - prefix
+                - domain
+                - status
+                - expiration
+                - refresh
+                - redirect
+                - groupId
+                - ownerId
+              x-examples:
+                example-1:
+                  type: 1
+                  name: gitlab.my
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
+            examples:
+              'Automatic password generation ':
+                value:
+                  grant_type: generate_password
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+              Default request:
+                value:
+                  name: demo2
+              Full Request:
+                value:
+                  client_name: GitLab LoL
+                  domain:
+                    - .*gitlab.lol.com/.*
+                    - 127.0.0.1
+                  scope:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - BLOCKED_MONEY_OUT
+                    - ALLOW_PAYMENT_OUT
+                  status: 2
+                  logo_uri: 'https://gitlab.lol.com/logo'
+                  client_uri: 'https://gitlab.lol.com'
+                  policy_uri: 'https://gitlab.lol.com/policy'
+                  tos_uri: 'https://gitlab.lol.com/tos'
+                  jwks_uri: 'https://gitlab.lol.com/jwks'
+                  description: My Local server for projects dev
+                  redirect_uri: 'https://gitlab.lol.com/callback'
+                  redirect_uris:
+                    - 'https://gitlab.lol.com/callback2'
+                    - 'https://gitlab.lol.com/callback3'
+                  contacts:
+                    - support@gitlab.lol.com
+                    - help@gitlab.lol.com
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
+  '/credential/:client_id':
+    get:
+      summary: GET information about a credential by it name
+      tags:
+        - Security
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: OK
+                    data:
+                      type: 1
+                      name: demo2
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 8b9e91dc70aebf1d058a69966798d5c3
+                      public: '1629134913542'
+                      prefix: Bearer
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      expiration: null
+                      refresh: 1d
+                      redirect: null
+                      groupId: 45
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      updatedAt: '2021-08-16T17:28:33.577Z'
+                      group:
+                        name: demo2
+                        id: 45
+                        permissions:
+                          - name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                            GroupPermission:
+                              groupId: 45
+                              permissionId: 1
+                              createdAt: '2021-08-16T17:28:33.568Z'
+                              updatedAt: '2021-08-16T17:28:33.568Z'
+                          - name: BLOCKED_MONEY_OUT
+                            label: payments
+                            GroupPermission:
+                              groupId: 45
+                              permissionId: 2
+                              createdAt: '2021-08-16T17:28:33.573Z'
+                              updatedAt: '2021-08-16T17:28:33.573Z'
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                  data:
+                    $ref: '#/components/schemas/Credential'
+                required:
+                  - status
+                  - data
+              examples:
+                example-1:
+                  value:
+                    status: OK
+                    data:
+                      type: 1
+                      name: demo2
+                      username: 991aea6a4587040942b8599a6d8fbebb
+                      password: 8b9e91dc70aebf1d058a69966798d5c3
+                      public: '1629134913542'
+                      prefix: Bearer
+                      domain: .*tropipay.com.* www.demo.cu
+                      status: 2
+                      expiration: '2021-08-16T17:28:33.568Z'
+                      refresh: 1d
+                      redirect: 'https://my.domain.com/oauth'
+                      groupId: 45
+                      ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                      createdAt: '2021-08-16T17:13:19.684Z'
+                      updatedAt: '2021-08-16T17:28:33.577Z'
+                      group:
+                        name: demo2
+                        id: 45
+                        permissions:
+                          - name: ALLOW_EXTERNAL_CHARGE
+                            label: payments
+                          - name: BLOCKED_MONEY_OUT
+                            label: payments
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      operationId: 'get-credential-:name'
+      description: This endpoint return an information about a credential by it Client Id or username.
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+        - schema:
+            type: string
+            example: demo2
+          in: query
+          name: name
+          description: Credential name
+    put:
+      summary: Update a credential by it name
+      operationId: 'put-credential-:name'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+              examples:
+                example:
+                  value:
+                    client_name: GitLab LoL
+                    client_id: 5d6fd52d1796bd41632099cb5444b7f6
+                    client_secret: 48c0dcaa3e209ec5c4c2623154ab52ab
+                    client_id_issued_at: '2021-08-19T20:10:19.199Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629409307441'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 52
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: |-
+        This endpoint allow to update a credential by it Client Id or username.
+
+        There are different types of credentials:
+        - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
+        - **MFA:** For Two Factor Authentication or Multi Factor Authentication in general.
+        - **ApiKey:** An application programming interface key (API key) is a unique identifier used to authenticate a user, developer, or calling program to an API. However, they are typically used to authenticate a project with the API rather than a human user. Different platforms may implement and use API keys in different ways.   
+
+        Take into account that the credential name must be unique, it is used to identify it, and it is the name that is registered in the list of applications of another user, when this authorizes an external credential to execute operations on his behalf. 
+
+        ```json
+        {
+
+            "automate":"generate_password",
+            "domain": ".*tropipay.com.* www.demo.es .*localhost.* .*127.0.0.1.*",
+            "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE"
+        }
+        ```
+
+        Among the parameters that are specified as input are all those defined for a credential and some additional options that are described below:
+        - **automate:** Optional parameter, data type is string, allowed values: generate_secret (generates a secret key automatically and modifies the public and passord or clinet_secret fields), generate_password (generates a password or client_secret randomly from the secret field, also updates the public field).
+        - **domain:** List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.
+        - **scope:** Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account. An application can request one or more scopes, this information is then presented to the user in the consent screen, and the access token issued to the application will be limited to the scopes granted. The OAuth spec allows the authorization server or user to modify the scopes granted to the application compared to what is requested, although there are not many examples of services doing this in practice.
+        - **status:** the status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.
+        - **prefix:** determines the type of authentication token to use, **Bearer** assumes by default.
+
+
+         
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                type:
+                  type: number
+                name:
+                  type: string
+                  minLength: 1
+                username:
+                  type: string
+                  minLength: 1
+                password:
+                  type: string
+                  minLength: 1
+                domain:
+                  type: string
+                  minLength: 1
+                scope:
+                  type: string
+                  minLength: 1
+                secret:
+                  type: string
+                  minLength: 1
+                public:
+                  type: string
+                prefix:
+                  type: string
+                  minLength: 1
+                status:
+                  type: number
+                expiration:
+                  type: string
+                  minLength: 1
+                refresh:
+                  type: string
+                  minLength: 1
+                redirect:
+                  type: string
+                  minLength: 1
+                groupId:
+                  type: number
+                ownerId:
+                  type: number
+              required:
+                - type
+                - name
+                - username
+                - password
+                - domain
+                - scope
+                - secret
+                - public
+                - prefix
+                - status
+                - expiration
+                - refresh
+                - redirect
+                - groupId
+                - ownerId
+              x-examples:
+                example-1:
+                  type: 1
+                  name: Gitlab.My
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
+            examples:
+              Full Request:
+                value:
+                  domain:
+                    - .*gitlab.lol.com/.*
+                    - 127.0.0.1
+                  scope:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - BLOCKED_MONEY_OUT
+                    - ALLOW_PAYMENT_OUT
+                  status: 2
+                  logo_uri: 'https://gitlab.lol.com/logo'
+                  client_uri: 'https://gitlab.lol.com'
+                  policy_uri: 'https://gitlab.lol.com/policy'
+                  tos_uri: 'https://gitlab.lol.com/tos'
+                  jwks_uri: 'https://gitlab.lol.com/jwks'
+                  description: My Local server for projects dev
+                  client_name: GitLab LoL
+                  redirect_uri: 'https://gitlab.lol.com/callback'
+                  redirect_uris:
+                    - 'https://gitlab.lol.com/callback2'
+                    - 'https://gitlab.lol.com/callback3'
+                  contacts:
+                    - support@gitlab.lol.com
+                    - help@gitlab.lol.com
+                  automate: generate_password
+              Auto Generate Password:
+                value:
+                  automate: generate_password
+              'Set security restrictions ':
+                value:
+                  domain: .*tropipay.com.* www.demo.es .*localhost.* 127.0.0.1
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT ALLOW_OTA_CHARGE
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Credential'
+            examples:
+              Generate Password:
+                value:
+                  grant_type: generate_password
+        description: ''
+      tags:
+        - Security
+    delete:
+      summary: Delete a credential by it name
+      operationId: 'delete-credential-:name'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+              examples:
+                if no exist: {}
+                ok:
+                  value:
+                    client_name: GitLab LoL
+                    client_id: 5d6fd52d1796bd41632099cb5444b7f6
+                    client_secret: 48c0dcaa3e209ec5c4c2623154ab52ab
+                    client_id_issued_at: '2021-08-19T20:10:19.199Z'
+                    client_secret_expires_at: 0
+                    client_public: '1629409307441'
+                    type: 1
+                    status: 2
+                    prefix: Bearer
+                    description: My Local server for projects dev
+                    groupId: 52
+                    ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+                    logo_uri: 'https://gitlab.lol.com/logo'
+                    client_uri: 'https://gitlab.lol.com'
+                    tos_uri: 'https://gitlab.lol.com/tos'
+                    policy_uri: 'https://gitlab.lol.com/policy'
+                    jwks_uri: 'https://gitlab.lol.com/jwks'
+                    registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+                    userinfo_encrypted_response_alg: RSA1_5
+                    userinfo_encrypted_response_enc: A128CBC-HS256
+                    token_endpoint_auth_method: client_secret_basic
+                    scope:
+                      - ALLOW_EXTERNAL_CHARGE
+                      - BLOCKED_MONEY_OUT
+                      - ALLOW_PAYMENT_OUT
+                    domain:
+                      - .*gitlab.lol.com/.*
+                      - 127.0.0.1
+                    contacts:
+                      - support@gitlab.lol.com
+                      - help@gitlab.lol.com
+                    redirect_uris:
+                      - 'https://gitlab.lol.com/callback2'
+                      - 'https://gitlab.lol.com/callback3'
+                      - 'https://gitlab.lol.com/callback'
+                    grant_types:
+                      - authorization_code
+                      - refresh_token
+                      - client_credential
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      description: This endpoint allow to delete a credential by it Client Id or username.
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Security
+    parameters: []
+  /credential/grant/list:
+    get:
+      summary: List of available permits
+      tags:
+        - Security
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - name
+                    - label
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    label:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - name: ALLOW_EXTERNAL_CHARGE
+                      label: payments
+                    - name: BLOCKED_MONEY_OUT
+                      label: payments
+                    - name: ALLOW_OTA_CHARGE
+                      label: payments_in
+                    - name: ALLOW_SELF_CHARGE
+                      label: payments_in
+                    - name: ALLOW_REDEEM_CODE
+                      label: payments_in
+                    - name: ALLOW_CHARGE_VOUCHER
+                      label: payments_in
+                    - name: ALLOW_EXTERNAL_TOPUP
+                      label: payments_in
+                    - name: ALLOW_INTERNAL_TRANSFER_IN
+                      label: payments_in
+                    - name: ALLOW_GIFT_CARD
+                      label: payments_out
+                    - name: ALLOW_RECHARGE
+                      label: payments_out
+                    - name: ALLOW_EXTERNAL_TRANSFER
+                      label: payments_out
+                    - name: ALLOW_INTERNAL_TRANSFER_OUT
+                      label: payments_out
+                    - name: ALLOW_CREATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_DELETE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_PROFILE
+                      label: app
+                    - name: ALLOW_PAYMENT_IN
+                      label: generic
+                    - name: ALLOW_PAYMENT_OUT
+                      label: generic
+                    - name: ALLOW_MARKET_PURCHASES
+                      label: generic
+                    - name: UPLOAD_DOCUMENT
+                      label: support
+              examples:
+                example-1:
+                  value:
+                    - name: ALLOW_EXTERNAL_CHARGE
+                      label: payments
+                    - name: BLOCKED_MONEY_OUT
+                      label: payments
+                    - name: ALLOW_OTA_CHARGE
+                      label: payments_in
+                    - name: ALLOW_SELF_CHARGE
+                      label: payments_in
+                    - name: ALLOW_REDEEM_CODE
+                      label: payments_in
+                    - name: ALLOW_CHARGE_VOUCHER
+                      label: payments_in
+                    - name: ALLOW_EXTERNAL_TOPUP
+                      label: payments_in
+                    - name: ALLOW_INTERNAL_TRANSFER_IN
+                      label: payments_in
+                    - name: ALLOW_GIFT_CARD
+                      label: payments_out
+                    - name: ALLOW_RECHARGE
+                      label: payments_out
+                    - name: ALLOW_EXTERNAL_TRANSFER
+                      label: payments_out
+                    - name: ALLOW_INTERNAL_TRANSFER_OUT
+                      label: payments_out
+                    - name: ALLOW_CREATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_DELETE_BENEFICIARY
+                      label: app
+                    - name: ALLOW_UPDATE_PROFILE
+                      label: app
+                    - name: ALLOW_PAYMENT_IN
+                      label: generic
+                    - name: ALLOW_PAYMENT_OUT
+                      label: generic
+                    - name: ALLOW_MARKET_PURCHASES
+                      label: generic
+                    - name: UPLOAD_DOCUMENT
+                      label: support
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      operationId: get-credential-grant-list
+      description: Get the list of available permits for scope field
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+  /credential/grant/allow:
+    post:
+      summary: Check grant allow
+      operationId: post-credential-grant-allow
+      responses:
+        '200':
+          description: |-
+            The answer is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field. 
+
+            - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field. This is the field that determines whether or not the credential is valid for certain permissions
+
+            - **domain:** it is of type boolean, it takes a true value if it complies with all the restrictions specified in the domain field. It also evaluates the status of the credential and if it has expired.
+
+            - **grants:** It contains the list of valid permissions for the credential, in this way it can be confirmed if any of the requested permissions is partially fulfilled. Note that for the grant to be valid, the credential must have all the requested permissions, if at least one of the requested permissions is not assigned to the credential, the valid field would take a false value. 
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                  domain:
+                    type: boolean
+                  grants:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - name
+                      properties:
+                        name:
+                          type: string
+                          minLength: 1
+                        groups:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - name
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                              credentials:
+                                type: array
+                                uniqueItems: true
+                                minItems: 1
+                                items:
+                                  required:
+                                    - name
+                                  properties:
+                                    name:
+                                      type: string
+                                      minLength: 1
+                                    owner:
+                                      type: object
+                                      properties:
+                                        email:
+                                          type: string
+                                          minLength: 1
+                                        group:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                              minLength: 1
+                                            permissions:
+                                              type: array
+                                              uniqueItems: true
+                                              minItems: 1
+                                              items:
+                                                required:
+                                                  - name
+                                                properties:
+                                                  name:
+                                                    type: string
+                                                    minLength: 1
+                                          required:
+                                            - name
+                                            - permissions
+                                      required:
+                                        - email
+                                        - group
+                required:
+                  - valid
+                  - domain
+                  - grants
+                x-examples:
+                  example-1:
+                    valid: false
+                    domain: false
+                    grants:
+                      - name: ALLOW_PAYMENT_IN
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+              examples:
+                Valid grants but no domain:
+                  value:
+                    valid: false
+                    domain: false
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_OUT
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                Valid domain but no grants:
+                  value:
+                    valid: false
+                    domain: true
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                'Valid ':
+                  value:
+                    valid: true
+                    domain: true
+                    grants:
+                      - name: ALLOW_EXTERNAL_CHARGE
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+                      - name: ALLOW_PAYMENT_IN
+                        groups:
+                          - name: gitlab.my
+                            credentials:
+                              - name: gitlab.my
+                                owner:
+                                  email: tonykssa@gmail.com
+                                  group:
+                                    name: KYC3_FULL_ALLOW
+                                    permissions:
+                                      - name: ALLOW_PAYMENT_IN
+                                      - name: ALLOW_EXTERNAL_CHARGE
+        '400':
+          $ref: '#/components/responses/OauthBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/FailedAuthenticateResponse'
+      tags:
+        - Security
+      description: |
+        Allows you to check if a credential complies with a list of permissions, from the specification of the scope field.
+
+        ```
+        {
+          "scope": "ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT"
+          "expiration": "2021-08-20T00:00:00.000Z",
+          "domain": ".*localhost.* .*127.0.0.1.*",
+          "status": 2
+        }
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                permissions:
+                  type: array
+                  items:
+                    required: []
+                    properties: {}
+              required:
+                - name
+                - permissions
+              x-examples:
+                example-1:
+                  name: gitlab.my
+                  permissions:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - ALLOW_PAYMENT_OUT
+            examples:
+              example-1:
+                value:
+                  name: gitlab.my
+                  permissions:
+                    - ALLOW_EXTERNAL_CHARGE
+                    - ALLOW_PAYMENT_IN
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value: {}
+        description: ''
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+  /access/token:
+    post:
+      summary: ''
+      operationId: post-access-token
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    minLength: 1
+                  refresh_token:
+                    type: string
+                    minLength: 1
+                  token_type:
+                    type: string
+                    minLength: 1
+                  scope:
+                    type: string
+                    minLength: 1
+                  expires_in:
+                    type: string
+                    minLength: 1
+                required:
+                  - access_token
+                  - refresh_token
+                  - token_type
+                  - scope
+                  - expires_in
+                x-examples:
+                  example-1:
+                    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MTczMTk3LCJleHAiOjE2MjkyNTk1OTd9.EMga30PwXdKU8eM7BnbV26pyZPx0dVj8fpB-wg7n2fo
+                    refresh_token: Z2l0bGFiLm15OmVhYjIwNTVkYWM0ODQyOTcwNWQ4YmEzYTRiMDRmZDBl
+                    token_type: Bearer
+                    scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+                    expires_in: 1d
+              examples:
+                example-1:
+                  value:
+                    access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFsTmFtZSI6ImdpdGxhYi5teSIsImlkIjoiZTI5MzE5MjAtZTQwMi0xMWVhLWEzMGQtODNjOTc4YTc0YWFhIiwiaWF0IjoxNjI5MTczMTk3LCJleHAiOjE2MjkyNTk1OTd9.EMga30PwXdKU8eM7BnbV26pyZPx0dVj8fpB-wg7n2fo
+                    refresh_token: Z2l0bGFiLm15OmVhYjIwNTVkYWM0ODQyOTcwNWQ4YmEzYTRiMDRmZDBl
+                    token_type: Bearer
+                    scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+                    expires_in: 1d
+      tags:
+        - Security
+      description: |-
+        The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used by clients to access resources about themselves rather than to access a user's resources.
+
+        ### Application access
+
+        In some cases, applications may need an access token to act on behalf of themselves rather than a user. For example, the service may provide a way for the application to update their own information such as their website URL or icon, or they may wish to get statistics about the users of the app. In this case, applications need a way to get an access token for their own account, outside the context of any specific user. OAuth provides the client_credentials grant type for this purpose.
+
+        To use the client credentials grant type, make a POST request like the following:
+
+        ```
+        POST https://api.authorization-server.com/token
+            grant_type=client_credentials&
+            client_id=CLIENT_ID&
+            client_secret=CLIENT_SECRET
+        ```
+
+        The response will include an access token in the same format as the other grant types.
+        Making Authenticated Requests
+
+        The end result of all the grant types is obtaining an access token.
+
+        Now that you have an access token, you can make requests to the API. You can quickly make an API request using cURL as follows:
+
+        ```
+        curl -H "Authorization: Bearer RsT5OjbzRn430zqMLgV3Ia" \
+        https://api.authorization-server.com/1/me
+        ```
+
+        That's it! Make sure you always send requests over HTTPS and never ignore invalid certificates. HTTPS is the only thing protecting requests from being intercepted or modified.
+
+        ### Differences from OAuth 1.0
+
+        OAuth 1.0 was largely based on existing proprietary protocols such as Flickr's "FlickrAuth" and Google's "AuthSub". The result represented the best solution based on actual implementation experience. However, after several years of working with the protocol, the community learned enough to rethink and improve the protocol in three main areas where OAuth 1.0 proved limited or confusing.
+
+
+        ### Bearer Tokens
+
+        Bearer tokens are a much simpler way of making API requests, since they don’t require cryptographic signing of each request. The tradeoff is that all API requests must be made over an HTTPS connection, since the request contains a plaintext token that could be used by anyone if it were intercepted. The advantage is that it doesn’t require complex libraries to make requests and is much simpler for both clients and servers to implement.
+
+        The downside to Bearer tokens is that there is nothing preventing other apps from using a Bearer token if it can get access to it. This is a common criticism of OAuth 2.0, although most providers only use Bearer tokens anyway. Under normal circumstances, when applications properly protect the access tokens under their control, this is not a problem, although technically it is less secure. If your service requires a more secure approach, you can a different access token type that may meet your security requirements.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                client_id:
+                  type: string
+                  minLength: 1
+                client_secret:
+                  type: string
+                  minLength: 1
+              required:
+                - name
+                - client_id
+                - client_secret
+              x-examples:
+                example-1:
+                  name: client_credentials
+                  client_id: 991aea6a4587040942b8599a6d8fbebb
+                  client_secret: 796c0519dace8efdeaf59e6ad40e811a
+            examples:
+              example-1:
+                value:
+                  grant_type: client_credentials
+                  client_id: 991aea6a4587040942b8599a6d8fbebb
+                  client_secret: 796c0519dace8efdeaf59e6ad40e811a
+                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
 components:
   schemas:
     User:
@@ -2575,9 +3760,11 @@ components:
           type: string
       description: An Event to hook on
     Movement:
-      description: ''
+      description: Details of a movement. Sent to notificationUrl upon completion of a transaction.
       type: object
       properties:
+        signature:
+          type: string
         id:
           type: number
         reference:
@@ -2594,7 +3781,8 @@ components:
         bookingDate:
           type: string
           minLength: 1
-        days: {}
+        days:
+          type: number
         amount:
           type: number
         currency:
@@ -2607,23 +3795,17 @@ components:
           type: string
           minLength: 1
         conversionRate: {}
-        providerFee: {}
-        ourFee: {}
-        realBankFee:
-          type: number
         depositaccountId:
           type: number
-        payProviderFee: {}
         state:
           type: number
-        serviceId: {}
-        paymentcardId: {}
-        expirationDate: {}
+        serviceId:
+          type: number
+        paymentcardId:
+          type: string
+        expirationDate:
+          type: string
         movementTypeId:
-          type: number
-        balanceBefore:
-          type: number
-        balanceAfter:
           type: number
         transactionId:
           type: number
@@ -2641,203 +3823,254 @@ components:
           type: number
         paymentEntityBalance:
           type: number
-        errorReason: {}
+        errorReason:
+          type: string
+        notificationUrl:
+          type: string
         riskFlag:
-          type: number
+          type: string
         riskScore:
-          type: number
+          type: string
         createdAt:
           type: string
           minLength: 1
         updatedAt:
           type: string
           minLength: 1
-        depositaccount:
-          type: object
-          properties:
-            isInEP:
-              type: number
-            id:
-              type: number
-            accountNumber:
-              type: string
-              minLength: 1
-            alias:
-              type: string
-              minLength: 1
-            swift:
-              type: string
-              minLength: 1
-            type:
-              type: number
-            country:
-              type: number
-            firstName:
-              type: string
-              minLength: 1
-            default: {}
-            state:
-              type: number
-            userId:
-              type: string
-              minLength: 1
-            countryDestinationId:
-              type: number
-            lastName:
-              type: string
-              minLength: 1
-            documentNumber:
-              type: string
-              minLength: 1
-            userRelationTypeId:
-              type: number
-            city:
-              type: string
-              minLength: 1
-            postalCode:
-              type: number
-            address:
-              type: string
-              minLength: 1
-            phone:
-              type: string
-              minLength: 1
-            checked:
-              type: boolean
-            province:
-              type: string
-              minLength: 1
-            beneficiaryType:
-              type: number
-            relatedUserId: {}
-            currency:
-              type: string
-              minLength: 1
-            correspondent: {}
-            location: {}
-            office: {}
-            officeValue: {}
-            paymentType:
-              type: number
-            paymentEntityBeneficiaryId:
-              type: number
-            paymentEntityAccountId:
-              type: number
-            verified: {}
-            documentTypeId: {}
-            documentExpirationDate: {}
-            createdAt:
-              type: string
-              minLength: 1
-            updatedAt:
-              type: string
-              minLength: 1
-            countryDestination:
-              type: object
-              properties:
-                id:
-                  type: number
-                name:
-                  type: string
-                  minLength: 1
-                sepaZone:
-                  type: boolean
-                state:
-                  type: number
-                slug:
-                  type: string
-                  minLength: 1
-                callingCode:
-                  type: number
-                isDestination:
-                  type: boolean
-                createdAt:
-                  type: string
-                  minLength: 1
-                updatedAt:
-                  type: string
-                  minLength: 1
-              required:
-                - id
-                - name
-                - sepaZone
-                - state
-                - slug
-                - callingCode
-                - isDestination
-                - createdAt
-                - updatedAt
-          required:
-            - isInEP
-            - id
-            - accountNumber
-            - alias
-            - swift
-            - type
-            - country
-            - firstName
-            - state
-            - userId
-            - countryDestinationId
-            - lastName
-            - documentNumber
-            - userRelationTypeId
-            - city
-            - postalCode
-            - address
-            - phone
-            - checked
-            - province
-            - beneficiaryType
-            - currency
-            - paymentType
-            - paymentEntityBeneficiaryId
-            - paymentEntityAccountId
-            - createdAt
-            - updatedAt
-            - countryDestination
-        service: {}
         charges:
           type: array
           items:
-            required: []
-            properties: {}
-        purchases:
+            type: object
+      x-examples:
+        Successful Notification:
+          value:
+            status: OK
+            data:
+              signature: wsaer4w534hd55345y5hTDd3TSL863K3ldk3
+              id: 27376
+              reference: '1574194435610'
+              bankOrderCode: '1574194435610'
+              provider: 4
+              userId: 103ec000-703b-11e9-8aea-b7e74734087c
+              bookingDate: '2019-11-19T20:13:55.613Z'
+              days: null
+              amount: 100000
+              currency: EUR
+              originalCurrencyAmount: 100000
+              destinationAmount: 96450
+              destinationCurrency: EUR
+              conversionRate: 1
+              depositaccountId: null
+              state: 5
+              serviceId: 2
+              paymentcardId: 95aa7620-0b05-11ea-b517-dfa69b738ed5
+              expirationDate: '2019-11-20T08:55:00.000Z'
+              movementTypeId: 2
+              transactionId: 111111
+              isInternal: false
+              agent: TROPIPAY
+              ip: 127.0.0.1
+              reasonId: ''
+              reasonDes: ''
+              errorReason: ''
+              notificationUrl: ''
+              riskFlag: 0
+              riskScore: 0
+              createdAt: '2019-11-19T20:13:55.614Z'
+              updatedAt: '2019-11-19T20:30:04.083Z'
+              paymentcard:
+                id: 95aa7620-0b05-11ea-b517-dfa69b738ed5
+                reference: di3khs1p0k369tj0h
+                concept: concept1
+                description: description1
+                amount: 100000
+                currency: EUR
+                singleUse: false
+                reasonId: 4
+                userId: 103ec000-703b-11e9-8aea-b7e74734087c
+                qrImage: null
+                shortUrl: null
+                state: 1
+                expirationDays: 1
+                lang: es
+                urlSuccess: 'https://mi-negocio.com/pago-ok'
+                urlFailed: 'https://mi-negocio.com/pago-ko'
+                urlNotification: 'https://mi-negocio.com/notificacion-de-pago'
+                createdAt: '2019-11-19T19:48:40.194Z'
+                updatedAt: '2019-11-19T19:48:40.194Z'
+              charges:
+                - id: 22742
+                  orderCode: '1574194435610'
+                  cardPan: '0000'
+                  cardExpirationDate: '2020-01-01T00:00:00.000Z'
+                  cardHolderName: Antonio
+                  amount: 1000
+                  currency: 978
+                  userId: 103ec000-703b-11e9-8aea-b7e74734087c
+                  bookingId: 27376
+                  errorReason: ''
+                  state: 3
+                  serviceId: 2
+                  cardCountry: ''
+                  cardBrand: VISA
+                  cardCategory: BUSINESS
+                  cardType: CREDIT
+                  clientIp: ''
+                  clientName: Antonio
+                  clientLastName: Lopez
+                  clientAddress: calle 280
+                  clientPhone: '5300000000'
+                  clientEmail: user@gmail.com
+                  clientTC: 'true'
+                  clientCountryId: 0
+                  createdAt: '2019-11-19T20:13:55.666Z'
+                  updatedAt: '2019-11-19T20:30:04.066Z'
+      x-internal: true
+    Credential:
+      description: ''
+      type: object
+      x-examples:
+        example:
+          value:
+            client_name: GitLab LoL
+            client_id: 5d6fd52d1796bd41632099cb5444b7f6
+            client_secret: fde8bc69b86e2a652137d900ed37a4b7
+            client_id_issued_at: '2021-08-19T20:10:19.199Z'
+            client_secret_expires_at: 0
+            client_public: '1629403819159'
+            type: 1
+            status: 2
+            prefix: Bearer
+            description: My Local server for projects dev
+            groupId: 52
+            ownerId: e2931920-e402-11ea-a30d-83c978a74aaa
+            logo_uri: 'https://gitlab.lol.com/logo'
+            client_uri: 'https://gitlab.lol.com'
+            tos_uri: 'https://gitlab.lol.com/tos'
+            policy_uri: 'https://gitlab.lol.com/policy'
+            jwks_uri: 'https://gitlab.lol.com/jwks'
+            registration_client_uri: 'https://www.tropipay.com/api/v2/credential/5d6fd52d1796bd41632099cb5444b7f6'
+            userinfo_encrypted_response_alg: RSA1_5
+            userinfo_encrypted_response_enc: A128CBC-HS256
+            token_endpoint_auth_method: client_secret_basic
+            scope:
+              - ALLOW_EXTERNAL_CHARGE
+              - BLOCKED_MONEY_OUT
+              - ALLOW_PAYMENT_OUT
+            domain:
+              - .*gitlab.lol.com/.*
+              - 127.0.0.1
+            contacts:
+              - support@gitlab.lol.com
+              - help@gitlab.lol.com
+            redirect_uris:
+              - 'https://gitlab.lol.com/callback2'
+              - 'https://gitlab.lol.com/callback3'
+              - 'https://gitlab.lol.com/callback'
+            grant_types:
+              - authorization_code
+              - refresh_token
+              - client_credential
+      properties:
+        client_name:
+          type: string
+          minLength: 1
+          description: 'Human-readable string name of the client to be presented to the end-user during authorization.  If omitted, the authorization server MAY display the raw "client_id" value to the end-user instead.  It is RECOMMENDED that clients always send this field. '
+        client_id:
+          type: string
+          minLength: 1
+          description: 'Unique Client Identifier. It MUST NOT be currently valid for any other registered Client. '
+        client_secret:
+          type: string
+          minLength: 1
+          description: 'Client Secret. The same Client Secret value MUST NOT be assigned to multiple Clients. This value is used by Confidential Clients to authenticate to the Token Endpoint, as described in Section 2.3.1 of OAuth 2.0, and for the derivation of symmetric encryption key values, as described in Section 10.2 of OpenID Connect Core 1.0 [OpenID.Core]. It is not needed for Clients selecting a token_endpoint_auth_method of private_key_jwt unless symmetric encryption will be used. '
+        client_id_issued_at:
+          type: string
+          minLength: 1
+          description: 'OPTIONAL. Time at which the Client Identifier was issued. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time. '
+        client_secret_expires_at:
+          type: number
+          description: 'if client_secret is issued. Time at which the client_secret will expire or 0 if it will not expire. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time. '
+        client_public:
+          type: string
+          minLength: 1
+        type:
+          type: number
+        status:
+          type: number
+          description: 'The status of a credential determine its validity, which can adopt different values:* 0 as created, 1 as declined, 2 as approved*.'
+        prefix:
+          type: string
+          minLength: 1
+          description: 'Determines the type of authentication token to use, **Bearer** assumes by default.'
+        description:
+          type: string
+          minLength: 1
+        groupId:
+          type: number
+        ownerId:
+          type: string
+          minLength: 1
+        logo_uri:
+          type: string
+          minLength: 1
+          description: 'URL string that references a logo for the client.  If present, the server SHOULD display this image to the end-user during approval. The value of this field MUST point to a valid image file.  '
+        client_uri:
+          type: string
+          minLength: 1
+          description: 'URL string of a web page providing information about the client. If present, the server SHOULD display this URL to the end-user in a clickable fashion.  It is RECOMMENDED that  clients always send this field.  The value of this field MUST point to a valid web page.  '
+        tos_uri:
+          type: string
+          minLength: 1
+          description: 'URL string that points to a human-readable terms of service document for the client that describes a contractual relationship between the end-user and the client that the end-user accepts when authorizing the client.  The authorization server SHOULD display this URL to the end-user if it is provided.  The value of this field MUST point to a valid web page.  '
+        policy_uri:
+          type: string
+          minLength: 1
+          description: 'URL string that points to a human-readable privacy policy document that describes how the deployment organization collects, uses, retains, and discloses personal data.  The authorization server SHOULD display this URL to the end-user if it is provided. The value of this field MUST point to a valid web page. '
+        jwks_uri:
+          type: string
+          minLength: 1
+          description: 'URL for the Client''s JSON Web Key Set [JWK] document. If the Client signs requests to the Server, it contains the signing key(s) the Server uses to validate signatures from the Client. The JWK Set MAY also contain the Client''s encryption keys(s), which are used by the Server to encrypt responses to the Client. When both signing and encryption keys are made available, a use (Key Use) parameter value is REQUIRED for all keys in the referenced JWK Set to indicate each key''s intended usage. Although some algorithms allow the same key to be used for both signatures and encryption, doing so is NOT RECOMMENDED, as it is less secure. The JWK x5c parameter MAY be used to provide X.509 representations of keys provided. When used, the bare key values MUST still be present and MUST match those in the certificate. '
+        registration_client_uri:
+          type: string
+          minLength: 1
+        userinfo_encrypted_response_alg:
+          type: string
+          minLength: 1
+        userinfo_encrypted_response_enc:
+          type: string
+          minLength: 1
+        token_endpoint_auth_method:
+          type: string
+          minLength: 1
+          description: 'Requested Client Authentication method for the Token Endpoint. The options are client_secret_post, client_secret_basic, client_secret_jwt, private_key_jwt, and none, as described in Section 9 of OpenID Connect Core 1.0 [OpenID.Core]. Other authentication methods MAY be defined by extensions. If omitted, the default is client_secret_basic -- the HTTP Basic Authentication Scheme specified in Section 2.3.1 of OAuth 2.0 [RFC6749]'
+        scope:
+          type: array
+          description: 'String or Array that containing a space-separated list of scope values (as described in Section 3.3 of OAuth 2.0 RFC6749) that the client can use when requesting access tokens. The semantics of values in this list are service specific. If omitted, an authorization server MAY register a client with a default set of scopes.'
+          items:
+            type: string
+        domain:
+          type: array
+          description: 'List of regular expressions separated by a blank space, where each expression is a security restriction, it can be based on the DNS or application domain by its name or on the ip address.'
+          items:
+            type: string
+        contacts:
+          type: array
+          description: 'Array of strings representing ways to contact people responsible for this client, typically email addresses.  The authorization server MAY make these contact addresses available to end-users for support requests for the client.  '
+          items:
+            type: string
+        redirect_uris:
+          type: array
+          description: 'Array of Redirection URI values used by the Client. One of these registered Redirection URI values MUST exactly match the redirect_uri parameter value used in each Authorization Request, with the matching performed as described in Section 6.2.1 of [RFC3986] (Simple String Comparison). '
+          items:
+            type: string
+        grant_types:
           type: array
           items:
-            required: []
-            properties: {}
-        consumedVoucher: {}
-      required:
-        - id
-        - reference
-        - bankOrderCode
-        - provider
-        - userId
-        - bookingDate
-        - amount
-        - currency
-        - destinationAmount
-        - destinationCurrency
-        - realBankFee
-        - depositaccountId
-        - state
-        - movementTypeId
-        - balanceBefore
-        - balanceAfter
-        - transactionId
-        - isInternal
-        - agent
-        - ip
-        - paymentEntityStatus
-        - paymentEntityBalance
-        - riskFlag
-        - riskScore
-        - createdAt
-        - updatedAt
-        - depositaccount
-        - charges
-        - purchases
+            type: string
+      x-tags:
+        - Segurity
+      title: ''
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
@@ -3203,3 +4436,77 @@ components:
               - rows
               - limit
               - offset
+    FailedAuthenticateResponse:
+      description: 'Error when no token is provided or supplied token is wrong and authentication is required. '
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
+          examples:
+            Supplied token is wrong:
+              value:
+                error:
+                  msg: Failed to authenticate token!
+            No token is provided:
+              value:
+                error:
+                  msg: No token!
+    OauthBadRequestResponse:
+      description: |
+        There are two different kinds of errors to handle. The first kind of error is when the developer did something wrong when creating the authorization request. The other kind of error is when the user rejects the request (clicks the “Deny” button).
+
+        If there is something wrong with the syntax of the request, such as the *redirect_uri* or *client_id is invalid*, then it’s important not to redirect the user and instead you should show the error message directly. This is to avoid letting your authorization server be used as an open redirector.
+
+        If the *redirect_uri* and client_id are both valid, but there is still some other problem, it’s okay to redirect the user back to the redirect URI with the error in the query string.
+
+        When redirecting back to the application to indicate an error, the server adds the following parameters to the redirect URL: error a single ASCII error code from the following list:
+
+        - **invalid_request:** the request is missing a parameter, contains an invalid parameter, includes a parameter more than once, or is otherwise invalid.
+        - **access_denied:** the user or authorization server denied the request
+        - **unauthorized_client:** the client is not allowed to request an authorization code using this method, for example if a confidential client attempts to use the implicit grant type.
+        - **unsupported_response_type:** the server does not support obtaining an authorization code using this method, for example if the authorization server never implemented the implicit grant type.
+        - **invalid_scope:** the requested scope is invalid or unknown.
+        - **server_error:** instead of displaying a 500 Internal Server Error page to the user, the server can redirect with this error code.
+        - **temporarily_unavailable:** if the server is undergoing maintenance, or is otherwise unavailable, this error code can be returned instead of responding with a 503 Service Unavailable status code.
+
+        **error_description**
+        The authorization server can optionally include a human-readable description of the error. This parameter is intended for the developer to understand the error, and is not meant to be displayed to the end user. The valid characters for this parameter are the ASCII character set except for the double quote and backslash, specifically, hex codes 20-21, 23-5B and 5D-7E.
+
+        **error_uri**
+        The server can also return a URL to a human-readable web page with information about the error. This is intended for the developer to get more information about the error, and is not meant to be displayed to the end user.
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              error:
+                type: string
+                minLength: 1
+              error_description:
+                type: string
+                minLength: 1
+              error_uri:
+                type: string
+                minLength: 1
+            required:
+              - error
+              - error_description
+              - error_uri
+            x-examples:
+              example-1:
+                error: invalid_client
+                error_description: Credential not found
+                error_uri: 'See the full API docs at https://authorization-server.com/docs/access_token'
+          examples:
+            Name must be Unique:
+              value:
+                error: invalid_request
+                error_description: Name must be Unique
+            Invalid Client:
+              value:
+                error: invalid_client
+                error_description: Credential not found
+                error_uri: 'See the full API docs at https://authorization-server.com/docs/access_token'

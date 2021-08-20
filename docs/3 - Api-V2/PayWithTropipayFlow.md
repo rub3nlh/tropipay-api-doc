@@ -11,7 +11,7 @@ You can integrate tropipay as a payment gateway in your site. It's as easy as ad
 
 If you are a developer making the integration, you will probably need to check [this link about generating payment flow URL](/reference/Tropipay-API.v2.yaml/paths/~1movements~1in~1with_tpp_url/post) in order to generate the url to redirect the customer to.
 
-Once clicked the button, customers will be first presented a login form you they can authenticate with their credentials. `This step is omitted if the user is already logged in to his Tropipay account`
+Once clicked the button, customers will be first presented a login form so they can authenticate with their credentials. `This step is omitted if the user is already logged in to his Tropipay account`
 <br>
 <img src="https://raw.github.com/rub3nlh/tropipay-api-doc/master/assets/images/paga-con-tropipay-1.jpg"  width="350" style="margin: auto;">
 
@@ -37,6 +37,99 @@ You need to check the signature of any callback for security reasons:
 
 `signature = sha256( bankOrderCode + userEmail + sha1(userPassword) + originalCurrencyAmount )
 `
+
+Below an example payload sent to your notification URL:
+
+```json
+{
+  "status": "OK",
+  "data": {
+    "signature": "wsaer4w534hd55345y5hTDd3TSL863K3ldk3",
+    "id": 27376,
+    "reference": "1574194435610",
+    "bankOrderCode": "1574194435610",
+    "provider": 4,
+    "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+    "bookingDate": "2019-11-19T20:13:55.613Z",
+    "days": null,
+    "amount": 100000,
+    "currency": "EUR",
+    "originalCurrencyAmount": 100000,
+    "destinationAmount": 96450,
+    "destinationCurrency": "EUR",
+    "conversionRate": 1,
+    "depositaccountId": null,
+    "state": 5,
+    "serviceId": 2,
+    "paymentcardId": "95aa7620-0b05-11ea-b517-dfa69b738ed5",
+    "expirationDate": "2019-11-20T08:55:00.000Z",
+    "movementTypeId": 2,
+    "transactionId": 111111,
+    "isInternal": false,
+    "agent": "TROPIPAY",
+    "ip": "127.0.0.1",
+    "reasonId": "",
+    "reasonDes": "",
+    "errorReason": "",
+    "notificationUrl": "",
+    "riskFlag": 0,
+    "riskScore": 0,
+    "createdAt": "2019-11-19T20:13:55.614Z",
+    "updatedAt": "2019-11-19T20:30:04.083Z",
+    "paymentcard": {
+      "id": "95aa7620-0b05-11ea-b517-dfa69b738ed5",
+      "reference": "di3khs1p0k369tj0h",
+      "concept": "concept1",
+      "description": "description1",
+      "amount": 100000,
+      "currency": "EUR",
+      "singleUse": false,
+      "reasonId": 4,
+      "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+      "qrImage": null,
+      "shortUrl": null,
+      "state": 1,
+      "expirationDays": 1,
+      "lang": "es",
+      "urlSuccess": "https://mi-negocio.com/pago-ok",
+      "urlFailed": "https://mi-negocio.com/pago-ko",
+      "urlNotification": "https://mi-negocio.com/notificacion-de-pago",
+      "createdAt": "2019-11-19T19:48:40.194Z",
+      "updatedAt": "2019-11-19T19:48:40.194Z"
+    },
+    "charges": [
+      {
+        "id": 22742,
+        "orderCode": "1574194435610",
+        "cardPan": "0000",
+        "cardExpirationDate": "2020-01-01T00:00:00.000Z",
+        "cardHolderName": "Antonio",
+        "amount": 1000,
+        "currency": 978,
+        "userId": "103ec000-703b-11e9-8aea-b7e74734087c",
+        "bookingId": 27376,
+        "errorReason": "",
+        "state": 3,
+        "serviceId": 2,
+        "cardCountry": "",
+        "cardBrand": "VISA",
+        "cardCategory": "BUSINESS",
+        "cardType": "CREDIT",
+        "clientIp": "",
+        "clientName": "Antonio",
+        "clientLastName": "Lopez",
+        "clientAddress": "calle 280",
+        "clientPhone": "5300000000",
+        "clientEmail": "user@gmail.com",
+        "clientTC": "true",
+        "clientCountryId": 0,
+        "createdAt": "2019-11-19T20:13:55.666Z",
+        "updatedAt": "2019-11-19T20:30:04.066Z"
+      }
+    ]
+  }
+}
+```
 
 #### Resources for Buttons and Styles:
 
