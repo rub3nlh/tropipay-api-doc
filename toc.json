@@ -11,6 +11,11 @@
       "uri": "docs/2 - Masters/Masters-Tables-Data.md"
     },
     {
+      "type": "item",
+      "title": "Integration Plugins and SDKs",
+      "uri": "docs/4 - Integration Plugins and SDKs/Integration Plugins.md"
+    },
+    {
       "type": "divider",
       "title": "TPP API V1.0"
     },
