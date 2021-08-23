@@ -370,6 +370,7 @@ paths:
         {
           status: "OK",
           data: {
+            "signature": "f0cf826579b25eae0beb98a9fd7130d97b096ec37c37b1eb90e5cc41575e3570",
             "id": 27376,
             "reference": "1574194435610",
             "bankOrderCode": "1574194435610",
