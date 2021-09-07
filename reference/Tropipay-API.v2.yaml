@@ -3762,6 +3762,43 @@ paths:
                   serviceDate: '2021-08-20'
                   client: null
                   directPayment: false
+  /movements/download:
+    post:
+      summary: Download list of movements
+      operationId: post-movements-download
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  criteria: salario
+                  dateFrom: '2021-01-05 02:00'
+                  dateTo: '2021-04-03 09:00'
+              properties:
+                criteria:
+                  type: string
+                  minLength: 1
+                dateFrom:
+                  type: string
+                  minLength: 1
+                dateTo:
+                  type: string
+                  minLength: 1
+        description: |
+          To filter the list of movements to download, you can use three different optional fields:
+          - filter by text contained in the reference  of the movement
+          - Initial Date to fetch movements from that date on
+          - End Date to fetch movements up to that date
+          All combinations are allowed. (you can filter using one, two or all fields)
+      description: 'This endpoint schedules sending an email to the email address of the user with a CSV list of the movements according to the specified filters. '
 components:
   schemas:
     User:
