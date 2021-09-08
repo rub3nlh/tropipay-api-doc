@@ -3614,6 +3614,8 @@ paths:
                 concept:
                   type: string
                   minLength: 1
+                favorite:
+                  type: boolean
                 description:
                   type: string
                   minLength: 1
@@ -3626,81 +3628,142 @@ paths:
                   type: boolean
                 reasonId:
                   type: number
-                reasonDes:
-                  type: string
                 expirationDays:
                   type: number
-                userId:
-                  type: string
-                  minLength: 1
                 lang:
                   type: string
                   minLength: 1
                 urlSuccess:
                   type: string
+                  minLength: 1
                 urlFailed:
                   type: string
+                  minLength: 1
                 urlNotification:
-                  type: string
-                expirationDate:
                   type: string
                   minLength: 1
                 serviceDate:
                   type: string
+                  minLength: 1
+                client:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    lastName:
+                      type: string
+                      minLength: 1
+                    address:
+                      type: string
+                      minLength: 1
+                    phone:
+                      type: string
+                      minLength: 1
+                    email:
+                      type: string
+                      minLength: 1
+                    countryId:
+                      type: number
+                    termsAndConditions:
+                      type: string
+                      minLength: 1
+                  required:
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - countryId
+                    - termsAndConditions
+                directPayment:
+                  type: boolean
               required:
                 - reference
                 - concept
+                - favorite
                 - description
                 - amount
                 - currency
                 - singleUse
                 - reasonId
-                - reasonDes
                 - expirationDays
-                - userId
                 - lang
                 - urlSuccess
                 - urlFailed
                 - urlNotification
-                - expirationDate
                 - serviceDate
+                - client
+                - directPayment
               x-examples:
                 example-1:
-                  reference: demo23232323
-                  concept: some product id
-                  description: some product description
-                  amount: 11500
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
                   currency: EUR
                   singleUse: true
                   reasonId: 4
-                  reasonDes: ''
                   expirationDays: 1
-                  userId: e2931920-e402-11ea-a30d-83c978a74aaa
                   lang: es
-                  urlSuccess: ''
-                  urlFailed: ''
-                  urlNotification: ''
-                  expirationDate: '2021-03-31'
-                  serviceDate: ''
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
             examples:
-              Example:
+              Example with Client Data:
                 value:
-                  reference: demo23232323
-                  concept: some product id
-                  description: some product description
-                  amount: 11500
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
                   currency: EUR
                   singleUse: true
                   reasonId: 4
-                  reasonDes: ''
                   expirationDays: 1
-                  userId: e2931920-e402-1111-aa0d-85ccb8a74aaa
                   lang: es
-                  urlSuccess: ''
-                  urlFailed: ''
-                  urlNotification: ''
-                  expirationDate: '2021-03-31'
-                  serviceDate: ''
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
+              Example without Client Data:
+                value:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client: null
+                  directPayment: false
         description: 'These are the details of the request body:'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
@@ -3877,6 +3940,7 @@ paths:
                   serviceDate: '2021-08-20'
                   client: null
                   directPayment: false
+      deprecated: true
   /movements/download:
     post:
       summary: Download list of movements
