@@ -3941,6 +3941,7 @@ paths:
                   client: null
                   directPayment: false
       deprecated: true
+      x-internal: true
   /movements/download:
     post:
       summary: Download list of movements
