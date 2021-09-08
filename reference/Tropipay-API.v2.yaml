@@ -3586,7 +3586,6 @@ paths:
   /paymentcards:
     get:
       summary: PaymentCards list
-      tags: []
       responses:
         '200':
           $ref: '#/components/responses/paymentCardList'
@@ -3594,8 +3593,10 @@ paths:
       description: Shows a list of stored paymentcards created by user. This list includes active and closed paylinks
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Payment Cards
     post:
-      summary: ''
+      summary: Create Payment Card
       operationId: post-paymentcards
       responses:
         '200':
@@ -3767,6 +3768,8 @@ paths:
         description: 'These are the details of the request body:'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Payment Cards
   /paymentcards/add:
     post:
       summary: Add new Payment Card
@@ -3979,6 +3982,8 @@ paths:
           - End Date to fetch movements up to that date
           All combinations are allowed. (you can filter using one, two or all fields)
       description: 'This endpoint schedules sending an email to the email address of the user with a CSV list of the movements according to the specified filters. '
+      tags:
+        - Movements
 components:
   schemas:
     User:
