@@ -1881,7 +1881,7 @@ paths:
                 - expirationDate
                 - serviceDate
             examples:
-              example-1:
+              Example:
                 value:
                   reference: demo23232323
                   concept: some product id
@@ -1900,12 +1900,17 @@ paths:
                   expirationDate: '2021-03-31'
                   serviceDate: ''
         description: 'Here we have an example of a valid request: '
-      description: |
+      description: |-
         This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges. 
+
+        <!-- theme: warning -->
+        >#### info
+        > This endpoint is deprecated. instead you can use [this endpoint](/reference/Tropipay-API.v2.yaml/paths/~1paymentcards/post)
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Movements
+      deprecated: true
   /movements/in/charge_user_card:
     post:
       summary: ''
@@ -3587,6 +3592,116 @@ paths:
           $ref: '#/components/responses/paymentCardList'
       operationId: get-paymentcards
       description: Shows a list of stored paymentcards created by user. This list includes active and closed paylinks
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    post:
+      summary: ''
+      operationId: post-paymentcards
+      responses:
+        '200':
+          $ref: '#/components/responses/paymentCard'
+      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                concept:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                singleUse:
+                  type: boolean
+                reasonId:
+                  type: number
+                reasonDes:
+                  type: string
+                expirationDays:
+                  type: number
+                userId:
+                  type: string
+                  minLength: 1
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                expirationDate:
+                  type: string
+                  minLength: 1
+                serviceDate:
+                  type: string
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - reasonDes
+                - expirationDays
+                - userId
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - expirationDate
+                - serviceDate
+              x-examples:
+                example-1:
+                  reference: demo23232323
+                  concept: some product id
+                  description: some product description
+                  amount: 11500
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  reasonDes: ''
+                  expirationDays: 1
+                  userId: e2931920-e402-11ea-a30d-83c978a74aaa
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: '2021-03-31'
+                  serviceDate: ''
+            examples:
+              Example:
+                value:
+                  reference: demo23232323
+                  concept: some product id
+                  description: some product description
+                  amount: 11500
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  reasonDes: ''
+                  expirationDays: 1
+                  userId: e2931920-e402-1111-aa0d-85ccb8a74aaa
+                  lang: es
+                  urlSuccess: ''
+                  urlFailed: ''
+                  urlNotification: ''
+                  expirationDate: '2021-03-31'
+                  serviceDate: ''
+        description: 'These are the details of the request body:'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
   /paymentcards/add:
