@@ -4027,6 +4027,7 @@ components:
         - lastName
         - email
         - emailVerified
+      x-internal: true
     AccessRequest:
       description: |-
         -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
@@ -4056,6 +4057,7 @@ components:
         - redirectType
         - extraCSS
         - redirectUrl
+      x-internal: true
     AccessResponse:
       description: ''
       type: object
@@ -4068,6 +4070,7 @@ components:
       x-examples:
         example-1:
           url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
+      x-internal: true
     ValidationParams:
       description: ''
       type: object
@@ -4113,6 +4116,7 @@ components:
                 param: userId
                 location: body
             message: Invalid Parameter
+      x-internal: true
     MerchantSetting:
       description: ''
       type: object
@@ -4150,6 +4154,7 @@ components:
         - state
         - createdAt
         - updatedAt
+      x-internal: true
     Event:
       title: Event
       type: object
@@ -4650,6 +4655,7 @@ components:
         - qrImage
         - shortUrl
         - paymentUrl
+      x-internal: true
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
