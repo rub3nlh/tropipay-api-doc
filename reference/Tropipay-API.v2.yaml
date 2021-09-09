@@ -1041,9 +1041,21 @@ paths:
               description: ''
               type: object
               properties:
+                beneficiaryType:
+                  type: number
+                  description: |-
+                    1: Another Tropipay user  
+                    2: External bank account
+                searchBy:
+                  type: number
+                  description: 'Required when beneficiaryType === 1. Possible values are: 1: search user by email. 2: search user by phone number'
+                searchValue:
+                  type: string
+                  description: the email to look for among tropipay users when beneficiaryType is 1 (INTERNAL)
                 accountNumber:
                   type: string
                   minLength: 1
+                  description: 'for other Tropipay users, this will be user email or phone.'
                 alias:
                   type: string
                   minLength: 1
@@ -1052,23 +1064,20 @@ paths:
                   minLength: 1
                 type:
                   type: number
-                country: {}
+                  description: Type of account
                 firstName:
                   type: string
                   minLength: 1
-                countryDestinationId:
-                  type: number
                 lastName:
                   type: string
                   minLength: 1
                 secondLastName:
                   type: string
                   minLength: 1
-                documentNumber:
-                  type: string
-                  minLength: 1
-                userRelationTypeId:
+                  description: 'For cuban beneficiaries, second surname is mandatory'
+                countryDestinationId:
                   type: number
+                  description: See list of countryDestinations for details
                 city:
                   type: string
                   minLength: 1
@@ -1077,35 +1086,60 @@ paths:
                 address:
                   type: string
                   minLength: 1
+                documentNumber:
+                  type: string
+                  minLength: 1
                 phone:
                   type: string
                   minLength: 1
                 province:
                   type: string
                   minLength: 1
-                beneficiaryType:
+                userRelationTypeId:
                   type: number
-                relatedUserId: {}
-                currency:
-                  type: string
-                  minLength: 1
-                correspondent: {}
-                location: {}
-                office: {}
-                officeValue: {}
                 paymentType:
                   type: number
-                verified: {}
-                documentTypeId: {}
-                documentExpirationDate: {}
+                documentTypeId:
+                  type: number
+                documentExpirationDate:
+                  type: string
               required:
-                - accountNumber
-                - alias
-                - type
-                - userRelationTypeId
                 - beneficiaryType
-                - currency
-                - paymentType
+                - alias
+                - userRelationTypeId
+            examples:
+              Other Tropipay User:
+                value:
+                  searchValue: someuser@email.com
+                  alias: My Friend in Tropipay
+                  userRelationTypeId: 3
+                  beneficiaryType: 1
+                  searchBy: 1
+              External Account:
+                value:
+                  accountNumber: 9225 9598 7777 8888
+                  alias: Mi first Beneficiary
+                  swift: BCXXMXMMXXX
+                  type: 3
+                  firstName: David
+                  countryDestinationId: 0
+                  lastName: Hunt
+                  secondLastName: Jhonson
+                  documentNumber: '84848484844'
+                  userRelationTypeId: 15
+                  city: Carsen City
+                  postalCode: '573000'
+                  address: '2540 Waterfall Street, SunFlower'
+                  phone: '+341234567856'
+                  province: Hamtoms
+                  beneficiaryType: 2
+                  paymentType: '2'
+                  documentTypeId: 1
+                  documentExpirationDate: '2030-05-01'
+        description: |
+          The parameters to pass depend on the type of beneficiary you are creating. Beneficiaries can be:
+          - Internal: another Tropipay user account. This will allow you to send balance to another Tropipay account
+          - External: some external bank account. This will allow you to send money to someone's bank account
       tags:
         - DepositAccounts
     parameters: []
