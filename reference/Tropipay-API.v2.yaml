@@ -1041,9 +1041,21 @@ paths:
               description: ''
               type: object
               properties:
+                beneficiaryType:
+                  type: number
+                  description: |-
+                    1: Another Tropipay user  
+                    2: External bank account
+                searchBy:
+                  type: number
+                  description: 'Required when beneficiaryType === 1. Possible values are: 1: search user by email. 2: search user by phone number'
+                searchValue:
+                  type: string
+                  description: the email to look for among tropipay users when beneficiaryType is 1 (INTERNAL)
                 accountNumber:
                   type: string
                   minLength: 1
+                  description: 'for other Tropipay users, this will be user email or phone.'
                 alias:
                   type: string
                   minLength: 1
@@ -1052,23 +1064,20 @@ paths:
                   minLength: 1
                 type:
                   type: number
-                country: {}
+                  description: Type of account
                 firstName:
                   type: string
                   minLength: 1
-                countryDestinationId:
-                  type: number
                 lastName:
                   type: string
                   minLength: 1
                 secondLastName:
                   type: string
                   minLength: 1
-                documentNumber:
-                  type: string
-                  minLength: 1
-                userRelationTypeId:
+                  description: 'For cuban beneficiaries, second surname is mandatory'
+                countryDestinationId:
                   type: number
+                  description: See list of countryDestinations for details
                 city:
                   type: string
                   minLength: 1
@@ -1077,35 +1086,60 @@ paths:
                 address:
                   type: string
                   minLength: 1
+                documentNumber:
+                  type: string
+                  minLength: 1
                 phone:
                   type: string
                   minLength: 1
                 province:
                   type: string
                   minLength: 1
-                beneficiaryType:
+                userRelationTypeId:
                   type: number
-                relatedUserId: {}
-                currency:
-                  type: string
-                  minLength: 1
-                correspondent: {}
-                location: {}
-                office: {}
-                officeValue: {}
                 paymentType:
                   type: number
-                verified: {}
-                documentTypeId: {}
-                documentExpirationDate: {}
+                documentTypeId:
+                  type: number
+                documentExpirationDate:
+                  type: string
               required:
-                - accountNumber
-                - alias
-                - type
-                - userRelationTypeId
                 - beneficiaryType
-                - currency
-                - paymentType
+                - alias
+                - userRelationTypeId
+            examples:
+              Other Tropipay User:
+                value:
+                  searchValue: someuser@email.com
+                  alias: My Friend in Tropipay
+                  userRelationTypeId: 3
+                  beneficiaryType: 1
+                  searchBy: 1
+              External Account:
+                value:
+                  accountNumber: 9225 9598 7777 8888
+                  alias: Mi first Beneficiary
+                  swift: BCXXMXMMXXX
+                  type: 3
+                  firstName: David
+                  countryDestinationId: 0
+                  lastName: Hunt
+                  secondLastName: Jhonson
+                  documentNumber: '84848484844'
+                  userRelationTypeId: 15
+                  city: Carsen City
+                  postalCode: '573000'
+                  address: '2540 Waterfall Street, SunFlower'
+                  phone: '+341234567856'
+                  province: Hamtoms
+                  beneficiaryType: 2
+                  paymentType: '2'
+                  documentTypeId: 1
+                  documentExpirationDate: '2030-05-01'
+        description: |
+          The parameters to pass depend on the type of beneficiary you are creating. Beneficiaries can be:
+          - Internal: another Tropipay user account. This will allow you to send balance to another Tropipay account
+          - External: some external bank account. This will allow you to send money to someone's bank account
       tags:
         - DepositAccounts
     parameters: []
@@ -1702,7 +1736,7 @@ paths:
       operationId: post-movements-in-paylink
       responses:
         '200':
-          description: 'Here we have an example of a valid response: '
+          description: 'This is an example of a valid response: '
           content:
             application/json:
               schema:
@@ -1881,7 +1915,7 @@ paths:
                 - expirationDate
                 - serviceDate
             examples:
-              example-1:
+              Example:
                 value:
                   reference: demo23232323
                   concept: some product id
@@ -1900,12 +1934,17 @@ paths:
                   expirationDate: '2021-03-31'
                   serviceDate: ''
         description: 'Here we have an example of a valid request: '
-      description: |
+      description: |-
         This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges. 
+
+        <!-- theme: warning -->
+        >#### info
+        > This endpoint is deprecated. instead you can use [this endpoint](/reference/Tropipay-API.v2.yaml/paths/~1paymentcards/post)
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Movements
+      deprecated: true
   /movements/in/charge_user_card:
     post:
       summary: ''
@@ -3578,6 +3617,407 @@ paths:
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+  /paymentcards:
+    get:
+      summary: PaymentCards list
+      responses:
+        '200':
+          $ref: '#/components/responses/paymentCardList'
+      operationId: get-paymentcards
+      description: Shows a list of stored paymentcards created by user. This list includes active and closed paylinks
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Payment Cards
+    post:
+      summary: Create Payment Card
+      operationId: post-paymentcards
+      responses:
+        '200':
+          $ref: '#/components/responses/paymentCard'
+      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                concept:
+                  type: string
+                  minLength: 1
+                favorite:
+                  type: boolean
+                description:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                singleUse:
+                  type: boolean
+                reasonId:
+                  type: number
+                expirationDays:
+                  type: number
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                  minLength: 1
+                urlFailed:
+                  type: string
+                  minLength: 1
+                urlNotification:
+                  type: string
+                  minLength: 1
+                serviceDate:
+                  type: string
+                  minLength: 1
+                client:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    lastName:
+                      type: string
+                      minLength: 1
+                    address:
+                      type: string
+                      minLength: 1
+                    phone:
+                      type: string
+                      minLength: 1
+                    email:
+                      type: string
+                      minLength: 1
+                    countryId:
+                      type: number
+                    termsAndConditions:
+                      type: string
+                      minLength: 1
+                  required:
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - countryId
+                    - termsAndConditions
+                directPayment:
+                  type: boolean
+              required:
+                - reference
+                - concept
+                - favorite
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - expirationDays
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - serviceDate
+                - client
+                - directPayment
+              x-examples:
+                example-1:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
+            examples:
+              Example with Client Data:
+                value:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
+              Example without Client Data:
+                value:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client: null
+                  directPayment: false
+        description: 'These are the details of the request body:'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Payment Cards
+  /paymentcards/add:
+    post:
+      summary: Add new Payment Card
+      operationId: post-paymentcards-add
+      responses:
+        '200':
+          $ref: '#/components/responses/paymentCard'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: Adds a new payment card that someone can use to send you funds from bank account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                reference:
+                  type: string
+                  minLength: 1
+                concept:
+                  type: string
+                  minLength: 1
+                favorite:
+                  type: boolean
+                description:
+                  type: string
+                  minLength: 1
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  minLength: 1
+                singleUse:
+                  type: boolean
+                reasonId:
+                  type: number
+                expirationDays:
+                  type: number
+                lang:
+                  type: string
+                  minLength: 1
+                urlSuccess:
+                  type: string
+                  minLength: 1
+                urlFailed:
+                  type: string
+                  minLength: 1
+                urlNotification:
+                  type: string
+                  minLength: 1
+                serviceDate:
+                  type: string
+                  minLength: 1
+                client:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    lastName:
+                      type: string
+                      minLength: 1
+                    address:
+                      type: string
+                      minLength: 1
+                    phone:
+                      type: string
+                      minLength: 1
+                    email:
+                      type: string
+                      minLength: 1
+                    countryId:
+                      type: number
+                    termsAndConditions:
+                      type: string
+                      minLength: 1
+                  required:
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - countryId
+                    - termsAndConditions
+                directPayment:
+                  type: boolean
+              required:
+                - reference
+                - concept
+                - favorite
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - expirationDays
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - serviceDate
+                - client
+                - directPayment
+              x-examples:
+                example-1:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
+            examples:
+              Example specifying client data:
+                value:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
+              Example without client data:
+                value:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client: null
+                  directPayment: false
+      deprecated: true
+      x-internal: true
+  /movements/download:
+    post:
+      summary: Download list of movements
+      operationId: post-movements-download
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  criteria: salario
+                  dateFrom: '2021-01-05 02:00'
+                  dateTo: '2021-04-03 09:00'
+              properties:
+                criteria:
+                  type: string
+                  minLength: 1
+                dateFrom:
+                  type: string
+                  minLength: 1
+                dateTo:
+                  type: string
+                  minLength: 1
+        description: |
+          To filter the list of movements to download, you can use three different optional fields:
+          - filter by text contained in the reference  of the movement
+          - Initial Date to fetch movements from that date on
+          - End Date to fetch movements up to that date
+          All combinations are allowed. (you can filter using one, two or all fields)
+      description: 'This endpoint schedules sending an email to the email address of the user with a CSV list of the movements according to the specified filters. '
+      tags:
+        - Movements
 components:
   schemas:
     User:
@@ -3621,6 +4061,7 @@ components:
         - lastName
         - email
         - emailVerified
+      x-internal: true
     AccessRequest:
       description: |-
         -  **redirectType**: the type of request defines the mode in which the login form interacts with its container, it can take one of two possible values: 
@@ -3650,6 +4091,7 @@ components:
         - redirectType
         - extraCSS
         - redirectUrl
+      x-internal: true
     AccessResponse:
       description: ''
       type: object
@@ -3662,6 +4104,7 @@ components:
       x-examples:
         example-1:
           url: 'https://www.tropipay.com/m-login/eyJtZXJjaGFudElkIjoxLCJzaWduYXR1cmUiOiJmZmVhZTE2ZDM4MmQ1ZDFjZDlkYjU5NzdmYzcxZmUzYiIsImNvZGUiOjE2MTM3Nzk4NTYxMzgsInJlZGlyZWN0VHlwZSI6IjEiLCJleHRyYUNTUyI6Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuNC4xL2Nzcy9ib290c3RyYXAubWluLmNzcyIsInJlZGlyZWN0VXJsIjoiaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbSJ9'
+      x-internal: true
     ValidationParams:
       description: ''
       type: object
@@ -3707,6 +4150,7 @@ components:
                 param: userId
                 location: body
             message: Invalid Parameter
+      x-internal: true
     MerchantSetting:
       description: ''
       type: object
@@ -3744,6 +4188,7 @@ components:
         - state
         - createdAt
         - updatedAt
+      x-internal: true
     Event:
       title: Event
       type: object
@@ -4071,6 +4516,180 @@ components:
       x-tags:
         - Segurity
       title: ''
+    PaymentCard:
+      description: ''
+      type: object
+      x-examples:
+        Example with client data:
+          id: 91a50330-01e2-11ec-b91b-df6f3b86a033
+          reference: my-reference
+          concept: Bicycle
+          description: Two wheels
+          amount: 100000
+          currency: EUR
+          singleUse: true
+          favorite: true
+          reasonId: 4
+          reasonDes: null
+          expirationDays: 0
+          userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+          lang: es
+          state: 1
+          urlSuccess: 'https://my-business.com/payment-ok'
+          urlFailed: 'https://my-business.com/payment-ko'
+          urlNotification: 'https://my-business.com/payment-callback'
+          expirationDate: null
+          serviceDate: null
+          hasClient: true
+          updatedAt: '2021-08-20T18:15:16.397Z'
+          createdAt: '2021-08-20T18:15:15.941Z'
+          qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADkCAYAAACIV4iNAAAAAklEQVR4AewaftIAAA88SURBVO3B0Wltyw5FweHGOQkUywxPsQgUlZ8/9dXQrLV9+x1U9fXzizHGFRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMa3zzkJv5SVtC5iS4r6NzETlbQuYmdrOCEm9jJCk64iZ2soHMTO1lB5ya6rKBzE11W0LmJLivo3MROVnDCTXRZQecm/lJW8MRijHGNxRjjGosxxjW+eVlW8CY3ccJN7GQFnZt4wk3sZAWdmzjhJk64iZ2soHMTO26iywo6N7HjJnaygs5NfFJW8CY38abFGOMaizHGNRZjjGt882Fu4kRW8ERW0LmJnaxgx010bqLLCjo38V/KCjo30bmJnazgRFZwwk3sZAU7buJNbuJEVvBJizHGNRZjjGssxhjX+Ob/XFbQuYkuK+jcRJcV7GQFnZvo3MSOm+iygh030WUFnZvYcRM7WUHnJnbcxBNZwY6b2MkKdrKCf8lijHGNxRjjGosxxjW++ce5iS4r+KSsoHMTnZvosoIdN/EmN7HjJrqsoHMTXVbQuYkTWUHnJnaygn/ZYoxxjcUY4xqLMcY1vvmwrOCT3ESXFey4iS4r6NxElxV0WUHnJjo3sZMVPJEVnHATXVbQuYkuKzjhJnbcxI6b2HETXVbwpqzgJosxxjUWY4xrLMYY1/jmZW7iJm6iywo6N9FlBZ2b6LKCnaygcxM7bqLLCjo3seMmuqzgTW6iywo6N9FlBZ2b6LKCzk10WUHnJnbcRJcV7LiJmy3GGNdYjDGusRhjXOPr5xf/x9zEE1nB+jcxImsoHMTXVaw4ya6rKBzE11WcMJN7GQFnZs4kRX8lxZjjGssxhjXWIwxrvHNy9xElxV0bqLLCnbcxE5WcMJNdFlBlxWccBNdVtBlBZ2b6LKCLit4U1bQuYkdN9FlBTtuossKdrKCzk3sZAU7WUHnJrqsoHMTXVbQuYkTWcGbFmOMayzGGNdYjDGu8c1DbuJEVrCTFTyRFTzhJrqsYCcr6NzETlbQuYkuK+jcxAk30WUFb3ITO26iywo6N7GTFexkBZ2b6LKCzk28KSv4pMUY4xqLMcY1FmOMa3z9/OI/5Ca6rKBzE11W0LmJLivYcgcxM7buKTFmOMayzGGNdYjDGu8c2HZQWflBU8kRV0bqLLCrqs4ISb6LKCE1lB5ya6rKBzE11WcCIr6NxElxU8kRW8yU10WUHnJjo30WUFXVawkxV0buJNizHGNRZjjGssxhjX+Pr5xQNu4i9lBTtuYicr6NzEiaygcxNdVrDjJnaygs5NnMgKOjexkxV0buJEVnDCTbwpK+jcRJcV7LiJN2UFTyzGGNdYjDGusRhjXOPr5xdjjCssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNf4HR2jSxBc4+N4AAAAASUVORK5CYII='
+          shortUrl: 'https://www.tropipay.com/money-request/91a50330-01e2-11ec-b91b-df6f3b86a033'
+          paymentUrl: 'http://localhost:3000/trust_payment/eyJmb3JtVXJsIjoiaHR0cHM6Ly9wYXltZW50cy5zZWN1cmV0cmFkaW5nLm5ldC9wcm9jZXNzL3BheW1lbnRzL2Nob2ljZSIsInNpdGVyZWZlcmVuY2UiOiJ0aXRhbmVzdGVsZWNvbTg3OTQyIiwic3Rwcm9maWxlIjoiZGVmYXVsdCIsInZlcnNpb24iOjIsImN1cnJlbmN5aXNvM2EiOiJFVVIiLCJtYWluYW1vdW50IjoxMDAwLCJsb2NhbGUilc3RhdHVzIiwibG9jYWxlIiwibWFpbmFtb3VudCIsIm1kIiwibWVyY2hhbnRjYXRlZ29yeWNvZGUiLCJwYW4iLCJwYXJlbnR0cmFuc2FjdGlvbnJlZmVyZW5jZSIsInRyYW5zYWN0aW9ucmVmZXJlbmNlIiwic3RhdHVzIiwicGFyZXEiLCJwYXlwYWxlbWFpbCIsInBhcmVzIiwic3Rwcm9maWxlIiwic3VibWVyY2hhbnRpZCIsInJlcXVlc3R0eXBlZGVzY3JpcHRpb24iLCJhY3F1aXJlcnJlc3BvbnNlIiwiZW5yb2xsZWQiLCJzdGF0dXMiLCJlY2kiLCJ0aHJlZWR2ZXJzaW9uIiwiY2F2diIsInNlY3VyaXR5cmVzcG9uc2VzZWN1cml0eWNvZGUiLCJjaGFyZ2VkZXNjcmlwdGlvbiIsImN1c3RvbWVyaXAiXX0='
+          value:
+            id: 91a50330-01e2-11ec-b91b-df6f3b86a033
+            reference: my-reference
+            concept: Bicycle
+            description: Two wheels
+            amount: 100000
+            currency: EUR
+            singleUse: true
+            favorite: true
+            reasonId: 4
+            reasonDes: null
+            expirationDays: 0
+            userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+            lang: es
+            state: 1
+            urlSuccess: 'https://my-business.com/payment-ok'
+            urlFailed: 'https://my-business.com/payment-ko'
+            urlNotification: 'https://my-business.com/payment-callback'
+            expirationDate: null
+            serviceDate: null
+            hasClient: true
+            updatedAt: '2021-08-20T18:15:16.397Z'
+            createdAt: '2021-08-20T18:15:15.941Z'
+            qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADkCAYAAACIV4iNAAAAAklEQVR4AewaftIAAA88SURBVO3B0Wltyw5FweHGOQkUywxPsQgUlZ8/9dXQrLV9+x1U9fXzizHGFRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMa3zzkJv5SVtC5iS4r6NzETlbQuYmdrOCEm9jJCk64iZ2soHMTO1lB5ya6rKBzE11W0LmJLivo3MROVnDCTXRZQecm/lJW8MRijHGNxRjjGosxxjW+eVlW8CY3ccJN7GQFnZt4wk3sZAWdmzjhJk64iZ2soHMTO26iywo6N7HjJnaygs5NfFJW8CY38abFGOMaizHGNRZjjGt882Fu4kRW8ERW0LmJnaxgx010bqLLCjo38V/KCjo30bmJnazgRFZwwk3sZAU7buJNbuJEVvBJizHGNRZjjGssxhjX+Ob/XFbQuYkuK+jcRJcV7GQFnZvo3MSOm+iygh030WUFnZvYcRM7WUHnJnbcxBNZwY6b2MkKdrKCf8lijHGNxRjjGosxxjW++ce5iS4r+KSsoHMTnZvosoIdN/EmN7HjJrqsoHMTXVbQuYkTWUHnJnaygn/ZYoxxjcUY4xqLMcY1vvmwrOCT3ESXFey4iS4r6NxElxV0WUHnJjo3sZMVPJEVnHATXVbQuYkuKzjhJnbcxI6b2HETXVbwpqzgJosxxjUWY4xrLMYY1/jmZW7iJm6iywo6N9FlBZ2b6LKCnaygcxM7bqLLCjo3seMmuqzgTW6iywo6N9FlBZ2b6LKCzk10WUHnJnbcRJcV7LiJmy3GGNdYjDGusRhjXOPr5xf/x9zEE126iywo6N7GTFexGDHTexkBZ2b2HETO1nBCTexkxV0bqLLCt60GGNcYzHGuMZijHGNbx7KCjo38SY30WUFT2QFO26iywo6N9FlBSfcRJcVdG7ihJvosoIn3MSOm9jJCWUFXVawkxV0buJNizHGNRZjjGssxhjX+Pr5xQNu4i9lBTtuYicr6NzEiaygcxNdVrDjJnaygs5NnMgKOjexkxV0buJEVnDCTbwpK+jcRJcV7LiJN2UFTyzGGNdYjDGusRhjXOPr5xdjjCssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNf4HR2jSxBc4+N4AAAAASUVORK5CYII='
+            shortUrl: 'https://www.tropipay.com/money-request/91a50540-01e2-11ec-b91b-df6f3b8bca33'
+            paymentUrl: 'http://localhost:3000/trust_payment/eyJmb3JtVXJsIjoiaHR0cHM6Ly9wYXltZW50cy5zZWN1cmV0cmFkaW5nLm5ldC9wcm9jZXNzL3BheW1lbnRzL2Nob2ljZSIsInNpdGVyZWZlcmVuY2UiOiJ0aXRhbmVzdGVsZWNvbTg3OTQyIiwic3Rwcm9maWxlIjoiZGVmYXVsdCIsInZlcnNpb24iOjIsImN1cnJlbmN5aXNvM2EiOiJFVVIiLCJtYWluYW1vdW50IjoxMDAwLCJsb2NhbGUiOiJlc19FUyIsIm9yZGVycmVmZXJlbmNlIjoiMDIyMzM4MDA4MzU3Iiwib3BlcmF0b3JuYW1lIjoiVFBQIiwic3RkZWZhdWx0cHJvZmlsZSI6InN0X2NhcmRvbmx5IiwiYWxsdXJsbm90aWZpY2F0aW9uIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9jYWxsYmFjay90cnVzdHBheW1lbnRzIiwic3VjY2Vzc2Z1bHVybHJlZGlyZWN0IjoiaHR0cHM6Ly9teS1idXNpbmVzcy5jb20vcGF5bWVudC1vayIsImRlY2xpbmVkdXJscmVkaXJwicGFyZXEiLCJwYXlwYWxlbWFpbCIsInBhcmVzIiwic3Rwcm9maWxlIiwic3VibWVyY2hhbnRpZCIsInJlcXVlc3R0eXBlZGVzY3JpcHRpb24iLCJhY3F1aXJlcnJlc3BvbnNlIiwiZW5yb2xsZWQiLCJzdGF0dXMiLCJlY2kiLCJ0aHJlZWR2ZXJzaW9uIiwiY2F2diIsInNlY3VyaXR5cmVzcG9uc2VzZWN1cml0eWNvZGUiLCJjaGFyZ2VkZXNjcmlwdGlvbiIsImN1c3RvbWVyaXAiXX0='
+        Example without client data:
+          value:
+            id: 91a50330-01e2-11ec-b91b-df6f3b86a033
+            reference: my-reference
+            concept: Bicycle
+            description: Two wheels
+            amount: 100000
+            currency: EUR
+            singleUse: true
+            favorite: true
+            reasonId: 4
+            reasonDes: null
+            expirationDays: 0
+            userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+            lang: es
+            state: 1
+            urlSuccess: 'https://my-business.com/payment-ok'
+            urlFailed: 'https://my-business.com/payment-ko'
+            urlNotification: 'https://my-business.com/payment-callback'
+            expirationDate: null
+            serviceDate: null
+            hasClient: false
+            updatedAt: '2021-08-20T18:15:16.397Z'
+            createdAt: '2021-08-20T18:15:15.941Z'
+            qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADkCAYAAACIV4iNAAAAAklEQVR4AewaftIAAA88SURBVO3B0Wltyw5FweHGOQkUywxPsQgUlZ8/9dXQrLV9+x1U9fXzizHGFRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMa3zzkJv5SVtC5iS4r6NzETlbQuYmdrOCEm9jJCk64iZ2soHMTO1lB5ya6rKBzE11W0LmJLivo3MROVnDCTXRZQecm/lJW8MRijHGNxRjjGosxxjW+eVlW8CY3ccJN7GQFnZt4wk3sZAWdmzjhJk64iZ2soHMTO26iywo6N7HjJnaygs5NfFJW8CY38abFGOMaizHGNRZjjGt882Fu4kRW8ERW0LmJnaxgx010bqLLCjo38V/KCjo30bmJnazgRFZwwk3sZAU7buJNbuJEVvBJizHGNRZjjGssxhjX+Ob/XF2bOJEV/JcWY4xrLMYY11iMMa7x9fOLB9zEiazghJvYyQp23MROVrDjJrqsoHMTT2QFnZvosoLOTexkBTtu4kRW0LmJnaygcxN/KSvo3MROVrDjJrqsoHMTXVbwxGKMcY3FGOMaizHGNb55KCs44Sa6rKBzE11WsOMmuqxgJyvo3MROVvBEVtC5iZ2s4JOygh03sZMV7LiJLivo3ESXFbzJTexkBW/KCt60GGNcYzHGuMZijHGNr59fPOAmuqzghJv4pKygcxMnsoIdN9FlBSfcRJcVdG7iJllB5yZOZAWdm+iygs5NdFlB5ybelBV0buJEVvDEYoxxjcUY4k10WUHnJrqsYCcreNNijHGNxRjjGosxxjW+fn7xgJs4kRV0buJNWUHnJnaygs5NdFlB5ya6rKBzE11W8ISb6LKCzk10WUHnJnaygs5N7GQFJ9xElxV0buK/lBXsuIkTWcETizHGNRZjjGssxhjX+OahrKBzEztuYicr2HETXVZwIit4k5v4S26iywo6N3HCTexkBTtuossKuqxgJyvo3MROVtC5iS4r2HETnZvYyQo6N/FJizHGNRZjjGssxhjX+OYhN9FlBTtu4oSb2HETJ9xElxWcyAp23ETnJrqs4Ims4C+5iZ2soHMTb8oKOjdxwk084Sa6rKBzE29ajDGusRhjXGMxxrjG188vHnATJMayzGGNdYjDGu8c2HZQWflBU8kRV0bqLLCrqs4ISb6LKCE1lB5ya6rKBzE11WcCIr6NxElxU8kRW8yU10WUHnJjo30WUFXVawkxV0buJNizHGNRZjjGssxhjX+Pr5xQNu4i9lBTtuYicr6NzEiaygcxNdVrDjJnaygs5NnMgKOjexkxV0buJEVnDCTbwpK+jcRJcV7LiJN2UFTyzGGNdYjDGusRhjXOPr5xdjjCssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNf4HR2jSxBc4+N4AAAAASUVORK5CYII='
+            shortUrl: 'https://www.tropipay.com/money-request/91a50330-01e2-11ec-b91b-df6f3b86a033'
+            paymentUrl: ''
+      properties:
+        id:
+          type: string
+          minLength: 1
+        reference:
+          type: string
+          minLength: 1
+        concept:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        amount:
+          type: number
+        currency:
+          type: string
+          minLength: 1
+        singleUse:
+          type: boolean
+        favorite:
+          type: boolean
+        reasonId:
+          type: number
+        reasonDes:
+          type: string
+        expirationDays:
+          type: number
+        userId:
+          type: string
+          minLength: 1
+        lang:
+          type: string
+          minLength: 1
+        state:
+          type: number
+        urlSuccess:
+          type: string
+          minLength: 1
+        urlFailed:
+          type: string
+          minLength: 1
+        urlNotification:
+          type: string
+          minLength: 1
+        expirationDate:
+          type: string
+        serviceDate:
+          type: string
+        hasClient:
+          type: boolean
+        updatedAt:
+          type: string
+          minLength: 1
+        createdAt:
+          type: string
+          minLength: 1
+        qrImage:
+          type: string
+          minLength: 1
+        shortUrl:
+          type: string
+          minLength: 1
+        paymentUrl:
+          type: string
+          minLength: 1
+      required:
+        - id
+        - reference
+        - concept
+        - description
+        - amount
+        - currency
+        - singleUse
+        - favorite
+        - reasonId
+        - reasonDes
+        - expirationDays
+        - userId
+        - lang
+        - state
+        - urlSuccess
+        - urlFailed
+        - urlNotification
+        - hasClient
+        - updatedAt
+        - createdAt
+        - qrImage
+        - shortUrl
+        - paymentUrl
+      x-internal: true
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
@@ -4510,3 +5129,72 @@ components:
                 error: invalid_client
                 error_description: Credential not found
                 error_uri: 'See the full API docs at https://authorization-server.com/docs/access_token'
+    paymentCard:
+      description: PaymentCard data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PaymentCard'
+          examples:
+            Example with client data:
+              value:
+                id: 91a50330-01e2-11ec-b91b-df6f3b86a033
+                reference: my-reference
+                concept: Bicycle
+                description: Two wheels
+                amount: 100000
+                currency: EUR
+                singleUse: true
+                favorite: true
+                reasonId: 4
+                reasonDes: null
+                expirationDays: 0
+                userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+                lang: es
+                state: 1
+                urlSuccess: 'https://my-business.com/payment-ok'
+                urlFailed: 'https://my-business.com/payment-ko'
+                urlNotification: 'https://my-business.com/payment-callback'
+                expirationDate: null
+                serviceDate: null
+                hasClient: true
+                updatedAt: '2021-08-20T18:15:16.397Z'
+                createdAt: '2021-08-20T18:15:15.941Z'
+                qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADkCAYAAACIV4iNAAAAAklEQVR4AewaftIAAA88SURBVO3B0Wltyw5FweHGOQkUywxPsQgUlZ8/9dXQrLV9+x1U9fXzizHGFRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMa3zzkJv5SVtC5iS4r6NzETlbQuYmdrOCEm9jJCk64iZ2soHMTO1lB5ya6rKBzE11W0LmJLivo3MROVnDCTXRZQecm/lJW8MRijHGNxRjjGosxxjW+eVlW8CY3ccJN7GQFnZt4wk3sZAWdmzjhJk64iZ2soHMTO26iywo6N7HjJnaygs5NfFJW8CY38abFGOMaizHGNRZjjGt882Fu4kRW8ERW0LmJnaxgx010bqLLCjo38V/KCjo30bmJnazgRFZwwk3sZAU7buJNbuJEVvBJizHGNRZjjGssxhjX+Ob/XFbQuYkuK+jcRJcV7GQFnZvo3MSOm+iygh030WUFnZvYcRM7WUHnJnbcxBNZwY6b2MkKdrKCf8lijHGNxRjjGosxxjW++ce5iS4r+KSsoHMTnZvosoIdN/EmN7HjJrqsoHMTXVbQuYkTWUHnJnaygn/ZYoxxjcUY4xqLMcY1vvmwrOCT3ESXFey4iS4r6NxElxV0WUHnJjo3sZMVPJEVnHATXVbQuYkuKzjhJnbcxI6b2HETXVbwpqzgJosxxjUWY4xrLMYY1/jmZW7iJm6iywo6N9FlBZ2b6LKCnaygcxM7bqLLCjo3seMmuqzgTW6iywo6N9FlBZ2b6LKCzk10WUHnJnbcRJcV7LiJmy3GGNdYjDGusRhjXOPr5xf/x9zEE126iywo6N7GTFexGDHTexkBZ2b2HETO1nBCTexkxV0bqLLCt60GGNcYzHGuMZijHGNbx7KCjo38SY30WUFT2QFO26iywo6N9FlBSfcRJcVdG7ihJvosoIn3MSOm9jJCWUFXVawkxV0buJNizHGNRZjjGssxhjX+Pr5xQNu4i9lBTtuYicr6NzEiaygcxNdVrDjJnaygs5NnMgKOjexkxV0buJEVnDCTbwpK+jcRJcV7LiJN2UFTyzGGNdYjDGusRhjXOPr5xdjjCssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNf4HR2jSxBc4+N4AAAAASUVORK5CYII='
+                shortUrl: 'https://www.tropipay.com/money-request/91a50540-01e2-11ec-b91b-df6f3b8bca33'
+                paymentUrl: 'http://localhost:3000/trust_payment/eyJmb3JtVXJsIjoiaHR0cHM6Ly9wYXltZW50cy5zZWN1cmV0cmFkaW5nLm5ldC9wcm9jZXNzL3BheW1lbnRzL2Nob2ljZSIsInNpdGVyZWZlcmVuY2UiOiJ0aXRhbmVzdGVsZWNvbTg3OTQyIiwic3Rwcm9maWxlIjoiZGVmYXVsdCIsInZlcnNpb24iOjIsImN1cnJlbmN5aXNvM2EiOiJFVVIiLCJtYWluYW1vdW50IjoxMDAwLCJsb2NhbGUiOiJlc19FUyIsIm9yZGVycmVmZXJlbmNlIjoiMDIyMzM4MDA4MzU3Iiwib3BlcmF0b3JuYW1lIjoiVFBQIiwic3RkZWZhdWx0cHJvZmlsZSI6InN0X2NhcmRvbmx5IiwiYWxsdXJsbm90aWZpY2F0aW9uIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2FwaS9jYWxsYmFjay90cnVzdHBheW1lbnRzIiwic3VjY2Vzc2Z1bHVybHJlZGlyZWN0IjoiaHR0cHM6Ly9teS1idXNpbmVzcy5jb20vcGF5bWVudC1vayIsImRlY2xpbmVkdXJscmVkaXJwicGFyZXEiLCJwYXlwYWxlbWFpbCIsInBhcmVzIiwic3Rwcm9maWxlIiwic3VibWVyY2hhbnRpZCIsInJlcXVlc3R0eXBlZGVzY3JpcHRpb24iLCJhY3F1aXJlcnJlc3BvbnNlIiwiZW5yb2xsZWQiLCJzdGF0dXMiLCJlY2kiLCJ0aHJlZWR2ZXJzaW9uIiwiY2F2diIsInNlY3VyaXR5cmVzcG9uc2VzZWN1cml0eWNvZGUiLCJjaGFyZ2VkZXNjcmlwdGlvbiIsImN1c3RvbWVyaXAiXX0='
+            Example without client data:
+              value:
+                id: 91a50330-01e2-11ec-b91b-df6f3b86a033
+                reference: my-reference
+                concept: Bicycle
+                description: Two wheels
+                amount: 100000
+                currency: EUR
+                singleUse: true
+                favorite: true
+                reasonId: 4
+                reasonDes: null
+                expirationDays: 0
+                userId: b168e810-e0bb-11ea-8b91-bd37f597fb67
+                lang: es
+                state: 1
+                urlSuccess: 'https://my-business.com/payment-ok'
+                urlFailed: 'https://my-business.com/payment-ko'
+                urlNotification: 'https://my-business.com/payment-callback'
+                expirationDate: null
+                serviceDate: null
+                hasClient: false
+                updatedAt: '2021-08-20T18:15:16.397Z'
+                createdAt: '2021-08-20T18:15:15.941Z'
+                qrImage: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADkCAYAAACIV4iNAAAAAklEQVR4AewaftIAAA88SURBVO3B0Wltyw5FweHGOQkUywxPsQgUlZ8/9dXQrLV9+x1U9fXzizHGFRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMa3zzkJv5SVtC5iS4r6NzETlbQuYmdrOCEm9jJCk64iZ2soHMTO1lB5ya6rKBzE11W0LmJLivo3MROVnDCTXRZQecm/lJW8MRijHGNxRjjGosxxjW+eVlW8CY3ccJN7GQFnZt4wk3sZAWdmzjhJk64iZ2soHMTO26iywo6N7HjJnaygs5NfFJW8CY38abFGOMaizHGNRZjjGt882Fu4kRW8ERW0LmJnaxgx010bqLLCjo38V/KCjo30bmJnazgRFZwwk3sZAU7buJNbuJEVvBJizHGNRZjjGssxhjX+Ob/XF2bOJEV/JcWY4xrLMYY11iMMa7x9fOLB9zEiazghJvYyQp23MROVrDjJrqsoHMTT2QFnZvosoLOTexkBTtu4kRW0LmJnaygcxN/KSvo3MROVrDjJrqsoHMTXVbwxGKMcY3FGOMaizHGNb55KCs44Sa6rKBzE11WsOMmuqxgJyvo3MROVvBEVtC5iZ2s4JOygh03sZMV7LiJLivo3ESXFbzJTexkBW/KCt60GGNcYzHGuMZijHGNr59fPOAmuqzghJv4pKygcxMnsoIdN9FlBSfcRJcVdG7iJllB5yZOZAWdm+iygs5NdFlB5ybelBV0buJEVvDEYoxxjcUY4k10WUHnJrqsYCcreNNijHGNxRjjGosxxjW+fn7xgJs4kRV0buJNWUHnJnaygs5NdFlB5ya6rKBzE11W8ISb6LKCzk10WUHnJnaygs5N7GQFJ9xElxV0buK/lBXsuIkTWcETizHGNRZjjGssxhjX+OahrKBzEztuYicr2HETXVZwIit4k5v4S26iywo6N3HCTexkBTtuossKuqxgJyvo3MROVtC5iS4r2HETnZvYyQo6N/FJizHGNRZjjGssxhjX+OYhN9FlBTtu4oSb2HETJ9xElxWcyAp23ETnJrqs4Ims4C+5iZ2soHMTb8oKOjdxwk084Sa6rKBzE29ajDGusRhjXGMxxrjG188vHnATJMayzGGNdYjDGu8c2HZQWflBU8kRV0bqLLCrqs4ISb6LKCE1lB5ya6rKBzE11WcCIr6NxElxU8kRW8yU10WUHnJjo30WUFXVawkxV0buJNizHGNRZjjGssxhjX+Pr5xQNu4i9lBTtuYicr6NzEiaygcxNdVrDjJnaygs5NnMgKOjexkxV0buJEVnDCTbwpK+jcRJcV7LiJN2UFTyzGGNdYjDGusRhjXOPr5xdjjCssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNRZjjGssxhjXWIwxrrEYY1xjMca4xmKMcY3FGOMaizHGNf4HR2jSxBc4+N4AAAAASUVORK5CYII='
+                shortUrl: 'https://www.tropipay.com/money-request/91a50330-01e2-11ec-b91b-df6f3b86a033'
+                paymentUrl: ''
+    paymentCardList:
+      description: A list of Payment Cards (Paylinks)
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/PaymentCard'
