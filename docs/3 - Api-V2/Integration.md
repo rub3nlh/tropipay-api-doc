@@ -519,6 +519,46 @@ const code_challenge = "N2_wPQ7X9iP5bKXcw05rqHw1S7OwFuU4Nqi6ccr_LEs";
 const code_challenge_method = "S256";
 ```
 
+### 2.7.3 Step 1
+The first step is to request the authorization code. the best way is to redirect from your server to the url stored in the oauth_authorize variable
+
+```js
+const param = qs.stringify({
+    response_type: "code",
+    client_id,
+    client_secret,
+    redirect_uri,
+    code_challenge,
+    code_challenge_method,
+    state,
+    scope
+});
+res.redirect(oauth_authorize + "?" + param);
+```
+### 2.7.4 Step 2
+Once the user completes the authentication and authorization process, you must check that everything is in order and request the access token
+
+```js
+if (req.query['state'] !== state) {
+    console.log('NOT secure, the state value not match');
+}
+//... confifure options for get authorization code
+const param = {
+    grant_type: "authorization_code",
+    code: req.query['code'],
+    client_id,
+    client_secret,
+    redirect_uri,
+    code_verifier,
+    scope
+};
+//... save authorization code
+const token = await axios.post(oauth_token, param);
+access_token = token.data.access_token;
+```
+### 2.7.5 Get user resource
+
+
 ## 3. Refresh Token
 The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
 
