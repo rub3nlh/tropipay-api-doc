@@ -518,5 +518,6 @@ The flow illustrated in Figure 2 includes the following steps:
 
 - **H:** The authorization server authenticates the client and validates the refresh token, and if valid, issues a new access token (and, optionally, a new refresh token).
 
+For more information, see the [link](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
 
 
