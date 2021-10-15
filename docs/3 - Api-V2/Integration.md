@@ -358,6 +358,12 @@ The Authorization Code Grant Type is probably the most common of the OAuth 2.0 g
 
 The authorization code grant is used when an application exchanges an authorization code for an access token. After the user returns to the application via the redirect URL, the application will get the authorization code from the URL and use it to request an access token. This request will be made to the token endpoint.
 
+The Authorization Code flow is best used in web and mobile apps. Since the Authorization Code grant has the extra step of exchanging the authorization code for the access token, it provides an additional layer of security not present in the Implicit grant type.
+
+If you’re using the Authorization Code flow in a mobile app, or any other type of application that can’t store a client secret, then you should also use the PKCE extension, which provides protections against other attacks where the authorization code may be intercepted.
+
+The code exchange step ensures that an attacker isn’t able to intercept the access token, since the access token is always sent via a secure backchannel between the application and the OAuth server.
+
 ### 2.2 Flow
 
 The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
@@ -430,5 +436,23 @@ We’re about ready to wrap up the flow. Now that the application has the author
 - **client_id**: The application’s client ID.
 - **client_secret**: The application’s client secret. This ensures that the request to get the access token is made only from the application, and not from a potential attacker that may have intercepted the authorization code.
 
+The token endpoint will verify all the parameters in the request, ensuring the code hasn’t expired and that the client ID and secret match. If everything checks out, it will generate an access token and return it in the response!
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+  "access_token":"MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+  "token_type":"bearer",
+  "expires_in":3600,
+  "refresh_token":"IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk",
+  "scope":"ALLOW_GET_BALANCE"
+}
+```
+
+The Authorization Code flow is complete! The application now has an access token it can use when making API requests.
 
 
