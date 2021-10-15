@@ -8,6 +8,8 @@ The TropiPay API supports integration based on the OAuth 2 standard.
 
 ## Protocol Flow
 
+```plain
+
          +--------+                               +---------------+
          |        |--(A)- Authorization Request ->|   Resource    |
          |        |                               |     Owner     |
@@ -26,6 +28,7 @@ The TropiPay API supports integration based on the OAuth 2 standard.
          |        |<-(F)--- Protected Resource ---|               |
          +--------+                               +---------------+
 
+```
 Figure 1: Abstract Protocol Flow
 
 An OAuth 2.0 flow has the following roles:
@@ -60,6 +63,8 @@ While similar in concept, a valid JWT would actually be far more difficult to fo
 
 Instead of storing and managing API keys for your clients (other servers), you can use a third-party service to manage authorization for you. The way this works is that an API client sends a request to an OAuth server asking for an API token. That token is then sent from the API client to your API service along with their request. Once you have the client’s token, you can verify its validity without needing to store any information about the client.
 
+```plain
+
          +--------+                               +---------------+
          |        |--(A)-- Authorization Grant -->| Authorization |
          |        |                               |     Server    |
@@ -72,6 +77,7 @@ Instead of storing and managing API keys for your clients (other servers), you c
          |        |<-(D)--- Protected Resource ---|               |
          +--------+                               +---------------+
 
+```
 -   **A)** Your app authenticates with the Auth0 Authorization Server using its Client ID (_like username for your app_) and Client Secret (_like password for your app_).
 -   **B)** TropiPay Authorization Server validates the Client ID and Client Secret, and  responds with an Access Token.
 -   **C)** Your application can use the Access Token to call an API on behalf of itself.
@@ -368,7 +374,7 @@ The code exchange step ensures that an attacker isn’t able to intercept the ac
 
 The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
 
-```
+```plain
                                                  +-------------------+
                                                  |   Auth  Server    |
        +--------+                                | +---------------+ |
@@ -460,8 +466,7 @@ The Authorization Code flow is complete! The application now has an access token
 The Proof Key for Code Exchange (PKCE, pronounced pixie) extension describes a technique for public clients to mitigate the threat of having the authorization code intercepted. The technique involves the client first creating a secret, and then using that secret again when exchanging the authorization code for an access token. This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
 
 
-
-### 3. Refresh Token
+## 3. Refresh Token
 The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
 
 ### 3.1 Introduction
