@@ -455,4 +455,12 @@ Pragma: no-cache
 
 The Authorization Code flow is complete! The application now has an access token it can use when making API requests.
 
+### 2.6 PKCE extension
+
+The Proof Key for Code Exchange (PKCE, pronounced pixie) extension describes a technique for public clients to mitigate the threat of having the authorization code intercepted. The technique involves the client first creating a secret, and then using that secret again when exchanging the authorization code for an access token. This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
+
+
+
+
+
 
