@@ -557,7 +557,21 @@ const token = await axios.post(oauth_token, param);
 access_token = token.data.access_token;
 ```
 ### 2.7.5 Get user resource
-
+If everything has gone well then with the value of the access token the user resource is requested
+```js
+let [balanceData, profileData] = await Promise.all([
+    axios({
+        headers: {'Authorization': 'Bearer ' + access_token},
+        url: url_tropipay + "/api/users/balance"
+    }),
+    axios({
+        headers: {'Authorization': 'Bearer ' + access_token},
+        url: url_tropipay + "/api/users/profile"
+    }),
+]);
+res.end(`<p> Hi <strong>${profileData.data.name} </strong> this is your 
+          TPP balance: <strong>${balanceData.data.balance / 100} </strong> EUR </p>`);
+```
 
 ## 3. Refresh Token
 The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
