@@ -9,8 +9,7 @@ The TropiPay API supports integration based on the OAuth 2 standard.
 ## Protocol Flow
 
 ```plain
-
-         +--------+                               +---------------+
+.        +--------+                               +---------------+
          |        |--(A)- Authorization Request ->|   Resource    |
          |        |                               |     Owner     |
          |        |<-(B)-- Authorization Grant ---|               |
@@ -374,7 +373,7 @@ The code exchange step ensures that an attacker isn’t able to intercept the ac
 
 The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
 
-```plain
+```plain                                                             
                                                  +-------------------+
                                                  |   Auth  Server    |
        +--------+                                | +---------------+ |
@@ -478,6 +477,7 @@ This section describes how to allow your developers to use refresh tokens to obt
 Refresh tokens are credentials used to obtain access tokens.  Refresh tokens are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).  Issuing a refresh token is optional at the discretion of the authorization server. If the authorization server issues a refresh token, it is included when issuing an access token.
 
 ```plain
+                                                                        
   +--------+                                           +---------------+
   |        |--(A)------- Authorization Grant --------->|               |
   |        |                                           |               |
