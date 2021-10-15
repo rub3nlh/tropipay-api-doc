@@ -474,7 +474,7 @@ The Proof Key for Code Exchange (PKCE) extension describes a technique for publi
 This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
 
 ### 2.7 Example
-Now that you understand the basics of the OAuth 2.0 authorization code flow works, let’s create a complete example that contemplates the entire flow.
+Now that you understand the basics of the OAuth 2.0 authorization code flow works, let’s create a complete example that contemplates the entire flow. You can see the full demo at this [link](https://github.com/tropipay/demo-oauth-code-nodejs)
 
 ### 2.7.1 Requirements
 It is necessary to create a credential app previously, see the sequence of screenshots shown below.
