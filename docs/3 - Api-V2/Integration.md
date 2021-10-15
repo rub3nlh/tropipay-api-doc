@@ -63,8 +63,7 @@ While similar in concept, a valid JWT would actually be far more difficult to fo
 Instead of storing and managing API keys for your clients (other servers), you can use a third-party service to manage authorization for you. The way this works is that an API client sends a request to an OAuth server asking for an API token. That token is then sent from the API client to your API service along with their request. Once you have the client’s token, you can verify its validity without needing to store any information about the client.
 
 ```plain
-
-         +--------+                               +---------------+
+.        +--------+                               +---------------+
          |        |--(A)-- Authorization Grant -->| Authorization |
          |        |                               |     Server    |
          |        |<-(B)----- Access Token -------|               |
@@ -374,7 +373,7 @@ The code exchange step ensures that an attacker isn’t able to intercept the ac
 The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
 
 ```plain                                                             
-                                                 +-------------------+
+.                                                +-------------------+
                                                  |   Auth  Server    |
        +--------+                                | +---------------+ |
        |        |--(A)- Authorization Request ---->|               | |
@@ -476,9 +475,8 @@ This section describes how to allow your developers to use refresh tokens to obt
 
 Refresh tokens are credentials used to obtain access tokens.  Refresh tokens are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).  Issuing a refresh token is optional at the discretion of the authorization server. If the authorization server issues a refresh token, it is included when issuing an access token.
 
-```plain
-                                                                        
-  +--------+                                           +---------------+
+```plain                                                         
+. +--------+                                           +---------------+
   |        |--(A)------- Authorization Grant --------->|               |
   |        |                                           |               |
   |        |<-(B)----------- Access Token -------------|               |
