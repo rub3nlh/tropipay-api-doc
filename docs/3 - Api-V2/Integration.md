@@ -461,8 +461,17 @@ The Authorization Code flow is complete! The application now has an access token
 
 ### 2.6 PKCE extension
 
-The Proof Key for Code Exchange (PKCE, pronounced pixie) extension describes a technique for public clients to mitigate the threat of having the authorization code intercepted. The technique involves the client first creating a secret, and then using that secret again when exchanging the authorization code for an access token. This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
+The Proof Key for Code Exchange (PKCE) extension describes a technique for public clients to mitigate the threat of having the authorization code intercepted. The technique involves the client first creating a secret, and then using that secret again when exchanging the authorization code for an access token. 
 
+- **code verifier:** A cryptographically random string that is used to correlate the authorization request to the token request.
+
+- **code challenge:** A challenge derived from the code verifier that is sent in the authorization request, to be verified against later.
+
+- **code challenge method:** A method that was used to derive code challenge.
+
+**Base64url:** Encoding Base64 encoding using the URL, with all trailing '=' characters omitted and without the inclusion of any line breaks, whitespace, or other additional characters.
+
+This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
 
 ## 3. Refresh Token
 The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
