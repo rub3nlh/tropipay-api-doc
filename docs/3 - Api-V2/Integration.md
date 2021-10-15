@@ -88,7 +88,7 @@ Now that you understand the basics of the OAuth 2.0 client credentials flow work
 **1.3.1.** Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
 
 To create a credential, just make a POST request to the _/api/v2/credential_ endpoint specifying a few parameters, as shown in the example below: 
-```
+```plain
   POST https://www.tropipay.com/api/v2/credential
 
   HEADER Authorization Bearer {USER-TOKEN}
@@ -168,9 +168,9 @@ To create a credential, just make a POST request to the _/api/v2/credential_ end
 > -   ALLOW_PAYMENT_OUT
 
 Example developed in Node Js: 
-
+```plain
     npm install dotenv axios
-
+```
 Index.js with source code:
 
 ```js
@@ -400,7 +400,7 @@ The Authorization Code grant type is used by web and mobile apps. It differs fro
 ### 2.3 Get the User’s Permission
 OAuth is all about enabling users to grant limited access to applications. The application first needs to decide which permissions it is requesting, then send the user to a browser to get their permission. To begin the authorization flow, the application constructs a URL like the following and opens a browser to that URL.
 
-```
+```plain
 https://tropipay-dev.herokuapp.com/api/v2/access/authorize
       ?response_type=code
       &client_id=1b125cefa4e6aa5fc044a06190953eac
@@ -423,7 +423,7 @@ When the user visits this URL, the authorization server will present them with a
 
 If the user approves the request, the authorization server will redirect the browser back to the redirect_uri specified by the application, adding a code and state to the query string. For example, the user will be redirected back to a URL such as:
 
-```
+```plain
 https//my-app.com/auth/callback?code=g0ZGZmNjVmOWIjNTk2NTk4ZTYyZGI3&state=xcoiv98y2kd22vusuye3kch
 ```
 
@@ -442,7 +442,7 @@ We’re about ready to wrap up the flow. Now that the application has the author
 
 The token endpoint will verify all the parameters in the request, ensuring the code hasn’t expired and that the client ID and secret match. If everything checks out, it will generate an access token and return it in the response!
 
-```
+```plain
 HTTP/1.1 200 OK
 Content-Type: application/json
 Cache-Control: no-store
