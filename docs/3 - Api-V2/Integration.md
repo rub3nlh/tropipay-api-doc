@@ -351,7 +351,7 @@ Response:
 ]
 ```
 
-## 2. Authorization Code Grant
+## 2. Authorization Code
 The Authorization Code Grant Type is probably the most common of the OAuth 2.0 grant types that you’ll encounter. It is used by both web apps and native apps to get an access token after a user authorizes an app. 
 
 ### 2.1 Introduction
