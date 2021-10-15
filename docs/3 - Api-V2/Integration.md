@@ -480,7 +480,44 @@ Now that you understand the basics of the OAuth 2.0 authorization code flow work
 It is necessary to create a credential app previously, see the sequence of screenshots shown below.
 ![credential.png](https://stoplight.io/api/v1/projects/cHJqOjE1ODAz/images/2V3MYoYGZC0)
 
+### 2.7.2 Configurations 
 
+It is necessary to use two endpoints from the TropiPay authorization server, in order to facilitate the understanding of the subject, these urls are stored in variables that will be used later.
+```js
+const url_tropipay = "https://sandbox.tropipay.me";
+const oauth_authorize = url_tropipay + '/api/v2/access/authorize';
+const oauth_token = url_tropipay + '/api/v2/access/token';
+```
+
+It is also important to specify the application credentials that will be used, as described in the previous section, these credentials can be obtained from your TropiPay account by accessing:
+
+```plain
+Credentials (Menu > Seguridad > APP y Credenciales)
+```
+
+These credentials are stored in constants vars but we recommend using environment variables or another mechanism for avoid security issues
+```js.
+const client_id = "946cef5ecad81f282e20d9bbb712ec64";
+const client_secret = "e25bbb41a2a2ed365e685e0edbb81162";
+```
+
+When you try to authenticate this way, you need to specify a url that expects the authorization code, it also specifies what are the necessary permissions to execute the operation
+```js
+const redirect_uri = "http://localhost:5000/oauth/response";
+const scope = "ALLOW_GET_BALANCE";
+```
+
+Security is important, in this case it is optional but it is recommended to send the **state** option and check it in the url that the authorization code expects
+```js
+const state = "abcd-1234";
+```
+
+Similar to the previous one it is recommended to use the verification by PKCE.
+```js 
+const code_verifier = "1234-abcd-1234";
+const code_challenge = "N2_wPQ7X9iP5bKXcw05rqHw1S7OwFuU4Nqi6ccr_LEs";
+const code_challenge_method = "S256";
+```
 
 ## 3. Refresh Token
 The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
