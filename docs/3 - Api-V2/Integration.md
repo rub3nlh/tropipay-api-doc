@@ -476,11 +476,11 @@ This way if the code is intercepted, it will not be useful since the token reque
 ### 2.7 Example
 Now that you understand the basics of the OAuth 2.0 authorization code flow works, let’s create a complete example that contemplates the entire flow. You can see the full demo at this [link](https://github.com/tropipay/demo-oauth-code-nodejs)
 
-### 2.7.1 Requirements
+#### 2.7.1 Requirements
 It is necessary to create a credential app previously, see the sequence of screenshots shown below.
 ![credential.png](https://stoplight.io/api/v1/projects/cHJqOjE1ODAz/images/2V3MYoYGZC0)
 
-### 2.7.2 Configurations 
+#### 2.7.2 Configurations 
 
 It is necessary to use two endpoints from the TropiPay authorization server, in order to facilitate the understanding of the subject, these urls are stored in variables that will be used later.
 ```js
@@ -519,7 +519,7 @@ const code_challenge = "N2_wPQ7X9iP5bKXcw05rqHw1S7OwFuU4Nqi6ccr_LEs";
 const code_challenge_method = "S256";
 ```
 
-### 2.7.3 Step 1
+#### 2.7.3 Step 1
 The first step is to request the authorization code. the best way is to redirect from your server to the url stored in the oauth_authorize variable
 
 ```js
@@ -535,7 +535,7 @@ const param = qs.stringify({
 });
 res.redirect(oauth_authorize + "?" + param);
 ```
-### 2.7.4 Step 2
+#### 2.7.4 Step 2
 Once the user completes the authentication and authorization process, you must check that everything is in order and request the access token
 
 ```js
@@ -556,7 +556,7 @@ const param = {
 const token = await axios.post(oauth_token, param);
 access_token = token.data.access_token;
 ```
-### 2.7.5 Get user resource
+#### 2.7.5 Get user resource
 If everything has gone well then with the value of the access token the user resource is requested
 ```js
 let [balanceData, profileData] = await Promise.all([
