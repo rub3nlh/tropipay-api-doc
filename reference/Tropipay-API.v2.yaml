@@ -4018,6 +4018,93 @@ paths:
       description: 'This endpoint schedules sending an email to the email address of the user with a CSV list of the movements according to the specified filters. '
       tags:
         - Movements
+  /movements/getRate:
+    post:
+      summary: Get Rate
+      tags:
+        - Movements
+      responses:
+        '200':
+          description: 'Currently returns rate [currencyFrom]-EUR'
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    rate: 0.8597713008339781
+                properties:
+                  rate:
+                    type: number
+              examples:
+                USD-EUR:
+                  value:
+                    rate: 0.8597713008339781
+        '400':
+          description: currently only 'EUR' is accepted as 'currencyTo' parameter
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        minLength: 1
+                      message:
+                        type: string
+                        minLength: 1
+                    required:
+                      - code
+                      - message
+                required:
+                  - error
+                x-examples:
+                  example-1:
+                    error:
+                      code: unsupported currencyTo
+                      message: B_007
+              examples:
+                Invalid CurrencyTo:
+                  value:
+                    error:
+                      code: unsupported currencyTo
+                      message: B_007
+      operationId: post-movements-getRate
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: Obtain current Tropipay conversion rate. For example USD to EUR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  currencyFrom: USD
+                  currencyTo: EUR
+              properties:
+                currencyFrom:
+                  type: string
+                  minLength: 1
+                  description: The currency to convert from
+                currencyTo:
+                  type: string
+                  minLength: 1
+                  description: Optional. Right now it will only accept value 'EUR'. Exchange to other currencies is not yet supported
+              required:
+                - currencyFrom
+            examples:
+              USD-EUR:
+                value:
+                  currencyFrom: USD
+                  currencyTo: EUR
+        description: ''
 components:
   schemas:
     User:
