@@ -15,6 +15,10 @@ Drupal Tropipay Plugin v7.x-1.3 (Drupal v7)
 
 [Download Plugin here  >> ](https://www.drupal.org/project/tropipay_payments)
 
+Drupal Tropipay Plugin v1.0.x-dev (Drupal 8 - 9 )
+
+[Download Plugin here  >> ](https://www.drupal.org/project/tropipay_payment)
+
 
 ## WooCommers
 WooCommers Tropipay Plugin v2.0

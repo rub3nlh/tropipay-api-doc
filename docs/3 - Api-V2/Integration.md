@@ -8,7 +8,8 @@ The TropiPay API supports integration based on the OAuth 2 standard.
 
 ## Protocol Flow
 
-         +--------+                               +---------------+
+```plain
+.        +--------+                               +---------------+
          |        |--(A)- Authorization Request ->|   Resource    |
          |        |                               |     Owner     |
          |        |<-(B)-- Authorization Grant ---|               |
@@ -26,6 +27,7 @@ The TropiPay API supports integration based on the OAuth 2 standard.
          |        |<-(F)--- Protected Resource ---|               |
          +--------+                               +---------------+
 
+```
 Figure 1: Abstract Protocol Flow
 
 An OAuth 2.0 flow has the following roles:
@@ -60,7 +62,8 @@ While similar in concept, a valid JWT would actually be far more difficult to fo
 
 Instead of storing and managing API keys for your clients (other servers), you can use a third-party service to manage authorization for you. The way this works is that an API client sends a request to an OAuth server asking for an API token. That token is then sent from the API client to your API service along with their request. Once you have the client’s token, you can verify its validity without needing to store any information about the client.
 
-         +--------+                               +---------------+
+```plain
+.        +--------+                               +---------------+
          |        |--(A)-- Authorization Grant -->| Authorization |
          |        |                               |     Server    |
          |        |<-(B)----- Access Token -------|               |
@@ -72,6 +75,7 @@ Instead of storing and managing API keys for your clients (other servers), you c
          |        |<-(D)--- Protected Resource ---|               |
          +--------+                               +---------------+
 
+```
 -   **A)** Your app authenticates with the Auth0 Authorization Server using its Client ID (_like username for your app_) and Client Secret (_like password for your app_).
 -   **B)** TropiPay Authorization Server validates the Client ID and Client Secret, and  responds with an Access Token.
 -   **C)** Your application can use the Access Token to call an API on behalf of itself.
@@ -84,7 +88,7 @@ Now that you understand the basics of the OAuth 2.0 client credentials flow work
 **1.3.1.** Create a credential in your TropiPay account if you do not have any previously, this would be from the TropiPay dashboard security section or from the API. For more information see [this section](/reference/Tropipay-API.v2.yaml/paths/~1credential/post)
 
 To create a credential, just make a POST request to the _/api/v2/credential_ endpoint specifying a few parameters, as shown in the example below: 
-```
+```plain
   POST https://www.tropipay.com/api/v2/credential
 
   HEADER Authorization Bearer {USER-TOKEN}
@@ -164,9 +168,9 @@ To create a credential, just make a POST request to the _/api/v2/credential_ end
 > -   ALLOW_PAYMENT_OUT
 
 Example developed in Node Js: 
-
+```plain
     npm install dotenv axios
-
+```
 Index.js with source code:
 
 ```js
@@ -350,3 +354,279 @@ Response:
   { name: "UPLOAD_DOCUMENT", label: "support" }
 ]
 ```
+
+## 2. Authorization Code
+The Authorization Code Grant Type is probably the most common of the OAuth 2.0 grant types that you’ll encounter. It is used by both web apps and native apps to get an access token after a user authorizes an app. 
+
+### 2.1 Introduction
+
+The authorization code grant is used when an application exchanges an authorization code for an access token. After the user returns to the application via the redirect URL, the application will get the authorization code from the URL and use it to request an access token. This request will be made to the token endpoint.
+
+The Authorization Code flow is best used in web and mobile apps. Since the Authorization Code grant has the extra step of exchanging the authorization code for the access token, it provides an additional layer of security not present in the Implicit grant type.
+
+If you’re using the Authorization Code flow in a mobile app, or any other type of application that can’t store a client secret, then you should also use the PKCE extension, which provides protections against other attacks where the authorization code may be intercepted.
+
+The code exchange step ensures that an attacker isn’t able to intercept the access token, since the access token is always sent via a secure backchannel between the application and the OAuth server.
+
+### 2.2 Flow
+
+The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
+
+```plain                                                             
+.                                                +-------------------+
+                                                 |   Auth  Server    |
+       +--------+                                | +---------------+ |
+       |        |--(A)- Authorization Request ---->|               | |
+       |        |       + t(code_verifier), t_m  | | Authorization | |
+       |        |                                | |    Endpoint   | |
+       |        |<-(B)---- Authorization Code -----|               | |
+       |        |                                | +---------------+ |
+       | Client |                                |                   |
+       |        |                                | +---------------+ |
+       |        |--(C)-- Access Token Request ---->|               | |
+       |        |          + code_verifier       | |    Token      | |
+       |        |                                | |   Endpoint    | |
+       |        |<-(D)------ Access Token ---------|               | |
+       +--------+                                | +---------------+ |
+                                                 +-------------------+
+```
+
+- The application opens a browser to send the user to the OAuth server
+- The user sees the authorization prompt and approves the app’s request
+- The user is redirected back to the application with an authorization code in the query string
+- The application exchanges the authorization code for an access token
+
+
+### 2.3 Get the User’s Permission
+OAuth is all about enabling users to grant limited access to applications. The application first needs to decide which permissions it is requesting, then send the user to a browser to get their permission. To begin the authorization flow, the application constructs a URL like the following and opens a browser to that URL.
+
+```plain
+https://tropipay-dev.herokuapp.com/api/v2/access/authorize
+      ?response_type=code
+      &client_id=1b125cefa4e6aa5fc044a06190953eac
+      &redirect_uri=https//my-app.com/auth/callback
+      &scope=ALLOW_GET_BALANCE
+      &state=xcoiv98y2kd22vusuye3kch
+```
+
+Here’s each query parameter explained:
+
+- **response_type=code**: This tells the authorization server that the application is initiating the authorization code flow.
+- **client_id**: The public identifier for the application, obtained when the developer first registered the application- .
+- **redirect_uri**: Tells the authorization server where to send the user back to after they approve the request- .
+- **scope**: One or more space-separated strings indicating which permissions the application is requesting. The specific OAuth API you’re using will define the scopes that it supports.
+- **state**: The application generates a random string and includes it in the request. It should then check that the same value is returned after the user authorizes the app. This is used to prevent CSRF attacks.
+
+When the user visits this URL, the authorization server will present them with a prompt asking if they would like to authorize this application’s request.
+
+### 2.4 Redirect Back to the Application
+
+If the user approves the request, the authorization server will redirect the browser back to the redirect_uri specified by the application, adding a code and state to the query string. For example, the user will be redirected back to a URL such as:
+
+```plain
+https//my-app.com/auth/callback?code=g0ZGZmNjVmOWIjNTk2NTk4ZTYyZGI3&state=xcoiv98y2kd22vusuye3kch
+```
+
+The state value will be the same value that the application initially set in the request. The application is expected to check that the state in the redirect matches the state it originally set. This protects against CSRF and other related attacks.
+
+The code is the authorization code generated by the authorization server. This code is relatively short-lived, typically lasting between 1 to 10 minutes depending on the OAuth service.
+
+### 2.5 Exchange the Authorization Code for an Access Token
+We’re about ready to wrap up the flow. Now that the application has the authorization code, it can use that to get an access token. The application makes a POST request to the service’s token endpoint with the following parameters:
+
+- **grant_type=authorization_code**: This tells the token endpoint that the application is using the Authorization Code grant type.
+- **code**: The application includes the authorization code it was given in the redirect.
+- **redirect_uri**: The same redirect URI that was used when requesting the code. Some APIs don’t require this parameter, so you’ll need to double check the documentation of the particular API you’re accessing.
+- **client_id**: The application’s client ID.
+- **client_secret**: The application’s client secret. This ensures that the request to get the access token is made only from the application, and not from a potential attacker that may have intercepted the authorization code.
+
+The token endpoint will verify all the parameters in the request, ensuring the code hasn’t expired and that the client ID and secret match. If everything checks out, it will generate an access token and return it in the response!
+
+```plain
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+  "access_token":"MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3",
+  "token_type":"bearer",
+  "expires_in":3600,
+  "refresh_token":"IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk",
+  "scope":"ALLOW_GET_BALANCE"
+}
+```
+
+The Authorization Code flow is complete! The application now has an access token it can use when making API requests.
+
+### 2.6 PKCE extension
+
+The Proof Key for Code Exchange (PKCE) extension describes a technique for public clients to mitigate the threat of having the authorization code intercepted. The technique involves the client first creating a secret, and then using that secret again when exchanging the authorization code for an access token. 
+
+- **code verifier:** A cryptographically random string that is used to correlate the authorization request to the token request.
+
+- **code challenge:** A challenge derived from the code verifier that is sent in the authorization request, to be verified against later.
+
+- **code challenge method:** A method that was used to derive code challenge.
+
+**Base64url:** Encoding Base64 encoding using the URL, with all trailing '=' characters omitted and without the inclusion of any line breaks, whitespace, or other additional characters.
+
+This way if the code is intercepted, it will not be useful since the token request relies on the initial secret. The full spec is available as [RFC7636](https://tools.ietf.org/html/rfc7636).
+
+### 2.7 Example
+Now that you understand the basics of the OAuth 2.0 authorization code flow works, let’s create a complete example that contemplates the entire flow. You can see the full demo at this [link](https://github.com/tropipay/demo-oauth-code-nodejs)
+
+#### 2.7.1 Requirements
+It is necessary to create a credential app previously, see the sequence of screenshots shown below.
+![credential.png](https://stoplight.io/api/v1/projects/cHJqOjE1ODAz/images/2V3MYoYGZC0)
+
+#### 2.7.2 Configurations 
+
+It is necessary to use two endpoints from the TropiPay authorization server, in order to facilitate the understanding of the subject, these urls are stored in variables that will be used later.
+```js
+const url_tropipay = "https://sandbox.tropipay.me";
+const oauth_authorize = url_tropipay + '/api/v2/access/authorize';
+const oauth_token = url_tropipay + '/api/v2/access/token';
+```
+
+It is also important to specify the application credentials that will be used, as described in the previous section, these credentials can be obtained from your TropiPay account by accessing:
+
+```plain
+Credentials (Menu > Seguridad > APP y Credenciales)
+```
+
+These credentials are stored in constants vars but we recommend using environment variables or another mechanism for avoid security issues
+```js.
+const client_id = "946cef5ecad81f282e20d9bbb712ec64";
+const client_secret = "e25bbb41a2a2ed365e685e0edbb81162";
+```
+
+When you try to authenticate this way, you need to specify a url that expects the authorization code, it also specifies what are the necessary permissions to execute the operation
+```js
+const redirect_uri = "http://localhost:5000/oauth/response";
+const scope = "ALLOW_GET_BALANCE";
+```
+
+Security is important, in this case it is optional but it is recommended to send the **state** option and check it in the url that the authorization code expects
+```js
+const state = "abcd-1234";
+```
+
+Similar to the previous one it is recommended to use the verification by PKCE.
+```js 
+const code_verifier = "1234-abcd-1234";
+const code_challenge = "N2_wPQ7X9iP5bKXcw05rqHw1S7OwFuU4Nqi6ccr_LEs";
+const code_challenge_method = "S256";
+```
+
+#### 2.7.3 Step 1
+The first step is to request the authorization code. the best way is to redirect from your server to the url stored in the oauth_authorize variable
+
+```js
+const param = qs.stringify({
+    response_type: "code",
+    client_id,
+    client_secret,
+    redirect_uri,
+    code_challenge,
+    code_challenge_method,
+    state,
+    scope
+});
+res.redirect(oauth_authorize + "?" + param);
+```
+#### 2.7.4 Step 2
+Once the user completes the authentication and authorization process, you must check that everything is in order and request the access token
+
+```js
+if (req.query['state'] !== state) {
+    console.log('NOT secure, the state value not match');
+}
+//... confifure options for get authorization code
+const param = {
+    grant_type: "authorization_code",
+    code: req.query['code'],
+    client_id,
+    client_secret,
+    redirect_uri,
+    code_verifier,
+    scope
+};
+//... save authorization code
+const token = await axios.post(oauth_token, param);
+access_token = token.data.access_token;
+```
+#### 2.7.5 Get user resource
+If everything has gone well then with the value of the access token the user resource is requested
+```js
+let [balanceData, profileData] = await Promise.all([
+    axios({
+        headers: {'Authorization': 'Bearer ' + access_token},
+        url: url_tropipay + "/api/users/balance"
+    }),
+    axios({
+        headers: {'Authorization': 'Bearer ' + access_token},
+        url: url_tropipay + "/api/users/profile"
+    }),
+]);
+res.end(`<p> Hi <strong>${profileData.data.name} </strong> this is your 
+          TPP balance: <strong>${balanceData.data.balance / 100} </strong> EUR </p>`);
+```
+
+## 3. Refresh Token
+The Refresh Token grant type is used by clients to exchange a refresh token for an access token when the access token has expired. This allows clients to continue to have a valid access token without further interaction with the user.
+
+### 3.1 Introduction
+
+This section describes how to allow your developers to use refresh tokens to obtain new access tokens. If your service issues refresh tokens along with the access token, then you’ll need to implement the Refresh grant type described here.
+
+### 3.1 Flow
+
+Refresh tokens are credentials used to obtain access tokens.  Refresh tokens are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).  Issuing a refresh token is optional at the discretion of the authorization server. If the authorization server issues a refresh token, it is included when issuing an access token.
+
+```plain                                                         
+. +--------+                                           +---------------+
+  |        |--(A)------- Authorization Grant --------->|               |
+  |        |                                           |               |
+  |        |<-(B)----------- Access Token -------------|               |
+  |        |               & Refresh Token             |               |
+  |        |                                           |               |
+  |        |                            +----------+   |               |
+  |        |--(C)---- Access Token ---->|          |   |               |
+  |        |                            |          |   |               |
+  |        |<-(D)- Protected Resource --| Resource |   | Authorization |
+  | Client |                            |  Server  |   |     Server    |
+  |        |--(E)---- Access Token ---->|          |   |               |
+  |        |                            |          |   |               |
+  |        |<-(F)- Invalid Token Error -|          |   |               |
+  |        |                            +----------+   |               |
+  |        |                                           |               |
+  |        |--(G)----------- Refresh Token ----------->|               |
+  |        |                                           |               |
+  |        |<-(H)----------- Access Token -------------|               |
+  +--------+           & Optional Refresh Token        +---------------+
+```
+
+A refresh token is a string representing the authorization granted to the client by the resource owner.  The string is usually opaque to the client.  The token denotes an identifier used to retrieve the authorization information.  Unlike access tokens, refresh tokens are intended for use only with authorization servers and are never sent to resource servers.
+
+The flow illustrated in Figure 2 includes the following steps:
+
+- **A:** The client requests an access token by authenticating with the authorization server and presenting an authorization grant.
+
+- **B:** The authorization server authenticates the client and validates the authorization grant, and if valid, issues an access token and a refresh token.
+
+- **C:** The client makes a protected resource request to the resource server by presenting the access token.
+
+- **D:** The resource server validates the access token, and if valid, serves the request.
+
+- **E:** Steps (C) and (D) repeat until the access token expires. If the client knows the access token expired, it skips to step (G); otherwise, it makes another protected resource request.
+
+- **F:** Since the access token is invalid, the resource server returns an invalid token error.
+
+- **G:** The client requests a new access token by authenticating with the authorization server and presenting the refresh token. The client authentication requirements are based on the client type and on the authorization server policies.
+
+- **H:** The authorization server authenticates the client and validates the refresh token, and if valid, issues a new access token (and, optionally, a new refresh token).
+
+For more information, see the [link](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
+
+
