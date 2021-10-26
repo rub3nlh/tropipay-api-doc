@@ -9,7 +9,7 @@ You can integrate tropipay as a payment gateway in your site. It's as easy as ad
 >#### info
 > Don't worry, they will be redirected back to your site once they finish the transaction. Also a callback will be sent to specified `urlNotification` URL
 
-If you are a developer making the integration, you will probably need to check [this link about generating payment flow URL](/reference/Tropipay-API.v2.yaml/paths/~1movements~1in~1with_tpp_url/post) in order to generate the url to redirect the customer to.
+If you are a developer making the integration, you will probably need to check [this link about generating payment flow URL](/docs/tropipay-api-doc/b3A6MTE3MTU5ODg-getting-the-pay-with-tropipay-url) in order to generate the url to redirect the customer to.
 
 Once clicked the button, customers will be first presented a login form so they can authenticate with their credentials. `This step is omitted if the user is already logged in to his Tropipay account`
 <br>
