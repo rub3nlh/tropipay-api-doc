@@ -54,14 +54,20 @@
           "uri": "docs/3 - Api-V2/Integration.md"
         },
         {
-          "type": "item",
-          "title": "Login",
-          "uri": "docs/3 - Api-V2/Login.md"
-        },
-        {
-          "type": "item",
-          "title": "Sign Up",
-          "uri": "docs/3 - Api-V2/SignUp.md"
+          "type":"group",
+          "title": "Merchant's Private Label access",
+          "items": [
+            {
+              "type": "item",
+              "title": "Private Label Login",
+              "uri": "docs/3 - Api-V2/Login.md"
+            },
+            {
+              "type": "item",
+              "title": "Private Label Sign Up",
+              "uri": "docs/3 - Api-V2/SignUp.md"
+            }
+          ]
         }
       ]
     },

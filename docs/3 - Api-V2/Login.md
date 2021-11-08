@@ -1,7 +1,7 @@
 ---
 tags: [Login]
 ---
-# User Login
+# Private Label Login
 
 The login process is an important step for using the API. It will allow the merchant to get a valid and temporary user token with wich, merchat's customers will be authenticated to make actions (check balance, make movements, add beneficiaries, etc)
 
@@ -13,4 +13,4 @@ This will return a dynamic URL that will load the signup form on Tropipay platfo
 
 <!-- theme: info -->
 >#### info
-> If you want to obtain authentication token to make user actions and you are not a merchant, you can use [this endpoint](/reference/Tropipay-API.v1.yaml/paths/~1access~1login/post)
+> If you are making an app integration to access your own account and you want to obtain an authentication token to make user actions, you can use [this endpoint](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post)

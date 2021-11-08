@@ -3623,7 +3623,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
   /access/token:
     post:
-      summary: ''
+      summary: Login
       operationId: post-access-token
       responses:
         '200':
