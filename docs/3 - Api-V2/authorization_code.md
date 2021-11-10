@@ -13,10 +13,6 @@ The code exchange step ensures that an attacker isn’t able to intercept the ac
 
 ### Flow
 
-In a nutshell, the integration steps are:
-
-
-
 The Authorization Code grant type is used by web and mobile apps. It differs from most of the other grant types by first requiring the app launch a browser to begin the flow. At a high level, the flow has the following steps:
 
 ```plain                                                             

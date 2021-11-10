@@ -17,13 +17,13 @@ Instead of storing and managing API keys for your clients (other servers), you c
 
 In a nutshell, the integration steps are:
 
-1 - Create a credential (ApiKey) in your Tropipay account accessing "Security" secction of the menu and clicking "Applications and credentials" button. There you will see your existent ApiKeys if exist and a button to add a new one. This step can also be done with the corresponding endpoint
+**1 -** Create a credential (ApiKey) in your Tropipay account accessing "Security" secction of the menu and clicking "Applications and credentials" button. There you will see your existent ApiKeys if exist and a button to add a new one. This step can also be done with the corresponding endpoint
 
-2- Store those credentials somewhere in your environment so they can be safe and accesible by your app
+**2 -** Store those credentials somewhere in your environment so they can be safe and accesible by your app
 
-3- Request a new access token using the [apiKey login endpoint](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) This access token is mandatory for accessing all other user resource endpoints
+**3 -** Request a new access token using the [apiKey login endpoint](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post) This access token is mandatory for accessing all other user resource endpoints
 
-4- Consume any of the API resources that ApiKey allows according to its configuration (Generate new Payment Cards, Beneficiaries, Transfer, Market Purchase, etc.)
+**4 -** Consume any of the API resources that ApiKey allows according to its configuration (Generate new Payment Cards, Beneficiaries, Transfer, Market Purchase, etc.)
 
 ```plain
 .        +--------+                               +---------------+
