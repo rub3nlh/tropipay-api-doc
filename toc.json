@@ -60,17 +60,17 @@
             {
               "type": "item",
               "title": "Client credentials",
-              "uri": "docs/3 - Api-V2/Integration.md"
+              "uri": "docs/3 - Api-V2/integration_credentials.md"
             },
             {
               "type": "item",
               "title": "Authorization Code with PKCE",
-              "uri": "docs/3 - Api-V2/Integration.md"
+              "uri": "docs/3 - Api-V2/authorization_code.md"
             },
             {
               "type": "item",
               "title": "Refresh Token",
-              "uri": "docs/3 - Api-V2/Integration.md"
+              "uri": "docs/3 - Api-V2/refresh_token.md"
             }
           ]
         },
