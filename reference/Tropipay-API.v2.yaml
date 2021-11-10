@@ -371,8 +371,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
-        - Authentication
-        - Security
+        - White Label
     parameters: []
   /countries:
     get:
@@ -726,7 +725,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
-        - Authentication
+        - White label
     parameters: []
   /access/send_email_code:
     parameters: []
@@ -778,10 +777,10 @@ paths:
                 value:
                   email: john@doe.com
         description: ''
-      tags:
-        - Authentication
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - White Label
   /access/send_phone_code:
     post:
       summary: 'SignUp workflow step 3: Send Phone Validation Code to user'
@@ -789,8 +788,6 @@ paths:
       responses:
         '200':
           description: OK
-      tags:
-        - Authentication
       description: 'Once the User has been registered, his phone number should be verified. In order to accomplish this, a secret code should be sent to user phone through this endpoint. Note that the received code by SMS will be required in order to validate the user phone number in [step 4](Tropipay-API.v2.yaml/paths/~1access~1validate_phone)'
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
@@ -817,6 +814,8 @@ paths:
                 - callingCode
                 - phone
                 - lang
+      tags:
+        - White Label
     parameters: []
   /deposit_accounts:
     get:
@@ -1187,10 +1186,10 @@ paths:
         '200':
           description: OK
       description: 'This allows to validate some user phone number through a secret code previously sent to user by SMS. See [Step 3: SendPhoneCode](Tropipay-API.v2.yaml/paths/~1access~1send_phone_code) for details on how to send validation codes'
-      tags:
-        - Authentication
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
+      tags:
+        - White Label
     parameters: []
   /merchant/kyc:
     post:
@@ -1220,7 +1219,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
-        - Settings
+        - White Label
     parameters: []
   /settings/price:
     get:
@@ -1249,7 +1248,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Merchant-Authorization-Token'
       tags:
-        - Settings
+        - White Label
     post:
       summary: Setting the public price
       operationId: post-configure-price
@@ -2242,7 +2241,7 @@ paths:
           required: true
       description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
       tags:
-        - Settings
+        - White Label
   /movements/out/send_validation_code:
     parameters: []
     post:
@@ -2565,7 +2564,7 @@ paths:
       summary: List Credentials
       responses:
         '200':
-          description: Example response
+          description: ''
           content:
             application/json:
               schema:
@@ -2654,7 +2653,7 @@ paths:
           $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: get-credential
       description: |-
-        This endpoint return a list credentials assigned to user. 
+        This endpoint returns a list credentials assigned to user. 
 
         There are different types of credentials:
         - **Base:** By default, users have a base credential made up of the user and password pair, from here the permissions are inherited for the rest of the user's credentials.
