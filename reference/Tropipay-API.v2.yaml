@@ -2662,7 +2662,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - Security
+        - Access & Credentials
     post:
       summary: Create Credential
       operationId: post-credential
@@ -2894,12 +2894,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - Security
+        - Access & Credentials
   '/credential/:client_id':
     get:
-      summary: GET information about a credential by it name
-      tags:
-        - Security
+      summary: Credential details
       responses:
         '200':
           description: OK
@@ -2987,7 +2985,7 @@ paths:
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
       operationId: 'get-credential-:name'
-      description: This endpoint return an information about a credential by it Client Id or username.
+      description: This endpoint returns information about a credential by its owner Id or username.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
         - schema:
@@ -2996,8 +2994,10 @@ paths:
           in: query
           name: name
           description: Credential name
+      tags:
+        - Access & Credentials
     put:
-      summary: Update a credential by it name
+      summary: Update a credential
       operationId: 'put-credential-:name'
       responses:
         '200':
@@ -3208,9 +3208,9 @@ paths:
                   grant_type: generate_password
         description: ''
       tags:
-        - Security
+        - Access & Credentials
     delete:
-      summary: Delete a credential by it name
+      summary: Delete a credential
       operationId: 'delete-credential-:name'
       responses:
         '200':
@@ -3270,13 +3270,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
-        - Security
+        - Access & Credentials
     parameters: []
   /credential/grant/list:
     get:
-      summary: List of available permits
-      tags:
-        - Security
+      summary: Available permissions
       responses:
         '200':
           description: OK
@@ -3392,14 +3390,16 @@ paths:
       description: Get the list of available permits for scope field
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Access & Credentials
   /credential/grant/allow:
     post:
-      summary: Check grant allow
+      summary: Check credential access
       operationId: post-credential-grant-allow
       responses:
         '200':
           description: |-
-            The answer is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field. 
+            The response is made up of several fields that allow to determine if the credential is valid to execute actions based on permissions, the field called 'valid' is the determinant and the rest allow to identify the factors that influence the value of the valid field. 
 
             - **valid:** it is of type boolean, it takes a true value if it complies with all the permissions specified in the scope field, it also checks that it is a valid credential based on the status and its expiration date if it is defined, finally it checks that the domain of the request complies with the restrictions defined in the domain field. This is the field that determines whether or not the credential is valid for certain permissions
 
@@ -3510,7 +3510,7 @@ paths:
                             credentials:
                               - name: gitlab.my
                                 owner:
-                                  email: tonykssa@gmail.com
+                                  email: user@mail.com
                                   group:
                                     name: KYC3_FULL_ALLOW
                                     permissions:
@@ -3527,7 +3527,7 @@ paths:
                             credentials:
                               - name: gitlab.my
                                 owner:
-                                  email: tonykssa@gmail.com
+                                  email: user@mail.com
                                   group:
                                     name: KYC3_FULL_ALLOW
                                     permissions:
@@ -3544,7 +3544,7 @@ paths:
                             credentials:
                               - name: gitlab.my
                                 owner:
-                                  email: tonykssa@gmail.com
+                                  email: user@mail.com
                                   group:
                                     name: KYC3_FULL_ALLOW
                                     permissions:
@@ -3566,8 +3566,6 @@ paths:
           $ref: '#/components/responses/OauthBadRequestResponse'
         '401':
           $ref: '#/components/responses/FailedAuthenticateResponse'
-      tags:
-        - Security
       description: |
         Allows you to check if a credential complies with a list of permissions, from the specification of the scope field.
 
@@ -3620,6 +3618,8 @@ paths:
         description: ''
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Access & Credentials
   /access/token:
     post:
       summary: Login
@@ -3669,8 +3669,6 @@ paths:
                     token_type: Bearer
                     scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
                     expires_in: 1d
-      tags:
-        - Security
       description: |-
         The Client Credentials grant type is used by clients to obtain an access token outside of the context of a user. This is typically used by clients to access resources about themselves rather than to access a user's resources.
 
@@ -3743,6 +3741,8 @@ paths:
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
                   scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
+      tags:
+        - Access & Credentials
   /paymentcards:
     get:
       summary: PaymentCards list
