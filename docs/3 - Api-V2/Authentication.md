@@ -5,14 +5,14 @@ tags: [Authentication]
 # Authentication
 
 To access the different endpoints, you need to use an Authorization Header type `Bearer`. There are two different authentication methods depending on the action to execute. Think about it like two group of endpoints:
-- Merchant configurations and actions endpoints
-- User actions endpoints
+- Private Label merchant configurations and action endpoints
+- User actions' endpoints
 
 <!-- theme: info -->
 >#### info
-> If you want to obtain authentication token to make user actions and you are not a merchant, you can use [this endpoint](/reference/Tropipay-API.v1.yaml/paths/~1access~1login/post)
+> If you are making an app integration to access your own account and you want to obtain an authentication token to make user actions, you can use [this endpoint](/reference/Tropipay-API.v2.yaml/paths/~1access~1token/post)
 
-## Merchant Actions
+## Private Label Merchant Actions
 
 For these endpoints's authentication you need to send the Authorization header with the value: 
 ```
