@@ -1097,7 +1097,7 @@ paths:
                 userRelationTypeId:
                   type: number
                 paymentType:
-                  type: number
+                  type: string
                 documentTypeId:
                   type: number
                 documentExpirationDate:
