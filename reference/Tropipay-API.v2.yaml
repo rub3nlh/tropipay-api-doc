@@ -2282,13 +2282,12 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
   /movements/in/remittance:
-    get:
+    post:
       summary: Sending a Remittance from your personal cards
-      tags:
-        - Movements
-        - Movements-in
-      responses: {}
-      operationId: get-movements-in-remittance
+      operationId: post-movements-in-remittance
+      responses:
+        '200':
+          description: OK
       description: 'When making a remittance, customers can opt to two options: extract and send money from their personal debit or credit cards or using their own balance. This endpoint is used to send money that will be extracted from customer''s personal card. It will respond with information related to the charge movement including an url to open the POST form to execute the extraction from customer card.'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
@@ -2296,6 +2295,7 @@ paths:
         content:
           application/json:
             schema:
+              description: ''
               type: object
               properties:
                 originalCurrencyAmount:
@@ -2306,22 +2306,72 @@ paths:
                   type: number
                 location:
                   type: string
+                  minLength: 1
                 amountToReceive:
                   type: number
                 currencyToReceive:
                   type: string
+                  minLength: 1
                 currencyToSend:
                   type: string
+                  minLength: 1
                 amountToSend:
                   type: number
                 agent:
                   type: string
+                  minLength: 1
                 beneficiaryId:
                   type: number
                 reasonId:
                   type: number
                 reasonDes:
                   type: string
+                  minLength: 1
+              required:
+                - originalCurrencyAmount
+                - country
+                - paymentType
+                - location
+                - amountToReceive
+                - currencyToReceive
+                - currencyToSend
+                - amountToSend
+                - agent
+                - beneficiaryId
+                - reasonId
+                - reasonDes
+              x-examples:
+                example-1:
+                  originalCurrencyAmount: 0
+                  country: 0
+                  paymentType: 0
+                  location: string
+                  amountToReceive: 0
+                  currencyToReceive: string
+                  currencyToSend: string
+                  amountToSend: 0
+                  agent: string
+                  beneficiaryId: 0
+                  reasonId: 0
+                  reasonDes: string
+            examples:
+              example-1:
+                value:
+                  originalCurrencyAmount: 0
+                  country: 0
+                  paymentType: 0
+                  location: string
+                  amountToReceive: 0
+                  currencyToReceive: string
+                  currencyToSend: string
+                  amountToSend: 0
+                  agent: string
+                  beneficiaryId: 0
+                  reasonId: 0
+                  reasonDes: string
+      tags:
+        - Movements
+        - Movements-in
   /movements/in/with_tpp_url:
     post:
       summary: Getting the Pay-with-Tropipay URL
