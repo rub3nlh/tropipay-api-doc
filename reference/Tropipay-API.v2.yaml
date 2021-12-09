@@ -2357,18 +2357,18 @@ paths:
             examples:
               example-1:
                 value:
-                  originalCurrencyAmount: 0
+                  originalCurrencyAmount: 50
+                  amountToSend: 130
+                  amountToReceive: 100
+                  currencyToReceive: USD
+                  currencyToSend: USD
                   country: 0
-                  paymentType: 0
-                  location: string
-                  amountToReceive: 0
-                  currencyToReceive: string
-                  currencyToSend: string
-                  amountToSend: 0
-                  agent: string
-                  beneficiaryId: 0
-                  reasonId: 0
-                  reasonDes: string
+                  paymentType: 2
+                  location: Cuba
+                  agent: agent
+                  beneficiaryId: 58598
+                  reasonId: 1
+                  reasonDes: Descripcion about remittance
       tags:
         - Movements
         - Movements-in
