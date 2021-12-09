@@ -2357,7 +2357,7 @@ paths:
             examples:
               example-1:
                 value:
-                  originalCurrencyAmount: 50
+                  originalCurrencyAmount: 135
                   amountToSend: 130
                   amountToReceive: 100
                   currencyToReceive: USD
