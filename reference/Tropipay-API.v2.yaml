@@ -2107,6 +2107,7 @@ paths:
                   customUrlOK: 'https://google.com'
                   customUrlKO: 'https://yahoo.es'
         description: 'Here we have an example of a valid request:'
+      x-internal: true
   /merchant/settings/get_prices:
     get:
       summary: Getting Operation costs
@@ -2372,6 +2373,7 @@ paths:
       tags:
         - Movements
         - Movements-in
+      x-internal: true
   /movements/in/with_tpp_url:
     post:
       summary: Getting the Pay-with-Tropipay URL
