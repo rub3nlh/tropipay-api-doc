@@ -4326,7 +4326,7 @@ paths:
       tags:
         - Hooks
     put:
-      summary: update user hook
+      summary: Update user hook
       operationId: put-api-v2-hooks
       responses:
         '200':
