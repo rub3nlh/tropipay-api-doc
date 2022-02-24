@@ -4622,7 +4622,7 @@ paths:
       operationId: 'get-hooks-:event_name-:target_name'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
-      description: Select hook by event name and target name
+      description: 'Select hook by event name and target name. Note that, to select the data of a very specific hook, you must filter by the name of the event and the target similar as below ```/api/v2/hooks/user_login/web```, in this case we try to request the data of the hook subscribed to the *user_login* event with notification via *web hook*. '
       tags:
         - Hooks
     delete:
