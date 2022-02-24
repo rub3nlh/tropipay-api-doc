@@ -4241,6 +4241,8 @@ paths:
                       value: myemail@gmail.com
                       createdAt: '2022-02-11T18:53:54.027Z'
                       updatedAt: '2022-02-11T18:53:54.027Z'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-api-v2-hooks
       description: 'This returns a list of user hook '
       parameters:
@@ -4283,6 +4285,8 @@ paths:
                     action: subscribe
                     status: success
                     details: user_login
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       requestBody:
@@ -4361,6 +4365,8 @@ paths:
                     action: update
                     status: success
                     details: user_login
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       requestBody:
         content:
           application/json:
@@ -4462,6 +4468,8 @@ paths:
                       description: Launched after a beneficiary is modified.
                     - name: beneficiary_deleted
                       description: Launched after a beneficiary is deleted.
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: get-hooks-events
       description: 'Get user hook event list '
       parameters:
@@ -4528,6 +4536,8 @@ paths:
                       value: myemail@gmail.com
                       createdAt: '2022-02-11T18:43:24.882Z'
                       updatedAt: '2022-02-11T18:43:24.882Z'
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       operationId: 'get-hooks-:event_name'
       description: Select hooks by event name
       parameters:
@@ -4586,7 +4596,7 @@ paths:
                       value: myemail@gmail.com
                       createdAt: '2022-02-11T18:43:24.882Z'
                       updatedAt: '2022-02-11T18:43:24.882Z'
-        '201':
+        '500':
           $ref: '#/components/responses/ErrorResponse'
       operationId: 'get-hooks-:event_name-:target_name'
       parameters:
