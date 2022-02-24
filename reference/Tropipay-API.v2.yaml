@@ -3820,6 +3820,31 @@ paths:
             schema:
               description: ''
               type: object
+              x-examples:
+                example-1:
+                  reference: my-reference
+                  concept: Bicycle
+                  favorite: true
+                  description: Two wheels
+                  amount: 100000
+                  currency: EUR
+                  singleUse: true
+                  reasonId: 4
+                  expirationDays: 1
+                  lang: es
+                  urlSuccess: 'https://my-business.com/payment-ok'
+                  urlFailed: 'https://my-business.com/payment-ko'
+                  urlNotification: 'https://my-business.com/payment-callback'
+                  serviceDate: '2021-08-20'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: client@email.com
+                    countryId: 1
+                    termsAndConditions: 'true'
+                  directPayment: true
               properties:
                 reference:
                   type: string
@@ -3860,6 +3885,14 @@ paths:
                   minLength: 1
                 client:
                   type: object
+                  required:
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - countryId
+                    - termsAndConditions
                   properties:
                     name:
                       type: string
@@ -3881,16 +3914,18 @@ paths:
                     termsAndConditions:
                       type: string
                       minLength: 1
-                  required:
-                    - name
-                    - lastName
-                    - address
-                    - phone
-                    - email
-                    - countryId
-                    - termsAndConditions
                 directPayment:
                   type: boolean
+                paymentMethods:
+                  type: array
+                  description: 'Optional: if included, sets which payment methods will be available for paying this paymentCard. Possible options are: ''EXT'' for external cards (visa, mastercard, etc) and ''TPP'' for payment with tropipay balance. If missing, all payment methods will be available to users'
+                  uniqueItems: false
+                  items:
+                    type: string
+                    enum:
+                      - EXT
+                      - TPP
+                    example: '[''TPP'']'
               required:
                 - reference
                 - concept
@@ -3908,31 +3943,6 @@ paths:
                 - serviceDate
                 - client
                 - directPayment
-              x-examples:
-                example-1:
-                  reference: my-reference
-                  concept: Bicycle
-                  favorite: true
-                  description: Two wheels
-                  amount: 100000
-                  currency: EUR
-                  singleUse: true
-                  reasonId: 4
-                  expirationDays: 1
-                  lang: es
-                  urlSuccess: 'https://my-business.com/payment-ok'
-                  urlFailed: 'https://my-business.com/payment-ko'
-                  urlNotification: 'https://my-business.com/payment-callback'
-                  serviceDate: '2021-08-20'
-                  client:
-                    name: John
-                    lastName: McClane
-                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
-                    phone: '+34645553333'
-                    email: client@email.com
-                    countryId: 1
-                    termsAndConditions: 'true'
-                  directPayment: true
             examples:
               Example with Client Data:
                 value:
@@ -3977,6 +3987,8 @@ paths:
                   serviceDate: '2021-08-20'
                   client: null
                   directPayment: false
+                  paymentMethods:
+                    - TPP
         description: 'These are the details of the request body:'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
