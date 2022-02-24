@@ -4465,6 +4465,74 @@ paths:
       description: Hooks events list
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  '/hooks/:event_name':
+    get:
+      summary: Select
+      tags:
+        - hooks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - event
+                    - target
+                    - value
+                    - createdAt
+                    - updatedAt
+                  properties:
+                    event:
+                      type: string
+                      minLength: 1
+                    target:
+                      type: string
+                      minLength: 1
+                    value:
+                      type: string
+                      minLength: 1
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - event: user_login
+                      target: web
+                      value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+                      createdAt: '2022-02-11T18:36:48.300Z'
+                      updatedAt: '2022-02-11T18:36:48.300Z'
+                    - event: user_login
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:43:24.882Z'
+                      updatedAt: '2022-02-11T18:43:24.882Z'
+              examples:
+                valid response:
+                  value:
+                    - event: user_login
+                      target: web
+                      value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+                      createdAt: '2022-02-11T18:36:48.300Z'
+                      updatedAt: '2022-02-11T18:36:48.300Z'
+                    - event: user_login
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:43:24.882Z'
+                      updatedAt: '2022-02-11T18:43:24.882Z'
+      operationId: 'get-hooks-:event_name'
+      description: Select hooks by event name
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
