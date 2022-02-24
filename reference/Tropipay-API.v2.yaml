@@ -4643,6 +4643,8 @@ paths:
       description: Delete or unsubscribe hook by event name and target name
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Hooks
 components:
   schemas:
     User:
