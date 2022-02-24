@@ -4169,7 +4169,7 @@ paths:
                   directPayment: false
       deprecated: true
       x-internal: true
-  /api/v2/hooks:
+  /hooks:
     get:
       summary: hooks List
       tags:
@@ -4397,6 +4397,7 @@ paths:
       description: Explicit update hook on payload request
       tags:
         - hooks
+    parameters: []
 components:
   schemas:
     User:
