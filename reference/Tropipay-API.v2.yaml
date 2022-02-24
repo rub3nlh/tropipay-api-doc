@@ -4169,6 +4169,229 @@ paths:
                   directPayment: false
       deprecated: true
       x-internal: true
+  /api/v2/hooks:
+    get:
+      summary: User hooks
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - event
+                    - target
+                    - value
+                    - createdAt
+                    - updatedAt
+                  properties:
+                    event:
+                      type: string
+                      minLength: 1
+                    target:
+                      type: string
+                      minLength: 1
+                    value:
+                      type: string
+                      minLength: 1
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - event: user_login
+                      target: web
+                      value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+                      createdAt: '2022-02-11T18:36:48.300Z'
+                      updatedAt: '2022-02-11T18:36:48.300Z'
+                    - event: user_kyc
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:53:30.397Z'
+                      updatedAt: '2022-02-11T18:53:30.397Z'
+                    - event: beneficiary_added
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:53:54.027Z'
+                      updatedAt: '2022-02-11T18:53:54.027Z'
+              examples:
+                valid response:
+                  value:
+                    - event: user_login
+                      target: web
+                      value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+                      createdAt: '2022-02-11T18:36:48.300Z'
+                      updatedAt: '2022-02-11T18:36:48.300Z'
+                    - event: user_kyc
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:53:30.397Z'
+                      updatedAt: '2022-02-11T18:53:30.397Z'
+                    - event: beneficiary_added
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:53:54.027Z'
+                      updatedAt: '2022-02-11T18:53:54.027Z'
+      operationId: get-api-v2-hooks
+      description: 'This returns a list of user hook '
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+    post:
+      summary: ''
+      operationId: post-api-v2-hooks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  action:
+                    type: string
+                    minLength: 1
+                  status:
+                    type: string
+                    minLength: 1
+                  details:
+                    type: string
+                    minLength: 1
+                required:
+                  - action
+                  - status
+                  - details
+                x-examples:
+                  example-1:
+                    action: subscribe
+                    status: success
+                    details: user_login
+              examples:
+                valid response:
+                  value:
+                    action: subscribe
+                    status: success
+                    details: user_login
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                event:
+                  type: string
+                  minLength: 1
+                target:
+                  type: string
+                  minLength: 1
+                value:
+                  type: string
+                  minLength: 1
+              required:
+                - event
+                - target
+                - value
+              x-examples:
+                example-1:
+                  event: user_login
+                  target: web
+                  value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+            examples:
+              add web hook:
+                value:
+                  event: user_login
+                  target: web
+                  value: 'https://webhook.site/680826a5-199e-4455-babc-f47b7f26ee7e'
+              add email hook:
+                value:
+                  event: user_login
+                  target: email
+                  value: myemail@gmail.com
+        description: ''
+      description: Insert a user hook
+    put:
+      summary: ''
+      operationId: put-api-v2-hooks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  action:
+                    type: string
+                    minLength: 1
+                  status:
+                    type: string
+                    minLength: 1
+                  details:
+                    type: string
+                    minLength: 1
+                required:
+                  - action
+                  - status
+                  - details
+                x-examples:
+                  example-1:
+                    action: update
+                    status: success
+                    details: user_login
+              examples:
+                valid response:
+                  value:
+                    action: update
+                    status: success
+                    details: user_login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                event:
+                  type: string
+                  minLength: 1
+                target:
+                  type: string
+                  minLength: 1
+                value:
+                  type: string
+                  minLength: 1
+              required:
+                - event
+                - target
+                - value
+              x-examples:
+                example-1:
+                  event: user_login
+                  target: email
+                  value: usr.tmpq@mailinator.com
+            examples:
+              update user_login/email:
+                value:
+                  event: user_login
+                  target: email
+                  value: usr.tmpq@mailinator.com
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: Explicit update hook on payload request
 components:
   schemas:
     User:
