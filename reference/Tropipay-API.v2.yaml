@@ -4640,6 +4640,8 @@ paths:
                     action: unsubscribe
                     status: success
                     details: user_login
+        '500':
+          $ref: '#/components/responses/ErrorResponse'
       description: Delete or unsubscribe hook by event name and target name
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
