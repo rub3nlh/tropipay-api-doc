@@ -4254,7 +4254,12 @@ paths:
       operationId: post-api-v2-hooks
       responses:
         '200':
-          description: OK
+          description: |
+            In general, valid responses are defined as an object with three elementary properties:
+
+            - **action:** represents the type of operation that was just executed.
+            - **status:** represents the status of the operation, taking value success in case everything goes well.
+            - **details:** displays additional values related to the operation, usually returns the name of the event.
           content:
             application/json:
               schema:
@@ -4398,6 +4403,12 @@ paths:
                   event: user_login
                   target: email
                   value: usr.tmpq@mailinator.com
+        description: |
+          In general, valid responses are defined as an object with three elementary properties:
+
+          - **action:** represents the type of operation that was just executed.
+          - **status:** represents the status of the operation, taking value success in case everything goes well.
+          - **details:** displays additional values related to the operation, usually returns the name of the event.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       description: Explicit update hook on payload request
@@ -4479,7 +4490,8 @@ paths:
       summary: Select user hook
       responses:
         '200':
-          description: OK
+          description: |
+            OK
           content:
             application/json:
               schema:
@@ -4549,7 +4561,8 @@ paths:
       summary: Select user hook by target
       responses:
         '200':
-          description: OK
+          description: |
+            OK
           content:
             application/json:
               schema:
@@ -4609,7 +4622,12 @@ paths:
       operationId: 'delete-hooks-:event_name-:target_name'
       responses:
         '200':
-          description: OK
+          description: |
+            In general, valid responses are defined as an object with three elementary properties:
+
+            - **action:** represents the type of operation that was just executed.
+            - **status:** represents the status of the operation, taking value success in case everything goes well.
+            - **details:** displays additional values related to the operation, usually returns the name of the event.
           content:
             application/json:
               schema:
