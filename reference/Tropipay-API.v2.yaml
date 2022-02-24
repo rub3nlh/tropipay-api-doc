@@ -4533,6 +4533,103 @@ paths:
       description: Select hooks by event name
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  '/hooks/:event_name/:target_name':
+    get:
+      summary: Select hook
+      tags:
+        - hooks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - event
+                    - target
+                    - value
+                    - createdAt
+                    - updatedAt
+                  properties:
+                    event:
+                      type: string
+                      minLength: 1
+                    target:
+                      type: string
+                      minLength: 1
+                    value:
+                      type: string
+                      minLength: 1
+                    createdAt:
+                      type: string
+                      minLength: 1
+                    updatedAt:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - event: user_login
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:43:24.882Z'
+                      updatedAt: '2022-02-11T18:43:24.882Z'
+              examples:
+                valid response:
+                  value:
+                    - event: user_login
+                      target: email
+                      value: myemail@gmail.com
+                      createdAt: '2022-02-11T18:43:24.882Z'
+                      updatedAt: '2022-02-11T18:43:24.882Z'
+      operationId: 'get-hooks-:event_name-:target_name'
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      description: Select hook by event name and target name
+    delete:
+      summary: Delete hook
+      operationId: 'delete-hooks-:event_name-:target_name'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  action:
+                    type: string
+                    minLength: 1
+                  status:
+                    type: string
+                    minLength: 1
+                  details:
+                    type: string
+                    minLength: 1
+                required:
+                  - action
+                  - status
+                  - details
+                x-examples:
+                  example-1:
+                    action: unsubscribe
+                    status: success
+                    details: user_login
+              examples:
+                valid response:
+                  value:
+                    action: unsubscribe
+                    status: success
+                    details: user_login
+      description: Delete or unsubscribe hook by event name and target name
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
