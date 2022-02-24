@@ -4171,8 +4171,9 @@ paths:
       x-internal: true
   /api/v2/hooks:
     get:
-      summary: User hooks
-      tags: []
+      summary: hooks List
+      tags:
+        - hooks
       responses:
         '200':
           description: OK
@@ -4247,7 +4248,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
     post:
-      summary: ''
+      summary: hooks Insert
       operationId: post-api-v2-hooks
       responses:
         '200':
@@ -4322,8 +4323,10 @@ paths:
                   value: myemail@gmail.com
         description: ''
       description: Insert a user hook
+      tags:
+        - hooks
     put:
-      summary: ''
+      summary: hooks update
       operationId: put-api-v2-hooks
       responses:
         '200':
@@ -4392,6 +4395,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       description: Explicit update hook on payload request
+      tags:
+        - hooks
 components:
   schemas:
     User:
