@@ -4559,12 +4559,7 @@ paths:
         '500':
           $ref: '#/components/responses/ErrorResponse'
       operationId: 'get-hooks-:event_name'
-      description: |-
-        Select all hooks subscribed to a given event name. The url for a certain event name would be as follows
-        ```
-        https://tropipay-dev.herokuapp.com/api/v2/hooks/user_login
-        ```
-        For the previous case, all the hooks associated with the *user_login* event, where basically a list, would be obtained where the target and the associated value would change.
+      description: 'Select all hooks subscribed to a given event name. The url for a certain event name would be as follows ``` /api/v2/hooks/user_login ``` For the previous case, all the hooks associated with the *user_login* event, where basically a list, would be obtained where the target and the associated value would change.'
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
