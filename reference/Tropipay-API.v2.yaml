@@ -4546,7 +4546,7 @@ paths:
         - Hooks
   '/hooks/:event_name/:target_name':
     get:
-      summary: Select user hook
+      summary: Select user hook by event name and target name
       responses:
         '200':
           description: OK
