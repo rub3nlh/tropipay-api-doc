@@ -4413,7 +4413,6 @@ paths:
                   target: email
                   value: usr.tmpq@mailinator.com
         description: |-
-
           Events are made up of an object with three fundamental properties *(event, target, value)*:
           * **event:** String that represents the name of the event, you must select from the list of available events, otherwise it will not produce an error but it will not be executed. For get full list of available events see endpoint **GET /api/v2/hooks/events**.
           * **target:** String representing the type of event supported. It is currently available: 'web' (allows to receive information in a url), 'email' (allows to receive information in an email address). 
@@ -4560,7 +4559,12 @@ paths:
         '500':
           $ref: '#/components/responses/ErrorResponse'
       operationId: 'get-hooks-:event_name'
-      description: Select hooks by event name
+      description: |-
+        Select all hooks subscribed to a given event name. The url for a certain event name would be as follows
+        ```
+        https://tropipay-dev.herokuapp.com/api/v2/hooks/user_login
+        ```
+        For the previous case, all the hooks associated with the *user_login* event, where basically a list, would be obtained where the target and the associated value would change.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
