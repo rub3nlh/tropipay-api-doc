@@ -4398,6 +4398,73 @@ paths:
       tags:
         - hooks
     parameters: []
+  /hooks/events:
+    get:
+      summary: Hooks events
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: ''
+                minItems: 1
+                uniqueItems: true
+                items:
+                  type: object
+                  required:
+                    - name
+                    - description
+                  properties:
+                    name:
+                      type: string
+                      minLength: 1
+                    description:
+                      type: string
+                      minLength: 1
+                x-examples:
+                  example-1:
+                    - name: user_signup
+                      description: Event launched once an user completes registration on the TropiPay platform.
+                    - name: user_login
+                      description: Event launched once an user completes login on the TropiPay platform.
+                    - name: user_kyc
+                      description: Event launched once an user completes kyc process.
+                    - name: payment_in_state_change
+                      description: The event is fired once a user changes their status payment in entry method.
+                    - name: payment_out_state_change
+                      description: The event is fired once a user changes their status payment out entry method.
+                    - name: beneficiary_added
+                      description: Launched after new beneficiary is created.
+                    - name: beneficiary_updated
+                      description: Launched after a beneficiary is modified.
+                    - name: beneficiary_deleted
+                      description: Launched after a beneficiary is deleted.
+              examples:
+                valid response:
+                  value:
+                    - name: user_signup
+                      description: Event launched once an user completes registration on the TropiPay platform.
+                    - name: user_login
+                      description: Event launched once an user completes login on the TropiPay platform.
+                    - name: user_kyc
+                      description: Event launched once an user completes kyc process.
+                    - name: payment_in_state_change
+                      description: The event is fired once a user changes their status payment in entry method.
+                    - name: payment_out_state_change
+                      description: The event is fired once a user changes their status payment out entry method.
+                    - name: beneficiary_added
+                      description: Launched after new beneficiary is created.
+                    - name: beneficiary_updated
+                      description: Launched after a beneficiary is modified.
+                    - name: beneficiary_deleted
+                      description: Launched after a beneficiary is deleted.
+      operationId: get-hooks-events
+      description: Hooks events list
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
 components:
   schemas:
     User:
