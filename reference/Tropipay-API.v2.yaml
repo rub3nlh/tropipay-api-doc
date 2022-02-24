@@ -4171,9 +4171,7 @@ paths:
       x-internal: true
   /hooks:
     get:
-      summary: hooks List
-      tags:
-        - hooks
+      summary: Get user hooks list
       responses:
         '200':
           description: OK
@@ -4247,8 +4245,10 @@ paths:
       description: 'This returns a list of user hook '
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Hooks
     post:
-      summary: hooks Insert
+      summary: Inser user hook
       operationId: post-api-v2-hooks
       responses:
         '200':
@@ -4324,9 +4324,9 @@ paths:
         description: ''
       description: Insert a user hook
       tags:
-        - hooks
+        - Hooks
     put:
-      summary: hooks update
+      summary: update user hook
       operationId: put-api-v2-hooks
       responses:
         '200':
@@ -4396,12 +4396,13 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       description: Explicit update hook on payload request
       tags:
-        - hooks
+        - Hooks
     parameters: []
   /hooks/events:
     get:
-      summary: Hooks events
-      tags: []
+      summary: Get user hook event list
+      tags:
+        - Hooks
       responses:
         '200':
           description: OK
@@ -4462,14 +4463,12 @@ paths:
                     - name: beneficiary_deleted
                       description: Launched after a beneficiary is deleted.
       operationId: get-hooks-events
-      description: Hooks events list
+      description: 'Get user hook event list '
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
   '/hooks/:event_name':
     get:
-      summary: Select
-      tags:
-        - hooks
+      summary: Select user hook
       responses:
         '200':
           description: OK
@@ -4533,11 +4532,11 @@ paths:
       description: Select hooks by event name
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Hooks
   '/hooks/:event_name/:target_name':
     get:
-      summary: Select hook
-      tags:
-        - hooks
+      summary: Select user hook
       responses:
         '200':
           description: OK
@@ -4591,8 +4590,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       description: Select hook by event name and target name
+      tags:
+        - Hooks
     delete:
-      summary: Delete hook
+      summary: Delete user hook
       operationId: 'delete-hooks-:event_name-:target_name'
       responses:
         '200':
