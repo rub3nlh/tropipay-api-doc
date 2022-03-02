@@ -1731,7 +1731,7 @@ paths:
     parameters: []
   /movements/in/charge_tokenized_card:
     post:
-      summary: Create a new OTA Virtual Card Charge
+      summary: Create a Tokenized Charge
       operationId: post-movements-in-charge
       responses:
         '200':
