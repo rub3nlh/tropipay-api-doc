@@ -1729,6 +1729,250 @@ paths:
       tags:
         - Movements
     parameters: []
+  /movements/in/charge_tokenized_card:
+    post:
+      summary: Create a new OTA Virtual Card Charge
+      operationId: post-movements-in-charge
+      responses:
+        '200':
+          description: 'Here we have an example of a valid response: '
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  id:
+                    type: number
+                  reference:
+                    type: string
+                    minLength: 1
+                  bankOrderCode:
+                    type: string
+                    minLength: 1
+                  provider:
+                    type: number
+                  userId:
+                    type: string
+                    minLength: 1
+                  bookingDate:
+                    type: string
+                    minLength: 1
+                  days: {}
+                  amount:
+                    type: number
+                  currency:
+                    type: string
+                    minLength: 1
+                  originalCurrencyAmount:
+                    type: string
+                    minLength: 1
+                  destinationAmount:
+                    type: string
+                    minLength: 1
+                  destinationCurrency:
+                    type: string
+                    minLength: 1
+                  conversionRate:
+                    type: number
+                  depositaccountId: {}
+                  state:
+                    type: number
+                  serviceId:
+                    type: number
+                  paymentcardId: {}
+                  expirationDate: {}
+                  movementTypeId:
+                    type: number
+                  transactionId: {}
+                  isInternal:
+                    type: boolean
+                  agent:
+                    type: string
+                    minLength: 1
+                  ip:
+                    type: string
+                    minLength: 1
+                  reasonId:
+                    type: number
+                  reasonDes:
+                    type: string
+                    minLength: 1
+                  errorReason: {}
+                  notificationUrl: {}
+                  riskFlag:
+                    type: number
+                  riskScore:
+                    type: number
+                  createdAt:
+                    type: string
+                    minLength: 1
+                  updatedAt:
+                    type: string
+                    minLength: 1
+                  cardTokenId: {}
+                  signature:
+                    type: string
+                    minLength: 1
+                required:
+                  - id
+                  - reference
+                  - bankOrderCode
+                  - provider
+                  - userId
+                  - bookingDate
+                  - amount
+                  - currency
+                  - originalCurrencyAmount
+                  - destinationAmount
+                  - destinationCurrency
+                  - conversionRate
+                  - state
+                  - serviceId
+                  - movementTypeId
+                  - isInternal
+                  - agent
+                  - ip
+                  - reasonId
+                  - reasonDes
+                  - riskFlag
+                  - riskScore
+                  - createdAt
+                  - updatedAt
+                  - signature
+                x-examples:
+                  example-1:
+                    id: 376353
+                    reference: '835502761496'
+                    bankOrderCode: '309654157120'
+                    provider: 4
+                    userId: 83f280b0-6708-11ec-b47e-2b40618a7d41
+                    bookingDate: '2022-03-02T12:20:23.993Z'
+                    days: null
+                    amount: 1800
+                    currency: EUR
+                    originalCurrencyAmount: '1800'
+                    destinationAmount: '1746'
+                    destinationCurrency: EUR
+                    conversionRate: 1
+                    depositaccountId: null
+                    state: 5
+                    serviceId: 40
+                    paymentcardId: null
+                    expirationDate: null
+                    movementTypeId: 2
+                    transactionId: null
+                    isInternal: false
+                    agent: TROPIPAY
+                    ip: 2.136.153.240
+                    reasonId: 1
+                    reasonDes: Arreglo de vivienda
+                    errorReason: null
+                    notificationUrl: null
+                    riskFlag: 0
+                    riskScore: 0
+                    createdAt: '2022-03-02T12:20:23.993Z'
+                    updatedAt: '2022-03-02T12:20:29.194Z'
+                    cardTokenId: null
+                    signature: 07ad5c8f339ec44f1ba842f79753b632e5033ce8c68450e328c6ee7a64d96c8f
+              examples:
+                example-1:
+                  value:
+                    id: 376353
+                    reference: '835502761496'
+                    bankOrderCode: '309654157120'
+                    provider: 4
+                    userId: 83f280b0-6708-34ec-b47e-2b40418a7d41
+                    bookingDate: '2022-01-02T12:20:23.993Z'
+                    days: null
+                    amount: 1800
+                    currency: EUR
+                    originalCurrencyAmount: '1800'
+                    destinationAmount: '1746'
+                    destinationCurrency: EUR
+                    conversionRate: 1
+                    depositaccountId: null
+                    state: 5
+                    serviceId: 40
+                    paymentcardId: null
+                    expirationDate: null
+                    movementTypeId: 2
+                    transactionId: null
+                    isInternal: false
+                    agent: TROPIPAY
+                    ip: 2.192.133.321
+                    reasonId: 1
+                    reasonDes: Arreglo de vivienda
+                    errorReason: null
+                    notificationUrl: null
+                    riskFlag: 0
+                    riskScore: 0
+                    createdAt: '2022-01-02T12:20:23.993Z'
+                    updatedAt: '2022-01-02T12:20:29.194Z'
+                    cardTokenId: null
+                    signature: 07ad5c8f339ec44f1ba842f79753b632e5033ce8c68450e328c6ee7a64d96c8f
+        '':
+          description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              x-examples:
+                example-1:
+                  currency: EUR
+                  originalCurrencyAmount: 1800
+                  cardTokenId: TOKEN_ID
+                  cofReason: DEFAULT
+                  reasonId: 1
+                  reasonDes: Arreglo de vivienda
+                  reference: '835502761496'
+              properties:
+                currency:
+                  type: string
+                  minLength: 1
+                originalCurrencyAmount:
+                  type: number
+                cardTokenId:
+                  type: string
+                  minLength: 1
+                cofReason:
+                  type: string
+                  minLength: 1
+                reasonId:
+                  type: number
+                reasonDes:
+                  type: string
+                  minLength: 1
+                reference:
+                  type: string
+                  minLength: 1
+              required:
+                - currency
+                - originalCurrencyAmount
+                - cardTokenId
+                - reasonId
+                - reasonDes
+                - reference
+            examples:
+              example-1:
+                value:
+                  currency: EUR
+                  originalCurrencyAmount: 1800
+                  cardTokenId: d8e31dae-c7e9-423f-b0bc-b6c870f1c9c8
+                  reasonId: 1
+                  reasonDes: Arreglo de vivienda
+                  reference: '835502761496'
+        description: 'Here we have an example of a valid request: '
+      description: |
+        ### Charge a Tokenized Card:
+        Create a charge for a tokenized Credit Card. The cardTokenId is obtained from the callback of a successfully previous charge.
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      tags:
+        - Movements
+    parameters: []
   /movements/in/paylink:
     post:
       summary: Create a new PayLink Charge
