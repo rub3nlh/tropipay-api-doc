@@ -1967,7 +1967,9 @@ paths:
         description: 'Here we have an example of a valid request: '
       description: |
         ### Charge a Tokenized Card:
-        Create a charge for a tokenized Credit Card. The cardTokenId is obtained from the callback of a successfully previous charge.
+        Create a charge for a tokenized Credit Card. 
+
+        > Note: The cardTokenId is obtained from the callback of a successfully previous charge.
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
