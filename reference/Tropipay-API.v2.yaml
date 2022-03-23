@@ -4215,6 +4215,9 @@ paths:
                     countryId: 1
                     termsAndConditions: 'true'
                   directPayment: true
+                  paymentMethods:
+                    - EXT
+                    - TPP
               Example without Client Data:
                 value:
                   reference: my-reference
