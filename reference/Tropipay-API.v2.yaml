@@ -96,6 +96,12 @@ paths:
         description: Patch user properties to update.
       tags:
         - Users
+    post:
+      summary: ''
+      operationId: post-users-userId
+      responses:
+        '200':
+          description: OK
   /merchant/hooks:
     get:
       summary: Get a list of all events subscribed with Hooks
