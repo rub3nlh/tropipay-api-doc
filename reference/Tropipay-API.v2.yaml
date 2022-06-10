@@ -4943,12 +4943,14 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                orderCode:
-                  type: string
               x-examples:
                 example-1:
                   orderCode: '{transfer-order-code}'
+              properties:
+                orderCode:
+                  type: string
+              required:
+                - orderCode
             examples:
               example-1:
                 value:
