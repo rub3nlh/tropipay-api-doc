@@ -4956,7 +4956,7 @@ paths:
               example-2:
                 value:
                   orderCode: TPP-jsjldk
-        description: ''
+        description: '* orderCode : it is the transaction id, you can look on Details in your History at the Tropipay web app'
       parameters:
         - schema:
             type: string
