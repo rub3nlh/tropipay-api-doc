@@ -971,6 +971,7 @@ paths:
                 - callingCode
                 - phone
                 - lang
+            examples: {}
     parameters: []
   /deposit_accounts:
     get:
@@ -2710,6 +2711,44 @@ paths:
           description: The currency to send
           required: true
       description: 'This allows you to fetch costs according to the destination country, amount and currency to send. It is useful to build an online calculator to show costs to clients'
+  /movements/in/refund:
+    post:
+      summary: make refund
+      tags: []
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: operation not found
+        '500':
+          description: We can not refund that operation. Make sure your operation is paid
+      operationId: post-movements-in-refund
+      description: |-
+        ### Refund your money back!!!
+        You can use this endpoint to make a refund request. This will notify our Support Agent, they will contact you as soon as possible to confirm or reject your refund (make sure you have enought funds in your account). We are planning future changes to make this operation semi-automated, so it will be subject to change, but right now you can use it without any problem
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {user-token}'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  orderCode: string
+              properties:
+                orderCode:
+                  type: string
+            examples:
+              example-1:
+                value:
+                  orderCode: TPP-dkld
+        description: ''
 components:
   schemas:
     User:
