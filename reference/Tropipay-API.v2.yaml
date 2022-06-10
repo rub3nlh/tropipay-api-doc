@@ -4922,7 +4922,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Hooks
-  movements/in/refund:
+  /movements/in/refund:
     post:
       summary: Make a refund
       tags:
