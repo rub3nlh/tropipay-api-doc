@@ -4922,7 +4922,7 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Hooks
-  /in/refund:
+  movements/in/refund:
     post:
       summary: Make a refund
       tags:
@@ -4964,6 +4964,7 @@ paths:
           name: Authorization
           description: 'Bearer {user-token}'
           required: true
+    parameters: []
 components:
   schemas:
     User:
