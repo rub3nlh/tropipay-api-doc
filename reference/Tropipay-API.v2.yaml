@@ -4922,6 +4922,48 @@ paths:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
         - Hooks
+  /in/refund:
+    post:
+      summary: Make a refund
+      tags:
+        - Movements
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Operation Not Found
+        '500':
+          description: Can not refund this operation
+      operationId: post-in-refund
+      description: |-
+        ### Refund your money back!!!
+        You can use this endpoint to make a refund request. This will notify our Support Agent, they will contact you as soon as possible to confirm or reject your refund (make sure you have enought funds in your account). We are planning future changes to make this operation semi-automated, so it will be subject to change, but right now you can use it without any problem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderCode:
+                  type: string
+              x-examples:
+                example-1:
+                  orderCode: '{transfer-order-code}'
+            examples:
+              example-1:
+                value:
+                  orderCode: '{transfer-order-code}'
+              example-2:
+                value:
+                  orderCode: TPP-jsjldk
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {user-token}'
+          required: true
 components:
   schemas:
     User:
