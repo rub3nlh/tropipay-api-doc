@@ -5466,7 +5466,7 @@ components:
           items:
             type: string
       x-tags:
-        - Segurity
+        - Security
       title: ''
     PaymentCard:
       description: ''
