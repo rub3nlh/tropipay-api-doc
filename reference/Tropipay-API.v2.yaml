@@ -4172,6 +4172,9 @@ paths:
                       - EXT
                       - TPP
                     example: '[''TPP'']'
+                saveToken:
+                  type: boolean
+                  default: false
               required:
                 - reference
                 - concept
