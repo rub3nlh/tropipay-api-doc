@@ -4966,6 +4966,7 @@ paths:
           name: Authorization
           description: 'Bearer {user-token}'
           required: true
+      x-internal: false
     parameters: []
 components:
   schemas:
