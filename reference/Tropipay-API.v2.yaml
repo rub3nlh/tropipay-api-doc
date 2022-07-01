@@ -4976,7 +4976,7 @@ paths:
     parameters: []
   '/paymentcards/:id':
     get:
-      summary: Your GET endpoint
+      summary: Payment Cards by Id
       responses:
         '200':
           description: OK
