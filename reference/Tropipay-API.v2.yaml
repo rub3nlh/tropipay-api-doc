@@ -3087,6 +3087,22 @@ paths:
             schema:
               description: ''
               type: object
+              x-examples:
+                example-1:
+                  type: 1
+                  name: gitlab.my
+                  username: 991aea6a4587040942b8599a6d8fbebb
+                  password: 991aea6a458704094254545454545454
+                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
+                  public: ''
+                  prefix: Bearer
+                  domain: .*tropipay.com.* www.demo.cuuuu
+                  status: 2
+                  expiration: '2021-08-20'
+                  refresh: 1d
+                  redirect: 'https://my.domain.com/oauth'
+                  groupId: 24
+                  ownerId: 21
               properties:
                 type:
                   type: number
@@ -3110,6 +3126,7 @@ paths:
                 domain:
                   type: string
                   minLength: 1
+                  description: 'Example: 12.12.23.0/16 for a ip_range and Example: 12.12.23.0 for a specific ip. You still can use domain format. Example : www.example.com. Do not use 1.12.23.* format any more'
                 status:
                   type: number
                 expiration:
@@ -3140,22 +3157,6 @@ paths:
                 - redirect
                 - groupId
                 - ownerId
-              x-examples:
-                example-1:
-                  type: 1
-                  name: gitlab.my
-                  username: 991aea6a4587040942b8599a6d8fbebb
-                  password: 991aea6a458704094254545454545454
-                  secret: Bx*K3eVr=We'HUK5aNp4XwQE?h=4#
-                  public: ''
-                  prefix: Bearer
-                  domain: .*tropipay.com.* www.demo.cuuuu
-                  status: 2
-                  expiration: '2021-08-20'
-                  refresh: 1d
-                  redirect: 'https://my.domain.com/oauth'
-                  groupId: 24
-                  ownerId: 21
             examples:
               'Automatic password generation ':
                 value:
@@ -3189,6 +3190,7 @@ paths:
                   contacts:
                     - support@gitlab.lol.com
                     - help@gitlab.lol.com
+        description: ''
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
       tags:
