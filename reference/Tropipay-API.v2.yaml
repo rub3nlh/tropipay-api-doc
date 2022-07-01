@@ -4421,6 +4421,8 @@ paths:
                   directPayment: false
       deprecated: true
       x-internal: true
+      tags:
+        - Payment Cards
   /hooks:
     get:
       summary: Get user hooks list
@@ -4970,6 +4972,131 @@ paths:
           description: 'Bearer {user-token}'
           required: true
     parameters: []
+  '/paymentcards/:id':
+    get:
+      summary: Your GET endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  reference:
+                    type: string
+                  concept:
+                    type: string
+                  description:
+                    type: string
+                  amount:
+                    type: integer
+                  currency:
+                    type: string
+                  singleUse:
+                    type: boolean
+                  reasonId:
+                    type: integer
+                  userId:
+                    type: string
+                  qrImage:
+                    type: 'null'
+                  shortUrl:
+                    type: string
+                  state:
+                    type: integer
+                  expirationDays:
+                    type: integer
+                  lang:
+                    type: string
+                  urlSuccess:
+                    type: string
+                  urlFailed:
+                    type: string
+                  urlNotification:
+                    type: string
+                  expirationDate:
+                    type: 'null'
+                  serviceDate:
+                    type: 'null'
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                x-examples:
+                  example-1:
+                    id: 07bcff30-44fe-11ea-8ec4-d35783b2188a
+                    reference: 2fe88rq17vak63ootcw
+                    concept: Menu medio dia
+                    description: |-
+                      primer 
+                      sedd
+                      erer
+                    amount: 2000
+                    currency: USD
+                    singleUse: false
+                    reasonId: 3
+                    userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                    qrImage: null
+                    shortUrl: 'http://bit.ly/37O5but'
+                    state: 1
+                    expirationDays: 0
+                    lang: es
+                    urlSuccess: ''
+                    urlFailed: ''
+                    urlNotification: ''
+                    expirationDate: null
+                    serviceDate: null
+                    createdAt: '2020-02-01T14:20:43.044Z'
+                    updatedAt: '2020-02-01T14:20:43.532Z'
+              examples:
+                example-1:
+                  value:
+                    id: 07bcff30-44fe-11ea-8ec4-d35783b2188a
+                    reference: 2fe88rq17vak63ootcw
+                    concept: Menu medio dia
+                    description: |-
+                      primer 
+                      sedd
+                      erer
+                    amount: 2000
+                    currency: USD
+                    singleUse: false
+                    reasonId: 3
+                    userId: c01af560-c7f4-11e8-849a-1196b4225e29
+                    qrImage: null
+                    shortUrl: 'http://bit.ly/37O5but'
+                    state: 1
+                    expirationDays: 0
+                    lang: es
+                    urlSuccess: ''
+                    urlFailed: ''
+                    urlNotification: ''
+                    expirationDate: null
+                    serviceDate: null
+                    createdAt: '2020-02-01T14:20:43.044Z'
+                    updatedAt: '2020-02-01T14:20:43.532Z'
+      operationId: 'get-paymentcards-:id'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+          description: 'Bearer {token}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples: {}
+        description: ''
+      description: 'Shows a stored paymentcard by id, created by user'
+      tags:
+        - Payment Cards
 components:
   schemas:
     User:
