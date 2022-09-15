@@ -6128,6 +6128,7 @@ components:
               limit:
                 type: number
                 description: The max number of objects to fetch
+                maximum: 500
               offset:
                 type: number
                 description: An offset number to start fetching from. Defaults to 0
