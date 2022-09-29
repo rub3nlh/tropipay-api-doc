@@ -5099,6 +5099,224 @@ paths:
       description: 'Shows a stored paymentcard by id, created by user'
       tags:
         - Payment Cards
+  /paymentcards/mediation:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-paymentcards-mediation
+    post:
+      summary: Creating a Mediation Payment Card
+      operationId: post-paymentcards-mediation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flowId:
+                    type: integer
+                  amount:
+                    type: integer
+                  currency:
+                    type: string
+                  concept:
+                    type: string
+                  description:
+                    type: string
+                  reference:
+                    type: string
+                  singleUse:
+                    type: boolean
+                  lang:
+                    type: string
+                  seller:
+                    type: object
+                    properties:
+                      sellerId:
+                        type: integer
+                      type:
+                        type: integer
+                      email:
+                        type: string
+                  paymentUrl:
+                    type: string
+                x-examples:
+                  example-1:
+                    flowId: 32312323
+                    amount: 5000
+                    currency: EUR
+                    concept: Celular
+                    description: Celular nuevo
+                    reference: cobro_original_1
+                    singleUse: false
+                    lang: es
+                    seller:
+                      sellerId: 34343
+                      type: 1
+                      email: someuser@email.com
+                    paymentUrl: 'https://tppay.me/23kj34'
+              examples:
+                Response Example without buyer:
+                  value:
+                    flowId: 91a50330-01e2-11ec-b91b-df6f3b86a033
+                    amount: 5000
+                    currency: EUR
+                    concept: Celular
+                    description: Celular nuevo
+                    reference: original_reference
+                    singleUse: false
+                    lang: es
+                    seller:
+                      sellerId: 45443
+                      type: 1
+                      email: someuser@email.com
+                    paymentUrl: 'https://tppay.me/23kj34'
+                Response Example with buyer:
+                  value:
+                    flowId: '32312323'
+                    amount: 5000
+                    currency: EUR
+                    concept: Playa
+                    description: Playa
+                    reference: cobro_original_1
+                    singleUse: false
+                    lang: en
+                    productUrl*: 'https://mercado.com/producto1.html'
+                    buyer:
+                      saveToken: false
+                      name: Jose
+                      lastName: Hdez
+                      email: xyz_lachjette@web.de
+                      countryISO: ES
+                      phone: '55161576'
+                      address: Calle x
+                    seller:
+                      sellerId: '34343 "type":1'
+                      email: someuser@email.com
+                    paymentUrl: 'https://tppay.me/23kj34'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {user-token}'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: Amount in cents
+                currency:
+                  type: string
+                  description: 'Currency ISO Code (EUR, USD)'
+                concept:
+                  type: string
+                description:
+                  type: string
+                reference:
+                  type: string
+                  description: reference in your system
+                singleUse:
+                  type: boolean
+                  description: true - payment link is closed after use it
+                lang:
+                  type: string
+                  description: 'Link Payment Language (es,en,pt)'
+                productUrl:
+                  type: string
+                buyer:
+                  type: object
+                  description: If the buyer param exist and it is different of null the payment flow will skip the form asking for buyer data.
+                  properties:
+                    name:
+                      type: string
+                    lastName:
+                      type: string
+                    email:
+                      type: string
+                    countryISO:
+                      type: string
+                      description: |-
+                        Country ISO Code 
+                        examples: ES, US
+                    phone:
+                      type: string
+                    address:
+                      type: string
+                    saveToken:
+                      type: boolean
+                  required:
+                    - name
+                    - lastName
+                    - email
+                    - countryISO
+                    - phone
+                    - address
+                seller:
+                  type: object
+                  properties:
+                    sellerId:
+                      type: string
+                    type:
+                      type: integer
+                      description: '1: Tropipay user'
+                    email:
+                      type: string
+                      description: The email of the seller with which are registered in Tropipay
+              required:
+                - amount
+                - currency
+                - concept
+                - reference
+                - singleUse
+                - lang
+            examples:
+              Example without buyer:
+                value:
+                  amount: 5000
+                  currency: EUR
+                  concept: Celular
+                  description: Celular nuevo
+                  reference: '458424548'
+                  singleUse: false
+                  lang: es
+                  productUrl: 'https://www.google.es'
+                  buyer: null
+                  seller:
+                    sellerId: null
+                    type: 1
+                    email: someuser@email.com
+              Example with Buyer:
+                value:
+                  amount: 5000
+                  currency: EUR
+                  concept: Playa
+                  description: Playa
+                  reference: cobro_original_1
+                  singleUse: false
+                  lang: en
+                  productUrl*: 'https://mercado.com/producto1.html'
+                  buyer:
+                    saveToken: false
+                    name: Jose
+                    lastName: Hdez
+                    email: xyz_lachjette@web.de
+                    countryISO: ES
+                    phone: '55161576'
+                    address: Calle x
+                  seller:
+                    sellerId: null
+                    type: 1
+                    email: someuser@email.com
+      description: |-
+        <b>Only for Business accounts</b><br>
+        This endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.
 components:
   schemas:
     User:
