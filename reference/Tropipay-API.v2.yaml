@@ -5100,11 +5100,6 @@ paths:
       tags:
         - Payment Cards
   /paymentcards/mediation:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-paymentcards-mediation
     post:
       summary: Creating a Mediation Payment Card
       operationId: post-paymentcards-mediation
@@ -5317,6 +5312,8 @@ paths:
       description: |-
         <b>Only for Business accounts</b><br>
         This endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.
+      tags:
+        - Payment Cards
 components:
   schemas:
     User:
