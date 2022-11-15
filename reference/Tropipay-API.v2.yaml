@@ -5100,6 +5100,11 @@ paths:
       tags:
         - Payment Cards
   /paymentcards/mediation:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-paymentcards-mediation
     post:
       summary: Creating a Mediation Payment Card
       operationId: post-paymentcards-mediation
@@ -5264,6 +5269,15 @@ paths:
                     email:
                       type: string
                       description: The email of the seller with which are registered in Tropipay
+                feePercent:
+                  type: integer
+                  description: 'Percent in cents, example: for 1,5%, 150'
+                feeFixed:
+                  type: integer
+                  description: 'Fee fixed in cents, 1,50 cents: 150'
+                sendMail:
+                  type: boolean
+                  description: If true Tropipay send emails to buyer and seller
               required:
                 - amount
                 - currency
@@ -5287,6 +5301,9 @@ paths:
                     sellerId: null
                     type: 1
                     email: someuser@email.com
+                  feePercent: 600
+                  feeFixed: 0
+                  sendMail: false
               Example with Buyer:
                 value:
                   amount: 5000
@@ -5309,11 +5326,12 @@ paths:
                     sellerId: null
                     type: 1
                     email: someuser@email.com
+                  feePercent: 600
+                  feeFixed: 0
+                  sendMail: false
       description: |-
         <b>Only for Business accounts</b><br>
         This endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.
-      tags:
-        - Payment Cards
 components:
   schemas:
     User:
