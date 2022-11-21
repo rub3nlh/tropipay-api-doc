@@ -448,6 +448,117 @@ paths:
           }
         }
         ```
+        Response KO
+
+        ```json
+        {
+          "status": "KO",
+          "data": {
+            "id": 379907,
+            "reference": "1668998014608",
+            "bankOrderCode": "149836443249",
+            "provider": 4,
+            "userId": "5272c180-02b2-11ed-80bf-8178c154af1a",
+            "bookingDate": "2022-11-21T02:33:34.614Z",
+            "days": null,
+            "amount": 10000,
+            "currency": "EUR",
+            "originalCurrencyAmount": "10000",
+            "destinationAmount": "9605",
+            "destinationCurrency": "EUR",
+            "conversionRate": 1,
+            "depositaccountId": null,
+            "state": 4,
+            "serviceId": 2,
+            "paymentcardId": "8666a580-6944-11ed-b4c6-45a858a82ca5",
+            "expirationDate": "2022-11-22T02:34:00.000Z",
+            "movementTypeId": 2,
+            "transactionId": null,
+            "isInternal": false,
+            "agent": "TROPIPAY",
+            "ip": "1.1.1.1",
+            "reasonId": null,
+            "reasonDes": null,
+            "errorReason": null,
+            "notificationUrl": null,
+            "riskFlag": 0,
+            "riskScore": 0,
+            "createdAt": "2022-11-21T02:33:34.615Z",
+            "updatedAt": "2022-11-21T02:34:55.434Z",
+            "charges": [
+              {
+                "clientName": "asdf",
+                "clientLastName": "asdf",
+                "clientAddress": "asdf",
+                "clientPhone": "534321",
+                "clientEmail": "w@gmail.copm",
+                "id": 252288,
+                "orderCode": "1668998114608",
+                "cardPan": "0004",
+                "cardBin": "454881",
+                "cardExpirationDate": "2023-11-01T00:00:00.000Z",
+                "cardHolderName": "asdf",
+                "saveToken": false,
+                "amount": 10000,
+                "currency": "978",
+                "userId": "5272c180-02b2-11ed-80bf-8178c154qf1a",
+                "bookingId": 379907,
+                "errorReason": "0:Ok",
+                "state": 4,
+                "serviceId": 2,
+                "cardCountry": "DE",
+                "cardBrand": "VISA",
+                "cardCategory": "SecureTrading Test Issuer1",
+                "cardType": "",
+                "card3DSVersion": "1.0.2",
+                "clientIp": "1.1.11.101",
+                "clientTC": "true",
+                "clientCountryId": 25,
+                "riskScore": 0,
+                "createdAt": "2022-11-21T02:33:34.626Z",
+                "updatedAt": "2022-11-21T02:34:55.426Z"
+              }
+            ],
+            "paymentcard": {
+              "id": "8666a580-6944-11ed-b4c6-45a858a81da5",
+              "credentialId": null,
+              "reference": "556ma4laq68c14",
+              "concept": "test",
+              "description": "test",
+              "amount": 10000,
+              "currency": "EUR",
+              "singleUse": false,
+              "reasonId": 2,
+              "reasonDes": null,
+              "userId": "5272c180-02b2-11ed-80bf-8178c154af1a",
+              "qrImage": null,
+              "shortUrl": "https://tppay.me/laq18b9s",
+              "state": 1,
+              "expirationDays": 1,
+              "lang": "es",
+              "urlSuccess": "https://mi-negocio.com/pago-ok",
+              "urlFailed": "https://mi-negocio.com/pago-ko",
+              "urlNotification":"https://mi-negocio.com/notify",
+              "expirationDate": null,
+              "serviceDate": null,
+              "hasClient": false,
+              "paymentUrl": null,
+              "favorite": null,
+              "saveToken": false,
+              "createdAt": "2022-11-21T02:30:55.192Z",
+              "updatedAt": "2022-11-21T02:30:55.781Z"
+            },
+            "cardTokenId": null,
+            "signature": "14f73aea583cd30edf6ca1e1deb450af0ffbda1760e253febdac94db95c58f68",
+            "clientData": {
+              "clientName": "asdf",
+              "clientLastName": "asdf",
+              "clientAddress": "asdf",
+              "clientEmail": "w@gmail.copm"
+            }
+          }
+        }
+        ```
       requestBody:
         content:
           application/json:
