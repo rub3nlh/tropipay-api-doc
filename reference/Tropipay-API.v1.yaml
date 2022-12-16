@@ -102,6 +102,10 @@ paths:
         With this endpoint you will receive a "token" parameter in the response. 
 
         You must use this parameter in the Header of all request you made for a Bearer authentication. 
+         </br>
+        email : testdev@mailinator.com
+        </br>
+        pass : 4321REWq
 
         > Header: { "Authorization" : "Bearer {token}" } 
   /paymentcards:
