@@ -99,13 +99,17 @@ paths:
         - Authentication
       description: |-
         #### Using your Token for Authentication
-        With this endpoint you will receive a "token" parameter in the response. 
-
-        You must use this parameter in the Header of all request you made for a Bearer authentication. 
+        You can use the follow email and password in dev enviroment for testing purpose
          </br>
         email : testdev@mailinator.com
         </br>
         pass : 4321REWq
+        <br/>
+
+        With this endpoint you will receive a "token" parameter in the response. 
+
+        You must use this parameter in the Header of all request you made for a Bearer authentication. 
+
 
         > Header: { "Authorization" : "Bearer {token}" } 
   /paymentcards:
