@@ -5100,11 +5100,6 @@ paths:
       tags:
         - Payment Cards
   /paymentcards/mediation:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-paymentcards-mediation
     post:
       summary: Creating a Mediation Payment Card
       operationId: post-paymentcards-mediation
@@ -5278,6 +5273,18 @@ paths:
                 sendMail:
                   type: boolean
                   description: If true Tropipay send emails to buyer and seller
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                paymentMethods:
+                  type: array
+                  description: 'Sets which payment methods will be available for paying this paymentCard. Possible options are: ''EXT'' for external cards (visa, mastercard, etc) and ''TPP'' for payment with tropipay balance. If missing, all payment methods will be available to users'
+                  items:
+                    type: string
+                    enum:
+                      - EXT
+                      - TPP
               required:
                 - amount
                 - currency
@@ -5329,9 +5336,9 @@ paths:
                   feePercent: 600
                   feeFixed: 0
                   sendMail: false
-      description: |-
-        <b>Only for Business accounts</b><br>
-        This endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.
+      description: "<b>Only for Business accounts</b><br>\nThis endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.\n\nYou can subscribe to events through hooks, and receive notifications for each action related to mediated paymentcards, there are three events for this:\n<ul>\n  <li>transaction_guarded: triggered when a paymentcard is paid\n  <br>Example: \"state\": {\n\t\"id\": \"123\",\n\t\"value\": \"9\",\n\t\"bookingId\": 378297,\n\t\"description\": \"UPDATESTATE:PAYLINK:BUYER\",\n\t\"updatedAt\": \"2022-12-13T12:35:38.205Z\",\n\t\"createdAt\": \"2022-12-13T12:35:38.205Z\",\n\t\"slug\": \"null\"\n},\n\"event\": 9,\n\"ownerType\": 3,\n\"ownerId\": 250680,\n\"bankOrderCode\": \"TX1670934938165\",\n\"amount\": 5000,\n\"serviceId\": 80,\n\"releaseCode\": \"289463\",\n\"urlSeller\": \"https://qa-space.herokuapp.com/transaction/mediation_status/Mzc4Mjk3c2VsbGVy\",\n\"urlBuyer\": \"https://qa-space.herokuapp.com/transaction/mediation_status/Mzc4Mjk3YnV5ZXI=\",\n\"paymentMethod\": \"EXT\",\n\"paymentcard\": {\n\t\"paymentcardId\": \"100a0260-7ac9-11ed-872e-679fbffa261d\",\n\t\"reference\": \"458424548\",\n\t\"concept\": \"Celular\",\n\t\"productUrl\": \"https://www.google.es\"\n},\n\"sendMail\": false,\n\"seller\": {\n\t\"name\": \"KELSY PAMELA\",\n\t\"surname\": \"CABELLO SOLORZANO\",\n\t\"address\": \"asd\",\n\t\"phone\": \"+34123456\",\n\t\"email\": \"seller@email.com\",\n\t\"id\": 59040\n},\n\"buyer\": {\n\t\"name\": \"El comprador Pedro\",\n\t\"surname\": \"Apellido de Pedro\",\n\t\"address\": \"direccion 01\",\n\t\"phone\": \"610444444\",\n\t\"email\": \"buyer@email.com\",\n\t\"id\": 250680\n}</li>\n  <li>transaction_cancelled: Triggered when a paymentcard is canceled</li>\n  <li>transaction_charged: Triggered when a paymentcard is released</li>\n</ul>"
+      tags:
+        - Payment Cards
 components:
   schemas:
     User:
