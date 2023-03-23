@@ -2831,7 +2831,6 @@ paths:
         content:
           application/json:
             schema:
-              description: ''
               type: object
               x-examples:
                 example-1:
@@ -2839,22 +2838,29 @@ paths:
                   dateFrom: '2021-01-05 02:00'
                   dateTo: '2021-04-03 09:00'
               properties:
-                criteria:
-                  type: string
-                  minLength: 1
                 dateFrom:
                   type: string
                   minLength: 1
                 dateTo:
                   type: string
                   minLength: 1
+                depositAccount:
+                  type: number
+                  x-stoplight:
+                    id: 5dnds8c97xwmj
+                format:
+                  type: string
+                  x-stoplight:
+                    id: xlk4r0doo048e
+                  description: This field can be 'csv' or 'pdf'
         description: |
-          To filter the list of movements to download, you can use three different optional fields:
-          - filter by text contained in the reference  of the movement
+          To filter the CSV list of movements to download, you can use two different optional fields:
           - Initial Date to fetch movements from that date on
           - End Date to fetch movements up to that date
-          All combinations are allowed. (you can filter using one, two or all fields)
-      description: 'This endpoint schedules sending an email to the email address of the user with a CSV list of the movements according to the specified filters. '
+          To filter the PDF list of movements to download, you can use the two criteria above and also the following criteria:
+          - The id of the beneficiary. The list will show the movements corresponding to that beneficiary
+          All combinations are allowed. (you can filter using one, two, all fields or none)
+      description: 'This endpoint schedules sending an email to the email address of the user with a CSV or PDF list of the movements according to the specified filters. If you do not define the type of file you want to receive, by default it will be CSV.'
       tags:
         - Movements
   /credential:
