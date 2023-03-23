@@ -4066,7 +4066,6 @@ paths:
         content:
           application/json:
             schema:
-              description: ''
               type: object
               x-examples:
                 example-1:
@@ -4139,7 +4138,6 @@ paths:
                     - address
                     - phone
                     - email
-                    - countryId
                     - termsAndConditions
                   properties:
                     name:
@@ -4159,6 +4157,12 @@ paths:
                       minLength: 1
                     countryId:
                       type: number
+                      description: This field is not required if countryIso has value
+                    countryIso:
+                      type: string
+                      x-stoplight:
+                        id: bit9tbdujea49
+                      description: 'This field is not required if countryId has value. Country ISO Code examples: ES, USA'
                     termsAndConditions:
                       type: string
                       minLength: 1
@@ -4167,7 +4171,6 @@ paths:
                 paymentMethods:
                   type: array
                   description: 'Optional: if included, sets which payment methods will be available for paying this paymentCard. Possible options are: ''EXT'' for external cards (visa, mastercard, etc) and ''TPP'' for payment with tropipay balance. If missing, all payment methods will be available to users'
-                  uniqueItems: false
                   items:
                     type: string
                     enum:
