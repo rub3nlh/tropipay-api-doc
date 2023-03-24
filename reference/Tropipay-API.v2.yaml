@@ -2848,11 +2848,19 @@ paths:
                   type: number
                   x-stoplight:
                     id: 5dnds8c97xwmj
+                  description: Only for pdf format
                 format:
                   type: string
                   x-stoplight:
                     id: xlk4r0doo048e
                   description: This field can be 'csv' or 'pdf'
+            examples:
+              Example 1:
+                value:
+                  dateFrom: '2023-01-25T19:07:33.083Z'
+                  dateTo: '2021-03-25T19:07:33.083Z'
+                  depositAccount: 25
+                  format: pdf
         description: |
           To filter the CSV list of movements to download, you can use two different optional fields:
           - Initial Date to fetch movements from that date on
