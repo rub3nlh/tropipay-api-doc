@@ -357,6 +357,7 @@ paths:
 
         You will get a short URL and a QR code with the Payment Link 
 
+        'EXT' payment method will not be allowed for amount above 2500 EUR or USD
         #### Callbacks:
 
         The result of the operation will be notified in a Callback with a POST to **urlNotification** parameter.
