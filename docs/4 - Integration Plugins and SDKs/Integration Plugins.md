@@ -29,7 +29,7 @@ WooCommers Tropipay Plugin v2.0
 ## Prestashop
 Prestashop Tropipay Plugin v1.0
 
-[Download Plugin here  >> ](https://blog.tropipay.com/prestashop-tropipay-plugin-v1-0/)
+[Download Plugin here  >> ](https://tpp-blog-wordpress.s3.amazonaws.com/wp-content/uploads/2023/05/12045119/prestashop-tropipay-plugin-v1-1.zip)
 
 
 # SDKs
