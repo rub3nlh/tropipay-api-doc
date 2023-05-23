@@ -5437,6 +5437,242 @@ paths:
       description: "<b>Only for Business accounts</b><br>\nThis endpoint allows you to generate an escrow payment link. This allows a payment to be made to persons belonging or not to the TropiPay platform with the particularity that the payment will be held in custody or retained until it is released with the approval of the payer.\n\nYou can subscribe to events through hooks, and receive notifications for each action related to mediated paymentcards, there are three events for this:\n<ul>\n  <li>transaction_guarded: triggered when a paymentcard is paid\n  <br>\n  <br>\n<h3>  Example: </h3>\n<br>\n\n<code>\n\"state\": {\n\t\"id\": \"123\",\n\t\"value\": \"9\",\n\t\"bookingId\": 378297,\n\t\"description\": \"UPDATESTATE:PAYLINK:BUYER\",\n\t\"updatedAt\": \"2022-12-13T12:35:38.205Z\",\n\t\"createdAt\": \"2022-12-13T12:35:38.205Z\",\n\t\"slug\": \"null\"\n},\n\"event\": 9,\n\"ownerType\": 3,\n\"ownerId\": 250680,\n\"bankOrderCode\": \"TX1670934938165\",\n\"amount\": 5000,\n\"serviceId\": 80,\n\"releaseCode\": \"289463\",\n\"urlSeller\": \"https://qa-space.herokuapp.com/transaction/mediation_status/Mzc4Mjk3c2VsbGVy\",\n\"urlBuyer\": \"https://qa-space.herokuapp.com/transaction/mediation_status/Mzc4Mjk3YnV5ZXI=\",\n\"paymentMethod\": \"EXT\",\n\"paymentcard\": {\n\t\"paymentcardId\": \"100a0260-7ac9-11ed-872e-679fbffa261d\",\n\t\"reference\": \"458424548\",\n\t\"concept\": \"Celular\",\n\t\"productUrl\": \"https://www.google.es\"\n},\n\"sendMail\": false,\n\"seller\": {\n\t\"name\": \"KELSY PAMELA\",\n\t\"surname\": \"CABELLO SOLORZANO\",\n\t\"address\": \"asd\",\n\t\"phone\": \"+34123456\",\n\t\"email\": \"seller@email.com\",\n\t\"id\": 59040\n},\n\"buyer\": {\n\t\"name\": \"El comprador Pedro\",\n\t\"surname\": \"Apellido de Pedro\",\n\t\"address\": \"direccion 01\",\n\t\"phone\": \"610444444\",\n\t\"email\": \"buyer@email.com\",\n\t\"id\": 250680\n}\n</code>\n</li>\n  <li>transaction_cancelled: Triggered when a paymentcard is canceled</li>\n  <li>transaction_charged: Triggered when a paymentcard is released</li>\n</ul>"
       tags:
         - Payment Cards
+  /express_remittance/prices:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-express_remittance
+    parameters: []
+    post:
+      summary: Express Remitance Prices
+      operationId: post-express_remittance-prices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        toSend:
+                          type: integer
+                        toGet:
+                          type: integer
+                        toPay:
+                          type: integer
+                        rate:
+                          type: number
+                        fee:
+                          type: integer
+                        feeEUR:
+                          type: integer
+                        bankFee:
+                          type: integer
+                        bankFeeCurrency:
+                          type: string
+                        destinationCurrency:
+                          type: string
+                        originCurrency:
+                          type: string
+                        toGetEUR:
+                          type: integer
+                x-examples:
+                  Example 1:
+                    prices:
+                      - toSend: 2768
+                        toGet: 1033963
+                        toPay: 3000
+                        rate: 373.5415
+                        fee: 232
+                        feeEUR: 232
+                        bankFee: 142
+                        bankFeeCurrency: EUR
+                        destinationCurrency: ARS
+                        originCurrency: EUR
+                        toGetEUR: 2768
+              examples:
+                Example 1:
+                  value:
+                    prices:
+                      - toSend: 2768
+                        toGet: 1033963
+                        toPay: 3000
+                        rate: 373.5415
+                        fee: 232
+                        feeEUR: 232
+                        bankFee: 142
+                        bankFeeCurrency: EUR
+                        destinationCurrency: ARS
+                        originCurrency: EUR
+                        toGetEUR: 2768
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            param:
+                              type: string
+                            value:
+                              type: 'null'
+                            msg:
+                              type: string
+                            code:
+                              type: string
+                            location:
+                              type: string
+                            i18n:
+                              type: string
+                      i18n:
+                        type: string
+                x-examples:
+                  Example 1:
+                    error:
+                      type: VALIDATION_ERROR
+                      code: INVALID_PARAM
+                      message: Invalid Parameter
+                      details:
+                        - param: 'toSend,toPay,toGet'
+                          value: null
+                          msg: 'Only one of this fields should be present [toSend, toPay, toGet]'
+                          code: MULTIPLE_FAILURES
+                          location: body
+                          i18n: Parámetros inválidos
+                      i18n: Parámetros inválidos
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      type: VALIDATION_ERROR
+                      code: INVALID_PARAM
+                      message: Invalid Parameter
+                      details:
+                        - param: 'toSend,toPay,toGet'
+                          value: null
+                          msg: 'Only one of this fields should be present [toSend, toPay, toGet]'
+                          code: MULTIPLE_FAILURES
+                          location: body
+                          i18n: Parámetros inválidos
+                      i18n: Parámetros inválidos
+      description: Get prices for new express remittance service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - properties:
+                    toPay:
+                      type: number
+                      x-stoplight:
+                        id: 8imlbnf6cv3ul
+                      minimum: 1000
+                      exclusiveMinimum: true
+                      description: Amount to pay
+                    country:
+                      $ref: '#/components/schemas/Country'
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: szxb4j7ov99u5
+                      enum:
+                        - USD
+                        - EUR
+                      description: Currency in which to pay
+                    destinationCurrency:
+                      type: string
+                      x-stoplight:
+                        id: rqvfdqxun0bsk
+                      description: Currency in which the money will arrive
+                - properties:
+                    toGet:
+                      type: number
+                      x-stoplight:
+                        id: 8imlbnf6cv3ul
+                      minimum: 1000
+                      exclusiveMinimum: true
+                      description: Amount to receive
+                    country:
+                      $ref: '#/components/schemas/Country'
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: szxb4j7ov99u5
+                      enum:
+                        - USD
+                        - EUR
+                      description: Currency in which to pay
+                    destinationCurrency:
+                      type: string
+                      x-stoplight:
+                        id: rqvfdqxun0bsk
+                      description: Currency in which the money will arrive
+                - properties:
+                    toSend:
+                      type: number
+                      x-stoplight:
+                        id: 8imlbnf6cv3ul
+                      minimum: 1000
+                      exclusiveMinimum: true
+                      description: Amount to send
+                    country:
+                      $ref: '#/components/schemas/Country'
+                    currency:
+                      type: string
+                      x-stoplight:
+                        id: szxb4j7ov99u5
+                      enum:
+                        - USD
+                        - EUR
+                      description: Currency in which to pay
+                    destinationCurrency:
+                      type: string
+                      x-stoplight:
+                        id: rqvfdqxun0bsk
+                      description: Currency in which the money will arrive
+              description: 'You can use any of the fields toGet, toPay or toSend to analyze the prices of our remittances'
+              type: object
+            examples:
+              Example 1:
+                value:
+                  toGet: 2000
+                  country: AR
+                  currency: USD
+                  destinationCurrency: string
+              Example 2:
+                value:
+                  toGet: 200000
+                  country: AR
+                  currency: USD
+                  destinationCurrency: string
+              Example 3:
+                value:
+                  toSend: 2000
+                  country: AR
+                  currency: USD
+                  destinationCurrency: string
+        description: 'You can use any of the fields toGet, toPay or toSend to analyze the prices of our remittances'
+      x-internal: false
 components:
   schemas:
     User:
@@ -6109,6 +6345,25 @@ components:
         - shortUrl
         - paymentUrl
       x-internal: true
+    Country:
+      title: Country
+      x-stoplight:
+        id: hbcb1om4in79j
+      type: string
+      enum:
+        - AR
+        - BO
+        - BR
+        - CO
+        - CU
+        - DO
+        - GM
+        - HN
+        - NG
+        - PE
+        - PY
+        - VE
+      description: Destination country of the remittance. We are working to add more destinations
   securitySchemes: {}
   parameters:
     User-Authorization-Token:
