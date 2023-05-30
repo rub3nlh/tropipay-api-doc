@@ -1838,6 +1838,113 @@ paths:
           in: header
           name: Authorization
           description: 'Bearer {your-token}'
+  /remittance/prices:
+    get:
+      summary: Remittance Prices
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    rate: 1
+                    viability: null
+                    prices:
+                      - agent: TROPIPAY
+                        path: BANK DEPOSIT
+                        paymentType: 2
+                        toSend: 10000
+                        toGet: 10100
+                        rate: '1.0084'
+                        fee: 1649
+                        feeEUR: 1300
+                        bankFee: 1300
+                        destinationCurrency: USD
+                        toGetEUR: 10000
+                        cuc: 10100
+                      - agent: T - FINCIMEX - TARJETA AIS USD
+                        agentId: T070
+                        subAgentId: '5'
+                        path: TARJETA AIS
+                        paymentType: 4
+                        toSend: '10000'
+                        toGet: 10100
+                        rate: '1.0100'
+                        fee: 1237
+                        bankFee: 900
+                        destinationCurrency: USD
+                        toGetEUR: null
+                properties:
+                  rate:
+                    type: integer
+                  viability:
+                    nullable: true
+                  prices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        agent:
+                          type: string
+                        path:
+                          type: string
+                        paymentType:
+                          type: integer
+                        toSend:
+                          type:
+                            - integer
+                            - string
+                        toGet:
+                          type: integer
+                        rate:
+                          type: string
+                        fee:
+                          type: integer
+                        feeEUR:
+                          type: integer
+                        bankFee:
+                          type: integer
+                        destinationCurrency:
+                          type: string
+                        toGetEUR:
+                          type: integer
+                          nullable: true
+                        agentId:
+                          type: string
+                        subAgentId:
+                          type: string
+      operationId: get-remittance-prices
+      description: Used for getting prices from Remittance service
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: country
+          description: IsoCountry2 or Slug2
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: amountToSend
+          description: amount in cents
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: currencyToSend
+          description: currency
+          required: true
+    parameters: []
+    trace:
+      summary: ''
+      operationId: trace-remittance-prices-country-amountToSend-currencyToSend
+      responses:
+        '200':
+          description: OK
 components:
   schemas: {}
 tags:
