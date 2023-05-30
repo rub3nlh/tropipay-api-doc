@@ -5438,11 +5438,6 @@ paths:
       tags:
         - Payment Cards
   /express_remittance/prices:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-express_remittance
     parameters: []
     post:
       summary: Express Remitance Prices
