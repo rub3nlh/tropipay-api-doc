@@ -1939,12 +1939,6 @@ paths:
           description: currency
           required: true
     parameters: []
-    trace:
-      summary: ''
-      operationId: trace-remittance-prices-country-amountToSend-currencyToSend
-      responses:
-        '200':
-          description: OK
 components:
   schemas: {}
 tags:
