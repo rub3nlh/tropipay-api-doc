@@ -4100,25 +4100,17 @@ paths:
         content:
           application/json:
             schema:
-              description: ''
               type: object
               properties:
-                name:
+                grant_type:
                   type: string
-                  minLength: 1
                 client_id:
                   type: string
-                  minLength: 1
                 client_secret:
                   type: string
-                  minLength: 1
-              required:
-                - name
-                - client_id
-                - client_secret
               x-examples:
-                example-1:
-                  name: client_credentials
+                Example 1:
+                  grant_type: client_credentials
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
             examples:
@@ -4127,7 +4119,6 @@ paths:
                   grant_type: client_credentials
                   client_id: 991aea6a4587040942b8599a6d8fbebb
                   client_secret: 796c0519dace8efdeaf59e6ad40e811a
-                  scope: ALLOW_EXTERNAL_CHARGE BLOCKED_MONEY_OUT
       tags:
         - Access & Credentials
   /paymentcards:
@@ -5653,19 +5644,19 @@ paths:
                   toGet: 2000
                   country: AR
                   currency: USD
-                  destinationCurrency: string
+                  destinationCurrency: ARG
               Example 2:
                 value:
                   toGet: 200000
                   country: AR
                   currency: USD
-                  destinationCurrency: string
+                  destinationCurrency: ARG
               Example 3:
                 value:
                   toSend: 2000
                   country: AR
                   currency: USD
-                  destinationCurrency: string
+                  destinationCurrency: ARG
         description: 'You can use any of the fields toGet, toPay or toSend to analyze the prices of our remittances'
       x-internal: false
 components:
