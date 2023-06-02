@@ -2601,6 +2601,104 @@ paths:
       description: Fetch all data of a specific movement by its ID
       parameters:
         - $ref: '#/components/parameters/User-Authorization-Token'
+  '/movements/:reference/state':
+    get:
+      summary: Get User Movement State
+      tags:
+        - Movements
+      responses:
+        '200':
+          description: Movement data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    x-stoplight:
+                      id: qjo4nh4wnaycj
+                  reference:
+                    type: string
+                    x-stoplight:
+                      id: 5jqwo4nq1z8a3
+                  state:
+                    type: number
+                    x-stoplight:
+                      id: 7ascuer0p49hm
+                  createdAt:
+                    type: string
+                    x-stoplight:
+                      id: fz91eznpyevyy
+                    minLength: 1
+                  updateAt:
+                    type: string
+                    x-stoplight:
+                      id: l3xxpa213ohyx
+                    minLength: 1
+                  completedAt:
+                    type: string
+                    x-stoplight:
+                      id: rvd40plmvodyq
+                    minLength: 1
+              examples:
+                Example 1:
+                  value:
+                    id: 1199926
+                    reference: TX1684339732718
+                    state: 1
+                    createdAt: '2023-05-17T16:54:38.699Z'
+                    updatedAt: '2023-05-17T16:54:44.107Z'
+                    completedAt: '2023-05-17T22:00:00.000Z'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    x-stoplight:
+                      id: 2wsgq1b2ffec1
+                    properties:
+                      type:
+                        type: string
+                        x-stoplight:
+                          id: s9aj7uio1f7vf
+                      code:
+                        type: string
+                        x-stoplight:
+                          id: ye8mevl30mvmk
+                      message:
+                        type: string
+                        x-stoplight:
+                          id: uvmk3eotahxh7
+                      details:
+                        type: array
+                        x-stoplight:
+                          id: 8ta39khj380a5
+                        items: {}
+                      i18n:
+                        type: string
+                        x-stoplight:
+                          id: dbj5q9mnqqebu
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      type: NOT_FOUND
+                      code: NOT_FOUND
+                      message: El Booking no existe o está en un estado no modificable
+                      details: []
+                      i18n: Recurso no encontrado
+      operationId: 'get-movements-:reference-state'
+      description: Get the status of a specific movement by its reference
+      parameters:
+        - $ref: '#/components/parameters/User-Authorization-Token'
+      requestBody:
+        content: {}
+    parameters: []
   /movements/in/remittance:
     post:
       summary: Sending a Remittance from your personal cards
