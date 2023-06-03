@@ -3024,7 +3024,7 @@ paths:
             type: string
           in: query
           name: criteria
-          description: 'find only movements that match with the value set '
+          description: find only movements that match with the value set. Only apply if reportType is set to ALL_MOVEMENTS
         - schema:
             type: number
           in: query
