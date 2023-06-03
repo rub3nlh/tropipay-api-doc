@@ -3044,6 +3044,11 @@ paths:
           in: query
           name: dateEnd
           description: end date
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: 'Bearer {token}'
   /credential:
     get:
       summary: List Credentials
