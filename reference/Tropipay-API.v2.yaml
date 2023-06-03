@@ -2990,58 +2990,60 @@ paths:
         description: ''
     parameters: []
   /movements/download:
-    post:
-      summary: Download list of movements
-      operationId: post-movements-download
+    get:
+      summary: Download Movements
+      operationId: get-movements-download
       responses:
         '200':
           description: OK
+      description: |-
+        This endpoint schedules sending an email to the email address of the user with a CSV or PDF list of the movements according to the specified filters. If you do not define the type of file you want to receive, by default it will be CSV.To filter the CSV list of movements to download, you can use two different optional query fields:
+        - Initial Date to fetch movements from that date on
+        - End Date to fetch movements up to that date
+        To filter the PDF list of movements to download, you can use the two criteria above and also the following criteria:
+        - The id of the beneficiary. The list will show the movements corresponding to that beneficiary
+        All combinations are allowed. (you can filter using one, two, all fields or none)
       parameters:
-        - $ref: '#/components/parameters/User-Authorization-Token'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              x-examples:
-                example-1:
-                  criteria: salario
-                  dateFrom: '2021-01-05 02:00'
-                  dateTo: '2021-04-03 09:00'
-              properties:
-                dateFrom:
-                  type: string
-                  minLength: 1
-                dateTo:
-                  type: string
-                  minLength: 1
-                depositAccount:
-                  type: number
-                  x-stoplight:
-                    id: 5dnds8c97xwmj
-                  description: Only for pdf format
-                format:
-                  type: string
-                  x-stoplight:
-                    id: xlk4r0doo048e
-                  description: This field can be 'csv' or 'pdf'
-            examples:
-              Example 1:
-                value:
-                  dateFrom: '2023-01-25T19:07:33.083Z'
-                  dateTo: '2021-03-25T19:07:33.083Z'
-                  depositAccount: 25
-                  format: pdf
-        description: |
-          To filter the CSV list of movements to download, you can use two different optional fields:
-          - Initial Date to fetch movements from that date on
-          - End Date to fetch movements up to that date
-          To filter the PDF list of movements to download, you can use the two criteria above and also the following criteria:
-          - The id of the beneficiary. The list will show the movements corresponding to that beneficiary
-          All combinations are allowed. (you can filter using one, two, all fields or none)
-      description: 'This endpoint schedules sending an email to the email address of the user with a CSV or PDF list of the movements according to the specified filters. If you do not define the type of file you want to receive, by default it will be CSV.'
-      tags:
-        - Movements
+        - schema:
+            type: string
+            enum:
+              - ALL_MOVEMENTS
+              - ACCOUNT_BALANCE
+          in: query
+          name: reportType
+          description: 'ALL_MOVEMENTS for send all movements in format csv or xls , ACCOUNT_BALANCE for send movements that affects balance'
+        - schema:
+            type: string
+            enum:
+              - csv
+              - xls
+          in: query
+          name: format
+          description: Only apply if reportType is set to ALL_MOVEMENTS
+        - schema:
+            type: string
+          in: query
+          name: criteria
+          description: 'find only movements that match with the value set '
+        - schema:
+            type: number
+          in: query
+          name: depositAccount
+          description: beneficiary's id you want to get movemnts
+        - schema:
+            type: string
+            format: date
+            example: 1/12/2022
+          in: query
+          name: dateStart
+          description: start date
+        - schema:
+            type: string
+            format: date
+            example: 2/3/2023
+          in: query
+          name: dateEnd
+          description: end date
   /credential:
     get:
       summary: List Credentials
