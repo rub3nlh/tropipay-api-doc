@@ -4428,7 +4428,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: qjc3p4z6jgjlt
-                  example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCA...'
+                  example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkHYTCA...'
               required:
                 - reference
                 - concept
