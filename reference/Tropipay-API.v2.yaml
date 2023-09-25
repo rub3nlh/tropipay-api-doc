@@ -4305,7 +4305,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/paymentCard'
-      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from another Tropipay account or an external (someone notbelonging to the TropiPay platform) in a very simple way, share your payment links and manage your charges.'
+      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from another Tropipay account or an external in a very simple way, share your payment links and manage your charges.'
       requestBody:
         content:
           application/json:
