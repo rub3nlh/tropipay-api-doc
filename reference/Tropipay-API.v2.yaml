@@ -4373,7 +4373,7 @@ paths:
                 urlNotification:
                   type: string
                   minLength: 1
-                  description: POST endpoint. Must be accesible for Tropipay servers. Use services like ngrok or webhook.site to test in local environments
+                  description: POST endpoint. Must be accesible for the Tropipay servers. Use services like ngrok or webhook.site to test in local environments
                 serviceDate:
                   type: string
                   minLength: 1
