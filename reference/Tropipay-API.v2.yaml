@@ -4350,7 +4350,7 @@ paths:
                   minLength: 1
                 amount:
                   type: number
-                  description: 'The amount always is an Integer in cents. (eg: 10.55 => 1055)'
+                  description: 'The amount always is an Integer in cents.(eg: 10.55 => 1055)'
                 currency:
                   type: string
                   minLength: 1
