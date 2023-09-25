@@ -15,7 +15,7 @@ You can use the Business API to automate your own business financial operations.
 
 In order to ensure safe and fair resource sharing, we define the following usage limits:
 
-- Maximum 60 requests per minute for a given business
+- Maximum 60 requests per minute for a given business.
 
 
 ### Demo account
