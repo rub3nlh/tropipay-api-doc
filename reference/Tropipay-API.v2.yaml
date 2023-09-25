@@ -4305,7 +4305,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/paymentCard'
-      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from people who do not belong to the TropiPay platform in a very simple way, share your payment links and manage your charges.'
+      description: 'This endpoint allows you to generate a payment link. This allows you to make a deposit from another Tropipay account or an external (someone notbelonging to the TropiPay platform) in a very simple way, share your payment links and manage your charges.'
       requestBody:
         content:
           application/json:
@@ -4340,6 +4340,7 @@ paths:
                 reference:
                   type: string
                   minLength: 1
+                  description: 'If passed, you''ll receive this in reference field in your hooks or notificationUrl. So you can track the order for internal use of your app.'
                 concept:
                   type: string
                   minLength: 1
@@ -4372,6 +4373,7 @@ paths:
                 urlNotification:
                   type: string
                   minLength: 1
+                  description: POST endpoint. Must be accesible for Tropipay servers. Use services like ngrok or webhook.site to test in local environments
                 serviceDate:
                   type: string
                   minLength: 1
@@ -4430,6 +4432,7 @@ paths:
                   x-stoplight:
                     id: qjc3p4z6jgjlt
                   example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkHYTCA...'
+                  description: 'Base64 string format of the image (jpg,png,etc)'
               required:
                 - reference
                 - concept
