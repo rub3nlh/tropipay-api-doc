@@ -32,7 +32,7 @@ WooCommerce Tropipay Plugin v2.0
 
 WooCommerce Tropipay Plugin v4.4
 
-[Download Plugin here >> ](https://tpp-help-wordpress-media.s3.amazonaws.com/wp-content/uploads/2023/06/21105535/tropipay-woocommerce-v44.zip)
+[Download Plugin here >> ](https://tpp-help-wordpress-media.s3.amazonaws.com/wp-content/uploads/2023/10/01215624/tropipay-v4.5.zip)
 
 <hr>
 
