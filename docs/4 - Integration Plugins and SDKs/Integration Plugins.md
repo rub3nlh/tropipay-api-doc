@@ -41,6 +41,11 @@ Prestashop Tropipay Plugin v1.0
 
 [Download Plugin here  >> ](https://tpp-blog-wordpress.s3.amazonaws.com/wp-content/uploads/2023/05/12045119/prestashop-tropipay-plugin-v1-1.zip)
 
+<br>
+
+Prestashop Tropipay Plugin v2.x (versions: 1.7, 8.1)
+Publish on github >> https://github.com/tropipay/prestashop-tropipay-plugin/releases/latest
+
 <hr>
 
 ## Odoo V16
