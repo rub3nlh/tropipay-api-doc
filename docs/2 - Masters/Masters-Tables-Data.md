@@ -41,3 +41,41 @@ tags: [Masters Tables]
 - 1 : Remittance
 - 2 : Personal
 - 3 : Generic Service
+
+### PaymentTypes (Deposit account payment types)
+- 2 : Bank Deposit
+- 4 : Tarjeta AIS
+- 100 : Crypto
+
+### UserRelationTyp (Deposit account relations)
+  - 0 : MYSELF
+  - 1 : GRANDPARENT
+  - 2 : FRIEND
+  - 3 : COMERCIAL
+  - 4 : SPOUSE
+  - 5 : BROTHER_IN_LAW
+  - 6 : EX_HUSBAND_WIFE
+  - 7 : STEPBROTHER
+  - 8 : SIBLING
+  - 9 : CHILD
+  - 10 : LABOR
+  - 11 : GRANDCHILD
+  - 12 : STEP_PARENT
+  - 13 : PARENT
+  - 14 : COUSIN
+  - 15 : NIECE_NEPHEW
+  - 16 : PARENT_IN_LAW
+  - 17 : UNCLES_AUNTS
+  - 18 : SONS_IN_LAW_DAUGHTERS_IN_LAW
+
+### DocumentTypes 
+  - 1 : Documento Nacional Identidad
+  - 2 : Pasaporte
+  - 3 : Tarjeta Residencia
+  - 6 : Carnet Conducir
+  - 8 : Código de Identificación Fiscal
+
+### BeneficiaryType
+  - 1 : INTERNAL
+  - 2 : EXTERNAL
+  - 3 : CRYPTO
