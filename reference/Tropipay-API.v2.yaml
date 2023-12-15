@@ -3110,6 +3110,8 @@ paths:
           in: header
           name: Authorization
           description: 'Bearer {token}'
+      tags:
+        - Movements
   /credential:
     get:
       summary: List Credentials
@@ -5679,6 +5681,9 @@ paths:
           name: Authorization
           description: 'Bearer {token}'
           required: true
+      tags:
+        - Movements
+        - Scheduled
   '/scheduled_transaction/{id}/activate':
     parameters:
       - schema:
@@ -5716,6 +5721,9 @@ paths:
                   x-stoplight:
                     id: s8nbtlo8e6nyp
                   description: 'This endpoint require 2fa security code, you can pass it from body or header'
+      tags:
+        - Movements
+        - Scheduled
   '/scheduled_transaction/{id}/deactivate':
     parameters:
       - schema:
@@ -5731,10 +5739,15 @@ paths:
           description: OK
       x-stoplight:
         id: itov0jcp2zdyd
+      tags:
+        - Movements
+        - Scheduled
   /scheduled_transaction:
     get:
       summary: Get All Scheduled Transaction by User
-      tags: []
+      tags:
+        - Movements
+        - Scheduled
       responses: {}
       operationId: get-scheduled_transaction
       x-stoplight:
@@ -5829,6 +5842,9 @@ paths:
           in: header
           name: securityCode
           description: Require 2fa
+      tags:
+        - Movements
+        - Scheduled
 components:
   schemas:
     User:
