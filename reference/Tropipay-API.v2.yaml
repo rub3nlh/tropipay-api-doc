@@ -5748,7 +5748,150 @@ paths:
       tags:
         - Movements
         - Scheduled
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    count: 1
+                    rows:
+                      - id: 1
+                        credentialId: null
+                        userId: c9304420-7b5d-11ea-b14a-d389ee0b5bfa
+                        ipUser: null
+                        depositaccountId: 157128
+                        originAmount: 500
+                        currency: EUR
+                        destinationCurrency: EUR
+                        reasonId: 13
+                        reasonDes: null
+                        conceptTransfer: Prueba
+                        callBackUrl: null
+                        serviceId: null
+                        userReference: null
+                        fiat: true
+                        destinationCredentialId: null
+                        notifyUser: null
+                        initialTransactionState: null
+                        paymentcardId: null
+                        startScheduledDate: '2023-12-20T23:00:00.000Z'
+                        frecuency: 4
+                        state: 1
+                        nextDate: '2023-12-20T23:00:00.000Z'
+                        createdAt: '2023-12-18T10:20:53.201Z'
+                        updatedAt: '2023-12-18T10:20:53.201Z'
+                        depositaccount:
+                          id: 157128
+                          accountNumber: wendyfernandezcastillo@gmail.com
+                          alias: wendy
+                          firstName: WENDY
+                          lastName: FERNANDEZ CASTILLO
+                          type: 9
+                          office: null
+                          countryDestination:
+                            name: España
+                            slug: ES
+                        service: null
+                        paymentcard: null
+                    limit: 10
+                    offset: 0
+                properties:
+                  count:
+                    type: integer
+                  rows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        credentialId:
+                          type: integer
+                          nullable: true
+                        userId:
+                          type: string
+                        ipUser:
+                          nullable: true
+                        depositaccountId:
+                          type: integer
+                        originAmount:
+                          type: integer
+                        currency:
+                          type: string
+                        destinationCurrency:
+                          type: string
+                        reasonId:
+                          type: integer
+                        reasonDes:
+                          type: string
+                          nullable: true
+                        conceptTransfer:
+                          type: string
+                        callBackUrl:
+                          nullable: true
+                        serviceId:
+                          nullable: true
+                        userReference:
+                          type: string
+                          nullable: true
+                        fiat:
+                          type: boolean
+                        destinationCredentialId:
+                          nullable: true
+                        notifyUser:
+                          nullable: true
+                        initialTransactionState:
+                          nullable: true
+                        paymentcardId:
+                          nullable: true
+                        startScheduledDate:
+                          type: string
+                        frecuency:
+                          type: integer
+                        state:
+                          type: integer
+                        nextDate:
+                          type: string
+                        createdAt:
+                          type: string
+                        updatedAt:
+                          type: string
+                        depositaccount:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            accountNumber:
+                              type: string
+                            alias:
+                              type: string
+                            firstName:
+                              type: string
+                            lastName:
+                              type: string
+                            type:
+                              type: integer
+                            office:
+                              nullable: true
+                            countryDestination:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                slug:
+                                  type: string
+                        service:
+                          nullable: true
+                        paymentcard:
+                          nullable: true
+                  limit:
+                    type: integer
+                  offset:
+                    type: integer
       operationId: get-scheduled_transaction
       x-stoplight:
         id: 6jpdm29m3xu9k
