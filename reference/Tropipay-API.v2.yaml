@@ -5988,6 +5988,431 @@ paths:
       tags:
         - Movements
         - Scheduled
+  /giftcards:
+    parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: Bearer token
+        required: true
+    get:
+      summary: Returns and filter giftcards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: integer
+                    code:
+                      type: string
+                    amount:
+                      type: integer
+                    balance:
+                      type: integer
+                    currency:
+                      type: string
+                    expirationDate:
+                      type: string
+                    state:
+                      type: integer
+                    expiredAmount:
+                      type: integer
+                    name:
+                      type: string
+                    lastName:
+                      type: string
+                    email:
+                      type: string
+                    phone:
+                      type: string
+                    notifyByEmail:
+                      type: boolean
+                    boughtBookingId:
+                      type: integer
+                    boughtUserId:
+                      type: string
+                    paymentcardId:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                x-examples:
+                  Example 1:
+                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
+                      type: 1
+                      code: 02XG
+                      amount: 10000
+                      balance: 10000
+                      currency: EUR
+                      expirationDate: '2025-02-06T17:04:25.481Z'
+                      state: 1
+                      expiredAmount: 0
+                      name: Pepe
+                      lastName: Pérez
+                      email: alsdfasdf@lkajsdfjasdf.com
+                      phone: '88848484'
+                      notifyByEmail: false
+                      boughtBookingId: 108
+                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
+                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
+                      createdAt: '2024-02-06T17:04:25.481Z'
+                      updatedAt: '2024-02-06T17:04:25.481Z'
+              examples:
+                Example 1:
+                  value:
+                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
+                      type: 1
+                      code: 02XG
+                      amount: 10000
+                      balance: 10000
+                      currency: EUR
+                      expirationDate: '2025-02-06T17:04:25.481Z'
+                      state: 1
+                      expiredAmount: 0
+                      name: Pepe
+                      lastName: Pérez
+                      email: alsdfasdf@lkajsdfjasdf.com
+                      phone: '88848484'
+                      notifyByEmail: false
+                      boughtBookingId: 108
+                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
+                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
+                      createdAt: '2024-02-06T17:04:25.481Z'
+                      updatedAt: '2024-02-06T17:04:25.481Z'
+          headers: {}
+      operationId: get-giftcards
+      x-stoplight:
+        id: pkf7zmiov4gyr
+      description: Return all giftcard created by a merchant user. Can be filterer by code and id using the query params. Also limit and offset are available for pagination
+      tags:
+        - Giftcard endpoints
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+        - schema:
+            type: string
+          in: query
+          name: code
+          description: filter for the given code
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: filter for the given id
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: filter the amount of results up to 100 records for pagination
+        - schema:
+            type: string
+          in: query
+          name: offset
+          description: filter the offset for pagination
+    post:
+      summary: Create a new giftcard
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/xhtml+xml:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  saveToken:
+                    type: boolean
+                  reference:
+                    type: string
+                  concept:
+                    type: string
+                  description:
+                    type: string
+                  amount:
+                    type: integer
+                  currency:
+                    type: string
+                  singleUse:
+                    type: boolean
+                  favorite:
+                    type: boolean
+                  reasonId:
+                    type: integer
+                  reasonDes:
+                    type: 'null'
+                  expirationDays:
+                    type: integer
+                  userId:
+                    type: string
+                  lang:
+                    type: string
+                  imageBase:
+                    type: 'null'
+                  state:
+                    type: integer
+                  urlSuccess:
+                    type: 'null'
+                  urlFailed:
+                    type: 'null'
+                  urlNotification:
+                    type: 'null'
+                  expirationDate:
+                    type: 'null'
+                  serviceDate:
+                    type: string
+                  hasClient:
+                    type: boolean
+                  credentialId:
+                    type: 'null'
+                  force3ds:
+                    type: boolean
+                  origin:
+                    type: integer
+                  paymentcardType:
+                    type: integer
+                  updatedAt:
+                    type: string
+                  createdAt:
+                    type: string
+                  qrImage:
+                    type: string
+                  shortUrl:
+                    type: string
+                  paymentUrl:
+                    type: 'null'
+                  rawUrlPayment:
+                    type: 'null'
+                  giftcard:
+                    type: 'null'
+                x-examples:
+                  Example 1:
+                    id: c4ac6da0-c697-11ee-87ed-65aa202921cb
+                    saveToken: false
+                    reference: tarjeta 3434
+                    concept: 'Order #: 0453443243243'
+                    description: ' '
+                    amount: 10000
+                    currency: EUR
+                    singleUse: true
+                    favorite: false
+                    reasonId: 22
+                    reasonDes: null
+                    expirationDays: 0
+                    userId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
+                    lang: es
+                    imageBase: null
+                    state: 1
+                    urlSuccess: null
+                    urlFailed: null
+                    urlNotification: null
+                    expirationDate: null
+                    serviceDate: '2024-02-08T05:00:00.000Z'
+                    hasClient: false
+                    credentialId: null
+                    force3ds: false
+                    origin: 2
+                    paymentcardType: 3
+                    updatedAt: '2024-02-08T15:36:09.520Z'
+                    createdAt: '2024-02-08T15:36:03.706Z'
+                    qrImage: 'data:image/png;base64,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'
+                    shortUrl: 'https://tppay.me/lsddsc5s'
+                    paymentUrl: null
+                    rawUrlPayment: null
+                    giftcard: null
+              examples:
+                Example 1:
+                  value: "{\n\t\"id\": \"c4ac6da0-c697-11ee-87ed-65aa202921cb\",\n\t\"saveToken\": false,\n\t\"reference\": \"tarjeta 3434\",\n\t\"concept\": \"Order #: 0453443243243\",\n\t\"description\": \" \",\n\t\"amount\": 10000,\n\t\"currency\": \"EUR\",\n\t\"singleUse\": true,\n\t\"favorite\": false,\n\t\"reasonId\": 22,\n\t\"reasonDes\": null,\n\t\"expirationDays\": 0,\n\t\"userId\": \"629cd1d0-ab72-11ee-8e91-e982a98d522c\",\n\t\"lang\": \"es\",\n\t\"imageBase\": null,\n\t\"state\": 1,\n\t\"urlSuccess\": null,\n\t\"urlFailed\": null,\n\t\"urlNotification\": null,\n\t\"expirationDate\": null,\n\t\"serviceDate\": \"2024-02-08T05:00:00.000Z\",\n\t\"hasClient\": false,\n\t\"credentialId\": null,\n\t\"force3ds\": false,\n\t\"origin\": 2,\n\t\"paymentcardType\": 3,\n\t\"updatedAt\": \"2024-02-08T15:36:09.520Z\",\n\t\"createdAt\": \"2024-02-08T15:36:03.706Z\",\n\t\"qrImage\": \"data:image/png;base64,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\",\n\t\"shortUrl\": \"https://tppay.me/lsddsc5s\",\n\t\"paymentUrl\": null,\n\t\"rawUrlPayment\": null,\n\t\"giftcard\": null\n}"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      code:
+                        type: string
+                      message:
+                        type: string
+                      details:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            param:
+                              type: string
+                            value:
+                              type: 'null'
+                            msg:
+                              type: string
+                            code:
+                              type: string
+                            location:
+                              type: string
+                            i18n:
+                              type: string
+                      i18n:
+                        type: string
+                x-examples:
+                  Example 1:
+                    error:
+                      type: VALIDATION_ERROR
+                      code: INVALID_PARAM
+                      message: Invalid Parameter
+                      details:
+                        - param: currency
+                          value: null
+                          msg: Invalid value
+                          code: INVALID_PARAM
+                          location: body
+                          i18n: Parámetros inválidos
+                      i18n: Parámetros inválidos
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      type: VALIDATION_ERROR
+                      code: INVALID_PARAM
+                      message: Invalid Parameter
+                      details:
+                        - param: currency
+                          value: null
+                          msg: Invalid value
+                          code: INVALID_PARAM
+                          location: body
+                          i18n: Parámetros inválidos
+                      i18n: Parámetros inválidos
+      operationId: post-new-giftcards
+      x-stoplight:
+        id: fyqevl0tpcsz6
+      description: 'Create a new giftcard. '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  reference: tarjeta 3434
+                  concept: 'Order #: 0453443243243'
+                  description: ' '
+                  amount: 10000
+                  currency: EUR
+                  lang: es
+                  urlSuccess: 'https://www.marca.com'
+                  urlFailed: 'https://www.google.com'
+                  urlNotification: 'https://webhook.site/a3959ddf-9342-40c5-a98b-fb4a71050c49'
+                  client:
+                    name: John
+                    lastName: McClane
+                    address: 'Ave. Guadí 232, Barcelona, Barcelona'
+                    phone: '+34645553333'
+                    email: cabellokelsyy@gmail.com
+                    countryId: 0
+                    termsAndConditions: 'true'
+                  owner:
+                    name: Pepe
+                    lastName: Pérez
+                    phone: '88848484'
+                    email: alsdfasdf@lkajsdfjasdf.com
+                    documentId: '834873487'
+                  paymentMethods:
+                    - EXT
+                    - TPP
+                  withPin: true
+                  giftcardType: 1
+                  notifyByEmail: false
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - owner
+                - paymentMethods
+                - withPin
+                - giftcardType
+                - notifyByEmail
+              properties:
+                reference:
+                  type: string
+                concept:
+                  type: string
+                description:
+                  type: string
+                amount:
+                  type: integer
+                currency:
+                  type: string
+                lang:
+                  type: string
+                urlSuccess:
+                  type: string
+                urlFailed:
+                  type: string
+                urlNotification:
+                  type: string
+                client:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    lastName:
+                      type: string
+                    address:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string
+                    countryId:
+                      type: integer
+                    termsAndConditions:
+                      type: string
+                owner:
+                  type: object
+                  required:
+                    - name
+                    - lastName
+                    - phone
+                    - email
+                    - documentId
+                  properties:
+                    name:
+                      type: string
+                    lastName:
+                      type: string
+                    phone:
+                      type: string
+                    email:
+                      type: string
+                    documentId:
+                      type: string
+                paymentMethods:
+                  type: array
+                  items:
+                    type: string
+                withPin:
+                  type: boolean
+                giftcardType:
+                  type: integer
+                notifyByEmail:
+                  type: boolean
 components:
   schemas:
     User:
@@ -7192,3 +7617,11 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PaymentCard'
+    getGiftcards:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
