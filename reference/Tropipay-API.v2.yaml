@@ -5996,128 +5996,6 @@ paths:
         name: Authorization
         description: Bearer token
         required: true
-    get:
-      summary: Returns and filter giftcards
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    type:
-                      type: integer
-                    code:
-                      type: string
-                    amount:
-                      type: integer
-                    balance:
-                      type: integer
-                    currency:
-                      type: string
-                    expirationDate:
-                      type: string
-                    state:
-                      type: integer
-                    expiredAmount:
-                      type: integer
-                    name:
-                      type: string
-                    lastName:
-                      type: string
-                    email:
-                      type: string
-                    phone:
-                      type: string
-                    notifyByEmail:
-                      type: boolean
-                    boughtBookingId:
-                      type: integer
-                    boughtUserId:
-                      type: string
-                    paymentcardId:
-                      type: string
-                    createdAt:
-                      type: string
-                    updatedAt:
-                      type: string
-                x-examples:
-                  Example 1:
-                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
-                      type: 1
-                      code: 02XG
-                      amount: 10000
-                      balance: 10000
-                      currency: EUR
-                      expirationDate: '2025-02-06T17:04:25.481Z'
-                      state: 1
-                      expiredAmount: 0
-                      name: Pepe
-                      lastName: Pérez
-                      email: alsdfasdf@lkajsdfjasdf.com
-                      phone: '88848484'
-                      notifyByEmail: false
-                      boughtBookingId: 108
-                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
-                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
-                      createdAt: '2024-02-06T17:04:25.481Z'
-                      updatedAt: '2024-02-06T17:04:25.481Z'
-              examples:
-                Example 1:
-                  value:
-                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
-                      type: 1
-                      code: 02XG
-                      amount: 10000
-                      balance: 10000
-                      currency: EUR
-                      expirationDate: '2025-02-06T17:04:25.481Z'
-                      state: 1
-                      expiredAmount: 0
-                      name: Pepe
-                      lastName: Pérez
-                      email: alsdfasdf@lkajsdfjasdf.com
-                      phone: '88848484'
-                      notifyByEmail: false
-                      boughtBookingId: 108
-                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
-                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
-                      createdAt: '2024-02-06T17:04:25.481Z'
-                      updatedAt: '2024-02-06T17:04:25.481Z'
-          headers: {}
-      operationId: get-giftcards
-      x-stoplight:
-        id: pkf7zmiov4gyr
-      description: Return all giftcard created by a merchant user. Can be filterer by code and id using the query params. Also limit and offset are available for pagination
-      tags:
-        - Giftcard endpoints
-      parameters:
-        - $ref: '#/components/parameters/Merchant-Authorization-Token'
-        - schema:
-            type: string
-          in: query
-          name: code
-          description: filter for the given code
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: filter for the given id
-        - schema:
-            type: string
-          in: query
-          name: limit
-          description: filter the amount of results up to 100 records for pagination
-        - schema:
-            type: string
-          in: query
-          name: offset
-          description: filter the offset for pagination
     post:
       summary: Create a new giftcard
       responses:
@@ -6414,6 +6292,128 @@ paths:
                   type: boolean
       tags:
         - Giftcard endpoints
+    get:
+      summary: Get merchant created giftcards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: integer
+                    code:
+                      type: string
+                    amount:
+                      type: integer
+                    balance:
+                      type: integer
+                    currency:
+                      type: string
+                    expirationDate:
+                      type: string
+                    state:
+                      type: integer
+                    expiredAmount:
+                      type: integer
+                    name:
+                      type: string
+                    lastName:
+                      type: string
+                    email:
+                      type: string
+                    phone:
+                      type: string
+                    notifyByEmail:
+                      type: boolean
+                    boughtBookingId:
+                      type: integer
+                    boughtUserId:
+                      type: string
+                    paymentcardId:
+                      type: string
+                    createdAt:
+                      type: string
+                    updatedAt:
+                      type: string
+                x-examples:
+                  Example 1:
+                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
+                      type: 1
+                      code: 02XG
+                      amount: 10000
+                      balance: 10000
+                      currency: EUR
+                      expirationDate: '2025-02-06T17:04:25.481Z'
+                      state: 1
+                      expiredAmount: 0
+                      name: Pepe
+                      lastName: Pérez
+                      email: alsdfasdf@lkajsdfjasdf.com
+                      phone: '88848484'
+                      notifyByEmail: false
+                      boughtBookingId: 108
+                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
+                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
+                      createdAt: '2024-02-06T17:04:25.481Z'
+                      updatedAt: '2024-02-06T17:04:25.481Z'
+              examples:
+                Example 1:
+                  value:
+                    - id: c7f39790-c511-11ee-975f-89d5e12a4d6c
+                      type: 1
+                      code: 02XG
+                      amount: 10000
+                      balance: 10000
+                      currency: EUR
+                      expirationDate: '2025-02-06T17:04:25.481Z'
+                      state: 1
+                      expiredAmount: 0
+                      name: Pepe
+                      lastName: Pérez
+                      email: alsdfasdf@lkajsdfjasdf.com
+                      phone: '88848484'
+                      notifyByEmail: false
+                      boughtBookingId: 108
+                      boughtUserId: 629cd1d0-ab72-11ee-8e91-e982a98d522c
+                      paymentcardId: c7d5af50-c511-11ee-975f-89d5e12a4d6c
+                      createdAt: '2024-02-06T17:04:25.481Z'
+                      updatedAt: '2024-02-06T17:04:25.481Z'
+          headers: {}
+      operationId: get-giftcards
+      x-stoplight:
+        id: pkf7zmiov4gyr
+      description: Return all giftcard created by a merchant user. Can be filterer by code and id using the query params. Also limit and offset are available for pagination
+      tags:
+        - Giftcard endpoints
+      parameters:
+        - $ref: '#/components/parameters/Merchant-Authorization-Token'
+        - schema:
+            type: string
+          in: query
+          name: code
+          description: filter for the given code
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: filter for the given id
+        - schema:
+            type: string
+          in: query
+          name: limit
+          description: filter the amount of results up to 100 records for pagination
+        - schema:
+            type: string
+          in: query
+          name: offset
+          description: filter the offset for pagination
 components:
   schemas:
     User:
