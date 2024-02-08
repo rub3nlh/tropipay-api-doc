@@ -6413,7 +6413,7 @@ paths:
                 notifyByEmail:
                   type: boolean
       tags:
-        - Giftcard enpoints
+        - Giftcard endpoints
 components:
   schemas:
     User:
