@@ -6177,7 +6177,7 @@ paths:
       operationId: post-new-giftcards
       x-stoplight:
         id: fyqevl0tpcsz6
-      description: 'Create a new giftcard. '
+      description: Create a new giftcard. (Only for merchant users. Contact support to activate this feature for your account).
       requestBody:
         content:
           application/json:
@@ -6389,7 +6389,7 @@ paths:
       operationId: get-giftcards
       x-stoplight:
         id: pkf7zmiov4gyr
-      description: Return all giftcard created by a merchant user. Can be filterer by code and id using the query params. Also limit and offset are available for pagination
+      description: Return all giftcard created by a merchant user. (Only for merchant users. Contact support to activate this feature for your account). Can be filterer by code and id using the query params. Also limit and offset are available for pagination
       tags:
         - Giftcard endpoints
       parameters:
