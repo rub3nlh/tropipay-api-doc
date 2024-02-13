@@ -1,5 +1,5 @@
 ---
-tags: [Giftcard]
+tags: [Integration]
 ---
 
 # Creating and selling giftcards (for Merchants)
