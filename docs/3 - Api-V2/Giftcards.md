@@ -1,19 +1,29 @@
-# Creating and selling giftcards (for Merchants) 
+---
+tags: [Giftcard endpoints]
+---
+
+# Creating and selling giftcards (for Merchants)
 
 ## Introduction
+
 Our Payments API provides merchants with the capability to offer gift cards to their customers as a part of their business operations. With this functionality, merchants can generate, manage, and track gift cards seamlessly within their systems.
 
 <!-- theme: info -->
->#### info
+
+> #### info
+>
 > You must contact support in order to activate this feature for your merchant account. Login with your account and access through the live chat in the Tropipay website
 
 ## Authentication
+
 To access the Gift Card Management functionalities, merchants need to authenticate their requests using an access token. Each request must include an access token in the header for authentication. Please refer to our API documentation for detailed instructions on authentication.
 
 ## Creating Gift Cards
+
 Merchants can create gift cards for their customers using a simple API call. The API endpoint for creating gift cards typically includes parameters such as the gift card amount, expiration date, and any additional metadata required by the merchant. Upon successful creation, the API returns a unique gift card identifier that can be used for further management and tracking. (Consider using a database to avoid unnecesary API request) The response is among other fields , a shortUrl that the clients can use to purchase the giftcard. Just like a regular paymentcard.
 
 ### Example Request
+
 ```http
 POST /api/v2/giftcards/
 Content-Type: application/json
@@ -52,7 +62,8 @@ Authorization: Bearer YOUR_API_TOKEN
 }
 ```
 
-### Example response 
+### Example response
+
 ```json
 {
 	"id": "d2673ab0-ca02-11ee-965b-a9b190553dd2",
@@ -106,8 +117,8 @@ Authorization: Bearer YOUR_API_TOKEN
 }
 ```
 
-When a giftcard is successfully paid, you get a callback to the notificationUrl. 
+When a giftcard is successfully paid, you get a callback to the notificationUrl.
 
 ## Managing Gift Cards
 
-You can check and filter created giftcards. This is very useful for further management and tracking. 
+You can check and filter created giftcards. This is very useful for further management and tracking.
