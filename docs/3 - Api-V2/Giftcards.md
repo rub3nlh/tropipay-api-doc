@@ -1,5 +1,5 @@
 ---
-tags: [Giftcard endpoints]
+tags: [Giftcard]
 ---
 
 # Creating and selling giftcards (for Merchants)
