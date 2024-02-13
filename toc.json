@@ -89,6 +89,18 @@
               "uri": "docs/3 - Api-V2/SignUp.md"
             }
           ]
+        },
+          {
+          "type":"group",
+          "title": "Selling giftcards",
+          "items": [
+            {
+              "type": "item",
+              "title": "Selling giftcards",
+              "uri": "docs/3 - Api-V2/Giftcards.md"
+            }
+           
+          ]
         }
       ]
     },

@@ -1,7 +1,3 @@
----
-tags: [Integration]
----
-
 # Creating and selling giftcards (for Merchants)
 
 ## Introduction
