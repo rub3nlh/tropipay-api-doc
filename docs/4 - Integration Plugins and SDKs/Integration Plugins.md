@@ -2,12 +2,19 @@
 tags: [Integrations, Plugins, SDK]
 ---
 
-# Integration Plugins
+
+
+# Integration Plugins and SDKs
 Integration plugins that our community has been developing to allow the integration of TropiPay in the most popular CMS-Ecommers.
 
 Allow:
 - Connect the Tropipay account of the merchant and be able to make payments with Credit/Debit Cards and Payments with Tropipay Account in electronic commerces.
 - The collected funds are deposited in the Tropipay account of the merchant.
+
+## SDKs
+TropipayJS SDK for Javascript/Typescript
+
+[Go to SDK documentation here >>](https://yosle.github.io/tropipayjs-docs/)
 
 
 ## Drupal
@@ -24,9 +31,9 @@ Drupal Tropipay Plugin v1.0.x-dev (Drupal 8 - 9 )
 <hr>
 
 ## WooCommerce
-WooCommerce Tropipay Plugin v2.0
+WooCommerce Tropipay Plugin v4.7.0
 
-[Download Plugin here  >> ](https://blog.tropipay.com/-woocomerce-tropipay-plugin-2-0/)
+[Download Plugin here  >> ](https://github.com/tropipay/woocomerce-tropipay-plugin/releases/)
 
 <br>
 
@@ -37,9 +44,9 @@ WooCommerce Tropipay Plugin v4.4
 <hr>
 
 ## Prestashop
-Prestashop Tropipay Plugin v1.0
+Prestashop Tropipay Plugin v2.1.3
 
-[Download Plugin here  >> ](https://tpp-blog-wordpress.s3.amazonaws.com/wp-content/uploads/2023/05/12045119/prestashop-tropipay-plugin-v1-1.zip)
+[Download Plugin here  >> ](https://github.com/tropipay/prestashop-tropipay-plugin/releases/tag/v2.1.3)
 
 <br>
 
@@ -55,12 +62,9 @@ Odoo Tropipay Addon
 
 <hr>
 
-# SDKs
-Coming soon ...
 
-## node
-## python
-## php
+
+
 
 
 
