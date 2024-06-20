@@ -33,7 +33,7 @@ Drupal Tropipay Plugin v1.0.x-dev (Drupal 8 - 9 )
 ## WooCommerce
 WooCommerce Tropipay Plugin v4.7.0
 
-[Download Plugin here  >> ](https://github.com/tropipay/woocomerce-tropipay-plugin/releases/)
+[Download Plugin here  >> ](https://github.com/tropipay/woocomerce-tropipay-plugin/releases/latest)
 
 <br>
 
@@ -46,7 +46,7 @@ WooCommerce Tropipay Plugin v4.4
 ## Prestashop
 Prestashop Tropipay Plugin v2.1.3
 
-[Download Plugin here  >> ](https://github.com/tropipay/prestashop-tropipay-plugin/releases/tag/v2.1.3)
+[Download Plugin here  >> ](https://github.com/tropipay/prestashop-tropipay-plugin/releases/latest)
 
 <br>
 
