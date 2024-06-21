@@ -659,10 +659,12 @@ paths:
                       type: string
                       x-stoplight:
                         id: zgxicpgd3hhj5
+                      description: Client city
                     zip:
                       type: string
                       x-stoplight:
                         id: 5fuu00v33et42
+                      description: Client zip code or postal code
                 expirationDate:
                   type: string
                   default: yyyy-mm-dd
