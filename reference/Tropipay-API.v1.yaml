@@ -718,6 +718,8 @@ paths:
                     email: client@email.com
                     countryId: 1
                     termsAndConditions: true
+                    city: Barcelona
+                    zip: '78622'
               Ex. Creating a Paylink (Get the Payment Link Directly):
                 value:
                   reference: your-own-system-reference

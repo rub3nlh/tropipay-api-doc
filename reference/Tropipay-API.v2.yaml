@@ -4438,14 +4438,14 @@ paths:
                       type: string
                       x-stoplight:
                         id: clrwcl8nxfuy7
+                      description: Client city
                     zip:
                       type: string
                       x-stoplight:
                         id: c2sdrinmn9q3u
-                      description: Client city
+                      description: Client zip code or postal code
                 directPayment:
                   type: boolean
-                  description: Client zip code or postal code
                 paymentMethods:
                   type: array
                   description: 'Optional: if included, sets which payment methods will be available for paying this paymentCard. Possible options are: ''EXT'' for external cards (visa, mastercard, etc) and ''TPP'' for payment with tropipay balance. If missing, all payment methods will be available to users'
@@ -4489,6 +4489,8 @@ paths:
                     email: client@email.com
                     countryId: 1
                     termsAndConditions: 'true'
+                    city: Barcelona
+                    zip: '78622'
                   directPayment: true
                   paymentMethods:
                     - EXT
