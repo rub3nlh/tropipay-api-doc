@@ -573,13 +573,20 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - reference
+                - concept
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
               properties:
                 reference:
                   type: string
                   description: reference in your system
                 concept:
                   type: string
-                  description: ''
                 description:
                   type: string
                 amount:
@@ -613,10 +620,19 @@ paths:
                   type: string
                   description: Callback notification with the response data
                 client:
-                  type:
-                    - 'null'
-                    - object
+                  type: object
                   description: 'If the client param exist and it is different of null the payment flow will skip the form asking for client data. '
+                  nullable: true
+                  required:
+                    - name
+                    - lastName
+                    - address
+                    - phone
+                    - email
+                    - termsAndConditions
+                    - countryId
+                    - city
+                    - zip
                   properties:
                     name:
                       type: string
@@ -639,14 +655,14 @@ paths:
                     countryId:
                       type: integer
                       description: Client Country Id (You must see country endpoint)
-                  required:
-                    - name
-                    - lastName
-                    - address
-                    - phone
-                    - email
-                    - termsAndConditions
-                    - countryId
+                    city:
+                      type: string
+                      x-stoplight:
+                        id: zgxicpgd3hhj5
+                    zip:
+                      type: string
+                      x-stoplight:
+                        id: 5fuu00v33et42
                 expirationDate:
                   type: string
                   default: yyyy-mm-dd
@@ -662,14 +678,6 @@ paths:
                 directPayment:
                   type: boolean
                   description: 'Allows to generate the payment link directly, the client, urlSuccess and urlFailed keys are required'
-              required:
-                - reference
-                - concept
-                - description
-                - amount
-                - currency
-                - singleUse
-                - reasonId
             examples:
               'Creating a Recurrent Payment Link ':
                 value:

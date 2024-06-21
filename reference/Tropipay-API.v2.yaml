@@ -4338,6 +4338,23 @@ paths:
                     countryId: 1
                     termsAndConditions: 'true'
                   directPayment: true
+              required:
+                - reference
+                - concept
+                - favorite
+                - description
+                - amount
+                - currency
+                - singleUse
+                - reasonId
+                - expirationDays
+                - lang
+                - urlSuccess
+                - urlFailed
+                - urlNotification
+                - serviceDate
+                - client
+                - directPayment
               properties:
                 reference:
                   type: string
@@ -4388,6 +4405,8 @@ paths:
                     - phone
                     - email
                     - termsAndConditions
+                    - city
+                    - zip
                   properties:
                     name:
                       type: string
@@ -4415,6 +4434,14 @@ paths:
                     termsAndConditions:
                       type: string
                       minLength: 1
+                    city:
+                      type: string
+                      x-stoplight:
+                        id: clrwcl8nxfuy7
+                    zip:
+                      type: string
+                      x-stoplight:
+                        id: c2sdrinmn9q3u
                 directPayment:
                   type: boolean
                 paymentMethods:
@@ -4435,23 +4462,6 @@ paths:
                     id: qjc3p4z6jgjlt
                   example: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkHYTCA...'
                   description: 'Base64 string format of the image (jpg,png,etc)'
-              required:
-                - reference
-                - concept
-                - favorite
-                - description
-                - amount
-                - currency
-                - singleUse
-                - reasonId
-                - expirationDays
-                - lang
-                - urlSuccess
-                - urlFailed
-                - urlNotification
-                - serviceDate
-                - client
-                - directPayment
             examples:
               Example with Client Data:
                 value:
