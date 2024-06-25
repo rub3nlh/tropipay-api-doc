@@ -743,6 +743,8 @@ paths:
                     email: client@email.com
                     countryId: 1
                     termsAndConditions: true
+                    city: Barcelona
+                    postCode: '78622'
                   directPayment: true
         description: |-
           #### Reasons (Payment reason ids):
