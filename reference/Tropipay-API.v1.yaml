@@ -632,7 +632,7 @@ paths:
                     - termsAndConditions
                     - countryId
                     - city
-                    - zip
+                    - postCode
                   properties:
                     name:
                       type: string
@@ -660,7 +660,7 @@ paths:
                       x-stoplight:
                         id: zgxicpgd3hhj5
                       description: Client city
-                    zip:
+                    postCode:
                       type: string
                       x-stoplight:
                         id: 5fuu00v33et42
@@ -719,7 +719,7 @@ paths:
                     countryId: 1
                     termsAndConditions: true
                     city: Barcelona
-                    zip: '78622'
+                    postCode: '78622'
               Ex. Creating a Paylink (Get the Payment Link Directly):
                 value:
                   reference: your-own-system-reference

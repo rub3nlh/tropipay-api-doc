@@ -4406,7 +4406,7 @@ paths:
                     - email
                     - termsAndConditions
                     - city
-                    - zip
+                    - postCode
                   properties:
                     name:
                       type: string
@@ -4439,7 +4439,7 @@ paths:
                       x-stoplight:
                         id: clrwcl8nxfuy7
                       description: Client city
-                    zip:
+                    postCode:
                       type: string
                       x-stoplight:
                         id: c2sdrinmn9q3u
@@ -4490,7 +4490,7 @@ paths:
                     countryId: 1
                     termsAndConditions: 'true'
                     city: Barcelona
-                    zip: '78622'
+                    postCode: '78622'
                   directPayment: true
                   paymentMethods:
                     - EXT
