@@ -1985,7 +1985,213 @@ paths:
                     cardTokenId: null
                     signature: 07ad5c8f339ec44f1ba842f79753b632e5033ce8c68450e328c6ee7a64d96c8f
         '':
-          description: ''
+          description: |-
+            When a tokenized payment is made in some cases the 3DS may be requested. In case the 3DS is not requested the response will be similar to example 1 where “paymentStatus”: “Authorized”, “charged”: true, “redirectUrl”: null. 
+
+            In the case of being requested the response will be similar to example 2, where “paymentStatus”: “Pending”, “charged”: false, “redirectUrl” will be the url where the application must be redirected to show the iframe where the 3DS will be completed. After the 3DS is completed it will automatically redirect to the OK or KO screen respectively.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  reference:
+                    type: string
+                  bankOrderCode:
+                    type: string
+                  provider:
+                    type: integer
+                  userId:
+                    type: string
+                  bookingDate:
+                    type: string
+                  days:
+                    type: 'null'
+                  amount:
+                    type: integer
+                  currency:
+                    type: string
+                  originalCurrencyAmount:
+                    type: string
+                  destinationAmount:
+                    type: string
+                  destinationCurrency:
+                    type: string
+                  conversionRate:
+                    type: number
+                  depositaccountId:
+                    type: 'null'
+                  ourFee:
+                    type: integer
+                  providerFee:
+                    type: integer
+                  state:
+                    type: integer
+                  serviceId:
+                    type: integer
+                  paymentcardId:
+                    type: 'null'
+                  expirationDate:
+                    type: 'null'
+                  movementTypeId:
+                    type: integer
+                  transactionId:
+                    type: 'null'
+                  isInternal:
+                    type: boolean
+                  agent:
+                    type: string
+                  ip:
+                    type: string
+                  reasonId:
+                    type: integer
+                  reasonDes:
+                    type: string
+                  errorReason:
+                    type: 'null'
+                  notificationUrl:
+                    type: 'null'
+                  riskFlag:
+                    type: integer
+                  riskScore:
+                    type: integer
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                  cardTokenId:
+                    type: 'null'
+                  charged:
+                    type: boolean
+                  tpAccountCode:
+                    type: string
+                  redirectUrl:
+                    type: 'null'
+                  paymentStatus:
+                    type: string
+                x-examples:
+                  Example 1:
+                    id: 1828
+                    reference: '835502761496'
+                    bankOrderCode: '967400723354'
+                    provider: 4
+                    userId: 143b8b70-a682-11ee-b26e-1dc19bd1a911
+                    bookingDate: '2024-08-27T22:08:23.633Z'
+                    days: null
+                    amount: 2684
+                    currency: USD
+                    originalCurrencyAmount: '3000'
+                    destinationAmount: '2603'
+                    destinationCurrency: EUR
+                    conversionRate: 1.117527
+                    depositaccountId: null
+                    ourFee: 300
+                    providerFee: 0
+                    state: 5
+                    serviceId: 40
+                    paymentcardId: null
+                    expirationDate: null
+                    movementTypeId: 2
+                    transactionId: null
+                    isInternal: false
+                    agent: TROPIPAY
+                    ip: 127.0.0.1
+                    reasonId: 1
+                    reasonDes: Arreglo de vivienda
+                    errorReason: null
+                    notificationUrl: null
+                    riskFlag: 0
+                    riskScore: 0
+                    createdAt: '2024-08-27T22:08:23.633Z'
+                    updatedAt: '2024-08-27T22:08:27.711Z'
+                    cardTokenId: null
+                    charged: true
+                    tpAccountCode: pay_7t64wvusiuuetalrhxzaf65com
+                    redirectUrl: null
+                    paymentStatus: Authorized
+              examples:
+                Example 1:
+                  value:
+                    id: 1828
+                    reference: '835502761496'
+                    bankOrderCode: '967400723354'
+                    provider: 4
+                    userId: 143b8b70-a682-11ee-b26e-1dc19bd1a911
+                    bookingDate: '2024-08-27T22:08:23.633Z'
+                    days: null
+                    amount: 2684
+                    currency: USD
+                    originalCurrencyAmount: '3000'
+                    destinationAmount: '2603'
+                    destinationCurrency: EUR
+                    conversionRate: 1.117527
+                    depositaccountId: null
+                    ourFee: 300
+                    providerFee: 0
+                    state: 5
+                    serviceId: 40
+                    paymentcardId: null
+                    expirationDate: null
+                    movementTypeId: 2
+                    transactionId: null
+                    isInternal: false
+                    agent: TROPIPAY
+                    ip: 127.0.0.1
+                    reasonId: 1
+                    reasonDes: Arreglo de vivienda
+                    errorReason: null
+                    notificationUrl: null
+                    riskFlag: 0
+                    riskScore: 0
+                    createdAt: '2024-08-27T22:08:23.633Z'
+                    updatedAt: '2024-08-27T22:08:27.711Z'
+                    cardTokenId: null
+                    charged: true
+                    tpAccountCode: pay_7t64wvusiuuetalrhxzaf65com
+                    redirectUrl: null
+                    paymentStatus: Authorized
+                Example 2:
+                  value:
+                    id: 1832
+                    reference: '835502761496'
+                    bankOrderCode: '946404798370'
+                    provider: 4
+                    userId: 143b8b70-a682-11ee-b26e-1dc19bd1a911
+                    bookingDate: '2024-08-27T22:21:02.229Z'
+                    days: null
+                    amount: 89483
+                    currency: USD
+                    originalCurrencyAmount: '100000'
+                    destinationAmount: '86799'
+                    destinationCurrency: EUR
+                    conversionRate: 1.117527
+                    depositaccountId: null
+                    ourFee: 300
+                    providerFee: 0
+                    state: 1
+                    serviceId: 40
+                    paymentcardId: null
+                    expirationDate: null
+                    movementTypeId: 2
+                    transactionId: null
+                    isInternal: false
+                    agent: TROPIPAY
+                    ip: 127.0.0.1
+                    reasonId: 1
+                    reasonDes: Arreglo de vivienda
+                    errorReason: null
+                    notificationUrl: null
+                    riskFlag: 0
+                    riskScore: 0
+                    createdAt: '2024-08-27T22:21:02.229Z'
+                    updatedAt: '2024-08-27T22:21:02.229Z'
+                    cardTokenId: null
+                    charged: false
+                    tpAccountCode: pay_saey25uc5wtevpg2b7trdmy6te
+                    redirectUrl:
+                      href: 'https://authentication-devices.sandbox.checkout.com/sessions-interceptor/sid_wb4fkjulvizuzlx34tjgmdjfuq'
+                    paymentStatus: Pending
       requestBody:
         content:
           application/json:
