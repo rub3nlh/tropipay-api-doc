@@ -2190,7 +2190,7 @@ paths:
                     charged: false
                     tpAccountCode: pay_saey25uc5wtevpg2b7trdmy6te
                     redirectUrl:
-                      href: 'https://authentication-devices.sandbox.checkout.com/sessions-interceptor/sid_wb4fkjulvizuzlx34tjgmdjfuq'
+                      href: 'https://authentication-devices.sandbox.pos_site.com/sessions-interceptor/sid_wb4fkjulvizuzlx34tjgmdjq'
                     paymentStatus: Pending
       requestBody:
         content:
